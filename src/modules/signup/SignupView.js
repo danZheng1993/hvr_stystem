@@ -15,7 +15,7 @@ export default function SignupView(props) {
     props.navigation.navigate({ routeName: 'SignupAsProvider' })
   };
   const handleClient = () => {
-    props.navigation.navigate({ routeName: 'Gallery' })
+    props.navigation.navigate({ routeName: 'SignupAsClient' })
   };
   return (
     <View style={styles.container}>

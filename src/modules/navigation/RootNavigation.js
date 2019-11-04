@@ -17,10 +17,15 @@ import AuthScreen from '../auth/AuthViewContainer'
 import LoginScreen from '../login/LoginViewContainer'
 import SignupScreen from '../signup/SignupView'
 import SignupAsProvider from '../signup/SignupAsProvider'
+import SignupAsClient from '../signup/SignupAsClient'
+import SendVerificationCode from '../signup/SendVerificationCode'
+import CheckVerificationCode from '../signup/CheckVerificationCode'
+
 import CreateProfile from '../Profile/CreateProfile'
 import BasicProfile from '../Profile/BasicProfile'
 import ShootingID from '../Profile/ShootingID'
 import CompanyInfo from '../Profile/CompanyInfo'
+
 import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVersionViewContainer';
 
 import { colors, fonts } from '../../styles';
@@ -89,7 +94,25 @@ const stackNavigator = createStackNavigator(
     SignupAsProvider: {
       screen: SignupAsProvider,
       navigationOptions: {
-        header: null,
+        title: '注册',
+      },
+    },
+    SignupAsClient: {
+      screen: SignupAsClient,
+      navigationOptions: {
+        title: '注册',
+      },
+    },
+    SendVerificationCode: {
+      screen: SendVerificationCode,
+      navigationOptions: {
+        title: '',
+      },
+    },
+    CheckVerificationCode: {
+      screen: CheckVerificationCode,
+      navigationOptions: {
+        title: '',
       },
     },
 

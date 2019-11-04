@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput } from 'react-native-paper';
+import { TextInput, HelperText } from 'react-native-paper';
 import {
   StyleSheet,
   View,
@@ -31,6 +31,12 @@ export default class SignupForm extends React.Component {
                     value={this.state.phoneNumber}
                     onChangeText={phoneNumber => this.setState({ phoneNumber })}
                 />
+                {/* <HelperText
+                  type="error"
+                  visible={!this.state.phoneNumber.includes('/[0-9]/')}
+                >
+                  Phone number is invalid!
+                </HelperText> */}
                 <View style={styles.verificationCode}>
                     <TextInput
                         style={{width: '50%', marginBottom: 15}}
