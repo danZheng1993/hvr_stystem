@@ -15,7 +15,12 @@ import GalleryScreen from '../gallery/GalleryViewContainer';
 // import ChartsScreen from '../containers/ChartsScreen';
 import AuthScreen from '../auth/AuthViewContainer'
 import LoginScreen from '../login/LoginViewContainer'
-import SignupScreen from '../signup/SignupViewContainer'
+import SignupScreen from '../signup/SignupView'
+import SignupAsProvider from '../signup/SignupAsProvider'
+import CreateProfile from '../Profile/CreateProfile'
+import BasicProfile from '../Profile/BasicProfile'
+import ShootingID from '../Profile/ShootingID'
+import CompanyInfo from '../Profile/CompanyInfo'
 import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVersionViewContainer';
 
 import { colors, fonts } from '../../styles';
@@ -52,6 +57,37 @@ const stackNavigator = createStackNavigator(
     },
     Signup: {
       screen: SignupScreen,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    CreateProfile: {
+      screen: CreateProfile,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    BasicProfile: {
+      screen: BasicProfile,
+      navigationOptions: {
+        title: '信息填写',
+      },
+    },
+    ShootingID: {
+      screen: ShootingID,
+      navigationOptions: {
+        title: '拍摄身份证',
+      },
+    },
+    CompanyInfo: {
+      screen: CompanyInfo,
+      navigationOptions: {
+        title: '公司信息',
+      },
+    },
+    
+    SignupAsProvider: {
+      screen: SignupAsProvider,
       navigationOptions: {
         header: null,
       },

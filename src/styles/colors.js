@@ -20,6 +20,7 @@ const blueVersion = {
   yellow: '#ffc247',
   warning: '#FF9F42',
   info: '#6999DD',
+  placeholder: '#D7D7D7'
 };
 
 export default blueVersion;

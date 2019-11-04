@@ -8,40 +8,22 @@ import {
 import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
 
-import { Text } from '../../components/StyledText';
-export default function SignupView(props) {
+import BasicProfile from './BasicProfile'
+export default function CreateProfile(props) {
 
   const handleClick = () => {
-    props.navigation.navigate({ routeName: 'Gallery' })
+    props.navigation.navigate({ routeName: 'CreateProfile' })
 
   };
   return (
     <View style={styles.container}>
-      <View style={styles.description}>
-        <Text size={28} black>
-        {/* Login role selection */}
-        登录角色选择 
-        </Text>
-        
-        <Text size={14} black>
-        {/* Select the account role you want to log in to */}
-
-        选择您要登录的账号角色
-        </Text>
-      </View>
+      <BasicProfile />
       <View style={styles.buttonsContainer}>
-        <Button
-          large
-          bgColor={colors.info}
-          style={styles.button}
-          caption="我是需求者"
-          onPress={() => handleClick()}
-        />
         <Button
           large
           bgColor={colors.warning}
           style={styles.button}
-          caption="我是服务方"
+          caption="下一步"
           onPress={() => handleClick()}
         />
       </View>
@@ -52,12 +34,11 @@ export default function SignupView(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-around',
   },
   buttonsContainer: {
-    flex: 2,
-    alignItems: 'center',
     alignSelf: 'stretch',
     margin: 20
   },
@@ -66,7 +47,8 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   description: {
-    flex: 1,
-    justifyContent: 'flex-start'
+    padding: 20,
+    marginBottom: 20,
+    alignSelf: 'stretch'
   },
 });
