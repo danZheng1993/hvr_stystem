@@ -9,23 +9,23 @@ import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
 
 import { Text } from '../../components/StyledText';
-export default function SignupView(props) {
+export default function LoginView(props) {
 
-  const handleClick = () => {
-    props.navigation.navigate({ routeName: 'Gallery' })
-
+  const handleProvider = () => {
+    props.navigation.navigate({ routeName: 'LoginAsProvider' })
+  };
+  const handleClient = () => {
+    props.navigation.navigate({ routeName: 'LoginAsClient' })
   };
   return (
     <View style={styles.container}>
       <View style={styles.description}>
         <Text size={28} black>
-        {/* Login role selection */}
-        登录角色选择 
+        登录角色选择
         </Text>
-        
+      </View>
+      <View style={styles.description}>
         <Text size={14} black>
-        {/* Select the account role you want to log in to */}
-
         选择您要登录的账号角色
         </Text>
       </View>
@@ -35,14 +35,14 @@ export default function SignupView(props) {
           bgColor={colors.info}
           style={styles.button}
           caption="我是需求者"
-          onPress={() => handleClick()}
+          onPress={() => handleClient()}
         />
         <Button
           large
           bgColor={colors.warning}
           style={styles.button}
           caption="我是服务方"
-          onPress={() => handleClick()}
+          onPress={() => handleProvider()}
         />
       </View>
     </View>
@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   description: {
-    flex: 1,
-    justifyContent: 'flex-start'
+    padding: 20,
+    marginBottom: 20,
+    alignSelf: 'stretch'
   },
 });

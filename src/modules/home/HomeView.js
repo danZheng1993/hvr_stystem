@@ -7,33 +7,41 @@ import {
 
 import { Button } from '../../components';
 
-export default function HomeScreen(props) {
-
-  const handleClick = () => {
-    props.navigation.navigate({ routeName: 'Auth' })
-
+export default class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  componentDidMount() {
+    setTimeout(() => {    
+      this.props.navigation.navigate({ routeName: 'Auth' })
+    }, 2000);
+  }
+  handleClick = () => {
+    this.props.navigation.navigate({ routeName: 'Auth' })
   };
-  return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('../../../assets/images/background.png')}
-        style={styles.bgImage}
-        resizeMode="cover"
-      >
-        
-      <View style={styles.buttonsContainer}>
-        <Button
-          large
-          secondary
-          rounded
-          style={styles.button}
-          caption="Start"
-          onPress={() => handleClick()}
-        />
+  render() {
+    return (
+      <View style={styles.container}>
+        <ImageBackground
+          source={require('../../../assets/images/background.png')}
+          style={styles.bgImage}
+          resizeMode="cover"
+        >
+          
+        <View style={styles.buttonsContainer}>
+          <Button
+            large
+            secondary
+            rounded
+            style={styles.button}
+            caption="Skip"
+            onPress={() => this.handleClick()}
+          />
+        </View>
+        </ImageBackground>
       </View>
-      </ImageBackground>
-    </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({

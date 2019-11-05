@@ -14,7 +14,14 @@ import GalleryScreen from '../gallery/GalleryViewContainer';
 // import MessagesScreen from '../containers/chat/MessagesScreen';
 // import ChartsScreen from '../containers/ChartsScreen';
 import AuthScreen from '../auth/AuthViewContainer'
+
 import LoginScreen from '../login/LoginViewContainer'
+import LoginAsProvider from '../login/LoginAsProvider'
+import LoginAsClient from '../login/LoginAsClient'
+import LoginWithPassword from '../login/LoginWithPassword'
+import LoginWithSMS from '../login/LoginWithSMS'
+import PasswordRecovery from '../login/PasswordRecovery'
+
 import SignupScreen from '../signup/SignupView'
 import SignupAsProvider from '../signup/SignupAsProvider'
 import SignupAsClient from '../signup/SignupAsClient'
@@ -115,7 +122,36 @@ const stackNavigator = createStackNavigator(
         title: '',
       },
     },
-
+    LoginAsProvider: {
+      screen: LoginAsProvider,
+      navigationOptions: {
+        title: '',
+      },
+    },
+    LoginAsClient: {
+      screen: LoginAsClient,
+      navigationOptions: {
+        title: '',
+      },
+    },
+    LoginWithPassword: {
+      screen: LoginWithPassword,
+      navigationOptions: {
+        title: '',
+      },
+    },
+    LoginWithSMS: {
+      screen: LoginWithSMS,
+      navigationOptions: {
+        title: '',
+      },
+    },
+    PasswordRecovery: {
+      screen: PasswordRecovery,
+      navigationOptions: {
+        title: '找回密码',
+      },
+    },
     Profile: {
       screen: AvailableInFullVersion,
       navigationOptions: {

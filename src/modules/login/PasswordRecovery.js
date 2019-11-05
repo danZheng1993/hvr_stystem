@@ -10,7 +10,7 @@ import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
 
 import { Text } from '../../components/StyledText';
-export default class SignupForm extends React.Component {
+export default class PasswordRecovery extends React.Component {
     state = {
         phoneNumber: '',
         verificationCode: '',
@@ -22,7 +22,9 @@ export default class SignupForm extends React.Component {
     }
     render(){
         return (
-           <>
+        <View style={styles.container}>
+          <View style={styles.description}>
+            
                 <TextInput
                     style={styles.input}
                     outlined
@@ -72,28 +74,40 @@ export default class SignupForm extends React.Component {
                     value={this.state.passwordConfirm}
                     onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
                 />
-            </>
+          </View>
+          <View style={styles.buttonsContainer}>
+            <Button
+              large
+              bgColor={colors.warning}
+              style={styles.button}
+              caption="确认"
+              onPress={() => handleClick()}
+            />
+          </View>
+        </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
   container: {
-      
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-around',
   },
   buttonsContainer: {
-    flex: 2,
-    alignItems: 'center',
     alignSelf: 'stretch',
     margin: 20
   },
   button: {
     marginBottom: 20,
-    alignSelf: 'flex-end',
+    alignSelf: 'stretch',
   },
   description: {
-    flex: 1,
-    justifyContent: 'flex-start'
+    padding: 20,
+    marginBottom: 20,
+    alignSelf: 'stretch'
   },
   input: {
     marginBottom: 15,
