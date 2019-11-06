@@ -81,7 +81,7 @@ export default class PasswordRecovery extends React.Component {
               bgColor={colors.warning}
               style={styles.button}
               caption="确认"
-              onPress={() => handleClick()}
+              onPress={() => this.handleClick()}
             />
           </View>
         </View>

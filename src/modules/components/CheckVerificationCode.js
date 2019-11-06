@@ -1,62 +1,44 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { TextInput } from 'react-native-paper';
+import  CodePin  from 'react-native-pin-code'
 
 import ImagePicker from 'react-native-image-picker'
 import { colors } from '../../styles'
 import { Button } from '../../components';
 import { Text } from '../../components/StyledText';
 
-export default class SendVerificationCode extends React.Component {
+export default class CheckVerificationCode extends React.Component {
   constructor(props) {
     super(props)
   }
   state = {
     photo: null,
-    phoneNumber: ''
+    code: ''
   }
-  handleClick = () => {
-    this.props.navigation.navigate({ routeName: 'CheckVerificationCode' })
-  };
-  handleChoosePhoto = () => {
-    const options = {
-      noData: true,
-    }
-    ImagePicker.launchImageLibrary(options, response => {
-      if (response.uri) {
-        this.setState({ photo: response })
-      }
-    })
-  }
-
+  
   render() {
-    const { photo } = this.state
+    const { code } = this.state
     return (
+
       <View style={styles.container}>
         <View style={styles.description}>
           <Text size={28} black>
-            绑定手机号
+            输入短信验证码
           </Text>
           <Text size={14} black>
-            为了您的帐号更安全，首次登录还需要绑定您的手机号
+            验证码已发送至  13581644633
           </Text>
-          <TextInput
-            style={styles.input}
-            outlined
-            label='输入手机号'
-            placeholder="输入手机号"
-            value={this.state.phoneNumber}
-            onChangeText={phoneNumber => this.setState({ phoneNumber })}
-        />
-        </View>
-        <View style={styles.buttonsContainer}>
-          <Button
-            large
-            bgColor={colors.warning}
-            style={styles.button}
-            caption="发送验证码"
-            onPress={() => this.handleClick()}
+          <CodePin
+            code="2018" // code.length is used if you not pass number prop
+            success={() => this.props.navigation.navigate({ routeName: 'CreateProfile' })} // If user fill '2018', success is called
+            text="" // My title
+            error="请输入正确的验证码，再试一次" // If user fail (fill '2017' for instance)
+            autoFocusFirst={false} // disabling auto-focus
           />
+          <Text size={14} black>
+            59s后可重新发送
+          </Text>
         </View>
       </View>    
     )

@@ -8,6 +8,7 @@ import {
 
 import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
+import { Form, TextValidator } from 'react-native-validator-form';
 
 import { Text } from '../../components/StyledText';
 export default class SignupForm extends React.Component {
@@ -17,31 +18,56 @@ export default class SignupForm extends React.Component {
         password: '',
         passwordConfirm: '',
     };
+    componentWillMount() {
+      // custom rule will have name 'isPasswordMatch'
+      Form.addValidationRule('isPasswordMatch', (value) => {
+          if (value !== this.state.password) {
+              return false;
+          }
+          return true;
+      });
+    }
+
+    componentWillUnmount() {
+      Form.removeValidationRule('isPasswordMatch');
+    }
     handleClick = () => {
 
+    }
+    submit = () => {
+        // your submit logic
+        alert("ddd")
+    }
+    handleSubmit = () => {
+      this.refs.form.submit();
     }
     render(){
         return (
            <>
-                <TextInput
-                    style={styles.input}
-                    outlined
+            <Form
+                ref="form"
+                onSubmit={this.handleSubmit}
+            >
+                <TextValidator
+                    name="phoneNumber"
                     label='手机号'
+                    validators={['required', 'matchRegexp:^[0-9]{11}$']}
+                    errorMessages={['This field is required', 'invalid phone number']}
                     placeholder="输入手机号"
+                    type="text"
+                    // keyboardType="email-address"
                     value={this.state.phoneNumber}
                     onChangeText={phoneNumber => this.setState({ phoneNumber })}
                 />
-                {/* <HelperText
-                  type="error"
-                  visible={!this.state.phoneNumber.includes('/[0-9]/')}
-                >
-                  Phone number is invalid!
-                </HelperText> */}
                 <View style={styles.verificationCode}>
-                    <TextInput
-                        style={{width: '50%', marginBottom: 15}}
+                    <TextValidator
+                        name="verificationCode"
+                        style={{ marginBottom: 15}}
+                        validators={['required', 'matchRegexp:^[0-9]{4}$']}                 
+                        errorMessages={['This field is required', 'invalid code']}
                         outlined
                         label='输入验证码'
+                        type="text"
                         placeholder="输入验证码"
                         value={this.state.verificationCode}
                         onChangeText={verificationCode => this.setState({ verificationCode })}
@@ -54,24 +80,39 @@ export default class SignupForm extends React.Component {
                         onPress={() => this.handleClick()}
                     />
                 </View>
-                <TextInput
+                <TextValidator
                     style={styles.input}
                     outlined
+                    validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
+                    errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
                     label='设置密码'
                     placeholder="设置密码（6-20位字母数字组合)"
                     value={this.state.password}
                     secureTextEntry
+                    maxLength={20}
                     onChangeText={password => this.setState({ password })}
                 />
-                <TextInput
+                <TextValidator
                     style={styles.input}
                     outlined
+                    validators={['required', 'isPasswordMatch']}                 
+                    errorMessages={['This field is required', 'password mismatch']}
                     label='确认密码'
                     placeholder="确认密码"
                     secureTextEntry
                     value={this.state.passwordConfirm}
                     onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
-                />
+                    />
+                  <View style={styles.buttonsContainer}>
+                    <Button
+                      large
+                      bgColor={colors.warning}
+                      style={styles.button}
+                      caption="确定"
+                      onPress={this.handleSubmit}
+                    />
+                    </View>
+            </Form>
             </>
         );
     }

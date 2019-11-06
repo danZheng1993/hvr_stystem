@@ -21,15 +21,6 @@ export default function SignupAsProvider(props) {
       <View style={styles.description}>
         <SignupForm />
       </View>
-      <View style={styles.buttonsContainer}>
-        <Button
-          large
-          bgColor={colors.warning}
-          style={styles.button}
-          caption="下一步"
-          onPress={() => handleClick()}
-        />
-      </View>
     </View>
   );
 }

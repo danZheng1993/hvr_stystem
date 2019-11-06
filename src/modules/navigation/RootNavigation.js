@@ -25,35 +25,30 @@ import PasswordRecovery from '../login/PasswordRecovery'
 import SignupScreen from '../signup/SignupView'
 import SignupAsProvider from '../signup/SignupAsProvider'
 import SignupAsClient from '../signup/SignupAsClient'
-import SendVerificationCode from '../signup/SendVerificationCode'
-import CheckVerificationCode from '../signup/CheckVerificationCode'
+import SendVerificationCode from '../components/SendVerificationCode'
+import CheckVerificationCode from '../components/CheckVerificationCode'
 
 import CreateProfile from '../Profile/CreateProfile'
 import BasicProfile from '../Profile/BasicProfile'
 import ShootingID from '../Profile/ShootingID'
 import CompanyInfo from '../Profile/CompanyInfo'
 
+import Client from '../client'
+
 import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVersionViewContainer';
 
 import { colors, fonts } from '../../styles';
+import HomeScreen from '../home/HomeView';
 
 const headerBackground = require('../../../assets/images/topBarBg.png');
 
 const stackNavigator = createStackNavigator(
   {
     Main: {
-      screen: MainTabNavigator,
-      navigationOptions: () => ({
-        title: 'HVR',
-        headerLeft: null,
-        headerBackground: (
-          <Image
-            style={{ flex: 1 }}
-            source={headerBackground}
-            resizeMode="cover"
-          />
-        ),
-      }),
+      screen: HomeScreen,
+      navigationOptions: {
+        header: null,
+      },
     },
     Auth: {
       screen: AuthScreen,
@@ -154,6 +149,12 @@ const stackNavigator = createStackNavigator(
     },
     Profile: {
       screen: AvailableInFullVersion,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Client: {
+      screen: Client,
       navigationOptions: {
         header: null,
       },

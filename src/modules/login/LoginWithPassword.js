@@ -14,7 +14,7 @@ export default class LoginWithPassword extends React.Component {
     password: '',
   }
   handleClick = () => {
-    this.props.navigation.navigate({ routeName: 'PasswordRecovery' })
+    this.props.navigation.navigate({ routeName: 'Client' })
 
   };
   render() {
@@ -54,14 +54,18 @@ export default class LoginWithPassword extends React.Component {
             onPress={() => this.handleClick()}
           />
         </View>
-        <View>
-              <Text style={{alignSelf: 'flex-start'}} size={14} black onPress={() => this.props.navigation.navigate({ routeName: 'LoginAsProvider' })}>
+        <View style={styles.anchor}>
+          <View style={styles.inputWrap}>
+              <Text size={14} black onPress={() => this.props.navigation.navigate({ routeName: 'LoginAsClient' })}>
               手机验证码登录
-            </Text>
-            <Text style={{width: '50%', alignSelf: 'flex-end'}} size={14} black onPress={() => this.props.navigation.navigate({ routeName: 'PasswordRecovery' })}>
-            忘记密码？
               </Text>
-          </View>
+            </View>           
+            <View style={styles.inputWrap}>
+              <Text size={14} black onPress={() => this.props.navigation.navigate({ routeName: 'PasswordRecovery' })}>
+              忘记密码？
+              </Text>
+            </View>
+        </View>
       </View>
     );
     }
@@ -89,5 +93,14 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 15,
+  },
+  anchor: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  inputWrap: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
 });
