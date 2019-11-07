@@ -1,13 +1,20 @@
 import { applyMiddleware, createStore, compose } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
+import createSagaMiddleware from 'redux-saga'
+
 import storage from 'redux-persist/lib/storage';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
-import reducer from './reducer';
+import reducer from './reducers';
+import sagas from './sagas'
+
+const sagaMiddleware = createSagaMiddleware()
+const initialState = {}
 
 const enhancers = [
   applyMiddleware(
     thunkMiddleware,
+    sagaMiddleware,
     createLogger({
       collapsed: true,
       // eslint-disable-next-line no-undef
@@ -31,7 +38,11 @@ const persistConfig = {
   storage,
   blacklist: [],
 };
-
 const persistedReducer = persistReducer(persistConfig, reducer);
-export const store = createStore(persistedReducer, {}, enhancer);
+
+const store1 = createStore(persistedReducer, initialState, enhancer);
+
+sagaMiddleware.run(sagas)
+
+export const store = store1
 export const persistor = persistStore(store);

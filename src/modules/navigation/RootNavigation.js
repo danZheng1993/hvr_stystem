@@ -45,7 +45,7 @@ const headerBackground = require('../../../assets/images/topBarBg.png');
 const stackNavigator = createStackNavigator(
   {
     Main: {
-      screen: HomeScreen,
+      screen: SignupAsClient,
       navigationOptions: {
         header: null,
       },

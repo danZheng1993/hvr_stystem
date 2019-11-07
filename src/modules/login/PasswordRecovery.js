@@ -114,6 +114,8 @@ const styles = StyleSheet.create({
   },
   verificationCode: {
     flexDirection: 'row',
+
+
     justifyContent: 'space-between',
   }
 });

@@ -10,13 +10,15 @@ import { Button } from '../../components';
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
+    timer = null;
   }
   componentDidMount() {
-    setTimeout(() => {    
+    this.timer = setTimeout(() => {    
       this.props.navigation.navigate({ routeName: 'Auth' })
-    }, 2000);
+    }, 5000);
   }
   handleClick = () => {
+    clearTimeout(this.timer);
     this.props.navigation.navigate({ routeName: 'Auth' })
   };
   render() {

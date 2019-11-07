@@ -1,17 +1,19 @@
 import React from 'react';
-import { TextInput, HelperText } from 'react-native-paper';
 import {
   StyleSheet,
   View,
-  Image,
 } from 'react-native';
+
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { createStructuredSelector } from 'reselect';
 
 import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
+import { signup } from '../../redux/modules/auth'
 
-import { Text } from '../../components/StyledText';
-export default class SignupForm extends React.Component {
+class SignupForm extends React.Component {
     state = {
         phoneNumber: '',
         verificationCode: '',
@@ -31,8 +33,23 @@ export default class SignupForm extends React.Component {
     componentWillUnmount() {
       Form.removeValidationRule('isPasswordMatch');
     }
-    handleClick = () => {
+    sendCode = () => {
+      const { phoneNumber } = this.state
+      if(phoneNumber.length != 11 || !Number.isInteger(+phoneNumber)) return;
+      const value = {
+        email: "aaa@aa.com", 
+        firstName: "aaaa", 
+        lastName: "bbbb", 
+        password: "ccc"
+      }
+      this.props.signup({
+        body: { email: phoneNumber, firstName: phoneNumber, lastName: phoneNumber, password: phoneNumber },
+        // success: () 
+      })
+    }
+    checkCode = () => {
 
+      this.refs.verify.submit()
     }
     submit = () => {
         // your submit logic
@@ -45,8 +62,8 @@ export default class SignupForm extends React.Component {
         return (
            <>
             <Form
-                ref="form"
-                onSubmit={this.handleSubmit}
+                ref="verify"
+                onSubmit={this.sendCode}
             >
                 <TextValidator
                     name="phoneNumber"
@@ -55,7 +72,7 @@ export default class SignupForm extends React.Component {
                     errorMessages={['This field is required', 'invalid phone number']}
                     placeholder="输入手机号"
                     type="text"
-                    // keyboardType="email-address"
+                    keyboardType="email-address"
                     value={this.state.phoneNumber}
                     onChangeText={phoneNumber => this.setState({ phoneNumber })}
                 />
@@ -77,42 +94,55 @@ export default class SignupForm extends React.Component {
                         bgColor={colors.info}
                         style={styles.button}
                         caption="获取验证码"
-                        onPress={() => this.handleClick()}
+                        onPress={() => this.sendCode()}
                     />
                 </View>
-                <TextValidator
-                    style={styles.input}
-                    outlined
-                    validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
-                    errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
-                    label='设置密码'
-                    placeholder="设置密码（6-20位字母数字组合)"
-                    value={this.state.password}
-                    secureTextEntry
-                    maxLength={20}
-                    onChangeText={password => this.setState({ password })}
-                />
-                <TextValidator
-                    style={styles.input}
-                    outlined
-                    validators={['required', 'isPasswordMatch']}                 
-                    errorMessages={['This field is required', 'password mismatch']}
-                    label='确认密码'
-                    placeholder="确认密码"
-                    secureTextEntry
-                    value={this.state.passwordConfirm}
-                    onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
-                    />
-                  <View style={styles.buttonsContainer}>
-                    <Button
-                      large
-                      bgColor={colors.warning}
-                      style={styles.button}
-                      caption="确定"
-                      onPress={this.handleSubmit}
-                    />
-                    </View>
-            </Form>
+                <View style={styles.buttonsContainer}>
+                      <Button
+                        large
+                        bgColor={colors.warning}
+                        style={styles.button}
+                        caption="确定"
+                        onPress={this.checkCode}
+                      />
+                      </View>
+                </Form>
+                <Form                 
+                  ref="form"
+                  onSubmit={this.handleSubmit}>
+                  <TextValidator
+                      style={styles.input}
+                      outlined
+                      validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
+                      errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
+                      label='设置密码'
+                      placeholder="设置密码（6-20位字母数字组合)"
+                      value={this.state.password}
+                      secureTextEntry
+                      maxLength={20}
+                      onChangeText={password => this.setState({ password })}
+                  />
+                  <TextValidator
+                      style={styles.input}
+                      outlined
+                      validators={['required', 'isPasswordMatch']}                 
+                      errorMessages={['This field is required', 'password mismatch']}
+                      label='确认密码'
+                      placeholder="确认密码"
+                      secureTextEntry
+                      value={this.state.passwordConfirm}
+                      onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
+                      />
+                    <View style={styles.buttonsContainer}>
+                      <Button
+                        large
+                        bgColor={colors.warning}
+                        style={styles.button}
+                        caption="确定"
+                        onPress={this.handleSubmit}
+                      />
+                      </View>
+                </Form>   
             </>
         );
     }
@@ -144,3 +174,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   }
 });
+
+
+const mapStateToProps = createStructuredSelector({
+});
+
+const mapDispatchToProps = {
+  signup,
+};
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(SignupForm);

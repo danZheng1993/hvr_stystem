@@ -3,7 +3,7 @@ import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { TextInput } from 'react-native-paper';
 
 import ImagePicker from 'react-native-image-picker'
-import { colors } from '../../styles'
+import { colors, commonStyles } from '../../styles'
 import { Button } from '../../components';
 import { Text } from '../../components/StyledText';
 export default class ShootingID extends React.Component {
