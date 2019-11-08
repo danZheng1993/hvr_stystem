@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
 const User = require('../models/user.model');
+const Code = require('../models/code.model');
+
 const PERMISSION = require('../constants/permission')
 
 function login(req, res, next) {
@@ -39,8 +41,6 @@ function login(req, res, next) {
 }
 
 function signup(req, res, next) {
-  console.log("aaaa")
-  console.log(req.body)
   const user = new User({
     phoneNumber: req.body.phoneNumber,
     password: req.body.password,
@@ -53,7 +53,54 @@ function signup(req, res, next) {
   .catch(next);
 }
 
+function sendcode(req, res, next) {
+  let min = 1000, max = 9999
+  let key = Math.floor(Math.random() * (max - min + 1) ) + min;
+  console.log(key)
+  const code = new Code({
+    phoneNumber: req.body.phoneNumber,
+    code: key,
+  });
+
+  code.save()
+  .then((newCode) => {
+    res.json(newCode);
+  })
+  .catch(next);
+}
+
+function checkcode(req, res, next) {
+  Code.findOne({ phoneNumber: req.body.phoneNumber })
+    .select('_id phoneNumber code verified')
+    .exec()
+    .then((code) => {
+      if (!code) {
+        return res.status(500).json({ message: 'error!' });
+      }
+      // if (code.verified === true) {
+      //   return res.status(500).json({ message: 'You are blocked' });
+      // }
+      return code.authenticate(req.body.code)
+      .then(() => {
+        Code.updateOne({phoneNumber: req.body.phoneNumber}, { $set: { "verified" : true } }).exec()
+        .then(() => {
+          res.json({         
+            phoneNumber: code.phoneNumber,
+            verified: code.verified,
+          });
+          console.log("verify ok")
+        })
+       .catch(next)
+      })
+      .catch(() => {
+        res.status(500).json({ message: 'Invalid code' });
+      });
+    })
+    .catch(next);
+  }
 module.exports = {
   login,
   signup,
+  sendcode,
+  checkcode
 };

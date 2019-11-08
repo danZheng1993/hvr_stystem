@@ -9,10 +9,10 @@ router.route('/signup')
   .post(authCtrl.signup);
 
 router.route('/sendcode')
-  .post(authCtrl.signup);
+  .post(authCtrl.sendcode);
 
 router.route('/checkcode')
-  .post(authCtrl.signup);
+  .post(authCtrl.checkcode);
 
 router.route('/')
 module.exports = router;
