@@ -3,8 +3,7 @@ const ROLES = require('../constants/role');
 
 function create(req, res, next) {
   const user = new User({
-    userName: req.body.userName,
-    email: req.body.email,
+    phoneNumber: req.body.phoneNumber,
     password: req.body.password,
   });
 
@@ -22,7 +21,7 @@ function create(req, res, next) {
 function update(req, res, next) {
   Object.assign(req.userModel, {
     userName: req.body.userName,
-    email: req.body.email,
+    phoneNumber: req.body.phoneNumber,
   });
 
   if (req.body.password) {

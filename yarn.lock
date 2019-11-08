@@ -3733,12 +3733,24 @@ http-signature@~1.2.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
+https-agent@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/https-agent/-/https-agent-1.0.0.tgz#895c61adafee57f3893562656fb2ad483786043e"
+  integrity sha1-iVxhra/uV/OJNWJlb7KtSDeGBD4=
+  dependencies:
+    tunnel "^0.0.3"
+
 https-proxy-agent@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-2.2.1.tgz#51552970fa04d723e04c56d04178c3f92592bbc0"
   dependencies:
     agent-base "^4.1.0"
     debug "^3.1.0"
+
+https@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/https/-/https-1.0.0.tgz#3c37c7ae1a8eeb966904a2ad1e975a194b7ed3a4"
+  integrity sha1-PDfHrhqO65ZpBKKtHpdaGUt+06Q=
 
 hyperlinker@^1.0.0:
   version "1.0.0"
@@ -4925,7 +4937,7 @@ locate-path@^3.0.0:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
 
-lodash-es@^4.17.15:
+lodash-es@^4.17.15, lodash-es@^4.17.4:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.15.tgz#21bd96839354412f23d7a10340e5eac6ee455d78"
   integrity sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ==
@@ -5023,7 +5035,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@4.x.x, lodash@^4.0.0, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.15, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
+lodash@4.x.x, lodash@^4.0.0, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
 
@@ -6436,6 +6448,11 @@ punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
 
+q@^1.4.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
+  integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
+
 qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
@@ -6680,6 +6697,13 @@ react-native-pin-code@^0.5.3:
   integrity sha512-vlHHjQGLagdtaaCWs5bYUw02i58BvGazrzUfrBs+0HfWfNXRYR4ZkJOzvlreT541Hm4+TyQa4JX2Ppt0Sv9ceA==
   dependencies:
     prop-types "^15.5.10"
+
+react-native-pinch@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-pinch/-/react-native-pinch-0.1.0.tgz#f453a67b5fa336fb77675b8a67257efadf77d992"
+  integrity sha512-loBLOwR4XRmnScssmNNuGDuG/CwTi4Fp+2z5OazQhcQHc8fsRde78m1jjyALlV4IrZisjID+Y339Ln9iOQusxg==
+  dependencies:
+    q "^1.4.1"
 
 react-native-platform-touchable@^1.1.1:
   version "1.1.1"
@@ -7094,6 +7118,31 @@ redux-modal@^4.0.0:
   dependencies:
     hoist-non-react-statics "^3.0.0"
     prop-types "^15.5.10"
+
+redux-persist-immutable@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/redux-persist-immutable/-/redux-persist-immutable-4.3.1.tgz#fcef34a246f1c4ec0ae10ad14a27a614215fd0ee"
+  integrity sha512-X8eYC3N9RyjOlZSpxGhLnCiCiCRncaNUfCFWD/DJdpK+kE1D08HcIiK1mBEFrR7Nk/73wX7Gc6GDq60X0l2P6Q==
+  dependencies:
+    redux-persist "^4.0.0"
+    redux-persist-transform-immutable "^4.1.0"
+
+redux-persist-transform-immutable@^4.1.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/redux-persist-transform-immutable/-/redux-persist-transform-immutable-4.3.0.tgz#24720c99f0707dd99e920b95f851ae3d1baa6ed8"
+  integrity sha1-JHIMmfBwfdmekguV+FGuPRuqbtg=
+  dependencies:
+    transit-immutable-js "^0.7.0"
+    transit-js "^0.8.846"
+
+redux-persist@^4.0.0:
+  version "4.10.2"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-4.10.2.tgz#8efdb16cfe882c521a78a6d0bfdfef2437f49f96"
+  integrity sha512-U+e0ieMGC69Zr72929iJW40dEld7Mflh6mu0eJtVMLGfMq/aJqjxUM1hzyUWMR1VUyAEEdPHuQmeq5ti9krIgg==
+  dependencies:
+    json-stringify-safe "^5.0.1"
+    lodash "^4.17.4"
+    lodash-es "^4.17.4"
 
 redux-persist@^5.10.0:
   version "5.10.0"
@@ -8086,6 +8135,16 @@ tr46@^1.0.1:
   dependencies:
     punycode "^2.1.0"
 
+transit-immutable-js@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/transit-immutable-js/-/transit-immutable-js-0.7.0.tgz#993e25089b6311ff402140f556276d6d253005d9"
+  integrity sha1-mT4lCJtjEf9AIUD1VidtbSUwBdk=
+
+transit-js@^0.8.846:
+  version "0.8.861"
+  resolved "https://registry.yarnpkg.com/transit-js/-/transit-js-0.8.861.tgz#829e516b80349a41fff5d59f5e6993b5473f72c9"
+  integrity sha512-4O9OrYPZw6C0M5gMTvaeOp+xYz6EF79JsyxIvqXHlt+pisSrioJWFOE80N8aCPoJLcNaXF442RZrVtdmd4wkDQ==
+
 trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
@@ -8105,6 +8164,11 @@ tunnel-agent@^0.6.0:
   resolved "https://registry.yarnpkg.com/tunnel-agent/-/tunnel-agent-0.6.0.tgz#27a5dea06b36b04a0a9966774b290868f0fc40fd"
   dependencies:
     safe-buffer "^5.0.1"
+
+tunnel@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/tunnel/-/tunnel-0.0.3.tgz#e8f988115ca7be9d076c7a1fae4788be708f0cf1"
+  integrity sha1-6PmIEVynvp0HbHofrkeIvnCPDPE=
 
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
@@ -8622,7 +8686,7 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3, whatwg-encoding@^1.0.5:
   dependencies:
     iconv-lite "0.4.24"
 
-whatwg-fetch@>=0.10.0:
+whatwg-fetch@>=0.10.0, whatwg-fetch@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
 

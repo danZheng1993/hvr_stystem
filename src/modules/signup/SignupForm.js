@@ -11,7 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
-import { signup } from '../../redux/modules/auth'
+import { signup, sendcode, checkcode } from '../../redux/modules/auth'
 
 class SignupForm extends React.Component {
     state = {
@@ -36,14 +36,9 @@ class SignupForm extends React.Component {
     sendCode = () => {
       const { phoneNumber } = this.state
       if(phoneNumber.length != 11 || !Number.isInteger(+phoneNumber)) return;
-      const value = {
-        email: "aaa@aa.com", 
-        firstName: "aaaa", 
-        lastName: "bbbb", 
-        password: "ccc"
-      }
-      this.props.signup({
-        body: { email: phoneNumber, firstName: phoneNumber, lastName: phoneNumber, password: phoneNumber },
+
+      this.props.sendcode({
+        body: { phoneNumber: phoneNumber},
         // success: () 
       })
     }
@@ -181,6 +176,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   signup,
+  sendcode,
+  checkcode
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

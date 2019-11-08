@@ -1,15 +1,31 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator')
+
 const bcrypt = require('bcryptjs');
 const ROLES = require('../constants/role');
+const PERMISSION = require('../constants/permission')
 
 const Schema = mongoose.Schema;
 const SALT_ROUNDS = 10;
 
 const userSchema = new Schema({
-  userName: { type: String, required: true, trim: true, default: '' },
-  email: { type: String, unique: true, required: true, trim: true },
-  password: { type: String, select: false },
-  role: { type: String, required: true, enum: Object.values(ROLES), default: ROLES.USER },
+  phoneNumber: { type: Number, unique:true, required: true, trim: true, default: '' },
+  userName: { type: String, trim: true, default: '' },
+  location: { type: String, trim: true, default: '' },
+  overview: { type: String, trim: true, default: '' },
+  
+  photo: { type: String, trim: true, default: '' },
+  frontID: { type: String, trim: true,  },
+  backID: { type: String, trim: true,  },
+  password: { type: String, select: false, required: true },
+  companyName: { type: String, select: false, },
+  companyLicense: { type: String, select: false, },
+  balance: { type: Number, trim: true, default: 0 },
+  
+
+
+  role: { type: String, enum: Object.values(ROLES), default: ROLES.PROVIDER },
+  permission: { type: String, enum: Object.values(PERMISSION), default: PERMISSION.NOT_ALLOWED },
 });
 
 userSchema.methods.hashPassword = function hashPassword(password) {
@@ -46,5 +62,7 @@ userSchema.pre('save', function preSave(next) {
     next();
   }
 });
+
+userSchema.plugin(uniqueValidator)
 
 module.exports = mongoose.model('User', userSchema);

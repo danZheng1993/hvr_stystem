@@ -22,3 +22,4 @@ module.exports = (app, cb) => {
   app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
   app.use('/', apiRoutes);
 };
+  

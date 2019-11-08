@@ -8,4 +8,11 @@ router.route('/login')
 router.route('/signup')
   .post(authCtrl.signup);
 
+router.route('/sendcode')
+  .post(authCtrl.signup);
+
+router.route('/checkcode')
+  .post(authCtrl.signup);
+
+router.route('/')
 module.exports = router;

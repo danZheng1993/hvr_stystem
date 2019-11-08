@@ -9,7 +9,8 @@ export const DO_LOGOUT = 'DO_LOGOUT'
 export const DO_SIGNUP = 'DO_SIGNUP'
 export const GET_PROFILE = 'GET_PROFILE'
 export const SAVE_PROFILE = 'SAVE_PROFILE'
-
+export const SEND_CODE = 'SEND_CODE'
+export const CHECK_CODE = 'CHECK_CODE'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -25,6 +26,8 @@ export const logout = createAction(DO_LOGOUT, () => {
   }
 })
 export const signup = createAction(DO_SIGNUP)
+export const checkcode = createAction(CHECK_CODE)
+export const sendcode = createAction(SEND_CODE)
 export const getProfile = createAction(GET_PROFILE)
 export const saveProfile = createAction(SAVE_PROFILE)
 
@@ -80,6 +83,32 @@ export default handleActions({
     ...state,
     token: null,
     status: requestFail(DO_SIGNUP),
+    me: null,
+    error: payload
+  }),
+  [requestSuccess(SEND_CODE)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(SEND_CODE),
+    error: null
+  }),
+
+  [requestFail(SEND_CODE)]: (state, { payload }) => ({
+    ...state,
+    token: null,
+    status: requestFail(SEND_CODE),
+    me: null,
+    error: payload
+  }),
+  [requestSuccess(CHECK_CODE)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(CHECK_CODE),
+    error: null
+  }),
+
+  [requestFail(CHECK_CODE)]: (state, { payload }) => ({
+    ...state,
+    token: null,
+    status: requestFail(CHECK_CODE),
     me: null,
     error: payload
   }),

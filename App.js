@@ -3,10 +3,14 @@ import React from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { PersistGate } from 'redux-persist/integration/react';
 import { colors } from './src/styles';
+// import configureStore from './src/configureStore';
 
-import { store, persistor } from './src/redux/store';
+import {  store, persistor } from './src/redux/store';
 
 import AppView from './src/modules/AppViewContainer';
+
+const initialState = {};
+// const store = configureStore(initialState);
 
 export default function App() {
   return (
