@@ -12,7 +12,9 @@ import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
 import { signup, sendcode, checkcode } from '../../redux/modules/auth'
+import { Text } from '../../components/StyledText';
 
+var timer
 class SignupAsProvider extends React.Component {
     constructor (props) {
       super(props)
@@ -21,6 +23,7 @@ class SignupAsProvider extends React.Component {
         verificationCode: '',
         password: '',
         passwordConfirm: '',
+        counter: 3,
       };
     }
 
@@ -43,24 +46,31 @@ class SignupAsProvider extends React.Component {
 
       this.props.sendcode({
         body: { phoneNumber: phoneNumber},
-        // success: () 
+        success: () => {
+          timer = setInterval(this.countTime, 1000)
+        }
       })
     }
-    checkCode = () => {
-      alert("aaaa")
-      console.log(this.refs)
-      // alert("aaa")
-      // const {phoneNumber, verificationCode} = this.state
-      // if(phoneNumber.length != 11 || !Number.isInteger(+phoneNumber) || verificationCode.length!=4) return;
-      // this.props.checkcode({
-      //   body: {phoneNumber: phoneNumber, code: +verificationCode}
-      // })
+
+    countTime = () => {
+      var {counter} = this.state
+      counter --;
+      if (counter == 0) {       
+        counter = 60
+        clearInterval(timer)
+      }
+      this.setState({counter})
     }
 
     handleSubmit = () => {
-      const { phoneNumber, verificationCode, password, passwordConfirm} = this.state
+      const { phoneNumber, verificationCode, password, passwordConfirm, counter} = this.state
 
       if (!phoneNumber || !verificationCode || !password || !passwordConfirm || password!=passwordConfirm) return;
+      if (counter == 60) {
+        alert("try again")
+        return;
+      }
+      clearInterval(timer)
       this.props.checkcode({
         body:{ phoneNumber, code: verificationCode},
         success: () => this.props.signup({
@@ -71,8 +81,12 @@ class SignupAsProvider extends React.Component {
       })
     }
     render(){
+        const { counter } = this.state
         return (
            <View style={styles.description}>
+             <Text size={14}>
+               {counter}
+             </Text>
             <Form
                 ref="form"
                 onSubmit={this.handleSubmit}

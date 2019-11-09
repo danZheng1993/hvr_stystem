@@ -6,7 +6,7 @@ import { requestFail, requestPending, requestSuccess } from './request'
 const defaultHeaders = () => {
   const auth = null
   //axios.defaults.baseURL = process.env.API_ROOT + '/'
-  axios.defaults.baseURL = 'http://198.18.39.1:4000/'
+  axios.defaults.baseURL = 'http://198.18.55.11:4000/'
   let headers = {
     'Accept': '*/*',
     'Content-Type': 'application/json'

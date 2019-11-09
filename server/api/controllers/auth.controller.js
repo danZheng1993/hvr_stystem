@@ -7,6 +7,9 @@ const md5 = require('md5')
 const moment = require('moment')
 const PERMISSION = require('../constants/permission')
 
+const bcrypt = require('bcryptjs');
+const SALT_ROUNDS = 10;
+
 function login(req, res, next) {
   User.findOne({ phoneNumber: req.body.phoneNumber })
     .select('_id password phoneNumber userName role permission')
@@ -60,19 +63,16 @@ function sendcode(req, res, next) {
   let min = 1000, max = 9999
   let key = Math.floor(Math.random() * (max - min + 1) ) + min;
   console.log(key)
-
-  console.log("here")
 //  tKey = date
 
   const date = moment()
   const tKey = (date.valueOf() - date.valueOf()%1000) / 1000
   const code = new Code({
     phoneNumber: req.body.phoneNumber,
-    code: key,
+    code:md5(key),
     created: date.format(),
   });
-  
-  code.save()
+  Code.updateOne({phoneNumber: code.phoneNumber}, { $set: {code: code.code, created: code.created }}, { upsert : true }).exec()
   .then((newCode) => {
     // axios.post('http://api.mix2.zthysms.com/v2/sendSms', {    
     //   "content": key,

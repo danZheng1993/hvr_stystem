@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator')
+const md5 = require('md5')
 
 const bcrypt = require('bcryptjs');
 
@@ -26,28 +27,13 @@ codeSchema.methods.hashPassword = function hashPassword(code) {
 
 codeSchema.methods.authenticate = function authenticate(code) {
   return new Promise((resolve, reject) => {
-    bcrypt.compare(code, this.code)
-      .then((allow) => {
-        if (!allow) return reject();
-        return resolve();
-      })
-      .catch(reject);
+    if (md5(+code) == this.code)
+      return resolve();
+    return reject();
   });
 };
 
 codeSchema.pre('save', function preSave(next) {
-  if (this.code && this.isModified('code')) {
-    this.code = this.hashPassword(this.code)
-    .then((code) => {
-      this.code = code;
-      next();
-    })
-    .catch(next);
-  } else {
-    next();
-  }
-});
-codeSchema.pre('updateOne', function preSave(next) {
   if (this.code && this.isModified('code')) {
     this.code = this.hashPassword(this.code)
     .then((code) => {
