@@ -2,9 +2,13 @@ import axios from 'axios'
 import { call, put } from 'redux-saga/effects'
 import { get } from 'lodash'
 import { requestFail, requestPending, requestSuccess } from './request'
-
+import { AsyncStorage } from 'react-native'
 const defaultHeaders = () => {
-  const auth = null
+  let auth
+  AsyncStorage.getItem('hvr_auth').then(res => {
+    auth = res
+  });
+  console.log(auth)
   //axios.defaults.baseURL = process.env.API_ROOT + '/'
   axios.defaults.baseURL = 'http://198.18.55.11:4000/'
   let headers = {

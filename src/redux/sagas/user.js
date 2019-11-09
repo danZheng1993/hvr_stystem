@@ -28,7 +28,7 @@ const doCreateUser = apiCall({
 
 const doUpdateUser = apiCall({
   type: UPDATE_USER,
-  method: 'put',
+  method: 'patch',
   path: ({ payload }) => `/users/${payload.id}/`
 })
 

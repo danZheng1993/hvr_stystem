@@ -6,16 +6,25 @@ import ImagePicker from 'react-native-image-picker'
 import { colors } from '../../styles'
 import { Button } from '../../components';
 
-export default class BasicProfile extends React.Component {
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { createStructuredSelector } from 'reselect';
+
+import { updateUser } from '../../redux/modules/user'
+
+class BasicProfile extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      photo: null,
+      userName: '',
+      overview: ''
+    }
   }
-  state = {
-    photo: null,
-    name: '',
-    overview: ''
-  }
+
   handleClick = () => {
+    const {userName, photo, overview} = this.state
+    this.props.updateUser({userName, photo, overview})
     this.props.navigation.navigate({ routeName: 'ShootingID' })
   };
   handleChoosePhoto = () => {
@@ -82,8 +91,8 @@ export default class BasicProfile extends React.Component {
             outlined
             label='昵称'
             placeholder="昵称"
-            value={this.state.name}
-            onChangeText={name => this.setState({ name })}
+            value={this.state.userName}
+            onChangeText={userName => this.setState({ userName })}
         />
         <TextInput
             style={styles.input}
@@ -141,3 +150,14 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
 });
+
+const mapStateToProps = createStructuredSelector({
+});
+
+const mapDispatchToProps = {
+  updateUser,
+};
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(BasicProfile);

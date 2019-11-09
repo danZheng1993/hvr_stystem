@@ -13,7 +13,7 @@ router.route('/')
 
 router.route('/:userId')
   .get(userCtrl.read)
-  .put(userCtrl.update)
+  .patch(userCtrl.update)
   .delete(userCtrl.remove);
 
 router.param('userId', userCtrl.getUserByID);

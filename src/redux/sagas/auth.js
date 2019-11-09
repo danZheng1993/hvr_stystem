@@ -8,8 +8,12 @@ const doLogin = apiCall({
   method: 'post',
   path: () => '/auth/login/',
   success: (res, action) => {
-    AsyncStorage.setItem('hvr_auth', JSON.stringify(res.data));
-  
+    console.log("aaa",res.data)
+    AsyncStorage.setItem('hvr_auth', JSON.stringify(res.data), () => {
+      AsyncStorage.getItem('hvr_auth').then( res => {
+        console.log(JSON.parse(res))
+      })
+    });
   }
 })
 
@@ -18,10 +22,14 @@ const doSignup = apiCall({
   method: 'post',
   path: () => '/auth/signup/',
   success: () => {
-    AsyncStorage.removeItem('hvr_auth')
+    AsyncStorage.removeItem('hvr_auth', () => {
+
+    })
   },
   fail: () => {
-    AsyncStorage.removeItem('hvr_auth')
+    AsyncStorage.removeItem('hvr_auth', () => {
+
+    })
   }
 })
 
@@ -47,10 +55,16 @@ const doSaveProfile = apiCall({
   method: 'put',
   path: () => '/users/profile/',
   success: (res, action) => {
+    let token
+    AsyncStorage.getItem('hvr_auth').then(res => {
+      token = JSON.parse(res).token
+    })
     AsyncStorage.setItem('hvr_auth', JSON.stringify({
       info: res.data,
-      token: JSON.parse(AsyncStorage.getItem('hvr_auth')).token
-    }))
+      token: token
+    }), () => {
+
+    })
   }
 })
 
