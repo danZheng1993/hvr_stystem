@@ -8,13 +8,8 @@ const doLogin = apiCall({
   method: 'post',
   path: () => '/auth/login/',
   success: (res, action) => {
-    // async () => {
-    //   try {
-    //       await AsyncStorage.setItem('hvr_auth', JSON.stringify(res.data));
-    //   } catch (error) {
-    //       // Error saving data
-    //   }
-    // }
+    AsyncStorage.setItem('hvr_auth', JSON.stringify(res.data));
+  
   }
 })
 
@@ -23,10 +18,10 @@ const doSignup = apiCall({
   method: 'post',
   path: () => '/auth/signup/',
   success: () => {
-    // localStorage.removeItem('hvr_auth')
+    AsyncStorage.removeItem('hvr_auth')
   },
   fail: () => {
-    // localStorage.removeItem('hvr_auth')
+    AsyncStorage.removeItem('hvr_auth')
   }
 })
 
@@ -52,10 +47,10 @@ const doSaveProfile = apiCall({
   method: 'put',
   path: () => '/users/profile/',
   success: (res, action) => {
-    // localStorage.setItem('hvr_auth', JSON.stringify({
-    //   info: res.data,
-    //   token: JSON.parse(localStorage.getItem('hvr_auth')).token
-    // }))
+    AsyncStorage.setItem('hvr_auth', JSON.stringify({
+      info: res.data,
+      token: JSON.parse(AsyncStorage.getItem('hvr_auth')).token
+    }))
   }
 })
 

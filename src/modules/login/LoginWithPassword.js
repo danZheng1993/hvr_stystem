@@ -3,18 +3,31 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { createStructuredSelector } from 'reselect';
+
 import {TextInput} from 'react-native-paper'
 import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
+import { Form, TextValidator } from 'react-native-validator-form';
 
 import { Text } from '../../components/StyledText';
-export default class LoginWithPassword extends React.Component {
+
+import {login} from '../../redux/modules/auth'
+
+class LoginWithPassword extends React.Component {
   state = {
     phoneNumber: '',
     password: '',
   }
   handleClick = () => {
-    this.props.navigation.navigate({ routeName: 'Client' })
+    const { phoneNumber, password} = this.state
+    this.props.login({
+      body: {phoneNumber, password},
+      success: () => this.props.navigation.navigate({ routeName: 'Client' })
+    })
 
   };
   render() {
@@ -27,32 +40,44 @@ export default class LoginWithPassword extends React.Component {
           <Text size={14} black>
             登录使用更多服务
           </Text>
-        <TextInput
-            style={styles.input}
-            outlined
-            label='输入手机号'
-            placeholder="输入手机号"
-            value={this.state.phoneNumber}
-            onChangeText={phoneNumber => this.setState({ phoneNumber })}
-        />
-        <TextInput
-            style={styles.input}
-            outlined
-            label='密码'
-            placeholder="密码"
-            secureTextEntry
-            value={this.state.password}
-            onChangeText={password => this.setState({ password })}
-        />
-        </View>
-        <View style={styles.buttonsContainer}>
-          <Button
-            large
-            bgColor={colors.warning}
-            style={styles.button}
-            caption="登录"
-            onPress={() => this.handleClick()}
-          />
+          <Form
+                ref="form"
+                onSubmit={this.handleClick}
+            >
+                <TextValidator
+                    name="phoneNumber"
+                    label='手机号'
+                    validators={['required', 'matchRegexp:^[0-9]{11}$']}
+                    errorMessages={['This field is required', 'invalid phone number']}
+                    placeholder="输入手机号"
+                    type="text"
+                    value={this.state.phoneNumber}
+                    onChangeText={phoneNumber => this.setState({ phoneNumber })}
+                />
+              <TextValidator
+                  style={styles.input}
+                  outlined
+                  validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
+                  errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
+                  label='设置密码'
+                  placeholder="设置密码（6-20位字母数字组合)"
+                  value={this.state.password}
+                  secureTextEntry
+                  maxLength={20}
+                  onChangeText={password => this.setState({ password })}
+              />
+                <View style={styles.buttonsContainer}>
+                  <Button
+                    large
+                    bgColor={colors.warning}
+                    style={styles.button}
+                    caption="确定"
+                    onPress={this.handleClick}
+                  />
+                </View>
+            </Form>   
+           
+        
         </View>
         <View style={styles.anchor}>
           <View style={styles.inputWrap}>
@@ -104,3 +129,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+
+const mapStateToProps = createStructuredSelector({
+});
+
+const mapDispatchToProps = {
+  login,
+};
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(LoginWithPassword);

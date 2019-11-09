@@ -17,13 +17,7 @@ export const CHECK_CODE = 'CHECK_CODE'
 
 export const login = createAction(DO_LOGIN)
 export const logout = createAction(DO_LOGOUT, () => {
-  async () => {
-    try {
-        await AsyncStorage.removeItem('hvr_auth');
-    } catch (error) {
-        // Error saving data
-    }
-  }
+  AsyncStorage.removeItem('hvr_auth');
 })
 export const signup = createAction(DO_SIGNUP)
 export const checkcode = createAction(CHECK_CODE)
@@ -32,7 +26,7 @@ export const getProfile = createAction(GET_PROFILE)
 export const saveProfile = createAction(SAVE_PROFILE)
 
 const getInitialState = () => {
-  let authRestore = JSON.parse(  null)
+  let authRestore = JSON.parse(AsyncStorage.getItem('hvr_auth') || null)
   return authRestore ? {
     token: authRestore.token,
     me: authRestore.info,
@@ -56,7 +50,7 @@ export default handleActions({
     ...state,
     token: payload.token,
     status: requestSuccess(DO_LOGIN),
-    me: payload.info
+    me: payload.userName
   }),
 
   [requestFail(DO_LOGIN)]: (state, { payload }) => ({
