@@ -9,7 +9,7 @@ router.route('/signup')
   .post(authCtrl.signup);
 
 router.route('/sendcode')
-  .post(authCtrl.sendcode);
+  .put(authCtrl.sendcode);
 
 router.route('/checkcode')
   .post(authCtrl.checkcode);

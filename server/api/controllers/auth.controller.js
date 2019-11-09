@@ -2,7 +2,9 @@ const jwt = require('jsonwebtoken');
 const config = require('../../config');
 const User = require('../models/user.model');
 const Code = require('../models/code.model');
-
+const axios = require('axios')
+const md5 = require('md5')
+const moment = require('moment')
 const PERMISSION = require('../constants/permission')
 
 function login(req, res, next) {
@@ -44,6 +46,7 @@ function signup(req, res, next) {
   const user = new User({
     phoneNumber: req.body.phoneNumber,
     password: req.body.password,
+    role: req.body.role
   });
 
   user.save()
@@ -57,13 +60,32 @@ function sendcode(req, res, next) {
   let min = 1000, max = 9999
   let key = Math.floor(Math.random() * (max - min + 1) ) + min;
   console.log(key)
+
+  console.log("here")
+//  tKey = date
+
+  const date = moment()
+  const tKey = (date.valueOf() - date.valueOf()%1000) / 1000
   const code = new Code({
     phoneNumber: req.body.phoneNumber,
     code: key,
+    created: date.format(),
   });
-
+  
   code.save()
   .then((newCode) => {
+    // axios.post('http://api.mix2.zthysms.com/v2/sendSms', {    
+    //   "content": key,
+    //   "mobile": "17718500067",
+    //   "username": "youyou88hy",
+    //   "password": md5( md5("FWhlITd4") + tKey),
+    //   tKey : tKey,
+    //   "ext": "9999" 
+    // }).then((response) => {
+    //   console.log(response.data);
+    // }, (error) => {
+    //   console.log(error);
+    // });
     res.json(newCode);
   })
   .catch(next);
@@ -80,13 +102,24 @@ function checkcode(req, res, next) {
       // if (code.verified === true) {
       //   return res.status(500).json({ message: 'You are blocked' });
       // }
+      console.log(req.body.code)
       return code.authenticate(req.body.code)
       .then(() => {
         Code.updateOne({phoneNumber: req.body.phoneNumber}, { $set: { "verified" : true } }).exec()
         .then(() => {
-          res.json({         
+          // const token = jwt.sign({
+          //   _id: user._id, // eslint-disable-line
+          //   userName: user.userName,
+          //   phoneNumber: user.phoneNumber,
+          //   role: user.role,
+          // }, config.jwtSecret, { expiresIn: config.jwtExpires });
+  
+          res.json({
+            _id: code._id, // eslint-disable-line
+            userName: null,
             phoneNumber: code.phoneNumber,
-            verified: code.verified,
+            role: null,
+            verified: true,
           });
           console.log("verify ok")
         })

@@ -14,12 +14,16 @@ import { Form, TextValidator } from 'react-native-validator-form';
 import { signup, sendcode, checkcode } from '../../redux/modules/auth'
 
 class SignupForm extends React.Component {
-    state = {
+    constructor (props) {
+      super(props)
+      this.state = {
         phoneNumber: '',
         verificationCode: '',
         password: '',
         passwordConfirm: '',
-    };
+      };
+    }
+
     componentWillMount() {
       // custom rule will have name 'isPasswordMatch'
       Form.addValidationRule('isPasswordMatch', (value) => {
@@ -43,22 +47,35 @@ class SignupForm extends React.Component {
       })
     }
     checkCode = () => {
+      alert("aaaa")
+      console.log(this.refs)
+      // alert("aaa")
+      // const {phoneNumber, verificationCode} = this.state
+      // if(phoneNumber.length != 11 || !Number.isInteger(+phoneNumber) || verificationCode.length!=4) return;
+      // this.props.checkcode({
+      //   body: {phoneNumber: phoneNumber, code: +verificationCode}
+      // })
+    }
 
-      this.refs.verify.submit()
-    }
-    submit = () => {
-        // your submit logic
-        alert("ddd")
-    }
     handleSubmit = () => {
-      this.refs.form.submit();
+      const { phoneNumber, verificationCode, password, passwordConfirm} = this.state
+
+      if (!phoneNumber || !verificationCode || !password || !passwordConfirm || password!=passwordConfirm) return;
+      this.props.checkcode({
+        body:{ phoneNumber, code: verificationCode},
+        success: () => this.props.signup({
+          body: {phoneNumber, password},
+          success: () => this.props.navigation.navigate({ routeName: 'BasicProfile' })
+        }),
+        fail:() => alert("invalid code")
+      })
     }
     render(){
         return (
            <>
             <Form
-                ref="verify"
-                onSubmit={this.sendCode}
+                ref="form"
+                onSubmit={this.handleSubmit}
             >
                 <TextValidator
                     name="phoneNumber"
@@ -92,52 +109,39 @@ class SignupForm extends React.Component {
                         onPress={() => this.sendCode()}
                     />
                 </View>
-                <View style={styles.buttonsContainer}>
-                      <Button
-                        large
-                        bgColor={colors.warning}
-                        style={styles.button}
-                        caption="确定"
-                        onPress={this.checkCode}
-                      />
-                      </View>
-                </Form>
-                <Form                 
-                  ref="form"
-                  onSubmit={this.handleSubmit}>
-                  <TextValidator
-                      style={styles.input}
-                      outlined
-                      validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
-                      errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
-                      label='设置密码'
-                      placeholder="设置密码（6-20位字母数字组合)"
-                      value={this.state.password}
-                      secureTextEntry
-                      maxLength={20}
-                      onChangeText={password => this.setState({ password })}
+              <TextValidator
+                  style={styles.input}
+                  outlined
+                  validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
+                  errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
+                  label='设置密码'
+                  placeholder="设置密码（6-20位字母数字组合)"
+                  value={this.state.password}
+                  secureTextEntry
+                  maxLength={20}
+                  onChangeText={password => this.setState({ password })}
+              />
+              <TextValidator
+                  style={styles.input}
+                  outlined
+                  validators={['required', 'isPasswordMatch']}                 
+                  errorMessages={['This field is required', 'password mismatch']}
+                  label='确认密码'
+                  placeholder="确认密码"
+                  secureTextEntry
+                  value={this.state.passwordConfirm}
+                  onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
                   />
-                  <TextValidator
-                      style={styles.input}
-                      outlined
-                      validators={['required', 'isPasswordMatch']}                 
-                      errorMessages={['This field is required', 'password mismatch']}
-                      label='确认密码'
-                      placeholder="确认密码"
-                      secureTextEntry
-                      value={this.state.passwordConfirm}
-                      onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
-                      />
-                    <View style={styles.buttonsContainer}>
-                      <Button
-                        large
-                        bgColor={colors.warning}
-                        style={styles.button}
-                        caption="确定"
-                        onPress={this.handleSubmit}
-                      />
-                      </View>
-                </Form>   
+                <View style={styles.buttonsContainer}>
+                  <Button
+                    large
+                    bgColor={colors.warning}
+                    style={styles.button}
+                    caption="确定"
+                    onPress={this.handleSubmit}
+                  />
+                  </View>
+            </Form>   
             </>
         );
     }

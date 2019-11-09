@@ -37,12 +37,14 @@ const getInitialState = () => {
     token: authRestore.token,
     me: authRestore.info,
     status: 'INIT',
-    error: null
+    error: null,
+    verified: false,
   } : {
     token: null,
     me: null,
     status: 'INIT',
-    error: null
+    error: null,
+    verified: false
   }
 }
 
@@ -102,6 +104,7 @@ export default handleActions({
   [requestSuccess(CHECK_CODE)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(CHECK_CODE),
+    verified: payload.verified,
     error: null
   }),
 

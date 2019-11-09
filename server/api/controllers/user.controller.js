@@ -5,6 +5,7 @@ function create(req, res, next) {
   const user = new User({
     phoneNumber: req.body.phoneNumber,
     password: req.body.password,
+    role: req.body.role
   });
 
   if (req.user.role === ROLES.ADMIN && req.body.role) {

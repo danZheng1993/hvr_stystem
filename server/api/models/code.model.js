@@ -7,9 +7,10 @@ const Schema = mongoose.Schema;
 const SALT_ROUNDS = 10;
 
 const codeSchema = new Schema({
-  phoneNumber: { type: Number, unique:true, required: true, trim: true, default: '' },
+  phoneNumber: { type: Number, required: true, trim: true, default: '' },
   code: { type: String, select: false },
   verified: { type: Boolean, default: false },
+  created: {type:Date}
 });
 
 codeSchema.methods.hashPassword = function hashPassword(code) {
@@ -35,6 +36,18 @@ codeSchema.methods.authenticate = function authenticate(code) {
 };
 
 codeSchema.pre('save', function preSave(next) {
+  if (this.code && this.isModified('code')) {
+    this.code = this.hashPassword(this.code)
+    .then((code) => {
+      this.code = code;
+      next();
+    })
+    .catch(next);
+  } else {
+    next();
+  }
+});
+codeSchema.pre('updateOne', function preSave(next) {
   if (this.code && this.isModified('code')) {
     this.code = this.hashPassword(this.code)
     .then((code) => {

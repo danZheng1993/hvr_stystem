@@ -2,6 +2,9 @@ import { get } from 'lodash'
 
 export const authStateSelector = (state) =>
   get(state, 'auth')
+  
+export const verifyStateSelector = (state) =>
+  get(state, 'auth.verified')
 
 export const profileSelector = (state) =>
   get(state, 'auth.me', null)
