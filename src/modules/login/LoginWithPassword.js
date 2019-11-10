@@ -19,14 +19,14 @@ import {login} from '../../redux/modules/auth'
 
 class LoginWithPassword extends React.Component {
   state = {
-    phoneNumber: '',
-    password: '',
+    phoneNumber: '22222222222',
+    password: '2222222222',
   }
   handleClick = () => {
     const { phoneNumber, password} = this.state
     this.props.login({
       body: {phoneNumber, password},
-      success: () => this.props.navigation.navigate({ routeName: 'Client' })
+      success: () => this.props.navigation.navigate({ routeName: 'BasicProfile' })
     })
 
   };
@@ -81,7 +81,7 @@ class LoginWithPassword extends React.Component {
         </View>
         <View style={styles.anchor}>
           <View style={styles.inputWrap}>
-              <Text size={14} black onPress={() => this.props.navigation.navigate({ routeName: 'LoginAsClient' })}>
+              <Text size={14} black onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithSMS' })}>
               手机验证码登录
               </Text>
             </View>           

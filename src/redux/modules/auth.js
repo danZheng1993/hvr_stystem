@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { requestSuccess, requestFail } from '../api/request'
-import { AsyncStorage } from "react-native";
+import { AsyncStorage } from 'react-native';
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -32,11 +32,14 @@ export const getProfile = createAction(GET_PROFILE)
 export const saveProfile = createAction(SAVE_PROFILE)
 
 const getInitialState = () => {
-  let authRestore = null
+  let authRestore
   AsyncStorage.getItem('hvr_auth').then(res => {
-    authRestore = JSON.parse(res)
+    if (res)
+      authRestore = JSON.parse(res)
+    else 
+      authRestore = null
   })
-  console.log("aaaa", authRestore)
+  console.log("authRestore", authRestore)
   return authRestore ? {
     token: authRestore.token,
     me: authRestore.info,
@@ -60,7 +63,7 @@ export default handleActions({
     ...state,
     token: payload.token,
     status: requestSuccess(DO_LOGIN),
-    me: payload.info
+    me: payload
   }),
 
   [requestFail(DO_LOGIN)]: (state, { payload }) => ({

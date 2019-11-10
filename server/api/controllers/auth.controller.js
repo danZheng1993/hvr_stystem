@@ -32,6 +32,7 @@ function login(req, res, next) {
         }, config.jwtSecret, { expiresIn: config.jwtExpires });
 
         res.json({
+          info: user,
           _id: user._id, // eslint-disable-line
           userName: user.userName,
           phoneNumber: user.phoneNumber,
@@ -108,21 +109,28 @@ function checkcode(req, res, next) {
       .then(() => {
         Code.updateOne({phoneNumber: req.body.phoneNumber}, { $set: { "verified" : true } }).exec()
         .then(() => {
-          // const token = jwt.sign({
-          //   _id: user._id, // eslint-disable-line
-          //   userName: user.userName,
-          //   phoneNumber: user.phoneNumber,
-          //   role: user.role,
-          // }, config.jwtSecret, { expiresIn: config.jwtExpires });
-  
-          res.json({
-            _id: code._id, // eslint-disable-line
-            userName: null,
-            phoneNumber: code.phoneNumber,
-            role: null,
-            verified: true,
-          });
-          console.log("verify ok")
+          User.findOne({ phoneNumber: req.body.phoneNumber })          
+          .select('_id password phoneNumber userName role permission')
+          .exec()
+          .then((user) => {
+            const token = jwt.sign({
+              _id: user._id, // eslint-disable-line
+              userName: user.userName,
+              phoneNumber: user.phoneNumber,
+              role: user.role,
+            }, config.jwtSecret, { expiresIn: config.jwtExpires });
+    
+            res.json({
+              info: user,
+              _id: user._id, // eslint-disable-line
+              userName: user.userName,
+              phoneNumber: user.phoneNumber,
+              role: user.role,
+              token,
+            })
+            console.log("verify ok")
+          })
+         
         })
        .catch(next)
       })

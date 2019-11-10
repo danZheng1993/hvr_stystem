@@ -6,7 +6,14 @@ import ImagePicker from 'react-native-image-picker'
 import { colors, commonStyles } from '../../styles'
 import { Button } from '../../components';
 import { Text } from '../../components/StyledText';
-export default class ShootingID extends React.Component {
+
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { createStructuredSelector } from 'reselect';
+
+import { saveProfile } from '../../redux/modules/auth'
+
+class ShootingID extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -18,24 +25,84 @@ export default class ShootingID extends React.Component {
     this.props.navigation.navigate({ routeName: 'CompanyInfo' })
   };
   handleChooseFrontPhoto = () => {
-    const options = {
-      noData: true,
-    }
-    ImagePicker.launchImageLibrary(options, response => {
-      if (response.uri) {
-        this.setState({ frontPhoto: response })
+    var options = {
+      title: 'Select Image',
+      customButtons: [
+        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.showImagePicker(options, response => {
+      console.log('Response = ', response);
+ 
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        let source = response;
+        // You can also display the image using data:
+        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+       
+        const data = new FormData();
+        data.append('name', 'avatar');
+        data.append('fileData', {
+          uri : response.uri,
+          type: response.type,
+          name: response.fileName
+        });
+        console.log(data)
+        this.setState({
+          frontPhoto: source,
+        });
       }
-    })
+    });
   }
   handleChooseBackPhoto = () => {
-    const options = {
-      noData: true,
-    }
-    ImagePicker.launchImageLibrary(options, response => {
-      if (response.uri) {
-        this.setState({ backPhoto: response })
+    var options = {
+      title: 'Select Image',
+      customButtons: [
+        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.showImagePicker(options, response => {
+      console.log('Response = ', response);
+ 
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        let source = response;
+        // You can also display the image using data:
+        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+       
+        const data = new FormData();
+        data.append('name', 'avatar');
+        data.append('fileData', {
+          uri : response.uri,
+          type: response.type,
+          name: response.fileName
+        });
+        console.log(data)
+        this.setState({
+          backPhoto: source,
+        });
       }
-    })
+    });
   }
 
   render() {
@@ -135,3 +202,16 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
 });
+
+
+
+const mapStateToProps = createStructuredSelector({
+});
+
+const mapDispatchToProps = {
+  saveProfile,
+};
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(ShootingID);

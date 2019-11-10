@@ -10,21 +10,25 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { updateUser } from '../../redux/modules/user'
+import { saveProfile } from '../../redux/modules/auth'
 
 class BasicProfile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       photo: null,
+      photoData: null,
       userName: '',
       overview: ''
     }
   }
 
   handleClick = () => {
-    const {userName, photo, overview} = this.state
-    this.props.updateUser({userName, photo, overview})
+    const {userName, photo, overview, photoData} = this.state
+    console.log("photodata", photoData)
+    this.props.saveProfile({
+      body:{userName, overview, photoData},
+    })
     this.props.navigation.navigate({ routeName: 'ShootingID' })
   };
   handleChoosePhoto = () => {
@@ -52,8 +56,18 @@ class BasicProfile extends React.Component {
         let source = response;
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+       
+        const data = new FormData();
+        data.append('name', 'avatar');
+        data.append('fileData', {
+          uri : response.uri,
+          type: response.type,
+          name: response.fileName
+        });
+        console.log(data)
         this.setState({
           photo: source,
+          photoData: data
         });
       }
     });
@@ -155,7 +169,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  updateUser,
+  saveProfile,
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

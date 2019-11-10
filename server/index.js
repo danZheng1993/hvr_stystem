@@ -8,7 +8,16 @@ const port = require('./port');
 const backendSetup = require('./middlewares/backendMiddleware');
 const resolve = require('path').resolve;
 const app = express();
-
+// app.use(bodyParser.json())
+//   const Storage = multer.diskStorage({
+//     destination(req, file, callback) {
+//       callback(null, './images')
+//     },
+//     filename(req, file, callback) {
+//       callback(null, `${file.fieldname}_${Date.now()}_${file.originalname}`)
+//     },
+//   })
+//   const upload = multer({ storage: Storage })
 backendSetup(app);
 
 // In production we need to pass these values in instead of relying on webpack

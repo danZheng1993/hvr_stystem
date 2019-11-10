@@ -7,7 +7,13 @@ import { colors } from '../../styles'
 import { Button } from '../../components';
 import { Text } from '../../components/StyledText';
 
-export default class CompanyInfo extends React.Component {
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { createStructuredSelector } from 'reselect';
+
+import { saveProfile } from '../../redux/modules/auth'
+
+class CompanyInfo extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -129,3 +135,15 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
 });
+
+
+const mapStateToProps = createStructuredSelector({
+});
+
+const mapDispatchToProps = {
+  saveProfile,
+};
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(CompanyInfo);

@@ -5,7 +5,7 @@ const policies = require('../policies');
 
 const router = express.Router();
 
-router.use(policies.checkRoles([ROLES.ADMIN, ROLES.MANAGER]));
+router.use(policies.checkRoles([ROLES.PROVIDER, ROLES.CLIENT, ROLES.ADMIN]));
 
 router.route('/')
   .get(userCtrl.list)
