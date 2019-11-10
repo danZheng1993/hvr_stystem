@@ -1861,6 +1861,11 @@ child-process-promise@^2.2.0:
     node-version "^1.0.0"
     promise-polyfill "^6.0.1"
 
+china-location@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/china-location/-/china-location-2.0.0.tgz#a64a307e393921889d020c2c992de622db67b1b2"
+  integrity sha512-5VUNUPJ5CytDZSy1+/Bj9uku7FvVUm1LukPRMalqbEU1Y16U34BVs5Qo6Oc6yqRrYmQbtUOQaPmA1tQjNd0piQ==
+
 chokidar@^2.0.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.2.tgz#9c23ea40b01638439e0513864d362aeacc5ad058"
@@ -6523,6 +6528,11 @@ rc@^1.2.7:
 react-addons-test-utils@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react-addons-test-utils/-/react-addons-test-utils-15.6.2.tgz#c12b6efdc2247c10da7b8770d185080a7b047156"
+
+react-china-location@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-china-location/-/react-china-location-1.1.1.tgz#a730e5d8da65c75acebdc0c0a9912b6726ce434e"
+  integrity sha512-EUxq2je9ERerzAuftMu5sHUTaabKYLR5oywEebaKLSv5FNJRVGzRFLQJaIqHgEbE9VAzMQWLe0RRB6pjGB9pdA==
 
 react-clone-referenced-element@^1.0.1:
   version "1.1.0"

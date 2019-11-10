@@ -2,12 +2,15 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  ScrollView,
+  Picker
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-
+import locationData from 'china-location/dist/location.json';
+import ChinaLocation from 'react-china-location';
 import {TextInput} from 'react-native-paper'
 import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
@@ -18,41 +21,40 @@ import { Text } from '../../components/StyledText';
 import {login} from '../../redux/modules/auth'
 import { authStateSelector } from '../../redux/selectors'
 
-class LoginWithPassword extends React.Component {
+class PostJob extends React.Component {
   state = {
     phoneNumber: '22222222222',
     password: '2222222222',
+    category : '',
+    scene: ''
   }
   handleClick = () => {
     const { phoneNumber, password} = this.state
     const { profile } = this.props
-    this.props.login({
-      body: {phoneNumber, password},
-      success: () => {
-        // if (profile.info.role == 'provider') {
-        //  this.props.navigation.navigate({ routeName: 'BasicProfile' })
-        // } else if (profile.info.role ==  'client') {
-          // }
-          this.props.navigation.navigate({ routeName: 'Client' })
-        }
-    })
-    
+    console.log(profile)
 
   };
+  onLocationChange = () => {
+
+  }
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.description}>
-          <Text size={18} black>
-            登录HVR
-          </Text>
-          <Text size={14} black>
-            登录使用更多服务
-          </Text>
           <Form
                 ref="form"
                 onSubmit={this.handleClick}
             >
+                <Text size={14}>category</Text>
+                  <Picker
+                  selectedValue={this.state.category}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({category: itemValue})
+                  }>
+                  <Picker.Item label="Java" value="java" />
+                  <Picker.Item label="JavaScript" value="js" />
+                </Picker>
+              
                 <TextValidator
                     name="phoneNumber"
                     label='手机号'
@@ -63,6 +65,28 @@ class LoginWithPassword extends React.Component {
                     value={this.state.phoneNumber}
                     onChangeText={phoneNumber => this.setState({ phoneNumber })}
                 />
+                  {/* <ChinaLocation
+                      list={locationData} 
+                      onLocationChange={this.onLocationChange}
+                  /> */}
+                <Picker
+                  selectedValue={this.state.scene}
+                  style={{height: 50, width: 100}}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({scene: itemValue})
+                  }>
+                  <Picker.Item label="Java" value="java" />
+                  <Picker.Item label="JavaScript" value="js" />
+                </Picker>
+                <Picker
+                  selectedValue={this.state.scene}
+                  style={{height: 50, width: 100}}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({scene: itemValue})
+                  }>
+                  <Picker.Item label="Java" value="java" />
+                  <Picker.Item label="JavaScript" value="js" />
+                </Picker>
               <TextValidator
                   style={styles.input}
                   outlined
@@ -88,29 +112,21 @@ class LoginWithPassword extends React.Component {
            
         
         </View>
-        <View style={styles.anchor}>
-          <View style={styles.inputWrap}>
-              <Text size={14} black onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithSMS' })}>
-              手机验证码登录
-              </Text>
-            </View>           
-            <View style={styles.inputWrap}>
-              <Text size={14} black onPress={() => this.props.navigation.navigate({ routeName: 'PasswordRecovery' })}>
-              忘记密码？
-              </Text>
-            </View>
-        </View>
-      </View>
+      </ScrollView>
     );
     }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    // flex: 1,
+    // flexDirection: 'column',
+    // alignItems: 'center',
+    // justifyContent: 'space-around',
+  },
+  picker: {
+    flexDirection: "row",
+    justifyContent: 'space-between'
   },
   buttonsContainer: {
     alignSelf: 'stretch',
@@ -151,4 +167,4 @@ const mapDispatchToProps = {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(LoginWithPassword);
+export default compose(withConnect)(PostJob);

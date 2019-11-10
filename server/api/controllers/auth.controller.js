@@ -95,7 +95,7 @@ function sendcode(req, res, next) {
 
 function checkcode(req, res, next) {
   Code.findOne({ phoneNumber: req.body.phoneNumber })
-    .select('_id phoneNumber code verified')
+    .select('phoneNumber code verified')
     .exec()
     .then((code) => {
       if (!code) {
@@ -104,13 +104,48 @@ function checkcode(req, res, next) {
       // if (code.verified === true) {
       //   return res.status(500).json({ message: 'You are blocked' });
       // }
-      console.log(req.body.code)
+      console.log(req.body.code, code)
       return code.authenticate(req.body.code)
-      .then(() => {
-        Code.updateOne({phoneNumber: req.body.phoneNumber}, { $set: { "verified" : true } }).exec()
-        .then(() => {
-          User.findOne({ phoneNumber: req.body.phoneNumber })          
-          .select('_id password phoneNumber userName role permission')
+      .then(() => {      
+        console.log("verify ok", code.__v)
+        if (code.verified == false) {
+          console.log("new")
+          Code.updateOne({phoneNumber: req.body.phoneNumber}, { $set: { "__v" : true } }).exec()  
+          .then (() => {
+            if (req.body.password) {
+              const user = new User({
+                phoneNumber: req.body.phoneNumber,
+                password: req.body.password,
+                role: req.body.role
+              });
+              user.save()
+              .then((newUser) => {
+                const token = jwt.sign({
+                  _id: newUser._id, // eslint-disable-line
+                  userName: newUser.userName,
+                  phoneNumber: newUser.phoneNumber,
+                  role: newUser.role,
+                }, config.jwtSecret, { expiresIn: config.jwtExpires });
+        
+                res.json({
+                  info: newUser,
+                  _id: newUser._id, // eslint-disable-line
+                  userName: newUser.userName,
+                  phoneNumber: newUser.phoneNumber,
+                  role: newUser.role,
+                  token,
+                })
+                res.json(newUser);
+              })
+              .catch(next);
+            } else {
+
+            }
+          })
+        } else {
+          
+          console.log("old")
+          User.findOne({ phoneNumber: +req.body.phoneNumber })    
           .exec()
           .then((user) => {
             const token = jwt.sign({
@@ -128,12 +163,11 @@ function checkcode(req, res, next) {
               role: user.role,
               token,
             })
-            console.log("verify ok")
           })
-         
+          .catch(next)
+        }
         })
        .catch(next)
-      })
       .catch(() => {
         res.status(500).json({ message: 'Invalid code' });
       });

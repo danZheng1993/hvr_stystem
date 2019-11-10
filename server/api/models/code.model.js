@@ -38,6 +38,7 @@ codeSchema.pre('save', function preSave(next) {
     this.code = this.hashPassword(this.code)
     .then((code) => {
       this.code = code;
+      this.verified = false;
       next();
     })
     .catch(next);

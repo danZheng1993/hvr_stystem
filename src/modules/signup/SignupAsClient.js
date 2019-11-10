@@ -69,11 +69,8 @@ class SignupAsClient extends React.Component {
 
       if (!phoneNumber || !verificationCode || !password || !passwordConfirm || password!=passwordConfirm) return;
       this.props.checkcode({
-        body:{ phoneNumber, code: verificationCode},
-        success: () => this.props.signup({
-          body: {phoneNumber, password, role: 'client'},
-          success: () => this.props.navigation.navigate({ routeName: 'Client' })
-        }),
+        body:{ phoneNumber, code: verificationCode, password, role: 'client'},
+        success: () => this.props.navigation.navigate({ routeName: 'Client' }),
         fail:() => alert("invalid code")
       })
     }

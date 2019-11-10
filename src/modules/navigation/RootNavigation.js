@@ -34,6 +34,7 @@ import ShootingID from '../Profile/ShootingID'
 import CompanyInfo from '../Profile/CompanyInfo'
 
 import Client from '../client'
+import PostJob from '../client/PostJob'
 
 import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVersionViewContainer';
 
@@ -45,7 +46,7 @@ const headerBackground = require('../../../assets/images/topBarBg.png');
 const stackNavigator = createStackNavigator(
   {
     Main: {
-      screen: LoginWithPassword,
+      screen: PostJob,
       navigationOptions: {
         header: null,
       },
