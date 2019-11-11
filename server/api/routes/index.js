@@ -10,6 +10,7 @@ const subcategoryRoute = require('./subcategory.route');
 const sceneRoute = require('./scene.route');
 const serviceRoute = require('./service.route');
 const profileRoute = require('./profile.route');
+const jobRoute = require('./job.route');
 
 const router = express.Router();
 const authMiddleware = expressJwt({ secret: config.jwtSecret });
@@ -22,5 +23,6 @@ router.use('/types',  typeRoute);
 router.use('/scenes',  sceneRoute);
 router.use('/subcategorys',  subcategoryRoute);
 router.use('/services',  serviceRoute);
+router.use('/jobs',  jobRoute);
 
 module.exports = router;

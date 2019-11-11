@@ -3,26 +3,70 @@ const Schema = mongoose.Schema;
 
 const positiveNumber = (distance) => distance > 0;
 
-const RecordSchema = new Schema({
-  date: {
+const JobSchema = new Schema({
+  ID: {
+    type: String
+  },
+  creator: {
+    type: String
+  },
+  ID: {
+    type: String
+  },
+  created: {
     type: Date,
   },
-  duration: {
+  location: {
+    type: String
+  },
+  category: {
+    type: String
+  },
+  count: {
     type: Number,
     default: 0,
-    validate: [positiveNumber, 'Duration should be bigger than 00:00'],
+    validate: [positiveNumber, 'should be bigger than 0'],
+    default: 1
   },
-  distance: {
+  start: {
+    type: Date,
+  },
+  end: {
+    type: Date,
+  },
+  scene: {
+    type: String,
+  },
+  subcategory: {
+    type: String,
+  },
+  services: {
+    type: Array,
+  },
+  budget: {
     type: Number,
     default: 0,
-    validate: [positiveNumber, 'Distance should be bigger than 0km'],
   },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User',
+  price: {
+    type: Number,
+    default: 0,
   },
+  description: {
+    type: String,
+    default: '',
+  },
+  isPublic: {
+    type: Boolean,
+    default: false
+  },
+  applicants: {
+    type: Array
+  },
+  hired: {
+    type: String
+  }
 }, {
   timestamp: true,
 });
 
-module.exports = mongoose.model('Record', RecordSchema);
+module.exports = mongoose.model('Job', JobSchema);

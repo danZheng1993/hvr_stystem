@@ -4,14 +4,14 @@ import {
   View,
   ScrollView,
   Picker,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import {fromJS} from 'immutable'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { Button, Loader } from '../../components';
+import { Button, Loader, Select } from '../../components';
 import { fonts, colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
 
@@ -28,7 +28,7 @@ import { getSubcategorys } from '../../redux/modules/subcategory';
 
 class PostJob extends React.Component {
   constructor(props) {
-    super()
+    super(props)
     
     this.state = {
       phoneNumber: '22222222222',
@@ -36,6 +36,7 @@ class PostJob extends React.Component {
       category : '',
       scene: '',
       type: '',
+      types: [{name:'please select', _id:'22222'}]
     }
   }
   componentWillMount() {
@@ -46,7 +47,10 @@ class PostJob extends React.Component {
     getSubcategorys()
   }
   componentDidMount() {
-
+    setTimeout(() =>  { 
+      this.setState({
+       types: this.props.types      }) 
+     }, 300)
   }
   handleClick = () => {
     const { phoneNumber, password} = this.state
@@ -54,34 +58,33 @@ class PostJob extends React.Component {
     console.log(profile)
 
   };
-  loadItem(value) {
-    if (!value) return
-    console.log(value)
-    return value.map((item, index) => {
-        index<=2 && <Picker.Item key={index} label={item.name} value={item.name} />
-    })
+  loadItem(items) { 
+    if (!items) return
+    item.slice(-1)
+    return items && items.map((item, index) => (
+        index <=2 && <Picker.Item key={index} label={item.name} value={item.name} />
+    ))
   }
   render() {
+    
     const {types, typesloading, scenes, scenesLoading, services, servciesLoading, subcategories, subcategorysloading} = this.props
-    console.log("teyps",types)
+    console.log("types",types, this)
+    let typess =  [{name: 'sss'}, {name: 'ddd'}]
+
     return (
       <ScrollView style={styles.container}>
         <View style={styles.description}>
-         <Loader
-          loading={typesloading && scenesLoading && servciesLoading && subcategorysloading} />
+         {/* <Loader
+          loading={typesloading && scenesLoading && servciesLoading && subcategorysloading} /> */}
           <Form
               ref="form"
               onSubmit={this.handleClick}
           >
             <Picker
-              selectedValue={this.state.type}
-              onValueChange={(itemValue, itemIndex) => 
-              this.setState({type: itemValue})}>
-              {types.map((item, index) => {
-                        index<=2 && <Picker.Item key={index} label={item.name} value={item.name} />
-
-              })}
-            </Picker>
+                    selectedValue='please select'
+                    onValueChange={ (value) => ( this.setState({type : value}) )}>
+                    { this.loadItem(this.state.types) }
+                </Picker>
             <TextValidator
                 name="phoneNumber"
                 label='手机号'

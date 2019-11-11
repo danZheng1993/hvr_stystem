@@ -6662,6 +6662,11 @@ react-native-linear-gradient@^2.5.3:
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.3.tgz#d90cf19a13fcccfa8bb32025ac40a15ae1b49e99"
 
+react-native-list-popover@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-list-popover/-/react-native-list-popover-1.1.1.tgz#cd8f7e8b898bb2955641190fc26efdf862fde91b"
+  integrity sha512-KojI5geYFFycyd+2N/B+2qhJAgfKFE+VhkbGmBg+m/BhyH2CG+8WmX9vg7BB9q+HKcyfpQseySPRIBv5+2NXBg==
+
 react-native-localize@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/react-native-localize/-/react-native-localize-1.0.4.tgz#4fd3c492ded717c1eb15b2c1f744c8c167e12473"
