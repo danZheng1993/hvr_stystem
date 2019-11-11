@@ -46,7 +46,7 @@ const headerBackground = require('../../../assets/images/topBarBg.png');
 const stackNavigator = createStackNavigator(
   {
     Main: {
-      screen: PostJob,
+      screen: HomeScreen,
       navigationOptions: {
         header: null,
       },
@@ -156,6 +156,12 @@ const stackNavigator = createStackNavigator(
     },
     Client: {
       screen: Client,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    PostJob: {
+      screen: PostJob,
       navigationOptions: {
         header: null,
       },

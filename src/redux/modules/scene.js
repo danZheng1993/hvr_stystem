@@ -65,7 +65,7 @@ export default handleActions({
   [requestSuccess(GET_SCENES)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(GET_SCENES),
-    scenes: payload,
+    scenes: Object.values(payload),
     error: null,
     loading: false
   }),

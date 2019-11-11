@@ -65,7 +65,7 @@ export default handleActions({
   [requestSuccess(GET_SUBCATEGORYS)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(GET_SUBCATEGORYS),
-    subcategorys: payload,
+    subcategorys: Object.values(payload),
     error: null,
     loading: false
   }),

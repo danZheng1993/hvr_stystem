@@ -65,7 +65,7 @@ export default handleActions({
   [requestSuccess(GET_SERVICES)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(GET_SERVICES),
-    services: payload,
+    services: Object.values(payload),
     error: null,
     loading: false
   }),

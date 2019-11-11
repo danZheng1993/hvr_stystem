@@ -10,16 +10,13 @@ const JobSchema = new Schema({
   creator: {
     type: String
   },
-  ID: {
-    type: String
-  },
   created: {
     type: Date,
   },
   location: {
     type: String
   },
-  category: {
+  type: {
     type: String
   },
   count: {

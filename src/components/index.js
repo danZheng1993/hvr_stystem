@@ -7,6 +7,8 @@ import TextInput from './TextInput';
 import SegmentedControl from './SegmentedControl';
 import Loader from './Loader'
 import Select from './Select'
+import Location from './Location'
+
 export {
   // ## Generator Components Exports
   Button,
@@ -17,4 +19,5 @@ export {
   Loader,
   Select,
   SegmentedControl,
+  Location
 };
