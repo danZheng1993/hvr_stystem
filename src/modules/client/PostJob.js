@@ -3,30 +3,50 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Picker
+  Picker,
+  ActivityIndicator
 } from 'react-native';
-
+import {fromJS} from 'immutable'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import locationData from 'china-location/dist/location.json';
-import ChinaLocation from 'react-china-location';
-import {TextInput} from 'react-native-paper'
-import { Button } from '../../components';
+
+import { Button, Loader } from '../../components';
 import { fonts, colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
 
 import { Text } from '../../components/StyledText';
 
-import {login} from '../../redux/modules/auth'
-import { authStateSelector } from '../../redux/selectors'
+import { getTypes } from '../../redux/modules/type'
+import { getScenes } from '../../redux/modules/scene'
+import { getServices } from '../../redux/modules/service'
+import {  typesListSelector, typesloadingSelector, 
+          scenesListSelector, scenesloadingSelector, 
+          servicesListSelector, servicesloadingSelector,
+          subcategorysListSelector, subcategorysloadingSelector } from '../../redux/selectors'
+import { getSubcategorys } from '../../redux/modules/subcategory';
 
 class PostJob extends React.Component {
-  state = {
-    phoneNumber: '22222222222',
-    password: '2222222222',
-    category : '',
-    scene: ''
+  constructor(props) {
+    super()
+    
+    this.state = {
+      phoneNumber: '22222222222',
+      password: '2222222222',
+      category : '',
+      scene: '',
+      type: '',
+    }
+  }
+  componentWillMount() {
+    const {getTypes, getScenes, getServices, getSubcategorys} = this.props
+  //  getScenes()
+    getTypes()
+    //getServices()
+    getSubcategorys()
+  }
+  componentDidMount() {
+
   }
   handleClick = () => {
     const { phoneNumber, password} = this.state
@@ -34,83 +54,71 @@ class PostJob extends React.Component {
     console.log(profile)
 
   };
-  onLocationChange = () => {
-
+  loadItem(value) {
+    if (!value) return
+    console.log(value)
+    return value.map((item, index) => {
+        index<=2 && <Picker.Item key={index} label={item.name} value={item.name} />
+    })
   }
   render() {
+    const {types, typesloading, scenes, scenesLoading, services, servciesLoading, subcategories, subcategorysloading} = this.props
+    console.log("teyps",types)
     return (
       <ScrollView style={styles.container}>
         <View style={styles.description}>
+         <Loader
+          loading={typesloading && scenesLoading && servciesLoading && subcategorysloading} />
           <Form
-                ref="form"
-                onSubmit={this.handleClick}
-            >
-                <Text size={14}>category</Text>
-                  <Picker
-                  selectedValue={this.state.category}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({category: itemValue})
-                  }>
-                  <Picker.Item label="Java" value="java" />
-                  <Picker.Item label="JavaScript" value="js" />
-                </Picker>
-              
-                <TextValidator
-                    name="phoneNumber"
-                    label='手机号'
-                    validators={['required', 'matchRegexp:^[0-9]{11}$']}
-                    errorMessages={['This field is required', 'invalid phone number']}
-                    placeholder="输入手机号"
-                    type="text"
-                    value={this.state.phoneNumber}
-                    onChangeText={phoneNumber => this.setState({ phoneNumber })}
-                />
-                  {/* <ChinaLocation
-                      list={locationData} 
-                      onLocationChange={this.onLocationChange}
-                  /> */}
-                <Picker
-                  selectedValue={this.state.scene}
-                  style={{height: 50, width: 100}}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({scene: itemValue})
-                  }>
-                  <Picker.Item label="Java" value="java" />
-                  <Picker.Item label="JavaScript" value="js" />
-                </Picker>
-                <Picker
-                  selectedValue={this.state.scene}
-                  style={{height: 50, width: 100}}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({scene: itemValue})
-                  }>
-                  <Picker.Item label="Java" value="java" />
-                  <Picker.Item label="JavaScript" value="js" />
-                </Picker>
-              <TextValidator
-                  style={styles.input}
-                  outlined
-                  validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
-                  errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
-                  label='设置密码'
-                  placeholder="设置密码（6-20位字母数字组合)"
-                  value={this.state.password}
-                  secureTextEntry
-                  maxLength={20}
-                  onChangeText={password => this.setState({ password })}
+              ref="form"
+              onSubmit={this.handleClick}
+          >
+            <Picker
+              selectedValue={this.state.type}
+              onValueChange={(itemValue, itemIndex) => 
+              this.setState({type: itemValue})}>
+              {types.map((item, index) => {
+                        index<=2 && <Picker.Item key={index} label={item.name} value={item.name} />
+
+              })}
+            </Picker>
+            <TextValidator
+                name="phoneNumber"
+                label='手机号'
+                validators={['required', 'matchRegexp:^[0-9]{11}$']}
+                errorMessages={['This field is required', 'invalid phone number']}
+                placeholder="输入手机号"
+                type="text"
+                value={this.state.phoneNumber}
+                onChangeText={phoneNumber => this.setState({ phoneNumber })}
+            />
+              {/* <ChinaLocation
+                  list={locationData} 
+                  onLocationChange={this.onLocationChange}
+              /> */}
+            
+            <TextValidator
+                style={styles.input}
+                outlined
+                validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
+                errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
+                label='设置密码'
+                placeholder="设置密码（6-20位字母数字组合)"
+                value={this.state.password}
+                secureTextEntry
+                maxLength={20}
+                onChangeText={password => this.setState({ password })}
+            />
+            <View style={styles.buttonsContainer}>
+              <Button
+                large
+                bgColor={colors.warning}
+                style={styles.button}
+                caption="确定"
+                onPress={this.handleClick}
               />
-                <View style={styles.buttonsContainer}>
-                  <Button
-                    large
-                    bgColor={colors.warning}
-                    style={styles.button}
-                    caption="确定"
-                    onPress={this.handleClick}
-                  />
-                </View>
-            </Form>   
-           
-        
+            </View>
+          </Form>   
         </View>
       </ScrollView>
     );
@@ -157,12 +165,21 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  profile: authStateSelector,
-
+  types: typesListSelector,
+  typesloading: typesloadingSelector,
+  scenes: scenesListSelector,
+  scenesLoading: scenesloadingSelector,
+  services: servicesListSelector,
+  servciesLoading: servicesloadingSelector,
+  subcategories: subcategorysListSelector,
+  servciesLoading: subcategorysloadingSelector
 });
 
 const mapDispatchToProps = {
-  login,
+  getTypes,
+  getScenes,
+  getServices,
+  getSubcategorys
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

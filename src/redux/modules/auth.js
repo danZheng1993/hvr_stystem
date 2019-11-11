@@ -46,12 +46,14 @@ const getInitialState = () => {
     status: 'INIT',
     error: null,
     verified: false,
+    loading: false
   } : {
     token: null,
     me: null,
     status: 'INIT',
     error: null,
-    verified: false
+    verified: false,
+    loading: false
   }
 }
 

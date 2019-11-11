@@ -34,7 +34,8 @@ const initialState = {
     page_size: 10,
     page: 1
   },
-  report: null
+  report: null,
+  loading: false,
 }
 
 // ------------------------------------

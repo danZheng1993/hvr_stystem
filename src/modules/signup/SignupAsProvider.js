@@ -72,11 +72,8 @@ class SignupAsProvider extends React.Component {
       }
       clearInterval(timer)
       this.props.checkcode({
-        body:{ phoneNumber, code: verificationCode},
-        success: () => this.props.signup({
-          body: {phoneNumber, password, role: 'provider'},
-          success: () => this.props.navigation.navigate({ routeName: 'BasicProfile' })
-        }),
+        body:{ phoneNumber, code: verificationCode, password, role: 'provider'},
+        success: () => this.props.navigation.navigate({ routeName: 'BasicProfile' }),
         fail:() => alert("invalid code")
       })
     }

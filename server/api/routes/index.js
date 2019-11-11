@@ -18,9 +18,9 @@ router.use('/auth', authRoute);
 router.use('/records', authMiddleware, recordRoute);
 router.use('/users', authMiddleware, userRoute);
 router.use('/profile', authMiddleware, profileRoute);
-router.use('/type',  typeRoute);
-router.use('/scene',  sceneRoute);
-router.use('/subcategory',  subcategoryRoute);
-router.use('/service',  serviceRoute);
+router.use('/types',  typeRoute);
+router.use('/scenes',  sceneRoute);
+router.use('/subcategorys',  subcategoryRoute);
+router.use('/services',  serviceRoute);
 
 module.exports = router;

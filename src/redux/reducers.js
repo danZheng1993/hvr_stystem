@@ -4,6 +4,10 @@ import { reducer as modal } from 'redux-modal'
 
 import auth from './modules/auth'
 import tracking from './modules/tracking'
+import type from './modules/type'
+import scene from './modules/scene'
+import service from './modules/service'
+import subcategory from './modules/subcategory'
 import user from './modules/user'
 import gallery from '../modules/gallery/GalleryState';
 import app from '../modules/AppState';
@@ -17,5 +21,9 @@ export default combineReducers({
   user,
   gallery,
   app,
-  calendar
+  calendar,
+  type,
+  scene,
+  service,
+  subcategory
 })

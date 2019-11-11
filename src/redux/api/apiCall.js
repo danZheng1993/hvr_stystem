@@ -15,10 +15,10 @@ const defaultHeaders = () => {
     'Content-Type': 'application/json'
   }
 
-  if (auth) {
-    const token = JSON.parse(auth).token
-    headers['Authorization'] = 'Bearer ' + token
-  } 
+  // if (auth) {
+  //   const token = JSON.parse(auth).token
+  //   headers['Authorization'] = 'Bearer ' + token
+  // } 
 
   return headers
 }
@@ -49,7 +49,8 @@ export default ({
       params
     })
     yield put({
-      type: requestPending(type)
+      type: requestPending(type),
+      loading: true
     })
 
     const res = yield call(axios.request, {

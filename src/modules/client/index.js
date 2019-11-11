@@ -60,13 +60,13 @@ export default createBottomTabNavigator(
       },
     },
     发现: {
-      screen: HomeView,
+      screen: PagesScreen,
       navigationOptions: {
         
       },
     },
     约拍: {
-      screen: HomeView,
+      screen: PagesScreen,
       navigationOptions: {
         
       },

@@ -11,6 +11,7 @@ const initialState = fromJS({
     heading: '',
     message: '',
   },
+  loading: false,
 });
 
 function appReducer(state = initialState, action) {
