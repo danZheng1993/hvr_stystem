@@ -24,6 +24,18 @@ export const recordsListSelector = (state) =>
 export const trackingStateSelector = (state) =>
   get(state, 'tracking', {})
 
+export const jobDetailSelector = (state) =>
+  get(state, 'job.job', {})
+
+export const jobsListSelector = (state) =>
+  get(state, 'job.jobs', [])
+
+  export const jobsloadingSelector = (state) =>
+  get(state, 'job.loading', false)
+
+export const jobStateSelector = (state) =>
+  get(state, 'job', {})
+
 export const typeDetailSelector = (state) =>
   get(state, 'type.type', {})
 

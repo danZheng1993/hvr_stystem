@@ -5,6 +5,7 @@ import user from './user'
 import type from './type'
 import scene from './scene'
 import service from './service'
+import job from './job'
 import subcategory from './subcategory'
 
 export default function* rootSaga () {
@@ -16,5 +17,6 @@ export default function* rootSaga () {
     scene(),
     service(),
     subcategory(),
+    job(),
   ])
 }

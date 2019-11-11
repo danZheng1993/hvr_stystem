@@ -80,11 +80,11 @@ class PostJob extends React.Component {
               ref="form"
               onSubmit={this.handleClick}
           >
-            <Picker
+            {/* <Picker
                     selectedValue='please select'
                     onValueChange={ (value) => ( this.setState({type : value}) )}>
                     { this.loadItem(this.state.types) }
-                </Picker>
+                </Picker> */}
             <TextValidator
                 name="phoneNumber"
                 label='手机号'
