@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import moment from 'moment'
 import { fonts, colors } from '../styles';
+import { TouchableRipple } from 'react-native-paper';
 
 export default class UsersList extends React.Component {
   constructor(props) {
@@ -19,11 +20,13 @@ export default class UsersList extends React.Component {
     return (
         <ScrollView>          
          {users && users.map((user, index) => (
-           <View key={index} style={styles.componentsSection}>
-             <Text size={14}>订单信息:<Text>{user.userName}</Text></Text>
-             <Text size={14}>订单编号:<Text>{user.overview}</Text></Text>
-             <Text size={14}>拍摄城市:<Text>{user.location}</Text></Text>
-            </View>
+          <TouchableRipple key={index} onPress={() => navigation.navigate('ProvidersView', {id: user._id})}>
+            <View style={styles.componentsSection} >
+              <Text size={14}>订单信息:<Text>{user.userName}</Text></Text>
+              <Text size={14}>订单编号:<Text>{user.overview}</Text></Text>
+              <Text size={14}>拍摄城市:<Text>{user.location}</Text></Text>
+              </View>
+          </TouchableRipple>
          ))}
          </ScrollView>
     );

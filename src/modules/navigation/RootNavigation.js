@@ -32,6 +32,7 @@ import CompanyInfo from '../Profile/CompanyInfo'
 
 import Client from '../client'
 import PostJob from '../client/PostJob'
+import ProvidersView from '../client/Providers/ProviderDetail'
 
 import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVersionViewContainer';
 
@@ -147,6 +148,12 @@ const stackNavigator = createStackNavigator(
     },
     Provider: {
       screen: Provider,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    ProvidersView: {
+      screen: ProvidersView,
       navigationOptions: {
         header: null,
       },

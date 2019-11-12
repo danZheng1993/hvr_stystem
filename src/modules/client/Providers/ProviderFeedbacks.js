@@ -3,42 +3,44 @@ import {
   StyleSheet,
   View,
   ScrollView,
+  Text,
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import { compose } from 'recompose';
+import { compose, withState } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { Button, Loader, UsersList,  } from '../../../components';
+import { Button, Loader,} from '../../../components';
 import { fonts, colors } from '../../../styles';
 
-import { searchUser } from '../../../redux/modules/user'
-import { usersListSelector, usersloadingSelector } from '../../../redux/selectors'
+import { getUser } from '../../../redux/modules/user'
+import { userDetailSelector, usersloadingSelector } from '../../../redux/selectors'
 
-class Providers extends React.Component {
+class ProviderFeedbacks extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      
+      select: 0
     }
   }
 
-  componentWillMount() {
-    const {searchUser} = this.props
-    searchUser({
-        body: {role: 'provider'}
-    })
+  handleClick =() => {
+
   }
 
-  render() {
-    const {users, usersloading} = this.props
+  componentWillMount() {
 
+  }
+
+
+  render() {
+    const {user, usersloading} = this.props
     return (
       <ScrollView style={styles.container}>
         <View style={styles.description}>
          { <Loader
           loading={usersloading} /> }
          </View>
-         <UsersList users={users} navigation={this.props.navigation}/>
+          <Text>Provider ProviderFeedbacks</Text>
       </ScrollView>
     );
   }
@@ -91,14 +93,14 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  users: usersListSelector,
+  user: userDetailSelector,
   usersloading: usersloadingSelector,
 });
 
 const mapDispatchToProps = {
-  searchUser
+  getUser
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(Providers);
+export default compose(withConnect)(ProviderFeedbacks);

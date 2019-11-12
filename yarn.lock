@@ -6623,6 +6623,14 @@ react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
+react-native-alphabetlistview@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-alphabetlistview/-/react-native-alphabetlistview-0.3.1.tgz#2d9c84636a8bb4869066816d1b86fcffb981c1d1"
+  integrity sha512-DkDv/wl/ECQBzTlpL2EUznOB2ZSDSArOI2zz+eXSIbKHGuOE4hfgFWixq8lPyzVVrz2QseXiXHVSxXzKfIpxuw==
+  dependencies:
+    merge "^1.2.0"
+    prop-types "^15.6.0"
+
 react-native-animatable@^1.1.0, react-native-animatable@^1.2.4:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.1.tgz#f004a7e9de6838d0fbf210d642593cff7affd9ef"
