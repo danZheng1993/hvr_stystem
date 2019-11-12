@@ -16,146 +16,146 @@ import { Text } from '../../components/StyledText';
 
 var timer
 class SignupAsProvider extends React.Component {
-    constructor (props) {
-      super(props)
-      this.state = {
-        phoneNumber: '',
-        verificationCode: '',
-        password: '',
-        passwordConfirm: '',
-        counter: 3,
-      };
-    }
+  constructor (props) {
+    super(props)
+    this.state = {
+      phoneNumber: '',
+      verificationCode: '',
+      password: '',
+      passwordConfirm: '',
+      counter: 3,
+    };
+  }
 
-    componentWillMount() {
-      // custom rule will have name 'isPasswordMatch'
-      Form.addValidationRule('isPasswordMatch', (value) => {
-          if (value !== this.state.password) {
-              return false;
-          }
-          return true;
-      });
-    }
-
-    componentWillUnmount() {
-      Form.removeValidationRule('isPasswordMatch');
-    }
-    sendCode = () => {
-      const { phoneNumber } = this.state
-      if(phoneNumber.length != 11 || !Number.isInteger(+phoneNumber)) return;
-
-      this.props.sendcode({
-        body: { phoneNumber: phoneNumber},
-        success: () => {
-          timer = setInterval(this.countTime, 1000)
-        }
-      })
-    }
-
-    countTime = () => {
-      var {counter} = this.state
-      counter --;
-      if (counter == 0) {       
-        counter = 60
-        clearInterval(timer)
+  componentWillMount() {
+    // custom rule will have name 'isPasswordMatch'
+    Form.addValidationRule('isPasswordMatch', (value) => {
+      if (value !== this.state.password) {
+          return false;
       }
-      this.setState({counter})
-    }
+      return true;
+    });
+  }
 
-    handleSubmit = () => {
-      const { phoneNumber, verificationCode, password, passwordConfirm, counter} = this.state
+  componentWillUnmount() {
+    Form.removeValidationRule('isPasswordMatch');
+  }
+  sendCode = () => {
+    const { phoneNumber } = this.state
+    if(phoneNumber.length != 11 || !Number.isInteger(+phoneNumber)) return;
 
-      if (!phoneNumber || !verificationCode || !password || !passwordConfirm || password!=passwordConfirm) return;
-      if (counter == 60) {
-        alert("try again")
-        return;
+    this.props.sendcode({
+      body: { phoneNumber: phoneNumber},
+      success: () => {
+        timer = setInterval(this.countTime, 1000)
       }
+    })
+  }
+
+  countTime = () => {
+    var {counter} = this.state
+    counter --;
+    if (counter == 0) {       
+      counter = 60
       clearInterval(timer)
-      this.props.checkcode({
-        body:{ phoneNumber, code: verificationCode, password, role: 'provider'},
-        success: () => this.props.navigation.navigate({ routeName: 'BasicProfile' }),
-        fail:() => alert("invalid code")
-      })
     }
-    render(){
-        const { counter } = this.state
-        return (
-           <View style={styles.description}>
-             <Text size={14}>
-               {counter}
-             </Text>
-            <Form
-                ref="form"
-                onSubmit={this.handleSubmit}
-            >
-                <TextValidator
-                    name="phoneNumber"
-                    label='手机号'
-                    validators={['required', 'matchRegexp:^[0-9]{11}$']}
-                    errorMessages={['This field is required', 'invalid phone number']}
-                    placeholder="输入手机号"
-                    type="text"
-                    keyboardType="email-address"
-                    value={this.state.phoneNumber}
-                    onChangeText={phoneNumber => this.setState({ phoneNumber })}
-                />
-                <View style={styles.verificationCode}>
-                    <TextValidator
-                        name="verificationCode"
-                        style={{ marginBottom: 15}}
-                        validators={['required', 'matchRegexp:^[0-9]{4}$']}                 
-                        errorMessages={['This field is required', 'invalid code']}
-                        outlined
-                        label='输入验证码'
-                        type="text"
-                        placeholder="输入验证码"
-                        value={this.state.verificationCode}
-                        onChangeText={verificationCode => this.setState({ verificationCode })}
-                    />
-                    <Button
-                        large
-                        bgColor={colors.info}
-                        style={styles.button}
-                        caption="获取验证码"
-                        onPress={() => this.sendCode()}
-                    />
-                </View>
-              <TextValidator
-                  style={styles.input}
-                  outlined
-                  validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
-                  errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
-                  label='设置密码'
-                  placeholder="设置密码（6-20位字母数字组合)"
-                  value={this.state.password}
-                  secureTextEntry
-                  maxLength={20}
-                  onChangeText={password => this.setState({ password })}
-              />
-              <TextValidator
-                  style={styles.input}
-                  outlined
-                  validators={['required', 'isPasswordMatch']}                 
-                  errorMessages={['This field is required', 'password mismatch']}
-                  label='确认密码'
-                  placeholder="确认密码"
-                  secureTextEntry
-                  value={this.state.passwordConfirm}
-                  onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
-                  />
-                <View style={styles.buttonsContainer}>
-                  <Button
-                    large
-                    bgColor={colors.warning}
-                    style={styles.button}
-                    caption="确定"
-                    onPress={this.handleSubmit}
-                  />
-                  </View>
-            </Form>   
-            </View>
-        );
+    this.setState({counter})
+  }
+
+  handleSubmit = () => {
+    const { phoneNumber, verificationCode, password, passwordConfirm, counter} = this.state
+
+    if (!phoneNumber || !verificationCode || !password || !passwordConfirm || password!=passwordConfirm) return;
+    if (counter == 60) {
+      alert("try again")
+      return;
     }
+    clearInterval(timer)
+    this.props.checkcode({
+      body:{ phoneNumber, code: verificationCode, password, role: 'provider'},
+      success: () => this.props.navigation.navigate({ routeName: 'BasicProfile' }),
+      fail:() => alert("invalid code")
+    })
+  }
+  render(){
+    const { counter } = this.state
+    return (
+      <View style={styles.description}>
+        <Text size={14}>
+          {counter}
+        </Text>
+        <Form
+            ref="form"
+            onSubmit={this.handleSubmit}
+        >
+          <TextValidator
+            name="phoneNumber"
+            label='手机号'
+            validators={['required', 'matchRegexp:^[0-9]{11}$']}
+            errorMessages={['This field is required', 'invalid phone number']}
+            placeholder="输入手机号"
+            type="text"
+            keyboardType="email-address"
+            value={this.state.phoneNumber}
+            onChangeText={phoneNumber => this.setState({ phoneNumber })}
+          />
+          <View style={styles.verificationCode}>
+            <TextValidator
+              name="verificationCode"
+              style={{ marginBottom: 15}}
+              validators={['required', 'matchRegexp:^[0-9]{4}$']}                 
+              errorMessages={['This field is required', 'invalid code']}
+              outlined
+              label='输入验证码'
+              type="text"
+              placeholder="输入验证码"
+              value={this.state.verificationCode}
+              onChangeText={verificationCode => this.setState({ verificationCode })}
+            />
+            <Button
+              large
+              bgColor={colors.info}
+              style={styles.button}
+              caption="获取验证码"
+              onPress={() => this.sendCode()}
+            />
+          </View>
+          <TextValidator
+            style={styles.input}
+            outlined
+            validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
+            errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
+            label='设置密码'
+            placeholder="设置密码（6-20位字母数字组合)"
+            value={this.state.password}
+            secureTextEntry
+            maxLength={20}
+            onChangeText={password => this.setState({ password })}
+          />
+          <TextValidator
+            style={styles.input}
+            outlined
+            validators={['required', 'isPasswordMatch']}                 
+            errorMessages={['This field is required', 'password mismatch']}
+            label='确认密码'
+            placeholder="确认密码"
+            secureTextEntry
+            value={this.state.passwordConfirm}
+            onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
+            />
+            <View style={styles.buttonsContainer}>
+              <Button
+                large
+                bgColor={colors.warning}
+                style={styles.button}
+                caption="确定"
+                onPress={this.handleSubmit}
+            />
+          </View>
+        </Form>   
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

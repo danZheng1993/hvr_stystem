@@ -10,18 +10,16 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import moment from 'moment'
+
 import { Button, Loader,  } from '../../../components';
 import { fonts, colors } from '../../../styles';
 
 import { getJobs } from '../../../redux/modules/job'
-import {formatDate} from '../../../utils/helper'
-
 import {  jobsListSelector, jobsloadingSelector } from '../../../redux/selectors'
 
 class JobsList extends React.Component {
   constructor(props) {
-    super(props)
-    
+    super(props)   
     this.state = {
       
     }
@@ -30,25 +28,9 @@ class JobsList extends React.Component {
     const {getJobs} = this.props
     getJobs()
   }
-  handleClick = () => {
-   
-  };
-
-  loadItem(items) { 
-    if (!items) return
-    items.pop()
-    console.log("itesm", items)
-    return items && items.map((item, index) => (
-        <Picker.Item label={item.name} value={item.name} />
-    ))
-  }
-  
 
   render() {
-    
-    // const {types, typesloading, scenes, scenesLoading, services, servciesLoading, subcategories, subcategorysloading} = this.props
     const {jobs, jobsloading} = this.props
-    console.log(jobs)
     return (
       <ScrollView style={styles.container}>
         <View style={styles.description}>

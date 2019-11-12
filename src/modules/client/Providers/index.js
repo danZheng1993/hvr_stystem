@@ -3,19 +3,16 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Picker,
-  Text
 } from 'react-native';
+
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import moment from 'moment'
 import { Button, Loader, UsersList,  } from '../../../components';
 import { fonts, colors } from '../../../styles';
 
 import { searchUser } from '../../../redux/modules/user'
-
-import {  usersListSelector, usersloadingSelector } from '../../../redux/selectors'
+import { usersListSelector, usersloadingSelector } from '../../../redux/selectors'
 
 class Providers extends React.Component {
   constructor(props) {
@@ -24,21 +21,17 @@ class Providers extends React.Component {
       
     }
   }
+
   componentWillMount() {
     const {searchUser} = this.props
     searchUser({
         body: {role: 'provider'}
     })
   }
-  handleClick = () => {
-   
-  };
 
   render() {
-    
-    // const {types, typesloading, scenes, scenesLoading, services, servciesLoading, subcategories, subcategorysloading} = this.props
     const {users, usersloading} = this.props
-    console.log(users)
+
     return (
       <ScrollView style={styles.container}>
         <View style={styles.description}>
@@ -48,7 +41,7 @@ class Providers extends React.Component {
          </View>
       </ScrollView>
     );
-    }
+  }
 }
 
 const styles = StyleSheet.create({

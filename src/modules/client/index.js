@@ -1,5 +1,4 @@
 /* eslint-disable import/no-unresolved */
-import React, { Component } from 'react';
 import { Image, View, StyleSheet, Text } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 
@@ -7,13 +6,8 @@ import { colors, fonts } from '../../styles';
 
 import HomeView from './Home/HomeContainer';
 import PagesScreen from '../pages/PagesViewContainer';
-import ComponentsScreen from '../components/ComponentsViewContainer';
 import PostJob from './PostJob'
-
 import MyPage from './MyPage'
-
-import AuthScreen from '../auth/AuthViewContainer';
-import GalleryScreen from '../gallery/GalleryViewContainer';
 import Providers from './Providers';
 
 

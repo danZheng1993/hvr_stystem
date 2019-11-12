@@ -7,10 +7,10 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
+import { Form, TextValidator } from 'react-native-validator-form';
 
 import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
-import { Form, TextValidator } from 'react-native-validator-form';
 import { signup, sendcode, checkcode } from '../../redux/modules/auth'
 
 class SignupForm extends React.Component {
@@ -45,16 +45,6 @@ class SignupForm extends React.Component {
         body: { phoneNumber: phoneNumber},
         // success: () 
       })
-    }
-    checkCode = () => {
-      alert("aaaa")
-      console.log(this.refs)
-      // alert("aaa")
-      // const {phoneNumber, verificationCode} = this.state
-      // if(phoneNumber.length != 11 || !Number.isInteger(+phoneNumber) || verificationCode.length!=4) return;
-      // this.props.checkcode({
-      //   body: {phoneNumber: phoneNumber, code: +verificationCode}
-      // })
     }
 
     handleSubmit = () => {
@@ -132,15 +122,15 @@ class SignupForm extends React.Component {
                   value={this.state.passwordConfirm}
                   onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
                   />
-                <View style={styles.buttonsContainer}>
-                  <Button
-                    large
-                    bgColor={colors.warning}
-                    style={styles.button}
-                    caption="确定"
-                    onPress={this.handleSubmit}
-                  />
-                  </View>
+              <View style={styles.buttonsContainer}>
+                <Button
+                  large
+                  bgColor={colors.warning}
+                  style={styles.button}
+                  caption="确定"
+                  onPress={this.handleSubmit}
+                />
+              </View>
             </Form>   
             </>
         );

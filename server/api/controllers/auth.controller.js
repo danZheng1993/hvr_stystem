@@ -11,7 +11,6 @@ const bcrypt = require('bcryptjs');
 const SALT_ROUNDS = 10;
 
 function login(req, res, next) {
-  console.log(req.body)
   User.findOne({ phoneNumber: req.body.phoneNumber })
     .select('_id password phoneNumber userName role permission')
     .exec()

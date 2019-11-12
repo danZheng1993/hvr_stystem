@@ -1,10 +1,10 @@
-# React Native Starter 🚀
+# HVR System 🚀
 
-*You're viewing the new and updated version of React Native Starter, previous version can be found under the [v1 branch](https://github.com/flatlogic/react-native-starter/tree/v1)*
+*You're viewing the new and updated version of HVR System, previous version can be found under the [v1 branch](https://github.com/flatlogic/react-native-starter/tree/v1)*
 
-A powerful react native starter template that bootstraps development of your mobile application. React Native Starter is a mobile application template with lots of built-in components like sidebar, navigation, form elements, etc - all you need to start building your mobile app faster. Check out live demo on [App Store](https://play.google.com/store/apps/details?id=com.reactnativestarter.lite), [Google Play](https://play.google.com/store/apps/details?id=com.reactnativestarter.app).
+A powerful react native starter template that bootstraps development of your mobile application. HVR System is a mobile application template with lots of built-in components like sidebar, navigation, form elements, etc - all you need to start building your mobile app faster. Check out live demo on [App Store](https://play.google.com/store/apps/details?id=com.reactnativestarter.lite), [Google Play](https://play.google.com/store/apps/details?id=com.reactnativestarter.app).
 
-![React Native Starter](https://i.imgur.com/vcz4bU6.png)
+![HVR System](https://i.imgur.com/vcz4bU6.png)
 
 <a href='https://play.google.com/store/apps/details?id=com.reactnativestarter.lite&pcampaignid=Github-OS-Repo'><img width="200" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 <a href='https://play.google.com/store/apps/details?id=com.reactnativestarter.lite&pcampaignid=Github-OS-Repo'><img width="200" alt='Download on App Store' src='https://i.imgur.com/7IxtMV0.png'/></a>
@@ -69,7 +69,7 @@ Read more and purchase it at https://reactnativestarter.com
 - [Tweet about it](https://twitter.com/intent/tweet?text=Amazing%20Mobile%20Application%20Template%20built%20with%20React%20Native!&url=https://github.com/flatlogic/react-native-starter&via=flatlogic).
 - Create pull requests, submit bugs, suggest new features or documentation updates :wrench:
 - Follow [@flatlogic on Twitter](https://twitter.com/flatlogic).
-- Subscribe to React Native Starter newsletter at [reactnativestarter.com](https://reactnativestarter.com/)
+- Subscribe to HVR System newsletter at [reactnativestarter.com](https://reactnativestarter.com/)
 - Like our page on [Facebook](https://www.facebook.com/flatlogic/) :thumbsup:
 
 ## More from Flatlogic

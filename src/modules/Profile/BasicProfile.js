@@ -31,6 +31,7 @@ class BasicProfile extends React.Component {
     })
     this.props.navigation.navigate({ routeName: 'ShootingID' })
   };
+  
   handleChoosePhoto = () => {
     var options = {
       title: 'Select Image',

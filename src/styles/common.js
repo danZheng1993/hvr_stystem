@@ -3,6 +3,37 @@ import { StyleSheet, StatusBar, Platform } from 'react-native';
 import colors from './colors';
 
 export default StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  buttonsContainer: {
+    flex: 2,
+    alignItems: 'flex-end',
+    alignSelf: 'stretch',
+    margin: 20
+  },
+  stretchButton: {
+    marginBottom: 20,
+    alignSelf: 'stretch'
+  },
+  bgImage: {
+    flex: 1,
+    marginHorizontal: -20,
+    width: '100%',
+    height: '100%'
+  },
+  logo: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  centerAlign: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+
   safeArea: {
     flex: 1,
     backgroundColor: colors.white,
@@ -18,23 +49,6 @@ export default StyleSheet.create({
   verificationCode: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-  buttonsContainer: {
-    alignItems: 'flex-end',
-  },
-  button: {
-    marginBottom: 20,
-  },
-  bgImage: {
-    flex: 1,
-    marginHorizontal: -20,
-    width: '100%',
-    height: '100%'
   },
   photo: {
     borderRadius: 100,

@@ -7,16 +7,18 @@ import {
 
 import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
-
 import { Text } from '../../components/StyledText';
+
 export default function SignupView(props) {
 
   const handleProvider = () => {
     props.navigation.navigate({ routeName: 'SignupAsProvider' })
   };
+
   const handleClient = () => {
     props.navigation.navigate({ routeName: 'SignupAsClient' })
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.description}>

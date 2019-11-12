@@ -59,4 +59,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 5,
   },
+  photo: {
+    borderRadius: 100,
+    borderColor: colors.gray,
+    backgroundColor: colors.info,
+    width: 100,
+    height: 100
+  },
 });

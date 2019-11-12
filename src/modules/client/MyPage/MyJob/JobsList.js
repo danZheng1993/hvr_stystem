@@ -1,24 +1,23 @@
 import React from 'react';
+
 import {
   StyleSheet,
   View,
   ScrollView,
-  Picker,
-  Text
 } from 'react-native';
+
 import { connect } from 'react-redux';
 import { withState,compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import moment from 'moment'
+
 import { Button, Loader, JobsList, RadioGroup } from '../../../../components'
 import { fonts, colors } from '../../../../styles';
 
-import job, { searchJob } from '../../../../redux/modules/job'
-
-import {  jobsListSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
-import { select } from 'redux-saga/effects';
+import { searchJob } from '../../../../redux/modules/job'
+import { jobsListSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
 
 const status = ['全部', '竞标中', '待付款','待拍摄', '待验收', '评价', '已完成']
+
 class MyJobList extends React.Component {
   constructor(props) {
     super(props)
@@ -26,16 +25,19 @@ class MyJobList extends React.Component {
       selected : 0
     }
   }
+
   componentWillMount() {
     const {searchJob, profile} = this.props
     searchJob({
       body: {creator: profile._id}
     })
   }
+
   handleClick = (index) => {
     this.props.setRadioGroupsState({ ...this.props.radioGroupsState, 0: index })
     this.setState({selected: index})
   }
+
   render() {    
     const {jobs, jobsloading} = this.props
     const {selected} = this.state
@@ -57,7 +59,7 @@ class MyJobList extends React.Component {
           />
         </View>
           <JobsList jobs={jobslist} 
-          navigation={this.props.navigation}/>
+                    navigation={this.props.navigation}/>
       </ScrollView>
     );
     }

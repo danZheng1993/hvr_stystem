@@ -1,26 +1,17 @@
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import { TextInput } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native'
 import  CodePin  from 'react-native-pin-code'
 
-import ImagePicker from 'react-native-image-picker'
 import { colors } from '../../styles'
-import { Button } from '../../components';
 import { Text } from '../../components/StyledText';
 
 export default class CheckVerificationCode extends React.Component {
   constructor(props) {
     super(props)
   }
-  state = {
-    photo: null,
-    code: ''
-  }
   
   render() {
-    const { code } = this.state
     return (
-
       <View style={styles.container}>
         <View style={styles.description}>
           <Text size={28} black>

@@ -15,9 +15,6 @@ import GalleryScreen from '../gallery/GalleryViewContainer';
 // import ChartsScreen from '../containers/ChartsScreen';
 import AuthScreen from '../auth/AuthViewContainer'
 
-import LoginScreen from '../login/LoginViewContainer'
-import LoginAsProvider from '../login/LoginAsProvider'
-import LoginAsClient from '../login/LoginAsClient'
 import LoginWithPassword from '../login/LoginWithPassword'
 import LoginWithSMS from '../login/LoginWithSMS'
 import PasswordRecovery from '../login/PasswordRecovery'
@@ -52,19 +49,13 @@ const headerBackground = require('../../../assets/images/topBarBg.png');
 const stackNavigator = createStackNavigator(
   {
     Main: {
-      screen: LoginWithPassword,
+      screen: HomeScreen,
       navigationOptions: {
         header: null,
       },
     },
     Auth: {
       screen: AuthScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Login: {
-      screen: LoginScreen,
       navigationOptions: {
         header: null,
       },
@@ -120,18 +111,6 @@ const stackNavigator = createStackNavigator(
     },
     CheckVerificationCode: {
       screen: CheckVerificationCode,
-      navigationOptions: {
-        title: '',
-      },
-    },
-    LoginAsProvider: {
-      screen: LoginAsProvider,
-      navigationOptions: {
-        title: '',
-      },
-    },
-    LoginAsClient: {
-      screen: LoginAsClient,
       navigationOptions: {
         title: '',
       },

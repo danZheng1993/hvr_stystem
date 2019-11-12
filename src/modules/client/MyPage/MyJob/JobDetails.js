@@ -3,22 +3,21 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Picker,
   Text
 } from 'react-native';
 import { connect } from 'react-redux';
-import { compose } from 'recompose';
-import { createStructuredSelector } from 'reselect';
-import moment from 'moment'
-import { Button, Loader, toast} from '../../../components';
-import { fonts, colors } from '../../../styles';
 import { TextInput } from 'react-native-paper'
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'recompose';
+import moment from 'moment'
+
+import { fonts, colors } from '../../../styles';
+import { Button, Loader, toast} from '../../../components';
+
 import { getJob, applyJob } from '../../../redux/modules/job'
-import {formatDate} from '../../../utils/helper'
-import { Form, TextValidator} from 'react-native-validator-form'
 import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../redux/selectors'
 
-class JobsList extends React.Component {
+class JobDetail extends React.Component {
   constructor(props) {
     super(props)
     
@@ -32,11 +31,10 @@ class JobsList extends React.Component {
     if (id != 'NO-ID') {
       getJob({
         id: id,
-        success: () => toast("success!"),
-        failed: () => toast("Error!")
       })
     }
   }
+
   handleClick = () => {
     let {price} = this.state
     let {applyJob, profile, navigation} = this.props
@@ -51,19 +49,18 @@ class JobsList extends React.Component {
     applyJob({
       id: id,
       body: { applicant: profile._id, price},
-      success: () => toast("success!"),
-      failed: () => toast("Error!")
     })  
   };
+
   handleContact =() => {
 
   } 
   
   render() {
     
-    // const {types, typesloading, scenes, scenesLoading, services, servciesLoading, subcategories, subcategorysloading} = this.props
     const {job, jobsloading} = this.props
     console.log(job)
+
     return (
       <ScrollView style={styles.container}>
         <View style={styles.description}>
@@ -174,4 +171,4 @@ const mapDispatchToProps = {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(JobsList);
+export default compose(withConnect)(JobDetail);

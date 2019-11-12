@@ -1,14 +1,11 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react';
-import { Image, View, StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 
 import { colors, fonts } from '../../styles';
 
-import PagesScreen from '../pages/PagesViewContainer';
 import ComponentsScreen from '../components/ComponentsViewContainer';
-import AuthScreen from '../auth/AuthViewContainer';
-import GalleryScreen from '../gallery/GalleryViewContainer';
 import JobsList from './jobs/JobsList'
 
 const styles = StyleSheet.create({
