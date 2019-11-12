@@ -6,6 +6,9 @@ export const authStateSelector = (state) =>
 export const verifyStateSelector = (state) =>
   get(state, 'auth.verified')
 
+export const authloadingSelector = (state) =>
+  get(state, 'auth.loading', false)
+
 export const profileSelector = (state) =>
   get(state, 'auth.me', null)
 

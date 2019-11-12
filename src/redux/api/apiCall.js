@@ -4,24 +4,46 @@ import { get } from 'lodash'
 import { requestFail, requestPending, requestSuccess } from './request'
 import { AsyncStorage } from 'react-native'
 const defaultHeaders = () => {
-  //let auth
+  // let auth = false
   AsyncStorage.getItem('hvr_auth').then(res => {
-    auth = res
+    auth = res  
   });
+
   //axios.defaults.baseURL = process.env.API_ROOT + '/'
-  axios.defaults.baseURL = 'http://198.18.62.247:4000/'
+  axios.defaults.baseURL = 'http://198.18.54.35:4000/'
   let headers = {
     'Accept': '*/*',
     'Content-Type': 'application/json'
   }
 
-  // if (auth) {
-  //   const token = JSON.parse(auth).token
-  //   headers['Authorization'] = 'Bearer ' + token
-  // } 
-
+  if (auth) {
+    const token = JSON.parse(auth).token
+    headers['Authorization'] = 'Bearer ' + token
+  } 
+  
   return headers
 }
+const uploadHeaders = () => {
+  // let auth = false
+  AsyncStorage.getItem('hvr_auth').then(res => {
+    auth = res  
+  });
+
+  //axios.defaults.baseURL = process.env.API_ROOT + '/'
+  axios.defaults.baseURL = 'http://198.18.54.35:4000/'
+  let headers = {
+    'Accept': '*/*',
+    'Content-Type': 'multipart/form-data'
+  }
+
+  if (auth) {
+    const token = JSON.parse(auth).token
+    headers['Authorization'] = 'Bearer ' + token
+  } 
+  
+  return headers
+}
+
 
 export default ({
   type,
@@ -35,6 +57,7 @@ export default ({
 }) => function* (action) {
   const {
     body,
+    file,
     params,
     success: successCallback,
     fail: failCallback
@@ -48,6 +71,7 @@ export default ({
       data: body,
       params
     })
+    console.log(file)
     yield put({
       type: requestPending(type),
       loading: true
@@ -56,7 +80,7 @@ export default ({
     const res = yield call(axios.request, {
       url: typeof path === 'function' ? path(action) : path,
       method: method.toLowerCase(),
-      headers: Object.assign({}, defaultHeaders(), headers),
+      headers: Object.assign({}, uploadHeaders(), headers),
       data: body,
       params: body
     })

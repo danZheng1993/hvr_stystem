@@ -40,13 +40,16 @@ import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVer
 
 import { colors, fonts } from '../../styles';
 import HomeScreen from '../home/HomeView';
+import  Provider from '../provider';
+import  JobDetails from '../provider/jobs/JobDetails';
+// import  JobDetails from '../provider/jobs/JobDetails';
 
 const headerBackground = require('../../../assets/images/topBarBg.png');
 
 const stackNavigator = createStackNavigator(
   {
     Main: {
-      screen: HomeScreen,
+      screen: Provider,
       navigationOptions: {
         header: null,
       },
@@ -152,6 +155,18 @@ const stackNavigator = createStackNavigator(
       screen: AvailableInFullVersion,
       navigationOptions: {
         header: null,
+      },
+    },
+    Provider: {
+      screen: Provider,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    JobDetails: {
+      screen: JobDetails,
+      navigationOptions: {
+        title: '接单列表',
       },
     },
     Client: {

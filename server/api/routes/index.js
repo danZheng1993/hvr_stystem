@@ -23,6 +23,6 @@ router.use('/types',  typeRoute);
 router.use('/scenes',  sceneRoute);
 router.use('/subcategorys',  subcategoryRoute);
 router.use('/services',  serviceRoute);
-router.use('/jobs',  jobRoute);
+router.use('/jobs', jobRoute);
 
 module.exports = router;

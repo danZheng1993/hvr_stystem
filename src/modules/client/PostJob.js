@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { Button, Loader, Select, Location } from '../../components';
+import { Button, Loader, Select, Location, toast } from '../../components';
 import { fonts, colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
 
@@ -17,10 +17,12 @@ import { Text } from '../../components/StyledText';
 
 import { createJob } from '../../redux/modules/job'
 
-import {  typesListSelector, typesloadingSelector, 
-          scenesListSelector, scenesloadingSelector, 
-          servicesListSelector, servicesloadingSelector,
-          subcategorysListSelector, subcategorysloadingSelector } from '../../redux/selectors'
+import {  typesListSelector, 
+          scenesListSelector, 
+          servicesListSelector, 
+          subcategorysListSelector, 
+          profileSelector,
+          jobsloadingSelector } from '../../redux/selectors'
 import { getSubcategorys } from '../../redux/modules/subcategory';
 
 import RadioForm from 'react-native-simple-radio-button';
@@ -51,10 +53,10 @@ class PostJob extends React.Component {
             value: false,
         },
       ],
-      service: [],
+      service: '',
       description: '',
       budget: 0,
-      ispublic: false
+      isPublic: false
     }
   }
   componentWillMount() {
@@ -66,15 +68,21 @@ class PostJob extends React.Component {
     this.setState({ types, services, subcategories, scenes})
   }
   handleClick = () => {
-    const {subcategory, scene, type, description, budget, ispublic} = this.state
-
-    console.log(subcategory, scene, type, description, budget, ispublic)
+    const {subcategory, scene, type, description, budget, isPublic} = this.state
+    const { profile} = this.props
+    console.log(subcategory, scene, type, description, budget, isPublic)
     this.props.createJob({
-      body: {subcategory, scene, type, description, budget, ispublic}
+      body: {subcategory, scene, type, description, budget, isPublic, creator: profile._id, location: 'beijing'},
+      success: () => toast("success!"),
+      failed: () => toast("Error!")
     })
   };
   onhandleService = (value, index) => {
-
+    const {services} = this.state
+    let str = ''
+    console.log(services[index])
+    if (value) str = services[index].name
+    this.setState({service: str})
   }
   loadItem(items) { 
     if (!items) return
@@ -86,17 +94,20 @@ class PostJob extends React.Component {
   }
   render() {
     
-    // const {types, typesloading, scenes, scenesLoading, services, servciesLoading, subcategories, subcategorysloading} = this.props
+    const {jobsloading} = this.props
+    console.log(jobsloading)
     const {types, scenes, services, subcategories} = this.state
     return (
       <ScrollView style={styles.container}>
+        <Loader
+          loading={ jobsloading } />
+        
         <View style={styles.description}>
-         {/* <Loader
-          loading={typesloading && scenesLoading && servciesLoading && subcategorysloading} /> */}
           <Form
               ref="form"
               onSubmit={this.handleClick}
           >
+            <View style={styles.componentsSection} >
           <Picker
               selectedValue={this.state.type}
               onValueChange={(itemValue, itemIndex) =>
@@ -109,9 +120,9 @@ class PostJob extends React.Component {
           <TextValidator
                 name="count"
                 label='手机号'
-                validators={['required', 'matchRegexp:^[0-9]{11}$']}
-                errorMessages={['This field is required', 'invalid phone number']}
-                placeholder="输入手机号"
+                validators={['required']}
+                errorMessages={['This field is required']}
+                placeholder="场景数量"
                 type="text"
                 value={this.state.count}
                 onChangeText={count => this.setState({ count })}
@@ -138,7 +149,8 @@ class PostJob extends React.Component {
                   list={locationData} 
                   onLocationChange={this.onLocationChange}
               /> */}
-            <View>
+              </View>
+            <View style = {styles.componentsSection}>
               {services && services.map((service, index) => (
                 <View key={index}>
                 <Text size={14}>
@@ -151,11 +163,12 @@ class PostJob extends React.Component {
                   labelHorizontal={true}
                   buttonColor={'#2196f3'}
                   animation={true}
-                  onPress={(value) => {this.onhandleService(index, value)}}
+                  onPress={(value) => {this.onhandleService(value, index)}}
                 />
                 </View>
               ))}
             </View>
+            <View style= {styles.componentsSection}>
             <TextValidator
                 style={styles.input}
                 outlined
@@ -177,7 +190,8 @@ class PostJob extends React.Component {
                 value={this.state.budget}
                 onChangeText={budget => this.setState({ budget })}
             />
-            <View>
+            </View>
+            <View style = {styles.componentsSection}>
                 <Text size={14}>
                   是否公开
                 </Text>
@@ -188,7 +202,7 @@ class PostJob extends React.Component {
                   labelHorizontal={true}
                   buttonColor={'#2196f3'}
                   animation={true}
-                  onPress = {(value) => {this.setState({ispublic: value})}}
+                  onPress = {(value) => {this.setState({isPublic: value})}}
                 />
                 </View>
             <View style={styles.buttonsContainer}>
@@ -196,7 +210,7 @@ class PostJob extends React.Component {
                 large
                 bgColor={colors.warning}
                 style={styles.button}
-                caption="确定"
+                caption="提交"
                 onPress={this.handleClick}
               />
             </View>
@@ -210,11 +224,12 @@ class PostJob extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // flexDirection: 'column',
-    // alignItems: 'center',
-    // justifyContent: 'space-around',
+    flex: 1,
+    backgroundColor: colors.bluish,
+    paddingHorizontal: 15,
+    paddingTop: 20,
   },
+  
   picker: {
     flexDirection: "row",
     justifyContent: 'space-between'
@@ -244,18 +259,22 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
+  componentsSection: {
+    backgroundColor: colors.white,
+    padding: 15,
+    marginBottom: 20,
+    borderRadius: 5,
+  },
 });
 
 
 const mapStateToProps = createStructuredSelector({
   types: typesListSelector,
-  typesloading: typesloadingSelector,
   scenes: scenesListSelector,
-  scenesLoading: scenesloadingSelector,
   services: servicesListSelector,
-  servciesLoading: servicesloadingSelector,
   subcategories: subcategorysListSelector,
-  servciesLoading: subcategorysloadingSelector
+  jobsloading: jobsloadingSelector,
+  profile: profileSelector,
 });
 
 const mapDispatchToProps = {

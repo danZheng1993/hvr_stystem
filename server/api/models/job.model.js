@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const STATUS = require('../constants/status')
 const positiveNumber = (distance) => distance > 0;
 
 const JobSchema = new Schema({
@@ -8,37 +8,45 @@ const JobSchema = new Schema({
     type: String
   },
   creator: {
-    type: String
+    type: String,
+    default: ''
   },
   created: {
     type: Date,
+    default: Date.now()
   },
   location: {
-    type: String
+    type: String,
+    default: ''
   },
   type: {
-    type: String
+    type: String,
+    default: ''
   },
   count: {
     type: Number,
-    default: 0,
+    default: 1,
     validate: [positiveNumber, 'should be bigger than 0'],
-    default: 1
   },
   start: {
     type: Date,
+    default: Date.now()
   },
   end: {
     type: Date,
+    default: Date.now()
   },
   scene: {
     type: String,
+    default: ''
   },
   subcategory: {
     type: String,
+    default: ''
   },
   services: {
-    type: Array,
+    type: String,
+    default: ''
   },
   budget: {
     type: Number,
@@ -60,10 +68,14 @@ const JobSchema = new Schema({
     type: Array
   },
   hired: {
-    type: String
-  }
+    type: String,
+    default: ''
+  },
+  status: { type: String, enum: Object.values(STATUS), default: STATUS.BIDDING },
+
 }, {
   timestamp: true,
 });
+
 
 module.exports = mongoose.model('Job', JobSchema);

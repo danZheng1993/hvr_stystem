@@ -31,12 +31,12 @@ class HomeScreen extends React.Component {
   }
   componentDidMount() {
     this.timer = setTimeout(() => {    
-      this.props.navigation.navigate({ routeName: 'PostJob' })
+      this.props.navigation.navigate({ routeName: 'Auth' })
     }, 5000);
   }
   handleClick = () => {
     clearTimeout(this.timer);
-    this.props.navigation.navigate({ routeName: 'PostJob' })
+    this.props.navigation.navigate({ routeName: 'Auth' })
   };
   render() {
     return (

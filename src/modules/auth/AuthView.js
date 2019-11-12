@@ -12,7 +12,7 @@ import { Text } from '../../components/StyledText';
 export default function AuthScreen(props) {
 
   const handleLogin = () => {
-    props.navigation.navigate({ routeName: 'Login' })
+    props.navigation.navigate({ routeName: 'LoginWithPassword' })
   };
   const handleSignup = () => {
     props.navigation.navigate({ routeName: 'Signup' })

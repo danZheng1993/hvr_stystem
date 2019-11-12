@@ -8,6 +8,7 @@ import SegmentedControl from './SegmentedControl';
 import Loader from './Loader'
 import Select from './Select'
 import Location from './Location'
+import toast from './Toast'
 
 export {
   // ## Generator Components Exports
@@ -18,6 +19,7 @@ export {
   TextInput,
   Loader,
   Select,
+  toast,
   SegmentedControl,
   Location
 };

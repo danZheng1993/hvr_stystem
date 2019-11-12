@@ -10,8 +10,8 @@ router.route('/')
   .get(jobCtrl.list)
   .post(jobCtrl.create);
 
-router.route('/report')
-  .get(jobCtrl.weeklyReport);
+router.route('/apply/:jobId')
+  .put(jobCtrl.apply);
 
 router.route('/:jobId')
   .get(jobCtrl.read)

@@ -45,6 +45,7 @@ function update(req, res, next) {
 
 function updateOne(req, res, next) {
   console.log("here")
+  console.log(req.body, req.file)
   var upload = multer({ dest: 'uploads/' }); //setting the default folder for multer
   upload.single('avatar')
   //other imports and code will go here

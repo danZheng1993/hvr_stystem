@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
-import { requestSuccess, requestFail } from '../api/request'
+import { requestSuccess, requestFail, requestPending } from '../api/request'
 import { AsyncStorage } from 'react-native';
 // ------------------------------------
 // Constants
@@ -61,11 +61,18 @@ const getInitialState = () => {
 // Reducer
 // ------------------------------------
 export default handleActions({
+  [requestPending(DO_LOGIN)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(DO_LOGIN),
+    error: null,
+    loading: true,
+  }),
   [requestSuccess(DO_LOGIN)]: (state, { payload }) => ({
     ...state,
     token: payload.token,
     status: requestSuccess(DO_LOGIN),
-    me: payload
+    me: payload.info,
+    loading: false
   }),
 
   [requestFail(DO_LOGIN)]: (state, { payload }) => ({
@@ -73,7 +80,8 @@ export default handleActions({
     token: null,
     status: requestFail(DO_LOGIN),
     me: null,
-    error: payload
+    error: payload,
+    loading: false
   }),
 
   [DO_LOGOUT]: (state, { payload }) => ({
@@ -81,13 +89,24 @@ export default handleActions({
     token: null,
     status: DO_LOGOUT,
     me: null,
-    error: null
+    error: null,
+    loading: false
+  }),
+
+  
+  [requestPending(DO_SIGNUP)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(DO_SIGNUP),
+    error: null,
+    loading: true,
+    
   }),
 
   [requestSuccess(DO_SIGNUP)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(DO_SIGNUP),
-    error: null
+    error: null,
+    loading: false
   }),
 
   [requestFail(DO_SIGNUP)]: (state, { payload }) => ({
@@ -95,12 +114,23 @@ export default handleActions({
     token: null,
     status: requestFail(DO_SIGNUP),
     me: null,
-    error: payload
+    error: payload,
+    loading: false
   }),
+
+  
+  [requestPending(SEND_CODE)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(DO_LOGIN),
+    error: null,
+    loading: true,
+  }),
+
   [requestSuccess(SEND_CODE)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(SEND_CODE),
-    error: null
+    error: null,
+    loading: false
   }),
 
   [requestFail(SEND_CODE)]: (state, { payload }) => ({
@@ -108,13 +138,24 @@ export default handleActions({
     token: null,
     status: requestFail(SEND_CODE),
     me: null,
-    error: payload
+    error: payload,
+    loading: false
   }),
+
+  
+  [requestPending(CHECK_CODE)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(DO_LOGIN),
+    error: null,
+    loading: true,
+  }),
+
   [requestSuccess(CHECK_CODE)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(CHECK_CODE),
     verified: payload.verified,
-    error: null
+    error: null,
+    loading: false
   }),
 
   [requestFail(CHECK_CODE)]: (state, { payload }) => ({
@@ -122,14 +163,25 @@ export default handleActions({
     token: null,
     status: requestFail(CHECK_CODE),
     me: null,
-    error: payload
+    error: payload,
+    loading: false
+  }),
+
+  
+  [requestPending(SAVE_PROFILE)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(DO_LOGIN),
+    error: null,
+    loading: true,
+    
   }),
 
   [requestSuccess(SAVE_PROFILE)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(SAVE_PROFILE),
     me: payload,
-    error: null
+    error: null,
+    loading: false
   })
 
 }, getInitialState())

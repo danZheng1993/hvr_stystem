@@ -10,6 +10,7 @@ export const GET_JOBS = 'GET_JOBS'
 export const CREATE_JOB = 'CREATE_JOB'
 export const UPDATE_JOB = 'UPDATE_JOB'
 export const DELETE_JOB = 'DELETE_JOB'
+export const APPLY_JOB = 'APPLY_JOB'
 export const SET_JOBS_PAGINATION = 'SET_JOBS_PAGINATION'
 
 // ------------------------------------
@@ -21,6 +22,7 @@ export const getJobs = createAction(GET_JOBS)
 export const createJob = createAction(CREATE_JOB)
 export const updateJob = createAction(UPDATE_JOB)
 export const deleteJob = createAction(DELETE_JOB)
+export const applyJob = createAction(APPLY_JOB)
 
 const initialState = {
   job: null,
@@ -65,7 +67,7 @@ export default handleActions({
   [requestSuccess(GET_JOBS)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(GET_JOBS),
-    jobs: payload,
+    jobs: Object.values(payload),
     error: null,
     loading: false
   }),
@@ -117,6 +119,28 @@ export default handleActions({
   [requestFail(UPDATE_JOB)]: (state, { payload }) => ({
     ...state,
     status: requestFail(UPDATE_JOB),
+    error: payload,
+    loading: false
+  }),
+
+  [requestPending(APPLY_JOB)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(APPLY_JOB),
+    error: null,
+    loading: true,
+  }),
+
+  [requestSuccess(APPLY_JOB)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(APPLY_JOB),
+    job: payload,
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(APPLY_JOB)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(APPLY_JOB),
     error: payload,
     loading: false
   }),

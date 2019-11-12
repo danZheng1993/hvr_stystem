@@ -5,13 +5,11 @@ import { createBottomTabNavigator } from 'react-navigation';
 
 import { colors, fonts } from '../../styles';
 
-import HomeView from './Home/HomeContainer';
 import PagesScreen from '../pages/PagesViewContainer';
 import ComponentsScreen from '../components/ComponentsViewContainer';
-import PostJob from './PostJob'
 import AuthScreen from '../auth/AuthViewContainer';
 import GalleryScreen from '../gallery/GalleryViewContainer';
-
+import JobsList from './jobs/JobsList'
 
 const styles = StyleSheet.create({
   tabBarItemContainer: {
@@ -21,6 +19,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: colors.white,
     paddingHorizontal: 10,
+  },
+  tabBarIcon: {
+    width: 0,
+    height: 0,
   },
   tabBarIconFocused: {
     tintColor: colors.primary,
@@ -50,28 +52,10 @@ const styles = StyleSheet.create({
 
 export default createBottomTabNavigator(
   {
-    首页: {
-      screen: HomeView,
+    接单: {
+      screen: JobsList,
       navigationOptions: {
         header: null,
-      },
-    },
-    发现: {
-      screen: PagesScreen,
-      navigationOptions: {
-        
-      },
-    },
-    约拍: {
-      screen: PostJob,
-      navigationOptions: {
-        
-      },
-    },
-    服务: {
-      screen: PagesScreen,
-      navigationOptions: {
-        
       },
     },
     我的: {

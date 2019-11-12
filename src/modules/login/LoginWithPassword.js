@@ -9,39 +9,51 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
 import {TextInput} from 'react-native-paper'
-import { Button } from '../../components';
+import { Button, Loader, toast } from '../../components';
 import { fonts, colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
 
 import { Text } from '../../components/StyledText';
+import toaster from 'toasted-notes';
 
 import {login} from '../../redux/modules/auth'
-import { authStateSelector } from '../../redux/selectors'
+import { profileSelector, authloadingSelector } from '../../redux/selectors'
 
 class LoginWithPassword extends React.Component {
-  state = {
-    phoneNumber: '22222222222',
-    password: '2222222222',
+  constructor(props) {
+    super(props)
+    this.state = {
+      phoneNumber: '22222222222',
+      password: '222222',
+    }
   }
   handleClick = () => {
-    const { phoneNumber, password} = this.state
-    const { profile } = this.props
+    const { phoneNumber, password} = this.state  
     this.props.login({
       body: {phoneNumber, password},
-      success: () => {
-        // if (profile.info.role == 'provider') {
-        //  this.props.navigation.navigate({ routeName: 'BasicProfile' })
-        // } else if (profile.info.role ==  'client') {
-          // }
-          this.props.navigation.navigate({ routeName: 'Client' })
-        }
+      success: () => this.redirect(),
+      fail: () => toast("Phone number or password is wrong!")
     })
-    
-
   };
+  
+  redirect() {
+    toast("login success!")
+    const {profile} = this.props
+    if (!profile) return
+    console.log(profile)
+    if (profile.role == 'provider') {
+      this.props.navigation.navigate({ routeName: 'BasicProfile' })
+    } else if (profile.role =='client'){
+      this.props.navigation.navigate({ routeName: 'PostJob' })
+    }
+  }
   render() {
+    const {loading, profile} = this.props
+
     return (
       <View style={styles.container}>
+        {/* { <Loader
+          loading={loading} /> } */}
         <View style={styles.description}>
           <Text size={18} black>
             登录HVR
@@ -141,8 +153,8 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  profile: authStateSelector,
-
+  profile: profileSelector,
+  loading: authloadingSelector
 });
 
 const mapDispatchToProps = {

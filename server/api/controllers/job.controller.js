@@ -23,6 +23,20 @@ function update(req, res, next) {
   .catch(next);
 }
 
+function apply(req, res, next) {
+  console.log("apply?")
+  // Object.assign(req.job, req.body);
+  console.log(req.body)
+  if (req.body.applicant && req.body.price) {
+    req.job.applicants.push({applicant: req.body.applicant, price: req.body.price})
+  }
+  req.job.save()
+  .then((updatedJob) => {
+    res.json(updatedJob);
+  })
+  .catch(next);
+}
+
 function read(req, res) {
   res.json(req.job);
 }
@@ -78,6 +92,7 @@ function weeklyReport(req, res) {
 }
 
 function getJobByID(req, res, next, id) {
+  console.log(req.body, id)
   Job.findById(id)
   .then((job) => {
     if (!job) {
@@ -89,7 +104,7 @@ function getJobByID(req, res, next, id) {
     //   res.status(403).json({ message: 'You are not authorized to access this job' });
     //   return;
     // }
-
+    console.log(job)
     req.job = job;
     next();
   })
@@ -101,6 +116,7 @@ module.exports = {
   update,
   read,
   list,
+  apply,
   remove,
   weeklyReport,
   getJobByID,
