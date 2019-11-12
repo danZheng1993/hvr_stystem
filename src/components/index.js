@@ -9,6 +9,9 @@ import Loader from './Loader'
 import Select from './Select'
 import Location from './Location'
 import toast from './Toast'
+import JobsList from './JobsList'
+import UsersList from './UsersList'
+import Profile from './Profile'
 
 export {
   // ## Generator Components Exports
@@ -20,6 +23,9 @@ export {
   Loader,
   Select,
   toast,
+  Profile,
   SegmentedControl,
-  Location
+  Location,
+  JobsList,
+  UsersList
 };

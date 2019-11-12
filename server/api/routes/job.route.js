@@ -9,6 +9,9 @@ const router = express.Router();
 router.route('/')
   .get(jobCtrl.list)
   .post(jobCtrl.create);
+  
+router.route('/search/')
+  .post(jobCtrl.search);
 
 router.route('/apply/:jobId')
   .put(jobCtrl.apply);

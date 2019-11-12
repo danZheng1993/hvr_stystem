@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects'
 import { get, pick } from 'lodash'
-import { GET_USER, GET_USERS, CREATE_USER, UPDATE_USER, DELETE_USER, GET_USER_REPORT }
+import { GET_USER, GET_USERS, CREATE_USER, UPDATE_USER, DELETE_USER, GET_USER_REPORT, SEARCH_USER }
   from '../modules/user'
 import apiCall from '../api/apiCall'
 
@@ -45,11 +45,21 @@ const doGetUserReport = apiCall({
   path: ({ payload }) => `/users/${payload.id}/report`
 })
 
+const doSearchUser = apiCall({
+  type: SEARCH_USER,
+  method: 'post',
+  path: () => `/users/search/`,
+  payloadOnSuccess: (res, { payload }) => ({
+    ...res,
+    ...pick(get(payload, 'params', {}), ['from', 'to', 'page', 'page_size']),
+  })
+})
 export default function* rootSaga () {
   yield takeLatest(GET_USER, doGetUser)
   yield takeLatest(GET_USERS, doGetUsers)
   yield takeLatest(CREATE_USER, doCreateUser)
   yield takeLatest(UPDATE_USER, doUpdateUser)
   yield takeLatest(DELETE_USER, doDeleteUser)
+  yield takeLatest(SEARCH_USER, doSearchUser)
   yield takeLatest(GET_USER_REPORT, doGetUserReport)
 }

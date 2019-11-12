@@ -133,12 +133,26 @@ function getProfile(req, res, next) {
   .catch(next);
 }
 
+function search(req, res, next) {
+  console.log("here",req.body)
+
+  User.find(req.body)
+  .sort({ userName: -1 })
+//  .limit(limit)
+ // .populate('user')
+  .then((entries) => {
+    res.json(entries);
+  })
+  .catch(next);
+}
+
 module.exports = {
   create,
   update,
   updateOne,
   read,
   list,
+  search,
   remove,
   getUserByID,
   getProfile,

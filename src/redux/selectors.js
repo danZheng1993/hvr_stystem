@@ -33,7 +33,7 @@ export const jobDetailSelector = (state) =>
 export const jobsListSelector = (state) =>
   get(state, 'job.jobs', [])
 
-  export const jobsloadingSelector = (state) =>
+export const jobsloadingSelector = (state) =>
   get(state, 'job.loading', false)
 
 export const jobStateSelector = (state) =>
@@ -98,3 +98,6 @@ export const recordsParamsSelector = (state) =>
 
 export const usersParamsSelector = (state) =>
   get(state, 'user.params', {})
+
+export const usersloadingSelector = (state) =>
+  get(state, 'user.loading', false)

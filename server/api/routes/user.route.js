@@ -5,11 +5,13 @@ const policies = require('../policies');
 
 const router = express.Router();
 
-router.use(policies.checkRoles([ROLES.PROVIDER, ROLES.CLIENT, ROLES.ADMIN]));
+// router.use(policies.checkRoles([ROLES.PROVIDER, ROLES.CLIENT, ROLES.ADMIN]));
 
 router.route('/')
   .get(userCtrl.list)
   .post(userCtrl.create);
+router.route('/search/')
+  .post(userCtrl.search);
 
 router.route('/:userId')
   .get(userCtrl.read)

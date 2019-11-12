@@ -42,6 +42,7 @@ function read(req, res) {
 }
 
 function list(req, res, next) {
+  console.log("list",req.user)
   const limit = req.query.limit * 1;
   let where = {};
 
@@ -92,7 +93,7 @@ function weeklyReport(req, res) {
 }
 
 function getJobByID(req, res, next, id) {
-  console.log(req.body, id)
+  console.log("getbyID",req.body, id)
   Job.findById(id)
   .then((job) => {
     if (!job) {
@@ -111,6 +112,19 @@ function getJobByID(req, res, next, id) {
   .catch(next);
 }
 
+function search(req, res, next) {
+  console.log("here",req.body)
+
+  Job.find(req.body)
+  .sort({ created: -1 })
+//  .limit(limit)
+ // .populate('user')
+  .then((entries) => {
+    res.json(entries);
+  })
+  .catch(next);
+}
+
 module.exports = {
   create,
   update,
@@ -118,6 +132,7 @@ module.exports = {
   list,
   apply,
   remove,
+  search,
   weeklyReport,
   getJobByID,
 };

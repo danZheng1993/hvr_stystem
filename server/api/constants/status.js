@@ -1,9 +1,8 @@
 module.exports = {
-    BIDDING: 'bidding',
-    NOT_PAID: 'not_paid',
-    READY_TO_START: 'ready_to_start',
-    TESTING: 'testing',
-    GIVING_FEEDBACK: 'giving_feedback',
-    FINISHED: 'finished',
+    BIDDING: '竞标中',
+    NOT_PAID: '待付款',
+    READY_TO_START: '待拍摄',
+    TESTING: '待验收',
+    GIVING_FEEDBACK: '评价',
+    FINISHED: '已完成',
   };
-  

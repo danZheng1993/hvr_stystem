@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React from 'react';
+import React, { Component } from 'react';
 import { Image, View, StyleSheet, Text } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 
@@ -9,8 +9,12 @@ import HomeView from './Home/HomeContainer';
 import PagesScreen from '../pages/PagesViewContainer';
 import ComponentsScreen from '../components/ComponentsViewContainer';
 import PostJob from './PostJob'
+
+import MyPage from './MyPage'
+
 import AuthScreen from '../auth/AuthViewContainer';
 import GalleryScreen from '../gallery/GalleryViewContainer';
+import Providers from './Providers';
 
 
 const styles = StyleSheet.create({
@@ -69,13 +73,13 @@ export default createBottomTabNavigator(
       },
     },
     服务: {
-      screen: PagesScreen,
+      screen: Providers,
       navigationOptions: {
         
       },
     },
     我的: {
-      screen: ComponentsScreen,
+      screen: MyPage,
       navigationOptions: {
         
       },

@@ -23,8 +23,8 @@ class LoginWithPassword extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      phoneNumber: '22222222222',
-      password: '222222',
+      phoneNumber: '11111111111',
+      password: '111111',
     }
   }
   handleClick = () => {
@@ -42,9 +42,9 @@ class LoginWithPassword extends React.Component {
     if (!profile) return
     console.log(profile)
     if (profile.role == 'provider') {
-      this.props.navigation.navigate({ routeName: 'BasicProfile' })
+      this.props.navigation.navigate({ routeName: 'Provider' })
     } else if (profile.role =='client'){
-      this.props.navigation.navigate({ routeName: 'PostJob' })
+      this.props.navigation.navigate({ routeName: 'Client' })
     }
   }
   render() {

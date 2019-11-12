@@ -42,6 +42,9 @@ import { colors, fonts } from '../../styles';
 import HomeScreen from '../home/HomeView';
 import  Provider from '../provider';
 import  JobDetails from '../provider/jobs/JobDetails';
+import MyPage from '../client/MyPage';
+import MyJob from '../client/MyPage/MyJob/JobsList';
+
 // import  JobDetails from '../provider/jobs/JobDetails';
 
 const headerBackground = require('../../../assets/images/topBarBg.png');
@@ -49,7 +52,7 @@ const headerBackground = require('../../../assets/images/topBarBg.png');
 const stackNavigator = createStackNavigator(
   {
     Main: {
-      screen: Provider,
+      screen: LoginWithPassword,
       navigationOptions: {
         header: null,
       },
@@ -135,6 +138,12 @@ const stackNavigator = createStackNavigator(
     },
     LoginWithPassword: {
       screen: LoginWithPassword,
+      navigationOptions: {
+        title: '',
+      },
+    },
+    MyJob: {
+      screen: MyJob,
       navigationOptions: {
         title: '',
       },

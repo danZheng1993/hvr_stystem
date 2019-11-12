@@ -11,6 +11,7 @@ export const CREATE_JOB = 'CREATE_JOB'
 export const UPDATE_JOB = 'UPDATE_JOB'
 export const DELETE_JOB = 'DELETE_JOB'
 export const APPLY_JOB = 'APPLY_JOB'
+export const SEARCH_JOB = 'SEARCH_JOB'
 export const SET_JOBS_PAGINATION = 'SET_JOBS_PAGINATION'
 
 // ------------------------------------
@@ -23,6 +24,7 @@ export const createJob = createAction(CREATE_JOB)
 export const updateJob = createAction(UPDATE_JOB)
 export const deleteJob = createAction(DELETE_JOB)
 export const applyJob = createAction(APPLY_JOB)
+export const searchJob = createAction(SEARCH_JOB)
 
 const initialState = {
   job: null,
@@ -75,6 +77,28 @@ export default handleActions({
   [requestFail(GET_JOBS)]: (state, { payload }) => ({
     ...state,
     status: requestFail(GET_JOBS),
+    error: payload,
+    loading: false
+  }),
+
+  [requestPending(SEARCH_JOB)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(SEARCH_JOB),
+    error: null,
+    loading: true,
+  }),
+
+  [requestSuccess(SEARCH_JOB)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(SEARCH_JOB),
+    jobs: Object.values(payload),
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(SEARCH_JOB)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(SEARCH_JOB),
     error: payload,
     loading: false
   }),

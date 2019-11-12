@@ -17,7 +17,7 @@ const authMiddleware = expressJwt({ secret: config.jwtSecret });
 
 router.use('/auth', authRoute);
 router.use('/records', authMiddleware, recordRoute);
-router.use('/users', authMiddleware, userRoute);
+router.use('/users', userRoute);
 router.use('/profile', authMiddleware, profileRoute);
 router.use('/types',  typeRoute);
 router.use('/scenes',  sceneRoute);
