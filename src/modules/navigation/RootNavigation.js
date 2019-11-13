@@ -32,16 +32,17 @@ import CompanyInfo from '../Profile/CompanyInfo'
 
 import Client from '../client'
 import PostJob from '../client/PostJob'
-import ProvidersView from '../client/Providers/ProviderDetail'
+import ProviderDetail from '../client/Providers/ProviderDetail'
 
 import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVersionViewContainer';
 
 import { colors, fonts } from '../../styles';
 import HomeScreen from '../home/HomeView';
 import  Provider from '../provider';
-import  JobDetails from '../provider/jobs/JobDetails';
+import  ApplyJob from '../provider/jobs/ApplyJob';
 import MyPage from '../client/MyPage';
 import MyJob from '../client/MyPage/MyJob/JobsList';
+import BiddingJob from '../client/MyPage/MyJob/BiddingJob';
 
 // import  JobDetails from '../provider/jobs/JobDetails';
 
@@ -50,7 +51,7 @@ const headerBackground = require('../../../assets/images/topBarBg.png');
 const stackNavigator = createStackNavigator(
   {
     Main: {
-      screen: HomeScreen,
+      screen: LoginWithPassword,
       navigationOptions: {
         header: null,
       },
@@ -152,14 +153,14 @@ const stackNavigator = createStackNavigator(
         header: null,
       },
     },
-    ProvidersView: {
-      screen: ProvidersView,
+    ProviderDetail: {
+      screen: ProviderDetail,
       navigationOptions: {
         header: null,
       },
     },
-    JobDetails: {
-      screen: JobDetails,
+    ApplyJob: {
+      screen: ApplyJob,
       navigationOptions: {
         title: '接单列表',
       },
@@ -172,6 +173,12 @@ const stackNavigator = createStackNavigator(
     },
     PostJob: {
       screen: PostJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    BiddingJob: {
+      screen: BiddingJob,
       navigationOptions: {
         header: null,
       },

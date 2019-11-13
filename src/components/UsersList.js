@@ -20,7 +20,7 @@ export default class UsersList extends React.Component {
     return (
         <ScrollView>          
          {users && users.map((user, index) => (
-          <TouchableRipple key={index} onPress={() => navigation.navigate('ProvidersView', {id: user._id})}>
+          <TouchableRipple key={index} onPress={() => navigation.navigate('ProviderDetail', {id: user._id})}>
             <View style={styles.componentsSection} >
               <Text size={14}>订单信息:<Text>{user.userName}</Text></Text>
               <Text size={14}>订单编号:<Text>{user.overview}</Text></Text>

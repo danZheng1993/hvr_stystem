@@ -1,68 +1,94 @@
-import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Picker, DateTimePicker } from 'react-native-dynamic-picker';
-
-const  data =
-[
-	{
-		value:'100',
-		lable:'北京',
-		children:[
-					{
-						value:'110',
-						lable:'北京',
-						children:[
-									{
-										value:'111',
-										lable:'东城区',
-										children:undefined 
-									},
-									{
-										value:'112',
-										lable:'西城区',
-										children:undefined 
-									}
-								]
-					},
-					 {
-						value:'120',
-                        lable:'Shanghai',
-                        children: undefined
-					}
-				]
-	},
-	{
-		value: '200',
-		lable: 'USA',
-		children: undefined
-  	},
-	
-]
-const list = [
-    'aaaa', 'bbbb'
-]
-
+import React, { Component } from 'react'
+import {
+	View, Text
+} from 'react-native'
+import AlphabetListView from 'react-native-alphabetlistview'
+class SectionHeader extends React.Component {
+	render() {
+	  // inline styles used for brevity, use a stylesheet when possible
+	  var textStyle = {
+		textAlign:'center',
+		color:'#fff',
+		fontWeight:'700',
+		fontSize:16
+	  };
+  
+	  var viewStyle = {
+		backgroundColor: '#ccc'
+	  };
+	  return (
+		<View style={viewStyle}>
+		  <Text style={textStyle}>{this.props.title}</Text>
+		</View>
+	  );
+	}
+  }
+  
+  class SectionItem extends React.Component {
+	render() {
+	  return (
+		<Text style={{color:'#f00'}}>{this.props.title}</Text>
+	  );
+	}
+  }
+  
+  class Cell extends React.Component {
+	render() {
+	  return (
+		<View style={{height:30}}>
+		  <Text>{this.props.item}</Text>
+		</View>
+	  );
+	}
+  }
+  
 export default class Location extends React.Component {
-    componentDidMount(){
-        // this.refs['Picker'].showPicker(true);
-        this.refs['DynamicPicker'].showPicker(true);
-    }
-    render() {
-        return (
-            <View style={styles.container}>
-                {/* <Picker ref='Picker' data={data} title='Picker' branchTitles={['Options']} /> */}
-                <Picker ref='DynamicPicker' isDynamic={true}  data={data} title='Pick Area' branchTitles={['Province',]} />
-            </View >
-        )
-    }
-}
- 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        height: 400,
-        width: 400,
-    }
-    })
-    
+  
+	constructor(props) {
+	  super(props);
+  
+	  this.state = {
+		data: {
+		  A: ['some','entries','are here'],
+		  B: ['some','entries','are here'],
+		  C: ['some','entries','are here'],
+		  D: ['some','entries','are here'],
+		  E: ['some','entries','are here'],
+		  F: ['some','entries','are here'],
+		  G: ['some','entries','are here'],
+		  H: ['some','entries','are here'],
+		  I: ['some','entries','are here'],
+		  J: ['some','entries','are here'],
+		  K: ['some','entries','are here'],
+		  L: ['some','entries','are here'],
+		  M: ['some','entries','are here'],
+		  N: ['some','entries','are here'],
+		  O: ['some','entries','are here'],
+		  P: ['some','entries','are here'],
+		  Q: ['some','entries','are here'],
+		  R: ['some','entries','are here'],
+		  S: ['some','entries','are here'],
+		  T: ['some','entries','are here'],
+		  U: ['some','entries','are here'],
+		  V: ['some','entries','are here'],
+		  W: ['some','entries','are here'],
+		  X: ['some','entries','are here'],
+		  Y: ['some','entries','are here'],
+		  Z: ['some','entries','are here'],
+		}
+	  };
+	}
+  
+	render() {
+	  return (
+		<AlphabetListView
+		  data={this.state.data}
+		  cell={Cell}
+		  cellHeight={30}
+		  sectionListItem={SectionItem}
+		  sectionHeader={SectionHeader}
+		  sectionHeaderHeight={22.5}
+		/>
+	  );
+	}
+  }

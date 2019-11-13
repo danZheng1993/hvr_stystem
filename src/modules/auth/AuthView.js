@@ -5,7 +5,7 @@ import {
   Image,
 } from 'react-native';
 
-import { Button } from '../../components';
+import { Button, Location } from '../../components';
 import { fonts, colors, commonStyles} from '../../styles';
 
 import { Text } from '../../components/StyledText';
@@ -20,7 +20,8 @@ export default function AuthScreen(props) {
   };
   return (
     <View style={commonStyles.container}>
-      <View style={commonStyles.logo}>
+      <Location />
+      {/* <View style={commonStyles.logo}>
         <Image
             style={{width: 100, height: 100 }}
             source={require('../../../assets/images/icon.png')}
@@ -47,7 +48,7 @@ export default function AuthScreen(props) {
           caption="注册"
           onPress={() => handleSignup()}
         />
-      </View>
+      </View> */}
     </View>
   );
 }

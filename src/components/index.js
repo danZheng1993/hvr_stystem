@@ -10,7 +10,9 @@ import Select from './Select'
 import Location from './Location'
 import toast from './Toast'
 import JobsList from './JobsList'
+import JobDetail from './JobDetail'
 import UsersList from './UsersList'
+import Applicants from './Applicants'
 import Profile from './Profile'
 
 export {
@@ -27,5 +29,7 @@ export {
   SegmentedControl,
   Location,
   JobsList,
+  JobDetail,
+  Applicants,
   UsersList
 };

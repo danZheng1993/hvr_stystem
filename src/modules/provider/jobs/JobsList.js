@@ -46,7 +46,7 @@ class JobsList extends React.Component {
              <Text size={14}>平台预估参考价:<Text>¥{job.budget}</Text></Text>
              <Text size={14}>需求方预算价格:<Text>¥{job.budget}</Text></Text>
              <Text size={14} onPress={() => {
-              this.props.navigation.navigate('JobDetails', {
+              this.props.navigation.navigate('ApplyJob', {
                 id: job._id,
               });
             }}

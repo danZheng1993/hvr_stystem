@@ -3,34 +3,36 @@ import {
   StyleSheet,
   View,
   ScrollView,
+  Picker,
   Text
 } from 'react-native';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import { TextInput } from 'react-native-paper'
 import { createStructuredSelector } from 'reselect';
-import { compose } from 'recompose';
 import moment from 'moment'
 
+import { Button, Loader, toast, JobDetail} from '../../../components';
 import { fonts, colors } from '../../../styles';
-import { Button, Loader, toast} from '../../../components';
-
 import { getJob, applyJob } from '../../../redux/modules/job'
 import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../redux/selectors'
 
-class JobDetail extends React.Component {
+class ApplyJob extends React.Component {
   constructor(props) {
     super(props)
-    
     this.state = {
       price: 0
     }
   }
+
   componentWillMount() {
     const {getJob, navigation} = this.props
     let id = navigation.getParam('id', 'NO-ID')
     if (id != 'NO-ID') {
       getJob({
         id: id,
+        success: () => toast("success!"),
+        failed: () => toast("Error!")
       })
     }
   }
@@ -55,11 +57,8 @@ class JobDetail extends React.Component {
   handleContact =() => {
 
   } 
-  
-  render() {
-    
+  render() {  
     const {job, jobsloading} = this.props
-    console.log(job)
 
     return (
       <ScrollView style={styles.container}>
@@ -67,18 +66,7 @@ class JobDetail extends React.Component {
          { <Loader
           loading={jobsloading} /> }
          {job && <>
-           <View style={styles.componentsSection}>
-             <Text size={14}>订单信息:<Text>{job.status}</Text></Text>
-             <Text size={14}>订单编号:<Text>{job._id}</Text></Text>
-             <Text size={14}>创建时间:<Text>{moment(job.created).format("YYYY-MM-DD HH:MM:SS")}</Text></Text>
-             <Text size={14}>拍摄城市:<Text>{job.location}</Text></Text>
-             <Text size={14}>服务项目:<Text>{job.count}个以内场景</Text></Text>
-             <Text size={14}>场景数量:<Text>{job.type}</Text></Text>
-             <Text size={14}>拍摄场景:<Text>{job.scene}</Text></Text>
-             <Text size={14}>行业类别:<Text>{job.subcategory}</Text></Text>
-             <Text size={14}>其他要求:<Text>{job.service}</Text></Text>
-             <Text size={14}>需求描述:<Text>{job.description}</Text></Text>
-            </View>
+            <JobDetail job={job} />
             <View>
               <Button
                 large
@@ -171,4 +159,4 @@ const mapDispatchToProps = {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(JobDetail);
+export default compose(withConnect)(ApplyJob);
