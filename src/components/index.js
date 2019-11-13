@@ -14,6 +14,7 @@ import JobDetail from './JobDetail'
 import UsersList from './UsersList'
 import Applicants from './Applicants'
 import Profile from './Profile'
+import Confirm from './Confirm'
 
 export {
   // ## Generator Components Exports
@@ -31,5 +32,6 @@ export {
   JobsList,
   JobDetail,
   Applicants,
-  UsersList
+  UsersList,
+  Confirm
 };

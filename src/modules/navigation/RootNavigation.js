@@ -43,6 +43,11 @@ import  ApplyJob from '../provider/jobs/ApplyJob';
 import MyPage from '../client/MyPage';
 import MyJob from '../client/MyPage/MyJob/JobsList';
 import BiddingJob from '../client/MyPage/MyJob/BiddingJob';
+import NotPaidJob from '../client/MyPage/MyJob/NotPaidJob';
+import WaitingJob from '../client/MyPage/MyJob/WaitingJob';
+import TestingJob from '../client/MyPage/MyJob/TestingJob';
+import FeedbackJob from '../client/MyPage/MyJob/FeedbackJob';
+import FinishingJob from '../client/MyPage/MyJob/FinishingJob';
 
 // import  JobDetails from '../provider/jobs/JobDetails';
 
@@ -183,6 +188,42 @@ const stackNavigator = createStackNavigator(
         header: null,
       },
     },
+
+    NotPaidJob: {
+      screen: NotPaidJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    
+    WaitingJob: {
+      screen: WaitingJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    
+    TestingJob: {
+      screen: TestingJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    FeedbackJob: {
+      screen: FeedbackJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    FinishingJob: {
+      screen: FinishingJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
     Gallery: {
       screen: GalleryScreen,
       navigationOptions: {

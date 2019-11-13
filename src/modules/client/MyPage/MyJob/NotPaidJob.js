@@ -2,28 +2,22 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  ScrollView,
   Text
 } from 'react-native';
 import { connect } from 'react-redux';
-import { TextInput } from 'react-native-paper'
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'recompose';
-import moment from 'moment'
 
 import { fonts, colors } from '../../../../styles';
-import { Button, Loader, toast, JobDetail, Applicants} from '../../../../components';
+import { Loader, toast, JobDetail} from '../../../../components';
 
 import { getJob } from '../../../../redux/modules/job'
 import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
+import { NotPaidAction } from '../../../../components/JobActions';
 
-class BiddingJob extends React.Component {
+class NotPaidJob extends React.Component {
   constructor(props) {
     super(props)
-    
-    this.state = {
-      price: 0
-    }
   }
   componentWillMount() {
     const {getJob, navigation} = this.props
@@ -49,10 +43,17 @@ class BiddingJob extends React.Component {
         <View style={styles.description}>
          { <Loader
           loading={jobsloading} /> }
-         {job && <JobDetail job={job} />
-
-         }
-         {<Applicants applicants={job.applicants} navigation={this.props.navigation} jobID={job._id}/> }
+         <JobDetail job={job} />
+         <View style={styles.componentsSection}>
+          <Text size={14}>项目定价 : ¥{job.price}</Text>
+          <Text size={14}>项目首付款(20%) : ¥{job.price / 5}</Text>
+          <Text size={14}>项目尾款(80%) : ¥{job.price * 0.8}</Text>
+          <Text size={14}>首付款支付时间 : </Text>
+          <Text size={14}>尾款支付时间 : </Text>
+          <Text size={14}>定价 : ¥{job.price}</Text>
+          <Text size={14}>首付款 : ¥{job.price / 5}</Text>
+          <NotPaidAction />
+         </View>
          </View>
       </View>
     );
@@ -72,8 +73,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   buttonsContainer: {
+    alignItems: 'flex-end',
     alignSelf: 'stretch',
-    margin: 20
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 20
   },
   button: {
     marginBottom: 20,
@@ -117,4 +121,4 @@ const mapDispatchToProps = {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(BiddingJob);
+export default compose(withConnect)(NotPaidJob);

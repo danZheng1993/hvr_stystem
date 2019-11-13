@@ -4,26 +4,43 @@ import {
   View,
   ScrollView,
   Text,
+  TouchableOpacity
 } from 'react-native';
 import moment from 'moment'
 import {Button} from '../components'
+import {NotPaidAction, WaitingAction, TestingAction, FinishingAction, FeedbackAction} from '../components/JobActions'
 import { fonts, colors } from '../styles';
+import { TouchableRipple } from 'react-native-paper';
 
 handleClick = () => {
 
 }
+
+
 
 export default class JobsList extends React.Component {
   constructor(props) {
     super(props)
     
   }
+
+  handleNavigate = (status, id) => {
+    const {navigation} = this.props
+    if (status == '竞标中') navigation.navigate('BiddingJob', {id: id})
+    if (status == '待付款') navigation.navigate('NotPaidJob', {id: id})
+    if (status == '待拍摄') navigation.navigate('WaitingJob', {id: id})
+    if (status == '待验收') navigation.navigate('TestingJob', {id: id})
+    if (status == '评价') navigation.navigate('FeedbackJob', {id: id})
+    if (status == '已完成') navigation.navigate('FinishingJob', {id: id})
+  } 
+
   render() {   
     const {jobs, navigation} = this.props
     console.log(jobs)
     return (
         <ScrollView>          
          {jobs && jobs.map((job, index) => (
+          <TouchableRipple key={index} onPress={() => this.handleNavigate(job.status, job._id)}>
            <View key={index} style={styles.componentsSection}>
              <Text size={14}>订单信息 : <Text>{job.status}</Text></Text>
              <Text size={14}>订单编号 : <Text>{job._id}</Text></Text>
@@ -51,26 +68,7 @@ export default class JobsList extends React.Component {
                   <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
                   <Text size={14}>首付款50% : <Text>¥{job.price}</Text></Text>
                 </View>
-                <View style={styles.buttonsContainer}>
-                  <Button
-                    small
-                    style={styles.button}
-                    caption="联系服务商"
-                    onPress={this.handleClick}
-                  />
-                  <Button
-                    small
-                    style={styles.button}
-                    caption="取消订单"
-                    onPress={this.handleClick}
-                  />
-                  <Button
-                    small
-                    style={styles.button}
-                    caption="去支付"
-                    onPress={this.handleClick}
-                  />
-                </View>
+                <NotPaidAction />
               </View>}
              {job.status == '待拍摄' && 
               <View>
@@ -78,26 +76,7 @@ export default class JobsList extends React.Component {
                 <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
                 <Text size={14}>首付款已支付 : <Text>¥{job.price}</Text></Text>
               </View>
-              <View style={styles.buttonsContainer}>
-                <Button
-                  small
-                  style={styles.button}
-                  caption="联系服务商"
-                  onPress={this.handleClick}
-                />
-                <Button
-                  small
-                  style={styles.button}
-                  caption="取消订单"
-                  onPress={this.handleClick}
-                />
-                <Button
-                  small
-                  style={styles.button}
-                  caption="催一催"
-                  onPress={this.handleClick}
-                />
-              </View>
+              <WaitingAction />
             </View>}
              {job.status == '待验收' && 
               <View>
@@ -105,76 +84,25 @@ export default class JobsList extends React.Component {
                 <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
                 <Text size={14}>已支付首付款 : <Text>¥{job.price}</Text></Text>
               </View>
-              <View style={styles.buttonsContainer}>
-                <Button
-                  small
-                  style={styles.button}
-                  caption="联系服务商"
-                  onPress={this.handleClick}
-                />
-                <Button
-                  small
-                  style={styles.button}
-                  caption="查看视频"
-                  onPress={this.handleClick}
-                />
-                <Button
-                  small
-                  style={styles.button}
-                  caption="确认验收"
-                  onPress={this.handleClick}
-                />
-              </View>
+              <TestingAction />
             </View>}
              {job.status == '评价' && 
                <View>
                <View stye={styles.textContainer}>
                  <Text size={14}>订单总金额 : <Text>¥{job.price}</Text></Text>
                </View>
-               <View style={styles.buttonsContainer}>
-                 <Button
-                   small
-                   style={styles.button}
-                   caption="联系服务商"
-                   onPress={this.handleClick}
-                 />
-                 <Button
-                   small
-                   style={styles.button}
-                   caption="查看视频"
-                   onPress={this.handleClick}
-                 />
-                 <Button
-                   small
-                   style={styles.button}
-                   caption="评价"
-                   onPress={this.handleClick}
-                 />
-               </View>
+               <FeedbackAction />
              </View>}
              {job.status == '已完成' && 
               <View>
               <View stye={styles.textContainer}>
                 <Text size={14}>订单总金额 : <Text>¥{job.price}</Text></Text>
               </View>
-              <View style={styles.buttonsContainer}>
-                <Button
-                  small
-                  style={styles.button}
-                  caption="联系服务商"
-                  onPress={this.handleClick}
-                />
-                <Button
-                  small
-                  style={styles.button}
-                  caption="查看视频"
-                  onPress={this.handleClick}
-                />
-              </View>
+              <FinishingAction />
             </View>}
              
             </View>
-
+            </TouchableRipple>
          ))}
          </ScrollView>
     );

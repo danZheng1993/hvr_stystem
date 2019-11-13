@@ -12,9 +12,9 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import moment from 'moment'
 import { fonts, colors } from '../styles';
 import Button from './Button'
+import Confirm from './Confirm'
 import { hireJob } from '../redux/modules/job'
 import { jobsloadingSelector } from '../redux/selectors'
 
@@ -25,22 +25,11 @@ class Applicants extends React.Component {
   }
   handleClick= (hired) => {
     const {jobID, hireJob} = this.props
-    Alert.alert(
-      '提示',
-      '是否确认选用？',
-      [
-        {
-          text: '取消',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {text: '确认', onPress: () => hireJob({
+      Confirm('提示' ,'是否确认选用？', () => hireJob({
           id: jobID,
           body: { hired: hired},
-        })  },
-      ],
-      {cancelable: false},
-    );
+        })
+      )
   }
 
   render() {   
