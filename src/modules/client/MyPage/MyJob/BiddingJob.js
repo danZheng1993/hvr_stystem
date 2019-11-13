@@ -35,23 +35,6 @@ class BiddingJob extends React.Component {
     }
   }
 
-  handleClick = () => {
-    let {price} = this.state
-    let {applyJob, profile, navigation} = this.props
-    //  if (+price == 0) {
-    //    price = this.props.job.budget
-    //  }
-    let id = navigation.getParam('id', 'NO-ID')
-    if (id == 'NO-ID') {
-      alert("error")
-      return
-    }
-    applyJob({
-      id: id,
-      body: { applicant: profile._id, price},
-    })  
-  };
-
   handleContact =() => {
 
   } 
@@ -69,7 +52,7 @@ class BiddingJob extends React.Component {
          {job && <JobDetail job={job} />
 
          }
-         {<Applicants applicants={job.applicants} navigation={this.props.navigation} /> }
+         {<Applicants applicants={job.applicants} navigation={this.props.navigation} jobID={job._id}/> }
          </View>
       </View>
     );

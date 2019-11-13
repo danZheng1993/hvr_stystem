@@ -7,17 +7,24 @@ import {
   Image,
   Alert
 } from 'react-native';
+
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { createStructuredSelector } from 'reselect';
+
 import moment from 'moment'
 import { fonts, colors } from '../styles';
 import Button from './Button'
+import { hireJob } from '../redux/modules/job'
+import { jobsloadingSelector } from '../redux/selectors'
 
-export default class Profile extends React.Component {
+class Applicants extends React.Component {
   constructor(props) {
     super(props)
     
   }
-  handleClick= () => {
-    // this.props(hire)
+  handleClick= (hired) => {
+    const {jobID, hireJob} = this.props
     Alert.alert(
       '提示',
       '是否确认选用？',
@@ -27,7 +34,10 @@ export default class Profile extends React.Component {
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        {text: '确认', onPress: () => console.log('OK Pressed')},
+        {text: '确认', onPress: () => hireJob({
+          id: jobID,
+          body: { hired: hired},
+        })  },
       ],
       {cancelable: false},
     );
@@ -38,7 +48,7 @@ export default class Profile extends React.Component {
     return (
       <ScrollView style={styles.componentsSection} horizontal={true}>
         {applicants && applicants.map((applicant, index) => (
-          <View key={index} style={{borderWidth: 1, borderColor: colors.gray, borderRadius:10, margin: 10}}>
+          <View key={index} style={{borderWidth: 1, borderColor: colors.gray, borderRadius:10, marginRight: 10}}>
             {applicant.photo ? 
               <Image
                 source={{ uri: photo.uri }}
@@ -111,3 +121,16 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
 });
+
+
+const mapStateToProps = createStructuredSelector({
+  jobsloading: jobsloadingSelector,
+});
+
+const mapDispatchToProps = {
+  hireJob,
+};
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(Applicants);

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Job = require('../models/job.model');
 const ROLES = require('../constants/role');
-
+const STATUS = require('../constants/status')
 function create(req, res, next) {
   const job = new Job(req.body);
  // job.user = req.user._id;
@@ -30,6 +30,18 @@ function apply(req, res, next) {
   if (req.body.applicant && req.body.price) {
     req.job.applicants.push({applicant: req.body.applicant, price: req.body.price})
   }
+  req.job.save()
+  .then((updatedJob) => {
+    res.json(updatedJob);
+  })
+  .catch(next);
+}
+
+function hire(req, res, next) {
+  console.log("hire?")
+
+  Object.assign(req.job, {...req.body, status: STATUS.NOT_PAID});
+  console.log(req.body)
   req.job.save()
   .then((updatedJob) => {
     res.json(updatedJob);
@@ -133,6 +145,7 @@ module.exports = {
   apply,
   remove,
   search,
+  hire,
   weeklyReport,
   getJobByID,
 };
