@@ -23,11 +23,11 @@ class Applicants extends React.Component {
     super(props)
     
   }
-  handleClick= (hired) => {
+  handleClick= (applicant) => {
     const {jobID, hireJob} = this.props
       Confirm('提示' ,'是否确认选用？', () => hireJob({
           id: jobID,
-          body: { hired: hired},
+          body: { hired: applicant.applicant, price: applicant.price},
         })
       )
   }
@@ -38,16 +38,11 @@ class Applicants extends React.Component {
       <ScrollView style={styles.componentsSection} horizontal={true}>
         {applicants && applicants.map((applicant, index) => (
           <View key={index} style={{borderWidth: 1, borderColor: colors.gray, borderRadius:10, marginRight: 10}}>
-            {applicant.photo ? 
-              <Image
-                source={{ uri: photo.uri }}
-                style={styles.photo}
-              /> :
+            
               <Image
                 source={require('../../assets/images/takePhoto.png')}
                 style={styles.photo}
               />
-              }
             {/* <Text size={14}><Text>{applicant.applicant}</Text></Text> */}
             <Text size={14}>报价 : ¥{applicant.price}</Text>
             <View style={styles.buttonsContainer}>
@@ -64,7 +59,7 @@ class Applicants extends React.Component {
                 small
                 style={styles.button}
                 caption="选用"
-                onPress={() => this.handleClick(applicant.applicant)}
+                onPress={() => this.handleClick(applicant)}
               />
             </View>
           </View>

@@ -48,14 +48,22 @@ const JobSchema = new Schema({
     type: String,
     default: ''
   },
+
+  systembudget: {
+    type: Number,
+    default: 0,
+  },
+
   budget: {
     type: Number,
     default: 0,
   },
+
   price: {
     type: Number,
     default: 0,
   },
+
   description: {
     type: String,
     default: '',
@@ -68,6 +76,10 @@ const JobSchema = new Schema({
     type: Array
   },
   hired: {
+    type: String,
+    default: ''
+  },
+  feedback: {
     type: String,
     default: ''
   },

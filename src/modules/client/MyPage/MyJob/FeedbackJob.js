@@ -11,13 +11,16 @@ import { compose } from 'recompose';
 import { fonts, colors } from '../../../../styles';
 import { Loader, toast, JobDetail} from '../../../../components';
 
-import { getJob } from '../../../../redux/modules/job'
+import { getJob, updateJobStatus } from '../../../../redux/modules/job'
 import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
 import { FeedbackAction } from '../../../../components/JobActions';
 
 class FeedbackJob extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      isDialogVisible : false
+    }
   }
   componentWillMount() {
     const {getJob, navigation} = this.props
@@ -33,13 +36,16 @@ class FeedbackJob extends React.Component {
 
   } 
   
+  onClickFeedback = () => {
+    alert("aaa")
+    this.setState({isDialogVisible: true})
+  }
   render() {
     
     const {job, jobsloading} = this.props
-    console.log(job)
-
     return (
       <View style={styles.container}>
+       
         <View style={styles.description}>
          { <Loader
           loading={jobsloading} /> }
@@ -48,7 +54,7 @@ class FeedbackJob extends React.Component {
           <Text size={14}>首付款支付时间 : </Text>
           <Text size={14}>尾款支付时间 : </Text>
           <Text size={14}>订单总金额 : ¥{job.price}</Text>
-          <FeedbackAction />
+          <FeedbackAction navigation={this.props.navigation} id={job._id} />
          </View>
          </View>
       </View>
@@ -112,7 +118,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  getJob
+  getJob,
+  updateJobStatus
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

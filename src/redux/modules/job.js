@@ -12,6 +12,7 @@ export const UPDATE_JOB = 'UPDATE_JOB'
 export const DELETE_JOB = 'DELETE_JOB'
 export const APPLY_JOB = 'APPLY_JOB'
 export const HIRE_JOB = 'HIRE_JOB'
+export const UPDATE_JOB_STATUS = 'UPDATE_JOB_STATUS'
 export const SEARCH_JOB = 'SEARCH_JOB'
 export const SET_JOBS_PAGINATION = 'SET_JOBS_PAGINATION'
 
@@ -26,6 +27,7 @@ export const updateJob = createAction(UPDATE_JOB)
 export const deleteJob = createAction(DELETE_JOB)
 export const applyJob = createAction(APPLY_JOB)
 export const hireJob = createAction(HIRE_JOB)
+export const updateJobStatus = createAction(UPDATE_JOB_STATUS)
 export const searchJob = createAction(SEARCH_JOB)
 
 const initialState = {
@@ -189,6 +191,28 @@ export default handleActions({
   [requestFail(HIRE_JOB)]: (state, { payload }) => ({
     ...state,
     status: requestFail(HIRE_JOB),
+    error: payload,
+    loading: false
+  }),
+
+  [requestPending(UPDATE_JOB_STATUS)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(UPDATE_JOB_STATUS),
+    error: null,
+    loading: true,
+  }),
+
+  [requestSuccess(UPDATE_JOB_STATUS)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(UPDATE_JOB_STATUS),
+    job: payload,
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(UPDATE_JOB_STATUS)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(UPDATE_JOB_STATUS),
     error: payload,
     loading: false
   }),

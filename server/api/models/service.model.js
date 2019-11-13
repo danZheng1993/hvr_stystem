@@ -5,6 +5,9 @@ const ServiceSchema = new Schema({
   name: {
     type: String,
   },
+  service: {
+    type: String,
+  },
 }, {
   timestamp: true,
 });

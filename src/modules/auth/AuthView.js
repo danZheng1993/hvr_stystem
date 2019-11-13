@@ -20,8 +20,7 @@ export default function AuthScreen(props) {
   };
   return (
     <View style={commonStyles.container}>
-      <Location />
-      {/* <View style={commonStyles.logo}>
+      <View style={commonStyles.logo}>
         <Image
             style={{width: 100, height: 100 }}
             source={require('../../../assets/images/icon.png')}
@@ -48,7 +47,7 @@ export default function AuthScreen(props) {
           caption="注册"
           onPress={() => handleSignup()}
         />
-      </View> */}
+      </View>
     </View>
   );
 }

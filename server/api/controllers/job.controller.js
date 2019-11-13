@@ -24,7 +24,7 @@ function update(req, res, next) {
 }
 
 function apply(req, res, next) {
-  console.log("apply?")
+  console.log("applied!")
   // Object.assign(req.job, req.body);
   console.log(req.body)
   if (req.body.applicant && req.body.price) {
@@ -38,9 +38,21 @@ function apply(req, res, next) {
 }
 
 function hire(req, res, next) {
-  console.log("hire?")
+  console.log("hire!!!")
 
   Object.assign(req.job, {...req.body, status: STATUS.NOT_PAID});
+  console.log(req.body)
+  req.job.save()
+  .then((updatedJob) => {
+    res.json(updatedJob);
+  })
+  .catch(next);
+}
+
+function updateStatus(req, res, next) {
+  console.log("update Status?")
+
+  Object.assign(req.job, {...req.body, status: STATUS.FINISHED});
   console.log(req.body)
   req.job.save()
   .then((updatedJob) => {
@@ -146,6 +158,7 @@ module.exports = {
   remove,
   search,
   hire,
+  updateStatus,
   weeklyReport,
   getJobByID,
 };

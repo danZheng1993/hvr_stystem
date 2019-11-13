@@ -54,32 +54,45 @@ class PostJob extends React.Component {
       description: '',
       budget: '',
       count: '',
-      isPublic: false
+      isPublic: false,
+      serviceOptions : []
     }
   }
 
   componentWillMount() {
     const {types, services, subcategories, scenes} = this.props
-    types.pop()
-    services.pop()
-    subcategories.pop()
-    scenes.pop()
+    types && types.pop()
+    subcategories && subcategories.pop()
+    scenes && scenes.pop()
+    services && services.pop()
+    console.log(types, subcategories, scenes)
+    types && this.setState({type: types[0].name})
+    scenes && this.setState({scene: scenes[0].name})
+    subcategories && this.setState({subcategory: subcategories[0].name})
     this.setState({ types, services, subcategories, scenes})
   }
 
   handleClick = () => {
-    const {subcategory, scene, type, description, budget, isPublic} = this.state
+    const {subcategory, scene, type, description, budget, isPublic, serviceOptions, services, count} = this.state
     const { profile} = this.props
+    let str = ''
+    for (let i=0; i<serviceOptions.length; i++) {
+      str += services[serviceOptions[i]].service + ' '
+    }
     this.props.createJob({
-      body: {subcategory, scene, type, description, budget, isPublic, creator: profile._id, location: 'beijing'},
+      body: {subcategory, scene, type, description, budget, isPublic, creator: profile._id, location: '北京', services: str, count},
     })
   };
 
   onhandleService = (value, index) => {
-    const {services} = this.state
-    let str = ''
-    if (value) str = services[index].name
-    this.setState({service: str})
+    let {serviceOptions} = this.state
+    let option = serviceOptions.indexOf(index)
+    if (value && option == -1) {
+      serviceOptions.push(index)
+    } else if(!value && option != -1) {
+      serviceOptions.splice(index, 1);
+    }
+    this.setState({serviceOptions})
   }
 
   render() { 
@@ -146,7 +159,7 @@ class PostJob extends React.Component {
                 </Text>
                 <RadioForm
                   radio_props={this.state.radioGroup}
-                  initial={0}
+                  initial={1}
                   formHorizontal={true}
                   labelHorizontal={true}
                   buttonColor={'#2196f3'}
@@ -187,7 +200,7 @@ class PostJob extends React.Component {
               </Text>
               <RadioForm
                 radio_props={this.state.radioGroup}
-                initial={0}
+                initial={1}
                 formHorizontal={true}
                 labelHorizontal={true}
                 buttonColor={'#2196f3'}

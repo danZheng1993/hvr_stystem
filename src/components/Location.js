@@ -1,9 +1,7 @@
-import React, { Component } from 'react'
-import {
-	View, Text
-} from 'react-native'
+import React, {Component} from 'react'
+import {View, Text, TouchableOpacity} from 'react-native'
 import AlphabetListView from 'react-native-alphabetlistview'
-class SectionHeader extends React.Component {
+class SectionHeader extends Component {
 	render() {
 	  // inline styles used for brevity, use a stylesheet when possible
 	  var textStyle = {
@@ -24,57 +22,62 @@ class SectionHeader extends React.Component {
 	}
   }
   
-  class SectionItem extends React.Component {
+  class SectionItem extends Component {
 	render() {
 	  return (
-		<Text style={{color:'#f00'}}>{this.props.title}</Text>
+		<Text style={{color:'#000'}}>{this.props.title}</Text>
 	  );
 	}
   }
   
-  class Cell extends React.Component {
+  class Cell extends Component {
 	render() {
 	  return (
-		<View style={{height:30}}>
-		  <Text>{this.props.item}</Text>
+			<TouchableOpacity onPress={() => alert(this.props.item)} style={{backgroundColor: 'white'}}>
+		<View style={{height:50, margin: 5, backgroundColor: 'white', borderBottomColor: 'gray', borderBottomWidth:1}}>
+				<Text size={58}>{this.props.item}</Text>	
 		</View>
+			</TouchableOpacity>
 	  );
 	}
   }
   
-export default class Location extends React.Component {
+export default class Location extends Component {
   
-	constructor(props) {
-	  super(props);
+	constructor(props, context) {
+	  super(props, context);
   
 	  this.state = {
 		data: {
-		  A: ['some','entries','are here'],
-		  B: ['some','entries','are here'],
-		  C: ['some','entries','are here'],
-		  D: ['some','entries','are here'],
-		  E: ['some','entries','are here'],
-		  F: ['some','entries','are here'],
-		  G: ['some','entries','are here'],
-		  H: ['some','entries','are here'],
-		  I: ['some','entries','are here'],
-		  J: ['some','entries','are here'],
-		  K: ['some','entries','are here'],
-		  L: ['some','entries','are here'],
-		  M: ['some','entries','are here'],
-		  N: ['some','entries','are here'],
-		  O: ['some','entries','are here'],
-		  P: ['some','entries','are here'],
-		  Q: ['some','entries','are here'],
-		  R: ['some','entries','are here'],
-		  S: ['some','entries','are here'],
-		  T: ['some','entries','are here'],
-		  U: ['some','entries','are here'],
-		  V: ['some','entries','are here'],
-		  W: ['some','entries','are here'],
-		  X: ['some','entries','are here'],
-		  Y: ['some','entries','are here'],
-		  Z: ['some','entries','are here'],
+		当前: ['全国'],
+		位: ['全国'],
+		热门: ['全国','北京','深圳','山海','广州','重庆','成都','杭州'],
+		  A: ['北京','深圳','山海'],
+		  B: ['北京','深圳','山海'],
+		  C: ['北京','深圳','山海'],
+		  D: ['北京','深圳','山海'],
+		  E: ['北京','深圳','山海'],
+		  F: ['北京','深圳','山海'],
+		  G: ['北京','深圳','山海'],
+		  H: ['北京','深圳','山海'],
+		  I: ['北京','深圳','山海'],
+		  J: ['北京','深圳','山海'],
+		  K: ['北京','深圳','山海'],
+		  L: ['北京','深圳','山海'],
+		  M: ['北京','深圳','山海'],
+		  N: ['北京','深圳','山海'],
+		  O: ['北京','深圳','山海'],
+		  P: ['北京','深圳','山海'],
+		  Q: ['北京','深圳','山海'],
+		  R: ['北京','深圳','山海'],
+		  S: ['北京','深圳','山海'],
+		  T: ['北京','深圳','山海'],
+		  U: ['北京','深圳','山海'],
+		  V: ['北京','深圳','山海'],
+		  W: ['北京','深圳','山海'],
+		  X: ['北京','深圳','山海'],
+		  Y: ['北京','深圳','山海'],
+		  Z: ['北京','深圳','山海'],
 		}
 	  };
 	}

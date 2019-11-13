@@ -19,6 +19,9 @@ router.route('/apply/:jobId')
 router.route('/hire/:jobId')
   .put(jobCtrl.hire);
 
+  router.route('/updateStatus/:jobId')
+  .put(jobCtrl.updateStatus);
+
 router.route('/:jobId')
   .get(jobCtrl.read)
   .put(jobCtrl.update)

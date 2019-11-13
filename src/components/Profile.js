@@ -18,16 +18,11 @@ export default class Profile extends React.Component {
     const {user, navigation} = this.props
     return (
       <View style={styles.componentsSection}>
-        {user.photo ? 
-          <Image
-            source={{ uri: photo.uri }}
-            style={styles.photo}
-          /> :
+
           <Image
             source={require('../../assets/images/takePhoto.png')}
             style={styles.photo}
           />
-          }
         <Text size={14}><Text>{user.userName}</Text></Text>
         <Text size={14}><Text>{user.description}</Text></Text>
         {/* <Text size={14}><Text>{user.photo}</Text></Text>

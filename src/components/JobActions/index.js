@@ -80,7 +80,7 @@ const TestingAction = props => {
   )
 }
 
-const FeedbackAction = props => {
+const FeedbackAction = ({navigation,id}) => {
   return (
     <View style={styles.buttonsContainer}>
       <Button
@@ -99,7 +99,7 @@ const FeedbackAction = props => {
         small
         style={styles.button}
         caption="评价"
-        onPress={this.handleClick}
+        onPress={() => navigation.navigate('GiveFeedback', {id: id})}
       />
     </View>
   )

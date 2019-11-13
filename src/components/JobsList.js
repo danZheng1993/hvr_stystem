@@ -91,7 +91,7 @@ export default class JobsList extends React.Component {
                <View stye={styles.textContainer}>
                  <Text size={14}>订单总金额 : <Text>¥{job.price}</Text></Text>
                </View>
-               <FeedbackAction />
+               <FeedbackAction navigation={navigation} id={job._id}/>
              </View>}
              {job.status == '已完成' && 
               <View>

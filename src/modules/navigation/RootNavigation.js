@@ -48,6 +48,7 @@ import WaitingJob from '../client/MyPage/MyJob/WaitingJob';
 import TestingJob from '../client/MyPage/MyJob/TestingJob';
 import FeedbackJob from '../client/MyPage/MyJob/FeedbackJob';
 import FinishingJob from '../client/MyPage/MyJob/FinishingJob';
+import GiveFeedback from '../client/MyPage/MyJob/GiveFeedback';
 
 // import  JobDetails from '../provider/jobs/JobDetails';
 
@@ -56,7 +57,7 @@ const headerBackground = require('../../../assets/images/topBarBg.png');
 const stackNavigator = createStackNavigator(
   {
     Main: {
-      screen: LoginWithPassword,
+      screen: HomeScreen,
       navigationOptions: {
         header: null,
       },
@@ -212,6 +213,13 @@ const stackNavigator = createStackNavigator(
 
     FeedbackJob: {
       screen: FeedbackJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    GiveFeedback: {
+      screen: GiveFeedback,
       navigationOptions: {
         header: null,
       },

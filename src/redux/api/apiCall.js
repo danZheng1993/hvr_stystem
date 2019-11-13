@@ -4,7 +4,7 @@ import { get } from 'lodash'
 import { requestFail, requestPending, requestSuccess } from './request'
 import { AsyncStorage } from 'react-native'
 const defaultHeaders = () => {
-  // let auth = false
+  let auth = false
   AsyncStorage.getItem('hvr_auth').then(res => {
     auth = res  
   });
