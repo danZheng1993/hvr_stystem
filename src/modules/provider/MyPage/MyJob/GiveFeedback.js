@@ -10,8 +10,6 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
 import { updateJobStatus } from '../../../../redux/modules/job'
-import { createFeedback } from '../../../../redux/modules/feedback'
-import { profileSelector } from '../../../../redux/selectors'
 
 class GiveFeedback extends React.Component {
   constructor(props) {
@@ -32,17 +30,10 @@ class GiveFeedback extends React.Component {
 
   handleClick = () => {
     const {feedback, id} = this.state
-    const {profile} = this.props
-    if (id != '') {
-      this.props.updateJobStatus({
-        id: id,
-        body:{feedback},
-      })
-    } else {
-      this.props.createFeedback({
-        body: {content: feedback, sender: profile._id}
-      })
-    }
+    this.props.updateJobStatus({
+      id: id,
+      body:{feedback},
+    })
   };
   
 
@@ -109,12 +100,10 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = createStructuredSelector({
-  profile: profileSelector
 });
 
 const mapDispatchToProps = {
   updateJobStatus,
-  createFeedback
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

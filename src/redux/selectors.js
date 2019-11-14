@@ -63,6 +63,18 @@ export const scenesListSelector = (state) =>
 export const sceneStateSelector = (state) =>
   get(state, 'scene', {})
 
+export const feedbackDetailSelector = (state) =>
+  get(state, 'feedback.feedback', {})
+
+export const feedbacksListSelector = (state) =>
+  get(state, 'feedback.feedbacks', [])
+
+  export const feedbacksloadingSelector = (state) =>
+  get(state, 'feedback.loading', false)
+
+export const feedbackStateSelector = (state) =>
+  get(state, 'feedback', {})
+
 export const serviceDetailSelector = (state) =>
   get(state, 'service.service', {})
 

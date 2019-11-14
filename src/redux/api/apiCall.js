@@ -10,7 +10,7 @@ const defaultHeaders = () => {
   });
 
   //axios.defaults.baseURL = process.env.API_ROOT + '/'
-  axios.defaults.baseURL = 'http://198.18.29.191:4000/'
+  axios.defaults.baseURL = 'http://198.18.59.108:4000/'
   let headers = {
     'Accept': '*/*',
     'Content-Type': 'application/json'

@@ -6,6 +6,7 @@ import auth from './modules/auth'
 import tracking from './modules/tracking'
 import type from './modules/type'
 import scene from './modules/scene'
+import feedback from './modules/feedback'
 import service from './modules/service'
 import subcategory from './modules/subcategory'
 import user from './modules/user'
@@ -27,5 +28,6 @@ export default combineReducers({
   scene,
   service,
   job,
+  feedback,
   subcategory
 })

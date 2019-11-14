@@ -108,6 +108,7 @@ class MyPage extends React.Component {
               name="basecamp"
               size={25}
               color="#5759CB"
+              onPress={() => this.props.navigation.navigate({ routeName: 'GiveFeedback' })}
             />
             <Icon style={styles.demoIcon} name="note" size={25} color="#5759CB" />
             <Icon

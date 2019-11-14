@@ -50,6 +50,14 @@ import FeedbackJob from '../client/MyPage/MyJob/FeedbackJob';
 import FinishingJob from '../client/MyPage/MyJob/FinishingJob';
 import GiveFeedback from '../client/MyPage/MyJob/GiveFeedback';
 
+import ProviderJob from '../provider/MyPage/MyJob'
+import ProviderBiddingJob from '../provider/MyPage/MyJob/BiddingJob';
+import ProviderNotPaidJob from '../provider/MyPage/MyJob/NotPaidJob';
+import ProviderWaitingJob from '../provider/MyPage/MyJob/WaitingJob';
+import ProviderTestingJob from '../provider/MyPage/MyJob/TestingJob';
+import ProviderFeedbackJob from '../provider/MyPage/MyJob/FeedbackJob';
+import ProviderFinishingJob from '../provider/MyPage/MyJob/FinishingJob';
+import ProviderGiveFeedback from '../provider/MyPage/MyJob/GiveFeedback';
 // import  JobDetails from '../provider/jobs/JobDetails';
 
 const headerBackground = require('../../../assets/images/topBarBg.png');
@@ -227,6 +235,62 @@ const stackNavigator = createStackNavigator(
 
     FinishingJob: {
       screen: FinishingJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    ProviderJob: {
+      screen: ProviderJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    ProviderBiddingJob: {
+      screen: ProviderBiddingJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    ProviderNotPaidJob: {
+      screen: ProviderNotPaidJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    
+    ProviderWaitingJob: {
+      screen: ProviderWaitingJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    
+    ProviderTestingJob: {
+      screen: ProviderTestingJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    ProviderFeedbackJob: {
+      screen: ProviderFeedbackJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    ProviderGiveFeedback: {
+      screen: ProviderGiveFeedback,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    ProviderFinishingJob: {
+      screen: ProviderFinishingJob,
       navigationOptions: {
         header: null,
       },

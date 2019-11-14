@@ -62,7 +62,7 @@ class ProviderDetail extends React.Component {
             onChange={index => this.handleSelect(index)}
           />
           {select ?
-            <ProviderFeedbacks /> : <ProviderWorks />
+            <ProviderFeedbacks id={user._id}/> : <ProviderWorks id={user._id}/>
           }
           </View>
          <View style={styles.buttonsContainer}>

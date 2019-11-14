@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from 'react-navigation';
 
 import { colors, fonts } from '../../styles';
 
-import ComponentsScreen from '../components/ComponentsViewContainer';
+import MyPage from './MyPage';
 import JobsList from './jobs/JobsList'
 
 const styles = StyleSheet.create({
@@ -56,7 +56,7 @@ export default createBottomTabNavigator(
       },
     },
     我的: {
-      screen: ComponentsScreen,
+      screen: MyPage,
       navigationOptions: {
         
       },

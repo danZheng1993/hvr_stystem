@@ -4,6 +4,7 @@ import tracking from './tracking'
 import user from './user'
 import type from './type'
 import scene from './scene'
+import feedback from './feedback'
 import service from './service'
 import job from './job'
 import subcategory from './subcategory'
@@ -18,5 +19,6 @@ export default function* rootSaga () {
     service(),
     subcategory(),
     job(),
+    feedback(),
   ])
 }

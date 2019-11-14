@@ -3,54 +3,60 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Text,
+  Text
 } from 'react-native';
-
 import { connect } from 'react-redux';
-import { compose, withState } from 'recompose';
+import { TextInput } from 'react-native-paper'
 import { createStructuredSelector } from 'reselect';
-import { Button, Loader,} from '../../../components';
-import { fonts, colors } from '../../../styles';
+import { compose } from 'recompose';
+import moment from 'moment'
 
-import { searchJob } from '../../../redux/modules/job'
-import { jobsListSelector, jobsloadingSelector } from '../../../redux/selectors'
+import { fonts, colors } from '../../../../styles';
+import { Button, Loader, toast, JobDetail, Applicants} from '../../../../components';
 
-class ProviderFeedbacks extends React.Component {
+import { getJob } from '../../../../redux/modules/job'
+import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
+
+class BiddingJob extends React.Component {
   constructor(props) {
     super(props)
+    
     this.state = {
-      select: 0
+      price: 0
+    }
+  }
+  componentWillMount() {
+    const {getJob, navigation} = this.props
+    let id = navigation.getParam('id', 'NO-ID')
+    if (id != 'NO-ID') {
+      getJob({
+        id: id,
+      })
     }
   }
 
-  handleClick =() => {
+  handleContact =() => {
 
-  }
-
-  componentWillMount() {
-    const {searchJob, id} = this.props
-    searchJob({
-      body: {hired: id, status: '已完成'}
-    })
-  }
-
-
+  } 
+  
   render() {
-    const {jobs, loading} = this.props
+    
+    const {job, jobsloading} = this.props
+    console.log(job)
+
     return (
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.description}>
          { <Loader
-          loading={loading} /> }
-          {jobs && jobs.map((job, index) => (
-            <View key={index}>
-              <Text>{job.feedback}</Text>
-            </View>
-          ))}
-        </View>
-      </ScrollView>
+          loading={jobsloading} /> }
+         {job && <JobDetail job={job} />
+
+         }
+         {<Applicants applicants={job.applicants} navigation={this.props.navigation} jobID={job._id}/> }
+         </View>
+      </View>
     );
-  }
+    }
 }
 
 const styles = StyleSheet.create({
@@ -100,14 +106,15 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  jobs: jobsListSelector,
-  loading: jobsloadingSelector,
+  job: jobDetailSelector,
+  jobsloading: jobsloadingSelector,
+  profile: profileSelector
 });
 
 const mapDispatchToProps = {
-  searchJob
+  getJob
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(ProviderFeedbacks);
+export default compose(withConnect)(BiddingJob);

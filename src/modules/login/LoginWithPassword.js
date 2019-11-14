@@ -23,8 +23,8 @@ class LoginWithPassword extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      phoneNumber: '11111111111',
-      password: '111111',
+      phoneNumber: '22222222222',
+      password: '222222',
     }
   }
   handleClick = () => {
