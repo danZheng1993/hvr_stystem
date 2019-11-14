@@ -18,13 +18,13 @@ const authMiddleware = expressJwt({ secret: config.jwtSecret });
 
 router.use('/auth', authRoute);
 router.use('/records', authMiddleware, recordRoute);
-router.use('/users', userRoute);
+router.use('/users', authMiddleware, userRoute);
 router.use('/profile', authMiddleware, profileRoute);
-router.use('/types',  typeRoute);
-router.use('/feedbacks',  feedbackRoute);
-router.use('/scenes',  sceneRoute);
-router.use('/subcategorys',  subcategoryRoute);
-router.use('/services',  serviceRoute);
-router.use('/jobs', jobRoute);
+router.use('/types', typeRoute);
+router.use('/feedbacks', authMiddleware, feedbackRoute);
+router.use('/scenes', sceneRoute);
+router.use('/subcategorys', subcategoryRoute);
+router.use('/services', serviceRoute);
+router.use('/jobs', authMiddleware, jobRoute);
 
 module.exports = router;

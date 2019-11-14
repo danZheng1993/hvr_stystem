@@ -1,34 +1,42 @@
 import React from 'react'
 import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { TextInput } from 'react-native-paper';
+import PhotoUpload from 'react-native-photo-upload'
 
 import ImagePicker from 'react-native-image-picker'
 import { colors } from '../../styles'
-import { Button } from '../../components';
+import { Button, Profile } from '../../components';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
 import { saveProfile } from '../../redux/modules/auth'
-
+import { profileSelector } from '../../redux/selectors'
+import uploadFile from '../../redux/api/upload'
 class BasicProfile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       photo: null,
-      photoData: null,
       userName: '',
       overview: ''
     }
   }
 
   handleClick = () => {
-    const {userName, photo, overview, photoData} = this.state
-    console.log("photodata", photoData)
-    this.props.saveProfile({
-      body:{userName, overview, photoData},
-    })
+    const {userName, photo, overview,} = this.state
+    const {profile} = this.props
+    if (photo) {
+      uploadFile('profile/me', 'post',this.createFormData(photo, { type: "photo", id: profile._id }))
+      .then(res => console.log(res))
+      .catch(err => alert(err))
+    }
+    if (userName || overview) {
+      this.props.saveProfile({
+        body: {userName, overview}
+      })
+    }
     this.props.navigation.navigate({ routeName: 'ShootingID' })
   };
   
@@ -55,38 +63,35 @@ class BasicProfile extends React.Component {
         alert(response.customButton);
       } else {
         let source = response;
-        // You can also display the image using data:
-        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-       
-        const data = new FormData();
-        data.append('name', 'avatar');
-        data.append('fileData', {
-          uri : response.uri,
-          type: response.type,
-          name: response.fileName
-        });
-        console.log(data)
         this.setState({
           photo: source,
-          photoData: data
         });
       }
     });
-    // const options = {
-    //   noData: true,
-    // }
-    // ImagePicker.launchImageLibrary(options, response => {
-    //   if (response.uri) {
-    //     this.setState({ photo: response })
-    //   }
-    // })
   }
+
+  createFormData = (photo, body) => {
+    const data = new FormData();
+  
+    data.append("photo", {
+      name: photo.fileName,
+      type: photo.type,
+      uri: photo.uri
+        // Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+    });
+  
+    Object.keys(body).forEach(key => {
+      data.append(key, body[key]);
+    });
+    console.log("uplaod", data)
+    return data;
+  };
 
   render() {
     const { photo } = this.state
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.handleChoosePhoto}>
+         <TouchableOpacity onPress={this.handleChoosePhoto}>
           {photo ? 
           <Image
             source={{ uri: photo.uri }}
@@ -99,7 +104,7 @@ class BasicProfile extends React.Component {
             onPress={this.handleChoosePhoto}
           />
           }    
-        </TouchableOpacity>
+        </TouchableOpacity> 
         <View style={styles.description}>
         <TextInput
             style={styles.input}
@@ -167,6 +172,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = createStructuredSelector({
+  profile: profileSelector
 });
 
 const mapDispatchToProps = {

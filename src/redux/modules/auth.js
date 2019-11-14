@@ -31,14 +31,8 @@ export const sendcode = createAction(SEND_CODE)
 export const getProfile = createAction(GET_PROFILE)
 export const saveProfile = createAction(SAVE_PROFILE)
 
-const getInitialState = () => {
-  let authRestore
-  AsyncStorage.getItem('hvr_auth').then(res => {
-    if (res)
-      authRestore = JSON.parse(res)
-    else 
-      authRestore = null
-  })
+const getInitialState = async () => {
+  let authRestore = await JSON.parse(AsyncStorage.getItem('hvr_auth')) || null    
   console.log("authRestore", authRestore)
   return authRestore ? {
     token: authRestore.token,
@@ -56,7 +50,8 @@ const getInitialState = () => {
     loading: false
   }
 }
-
+var initialState = {}
+getInitialState().then(val => initialState = val)
 // ------------------------------------
 // Reducer
 // ------------------------------------
@@ -170,7 +165,7 @@ export default handleActions({
   
   [requestPending(SAVE_PROFILE)]: (state, { payload }) => ({
     ...state,
-    status: requestPending(DO_LOGIN),
+    status: requestPending(SAVE_PROFILE),
     error: null,
     loading: true,
     
@@ -184,4 +179,4 @@ export default handleActions({
     loading: false
   })
 
-}, getInitialState())
+}, initialState)

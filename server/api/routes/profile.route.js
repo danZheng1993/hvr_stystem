@@ -7,6 +7,6 @@ router.use(userCtrl.getProfile);
 
 router.route('/me')
   .get(userCtrl.read)
-  .patch(userCtrl.updateOne);
-
+  .patch(userCtrl.updateOne)
+  .post(userCtrl.uploadFile);
 module.exports = router;

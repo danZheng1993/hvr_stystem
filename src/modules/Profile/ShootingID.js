@@ -12,6 +12,8 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
 import { saveProfile } from '../../redux/modules/auth'
+import uploadFile from '../../redux/api/upload'
+import { profileSelector } from '../../redux/selectors'
 
 class ShootingID extends React.Component {
   constructor(props) {
@@ -22,8 +24,38 @@ class ShootingID extends React.Component {
     backPhoto: null
   }
   handleClick = () => {
+    const {frontPhoto, backPhoto,} = this.state
+    const {profile} = this.props
+    if (frontPhoto) {
+      uploadFile('profile/me', 'post',this.createFormData(frontPhoto, { type: "frontID", id: profile._id }))
+      .then(res => console.log(res))
+      .catch(err => alert(err))
+    }
+    if (backPhoto) {
+      uploadFile('profile/me', 'post',this.createFormData(backPhoto, { type: "backID", id: profile._id }))
+      .then(res => console.log(res))
+      .catch(err => alert(err))
+    }
     this.props.navigation.navigate({ routeName: 'CompanyInfo' })
   };
+  
+  createFormData = (photo, body) => {
+    const data = new FormData();
+  
+    data.append("photo", {
+      name: photo.fileName,
+      type: photo.type,
+      uri: photo.uri
+        // Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+    });
+  
+    Object.keys(body).forEach(key => {
+      data.append(key, body[key]);
+    });
+    console.log("uplaod", data)
+    return data;
+  };
+
   handleChooseFrontPhoto = () => {
     var options = {
       title: 'Select Image',
@@ -47,17 +79,6 @@ class ShootingID extends React.Component {
         alert(response.customButton);
       } else {
         let source = response;
-        // You can also display the image using data:
-        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-       
-        const data = new FormData();
-        data.append('name', 'avatar');
-        data.append('fileData', {
-          uri : response.uri,
-          type: response.type,
-          name: response.fileName
-        });
-        console.log(data)
         this.setState({
           frontPhoto: source,
         });
@@ -87,17 +108,6 @@ class ShootingID extends React.Component {
         alert(response.customButton);
       } else {
         let source = response;
-        // You can also display the image using data:
-        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-       
-        const data = new FormData();
-        data.append('name', 'avatar');
-        data.append('fileData', {
-          uri : response.uri,
-          type: response.type,
-          name: response.fileName
-        });
-        console.log(data)
         this.setState({
           backPhoto: source,
         });
@@ -206,6 +216,7 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
+  profile: profileSelector
 });
 
 const mapDispatchToProps = {

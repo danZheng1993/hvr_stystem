@@ -14,12 +14,12 @@ const userSchema = new Schema({
   location: { type: String, trim: true, default: '' },
   overview: { type: String, trim: true, default: '' },
   
-  photo: { type: String, trim: true, default: '' },
-  frontID: { type: String, trim: true,  },
-  backID: { type: String, trim: true,  },
+  photo: { type: String, trim: true, default: 'default.png' },
+  frontID: { type: String, trim: true, default: 'default.png' },
+  backID: { type: String, trim: true,  default: 'default.png'},
   password: { type: String, select: false, required: true },
   companyName: { type: String, select: false, },
-  companyLicense: { type: String, select: false, },
+  companyLicense: { type: String, select: false, default: 'default.png'},
   balance: { type: Number, trim: true, default: 0 }, 
 
   role: { type: String, enum: Object.values(ROLES), default: ROLES.PROVIDER },

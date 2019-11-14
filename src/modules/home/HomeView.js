@@ -14,6 +14,7 @@ import { getSubcategorys } from '../../redux/modules/subcategory';
 import { getTypes } from '../../redux/modules/type'
 import { getScenes } from '../../redux/modules/scene'
 import { getServices } from '../../redux/modules/service'
+import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
 
 class HomeScreen extends React.Component {
@@ -32,13 +33,21 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
     this.timer = setTimeout(() => {    
-      this.props.navigation.navigate({ routeName: 'Auth' })
+      this.redirect()
     }, 5000);
+  }
+  redirect = () => {  
+    const {profile} = this.props
+    var route = 'Auth'
+    if (profile && profile.role == 'provider') route = 'Provider'
+    else if (profile && profile.role == 'client') route = 'Client'
+    this.props.navigation.navigate({ routeName: route })
+
   }
 
   handleClick = () => {
     clearTimeout(this.timer);
-    this.props.navigation.navigate({ routeName: 'Auth' })
+    this.redirect()
   };
 
   render() {
@@ -67,7 +76,7 @@ class HomeScreen extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-
+  profile: profileSelector
 });
 
 const mapDispatchToProps = {

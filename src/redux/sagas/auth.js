@@ -2,6 +2,7 @@ import { takeLatest } from 'redux-saga/effects'
 import { DO_LOGIN, DO_SIGNUP, GET_PROFILE, SAVE_PROFILE, SEND_CODE, CHECK_CODE } from '../modules/auth'
 import apiCall from '../api/apiCall'
 import { AsyncStorage } from 'react-native';
+import {storeData} from '../api/storage'
 
 const doLogin = apiCall({
   type: DO_LOGIN,
@@ -9,11 +10,8 @@ const doLogin = apiCall({
   path: () => '/auth/login/',
   success: (res, action) => {
     AsyncStorage.setItem('hvr_auth', JSON.stringify(res.data), () => {
-      AsyncStorage.getItem('hvr_auth').then( res => {
-        console.log(JSON.parse(res))
-      })
     });
-  }
+    }
 })
 
 const doSignup = apiCall({

@@ -3,15 +3,13 @@ import { call, put } from 'redux-saga/effects'
 import { get } from 'lodash'
 import { requestFail, requestPending, requestSuccess } from './request'
 import { AsyncStorage } from 'react-native'
-const defaultHeaders = () => {
-  let auth = false
-  AsyncStorage.getItem('hvr_auth').then(res => {
-    auth = res  
-  });
-
+var defaultHeader
+defaultHeaders = async () => {
+  var auth = await AsyncStorage.getItem('hvr_auth') || null;
+  console.log("auth",auth)
   //axios.defaults.baseURL = process.env.API_ROOT + '/'
-  axios.defaults.baseURL = 'http://198.18.59.108:4000/'
-  let headers = {
+  axios.defaults.baseURL = 'http://198.18.48.86:4000/'
+  var headers = {
     'Accept': '*/*',
     'Content-Type': 'application/json'
   }
@@ -19,32 +17,11 @@ const defaultHeaders = () => {
   if (auth) {
     const token = JSON.parse(auth).token
     headers['Authorization'] = 'Bearer ' + token
+    console.log('token', token)
   } 
-  
-  return headers
+  return headers;
 }
-const uploadHeaders = () => {
-  // let auth = false
-  AsyncStorage.getItem('hvr_auth').then(res => {
-    auth = res  
-  });
-
-  //axios.defaults.baseURL = process.env.API_ROOT + '/'
-  axios.defaults.baseURL = 'http://198.18.54.35:4000/'
-  let headers = {
-    'Accept': '*/*',
-    'Content-Type': 'multipart/form-data'
-  }
-
-  if (auth) {
-    const token = JSON.parse(auth).token
-    headers['Authorization'] = 'Bearer ' + token
-  } 
-  
-  return headers
-}
-
-
+defaultHeaders().then((header => defaultHeader = header))
 export default ({
   type,
   method, // one of 'get', 'post', 'put', 'delete'
@@ -67,11 +44,10 @@ export default ({
     console.log({
       url: typeof path === 'function' ? path(action) : path,
       method: method.toLowerCase(),
-      headers: Object.assign({}, defaultHeaders(), headers),
+      headers: Object.assign({}, defaultHeader),
       data: body,
       params
     })
-    console.log(file)
     yield put({
       type: requestPending(type),
       loading: true
@@ -80,7 +56,7 @@ export default ({
     const res = yield call(axios.request, {
       url: typeof path === 'function' ? path(action) : path,
       method: method.toLowerCase(),
-      headers: Object.assign({}, defaultHeaders(), headers),
+      headers: Object.assign({}, defaultHeader, headers),
       data: body,
       params: body
     })
