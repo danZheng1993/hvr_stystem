@@ -42,7 +42,7 @@ class ProviderFeedbacks extends React.Component {
         <View style={styles.description}>
          { <Loader
           loading={loading} /> }
-          {jobs && jobs.map((job, index) => (
+          {jobs.length && jobs.map((job, index) => (
             <View key={index}>
               <Text>{job.feedback}</Text>
             </View>

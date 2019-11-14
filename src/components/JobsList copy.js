@@ -18,7 +18,7 @@ export default class JobsList extends React.Component {
     console.log(jobs)
     return (
         <ScrollView>          
-         {jobs && jobs.map((job, index) => (
+         {jobs.length && jobs.map((job, index) => (
            <View key={index} style={styles.componentsSection}>
              <Text size={14}>订单信息:<Text>{job.status}</Text></Text>
              <Text size={14}>订单编号:<Text>{job._id}</Text></Text>

@@ -38,7 +38,7 @@ export default class ProviderJobsList extends React.Component {
     console.log(jobs)
     return (
         <ScrollView>          
-         {jobs && jobs.map((job, index) => (
+         {jobs.length && jobs.map((job, index) => (
           <TouchableRipple key={index} onPress={() => this.handleNavigate(job.status, job._id)}>
            <View key={index} style={styles.componentsSection}>
              <Text size={14}>订单信息 : <Text>{job.status}</Text></Text>

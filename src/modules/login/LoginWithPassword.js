@@ -31,22 +31,26 @@ class LoginWithPassword extends React.Component {
     const { phoneNumber, password} = this.state  
     this.props.login({
       body: {phoneNumber, password},
-      success: () => this.redirect(),
-      fail: () => toast("Phone number or password is wrong!")
+      // success: () => this.redirect(),
+      // fail: () => toast("Phone number or password is wrong!")
     })
   };
   
   redirect() {
     toast("login success!")
     const {profile} = this.props
+    console.log(">>>>>>>>>Profile",profile)
     if (!profile) return
-    console.log(profile)
     if (profile.role == 'provider') {
       this.props.navigation.navigate({ routeName: 'Provider' })
     } else if (profile.role =='client'){
       this.props.navigation.navigate({ routeName: 'Client' })
     }
   }
+  componentDidUpdate() {
+    this.redirect()
+  }
+
   render() {
     const {loading, profile} = this.props
 

@@ -42,7 +42,7 @@ class MyJobList extends React.Component {
     const {jobs, jobsloading} = this.props
     const {selected} = this.state
     let jobslist = jobs
-    if (selected) {
+    if (selected && jobs.length) {
       jobslist = jobs.filter(job => job.status == status[selected])
     }
     return (

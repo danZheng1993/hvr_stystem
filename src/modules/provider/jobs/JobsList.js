@@ -36,7 +36,7 @@ class JobsList extends React.Component {
         <View style={styles.description}>
          { <Loader
           loading={jobsloading} /> }
-         {jobs && jobs.map((job, index) => (
+         {jobs.length && jobs.map((job, index) => (
            <View key={index} style={styles.componentsSection}>
              <Text size={14}>订单信息:<Text>{job.status}</Text></Text>
              <Text size={14}>订单编号:<Text>{job._id}</Text></Text>
