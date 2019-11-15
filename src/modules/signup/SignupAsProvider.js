@@ -23,7 +23,7 @@ class SignupAsProvider extends React.Component {
       verificationCode: '',
       password: '',
       passwordConfirm: '',
-      counter: 3,
+      counter: 60,
     };
   }
 

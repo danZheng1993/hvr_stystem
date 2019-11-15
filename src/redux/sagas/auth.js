@@ -9,8 +9,7 @@ const doLogin = apiCall({
   method: 'post',
   path: () => '/auth/login/',
   success: (res, action) => {
-    AsyncStorage.setItem('hvr_auth', JSON.stringify(res.data), () => {
-    });
+    AsyncStorage.setItem('hvr_auth', JSON.stringify(res.data)).then(alert("success"))
     }
 })
 
@@ -18,16 +17,11 @@ const doSignup = apiCall({
   type: DO_SIGNUP,
   method: 'post',
   path: () => '/auth/signup/',
-  success: () => {
-    AsyncStorage.removeItem('hvr_auth', () => {
-
-    })
+  success: (res, action) => {
+    console.log(">>>>>>>>>signup", res)
+    AsyncStorage.setItem('hvr_auth', JSON.stringify(res.data), () => {
+    });
   },
-  fail: () => {
-    AsyncStorage.removeItem('hvr_auth', () => {
-
-    })
-  }
 })
 
 const doSendcode = apiCall({
@@ -35,6 +29,7 @@ const doSendcode = apiCall({
   method: 'post',
   path: () => '/auth/sendcode',
 })
+
 const doCheckcode = apiCall({
   type: CHECK_CODE,
   method: 'post',
@@ -52,6 +47,7 @@ const doSaveProfile = apiCall({
   method: 'patch',
   path: () => '/profile/me/',
   success: (res, action) => {
+    console.log(res)
     let token
     AsyncStorage.getItem('hvr_auth').then(res => {
       token = JSON.parse(res).token

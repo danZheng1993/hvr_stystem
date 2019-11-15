@@ -12,7 +12,7 @@ const app = express();
 backendSetup(app);
 
 // In production we need to pass these values in instead of relying on webpack
-
+app.use(express.static('public'))
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   res.status(500).send({ error: (err && err.message) || 'Something went wrong on the server' });
 });

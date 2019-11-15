@@ -48,7 +48,7 @@ class ProviderDetail extends React.Component {
     const {select} = this.state
     return (
       <ScrollView style={styles.container}>
-        <Profile user={user} />
+        <Profile user={user} navigation={this.props.navigation}/>
         <View style={styles.description}>
          { <Loader
           loading={usersloading} /> }

@@ -48,7 +48,7 @@ class MyJobList extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <Loader loading={jobsloading} />
-         { <Loader
+        { <Loader
           loading={jobsloading} /> }
         <View style={styles.componentsSection}>
           <RadioGroup
@@ -58,8 +58,7 @@ class MyJobList extends React.Component {
             onChange={index => this.handleClick(index)}
           />
         </View>
-          <ProviderJobsList jobs={jobslist} 
-                    navigation={this.props.navigation}/>
+        <ProviderJobsList jobs={jobslist} navigation={this.props.navigation}/>
       </ScrollView>
     );
     }

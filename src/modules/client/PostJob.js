@@ -61,14 +61,14 @@ class PostJob extends React.Component {
 
   componentWillMount() {
     const {types, services, subcategories, scenes} = this.props
-    types && types.pop()
-    subcategories && subcategories.pop()
-    scenes && scenes.pop()
-    services && services.pop()
+    types.length && types.pop()
+    subcategories.length && subcategories.pop()
+    scenes.length && scenes.pop()
+    services.length && services.pop()
     console.log(types, subcategories, scenes)
-    types && this.setState({type: types[0].name})
-    scenes && this.setState({scene: scenes[0].name})
-    subcategories && this.setState({subcategory: subcategories[0].name})
+    types.length && this.setState({type: types[0].name})
+    scenes.length && this.setState({scene: scenes[0].name})
+    subcategories.length && this.setState({subcategory: subcategories[0].name})
     this.setState({ types, services, subcategories, scenes})
   }
 

@@ -10,5 +10,5 @@ try {
 module.exports = {
   mongoURL: process.env.MONGO_URL,
   jwtSecret: process.env.JWT_SECRET,
-  jwtExpires: '30d',
+  jwtExpires: '1d',
 };

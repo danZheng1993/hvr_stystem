@@ -12,7 +12,7 @@ const SALT_ROUNDS = 10;
 
 function login(req, res, next) {
   User.findOne({ phoneNumber: req.body.phoneNumber })
-    .select('_id password phoneNumber userName role permission')
+    .select('_id password phoneNumber userName role permission photo overview')
     .exec()
     .then((user) => {
       if (!user) {
@@ -29,7 +29,7 @@ function login(req, res, next) {
           phoneNumber: user.phoneNumber,
           role: user.role,
         }, config.jwtSecret, { expiresIn: config.jwtExpires });
-
+        
         res.json({
           info: user,
           _id: user._id, // eslint-disable-line
@@ -47,15 +47,31 @@ function login(req, res, next) {
 }
 
 function signup(req, res, next) {
+  console.log("signup")
   const user = new User({
     phoneNumber: req.body.phoneNumber,
     password: req.body.password,
     role: req.body.role
   });
 
-  user.save()
+  return user.save()
   .then((newUser) => {
-    res.json(newUser);
+    console.log(newUser)
+    const token = jwt.sign({
+      _id: newUser._id, // eslint-disable-line
+      userName: newUser.userName,
+      phoneNumber: newUser.phoneNumber,
+      role: newUser.role,
+    }, config.jwtSecret, { expiresIn: config.jwtExpires });
+
+    res.json({
+      info: newUser,
+      _id: newUser._id, // eslint-disable-line
+      userName: newUser.userName,
+      phoneNumber: newUser.phoneNumber,
+      role: newUser.role,
+      token,
+    });
   })
   .catch(next);
 }
@@ -110,34 +126,7 @@ function checkcode(req, res, next) {
         if (code.verified == false) {
           console.log("new")
           if (req.body.password) {
-            const newuser = new User({
-              phoneNumber: req.body.phoneNumber,
-              password: req.body.password,
-              role: req.body.role
-            });
-            console.log(newuser)
-            newuser.save()
-            .then((newUser) => {
-              const token = jwt.sign({
-                _id: newUser._id, // eslint-disable-line
-                userName: newUser.userName,
-                phoneNumber: newUser.phoneNumber,
-                role: newUser.role,
-              }, config.jwtSecret, { expiresIn: config.jwtExpires });
-      
-              res.json({
-                info: newUser,
-                _id: newUser._id, // eslint-disable-line
-                userName: newUser.userName,
-                phoneNumber: newUser.phoneNumber,
-                role: newUser.role,
-                token,
-              })
-              res.json(newUser);
-            })
-            .catch(next);
-          } else {
-
+            return signup(req,res,next)
           }
           Code.updateOne({phoneNumber: req.body.phoneNumber}, { $set: { "verified" : true } }).exec()  
           .then (() => {

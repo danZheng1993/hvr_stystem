@@ -20,15 +20,25 @@ class BasicProfile extends React.Component {
     this.state = {
       photo: null,
       userName: '',
-      overview: ''
+      overview: '',
+      update: ''
+    }
+  }
+
+  componentWillMount() {
+    const {navigation} = this.props
+    let update = navigation.getParam('update', 'none')
+    if (update != 'none') {
+      this.setState({update})
     }
   }
 
   handleClick = () => {
-    const {userName, photo, overview,} = this.state
+    const {userName, photo, overview,update} = this.state
     const {profile} = this.props
+    console.log(profile)
     if (photo) {
-      uploadFile('profile/me', 'post',this.createFormData(photo, { type: "photo", id: profile._id }))
+      uploadFile('profile/me', 'post',this.createFormData(photo, { type: "photo"}))
       .then(res => console.log(res))
       .catch(err => alert(err))
     }
@@ -37,7 +47,10 @@ class BasicProfile extends React.Component {
         body: {userName, overview}
       })
     }
-    this.props.navigation.navigate({ routeName: 'ShootingID' })
+    if (update == '')
+      this.props.navigation.navigate({ routeName: 'ShootingID' })
+    else 
+      this.props.navigation.goBack()
   };
   
   handleChoosePhoto = () => {
@@ -88,9 +101,10 @@ class BasicProfile extends React.Component {
   };
 
   render() {
-    const { photo } = this.state
+    const { photo , update} = this.state
     return (
       <View style={styles.container}>
+        {(update == '' || update == 'photo') && 
          <TouchableOpacity onPress={this.handleChoosePhoto}>
           {photo ? 
           <Image
@@ -104,16 +118,17 @@ class BasicProfile extends React.Component {
             onPress={this.handleChoosePhoto}
           />
           }    
-        </TouchableOpacity> 
+        </TouchableOpacity> }
         <View style={styles.description}>
-        <TextInput
+        {(update == '' || update == 'userName') && <TextInput
             style={styles.input}
             outlined
             label='昵称'
             placeholder="昵称"
             value={this.state.userName}
             onChangeText={userName => this.setState({ userName })}
-        />
+        />}
+        {(update == '' || update == 'overview') && 
         <TextInput
             style={styles.input}
             outlined
@@ -124,7 +139,7 @@ class BasicProfile extends React.Component {
             numberOfLines={6}
             value={this.state.overview}
             onChangeText={overview => this.setState({ overview })}
-        />
+        />}
         </View>
         <View style={styles.buttonsContainer}>
           <Button

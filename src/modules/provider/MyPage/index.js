@@ -21,18 +21,14 @@ class MyPage extends React.Component {
   }
 
   render () {
-    // const {profile} = this.props
-    const profile = {
-      userName: '上善若水任方圆',
-      description: '不好也不坏'
-    }
+    const {profile} = this.props
 
     return (
       <ScrollView
         style={styles.container}
         contentContainerStyle={{ paddingBottom: 20 }}
       >
-        <Profile user = {profile}/>
+        <Profile user = {profile} navigation={this.props.navigation} />
         <View style={styles.componentsSection}>
           <Text style={styles.componentSectionHeader}>我的订单</Text>
           <View style={styles.demoButtonsContainer}>

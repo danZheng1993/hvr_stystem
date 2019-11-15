@@ -6,6 +6,8 @@ import {
   Text,
   Image
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+
 import moment from 'moment'
 import { fonts, colors } from '../styles';
 
@@ -15,20 +17,36 @@ export default class Profile extends React.Component {
     
   }
   render() {   
+    const url="http://198.18.16.228:4000/"
     const {user, navigation} = this.props
     return (
       <View style={styles.componentsSection}>
+        <View style={styles.demoIconsContainer}>
+          <Icon
+            style={styles.demoIcon}
+            name="bell"
+            size={25}
+            color="#5759CB"
+          />
+          <Icon
+            style={styles.demoIcon}
+            name="settings"
+            size={25}
+            color="#5759CB"
+            onPress={() => navigation.navigate('Settings')}
+          />
+        </View>
 
+        {user && <>
           <Image
-            source={require('../../assets/images/takePhoto.png')}
+            source={{uri: url + (user.photo ? user.photo: 'default.png')}}
             style={styles.photo}
           />
         <Text size={14}><Text>{user.userName}</Text></Text>
-        <Text size={14}><Text>{user.description}</Text></Text>
-        {/* <Text size={14}><Text>{user.photo}</Text></Text>
-        <Text size={14}><Text>{user.location}</Text></Text>
         <Text size={14}><Text>{user.overview}</Text></Text>
-        <Text size={14}><Text>¥{user.balance}</Text></Text> */}
+        </>
+        }
+        
       </View>
     );
     }
@@ -60,5 +78,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.info,
     width: 100,
     height: 100
+  },
+  demoIconsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    marginBottom: 20,
   },
 });

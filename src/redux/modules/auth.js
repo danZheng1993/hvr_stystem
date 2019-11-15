@@ -16,8 +16,8 @@ export const CHECK_CODE = 'CHECK_CODE'
 // ------------------------------------
 
 export const login = createAction(DO_LOGIN)
-export const logout = createAction(DO_LOGOUT, () => {
-  AsyncStorage.removeItem('hvr_auth', () => {}) 
+export const logout = createAction(DO_LOGOUT, (callback) => {
+  AsyncStorage.removeItem('hvr_auth', () => {callback}) 
 })
 export const signup = createAction(DO_SIGNUP)
 export const checkcode = createAction(CHECK_CODE)
@@ -95,7 +95,9 @@ export default handleActions({
     ...state,
     status: requestSuccess(DO_SIGNUP),
     error: null,
-    loading: false
+    loading: false,
+    token: payload.token,
+    me: payload.info,
   }),
 
   [requestFail(DO_SIGNUP)]: (state, { payload }) => ({
@@ -145,6 +147,7 @@ export default handleActions({
     verified: payload.verified,
     error: null,
     loading: false
+
   }),
 
   [requestFail(CHECK_CODE)]: (state, { payload }) => ({
@@ -168,7 +171,7 @@ export default handleActions({
   [requestSuccess(SAVE_PROFILE)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(SAVE_PROFILE),
-    me: payload,
+    me: payload.info,
     error: null,
     loading: false
   })

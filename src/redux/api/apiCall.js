@@ -8,7 +8,7 @@ defaultHeaders = async () => {
   var auth = await AsyncStorage.getItem('hvr_auth') || null;
   console.log("auth",auth)
   //axios.defaults.baseURL = process.env.API_ROOT + '/'
-  axios.defaults.baseURL = 'http://198.18.48.86:4000/'
+  axios.defaults.baseURL = 'http://198.18.16.228:4000/'
   var headers = {
     'Accept': '*/*',
     'Content-Type': 'application/json'

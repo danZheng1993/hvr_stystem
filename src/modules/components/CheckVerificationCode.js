@@ -1,15 +1,47 @@
 import React from 'react'
+
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { createStructuredSelector } from 'reselect';
+
 import { View, StyleSheet } from 'react-native'
 import  CodePin  from 'react-native-pin-code'
 
 import { colors } from '../../styles'
 import { Text } from '../../components/StyledText';
+import {checkcode} from '../../redux/modules/auth'
 
-export default class CheckVerificationCode extends React.Component {
+class CheckVerificationCode extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      phoneNumber: ''
+    }
   }
   
+  componentWillMount() {
+    const {getUser, navigation} = this.props
+    let phoneNumber = navigation.getParam('phoneNumber', 'NO-ID')
+    if (phoneNumber != 'NO-ID') {
+      this.setState({phoneNumber})
+    }
+  }
+
+  handleCheck = async (code) => {
+    const { phoneNumber } = this.state
+    const {checkcode} = this.props
+    let res = false
+    await checkcode({
+      body:{ phoneNumber, code: code},
+      // success: () => this.props.navigation.navigate({ routeName: 'BasicProfile' })
+    })
+  }
+  check (code) {
+    var val
+    this.handleCheck(code).then(res => alert(res))
+    // alert(val)
+    // return val
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -21,8 +53,9 @@ export default class CheckVerificationCode extends React.Component {
             验证码已发送至  13581644633
           </Text>
           <CodePin
-            code="2018" // code.length is used if you not pass number prop
-            success={() => this.props.navigation.navigate({ routeName: 'CreateProfile' })} // If user fill '2018', success is called
+            number={4} // You must pass number prop, it will be used to display 4 (here) inputs
+            checkPinCode={(code, callback) => callback(this.check(code))}
+            success={() => alert("success")} // If user fill '2018', success is called
             text="" // My title
             error="请输入正确的验证码，再试一次" // If user fail (fill '2017' for instance)
             autoFocusFirst={false} // disabling auto-focus
@@ -81,3 +114,14 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
 });
+
+const mapStateToProps = createStructuredSelector({
+});
+
+const mapDispatchToProps = {
+  checkcode,
+};
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(CheckVerificationCode);

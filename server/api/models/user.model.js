@@ -18,7 +18,7 @@ const userSchema = new Schema({
   frontID: { type: String, trim: true, default: 'default.png' },
   backID: { type: String, trim: true,  default: 'default.png'},
   password: { type: String, select: false, required: true },
-  companyName: { type: String, select: false, },
+  companyName: { type: String, select: false, default: ''},
   companyLicense: { type: String, select: false, default: 'default.png'},
   balance: { type: Number, trim: true, default: 0 }, 
 

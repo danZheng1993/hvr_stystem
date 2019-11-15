@@ -31,17 +31,11 @@ class deviceStorage  {
         console.log('AsyncStorage Error: ' + error.message);
       }
     }
-
+    
     async deleteJWT() {
       try{
         await AsyncStorage.removeItem('hvr_auth')
-        .then(
-          () => {
-            this.setState({
-              jwt: ''
-            })
-          }
-        );
+        
       } catch (error) {
         console.log('AsyncStorage Error: ' + error.message);
       }

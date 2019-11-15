@@ -1,21 +1,36 @@
 import React from 'react'
+
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { createStructuredSelector } from 'reselect';
+
 import { View, StyleSheet } from 'react-native'
 import { TextInput } from 'react-native-paper';
 
 import { colors } from '../../styles'
 import { Button } from '../../components';
 import { Text } from '../../components/StyledText';
+import {sendcode} from '../../redux/modules/auth'
 import CheckVerificationCode from './CheckVerificationCode';
 
-export default class SendVerificationCode extends React.Component {
+class SendVerificationCode extends React.Component {
   constructor(props) {
     super(props)
   }
   state = {
     phoneNumber: '',
   }
+  
   handleClick = () => {
-    alert("Check-Verification")
+    const { phoneNumber } = this.state
+    if(phoneNumber.length != 11 || !Number.isInteger(+phoneNumber)) return;
+
+    this.props.sendcode({
+      body: { phoneNumber: phoneNumber},
+      success: () => {    
+        this.props.navigation.navigate('CheckVerificationCode',{phoneNumber: phoneNumber})
+      }
+    })
   };
   
   render() {
@@ -70,3 +85,14 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
 });
+
+const mapStateToProps = createStructuredSelector({
+});
+
+const mapDispatchToProps = {
+  sendcode,
+};
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(SendVerificationCode);

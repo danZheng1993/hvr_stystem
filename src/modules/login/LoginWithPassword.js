@@ -16,7 +16,7 @@ import { Form, TextValidator } from 'react-native-validator-form';
 import { Text } from '../../components/StyledText';
 import toaster from 'toasted-notes';
 
-import {login} from '../../redux/modules/auth'
+import {login, getProfile} from '../../redux/modules/auth'
 import { profileSelector, authloadingSelector } from '../../redux/selectors'
 
 class LoginWithPassword extends React.Component {
@@ -31,16 +31,16 @@ class LoginWithPassword extends React.Component {
     const { phoneNumber, password} = this.state  
     this.props.login({
       body: {phoneNumber, password},
-      // success: () => this.redirect(),
+      // success: () => getprofile(),
       // fail: () => toast("Phone number or password is wrong!")
     })
   };
   
   redirect() {
-    toast("login success!")
     const {profile} = this.props
-    console.log(">>>>>>>>>Profile",profile)
     if (!profile) return
+    toast("login success!")
+    console.log(">>>>>>>>>Profile",profile)
     if (profile.role == 'provider') {
       this.props.navigation.navigate({ routeName: 'Provider' })
     } else if (profile.role =='client'){

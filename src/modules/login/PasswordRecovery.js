@@ -14,6 +14,7 @@ import { Form, TextValidator } from 'react-native-validator-form';
 import { sendcode, checkcode } from '../../redux/modules/auth'
 import { Text } from '../../components/StyledText';
 import { saveProfile } from '../../redux/modules/auth'
+import SendVerificationcode from '../components/SendVerificationCode'
 
 var timer
 class PasswordRecovery extends React.Component {
@@ -88,7 +89,8 @@ class PasswordRecovery extends React.Component {
              <Text size={14}>
                {counter}
              </Text>
-            <Form
+             <SendVerificationcode navigation={this.props.navigation} />
+            {/* <Form
                 ref="form"
                 onSubmit={this.handleSubmit}
             >
@@ -156,8 +158,8 @@ class PasswordRecovery extends React.Component {
                     onPress={this.handleSubmit}
                   />
                   </View>
-            </Form>   
-            </View>
+            </Form>  */} 
+            </View> 
         );
     }
 }

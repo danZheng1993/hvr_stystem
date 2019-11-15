@@ -58,6 +58,9 @@ import ProviderTestingJob from '../provider/MyPage/MyJob/TestingJob';
 import ProviderFeedbackJob from '../provider/MyPage/MyJob/FeedbackJob';
 import ProviderFinishingJob from '../provider/MyPage/MyJob/FinishingJob';
 import ProviderGiveFeedback from '../provider/MyPage/MyJob/GiveFeedback';
+
+import Settings from '../settings';
+import PersonalInformation from '../settings/PersonalInformation';
 // import  JobDetails from '../provider/jobs/JobDetails';
 
 const headerBackground = require('../../../assets/images/topBarBg.png');
@@ -291,6 +294,26 @@ const stackNavigator = createStackNavigator(
 
     ProviderFinishingJob: {
       screen: ProviderFinishingJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    Settings: {
+      screen: Settings,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Settings: {
+      screen: Settings,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    PersonalInformation: {
+      screen: PersonalInformation,
       navigationOptions: {
         header: null,
       },

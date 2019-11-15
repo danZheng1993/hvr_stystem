@@ -45,12 +45,12 @@ function uploadFile(req, res, next) {
   console.log("uploadFile")
   var form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
-    if (!files || !fields.id || !fields.type) return;
+    if (!files || !fields.type) return;
 
     console.log(fields)
     var oldpath = files.photo.path;
     var directory = process.cwd() + '\\public\\'
-    var fileName = fields.id + '_' + fields.type + path.extname(files.photo.name);
+    var fileName = req.user._id + '_' + fields.type + path.extname(files.photo.name);
     fs.readFile(oldpath, function (err, data) {
       if (err) throw err;
       
@@ -69,21 +69,21 @@ function uploadFile(req, res, next) {
     });
     if (fields.type == 'photo') {
       console.log("update Photo...")
-      User.updateOne({_id: fields.id}, { $set: {photo: fileName }}).exec()
+      User.updateOne({_id: req.user._id}, { $set: {photo: fileName }}).exec()
       .then((newuser) => {
         res.json(newuser);
       })
       .catch(next);
     } else if (fields.type == 'frontID') {
       console.log("update frontID...")
-      User.updateOne({_id: fields.id}, { $set: {frontID: fileName }}).exec()
+      User.updateOne({_id: req.user._id}, { $set: {frontID: fileName }}).exec()
       .then((newuser) => {
         res.json(newuser);
       })
       .catch(next);
     } else if (fields.type == 'backID') {
       console.log("update backID...")
-      User.updateOne({_id: fields.id}, { $set: {backID: fileName }}).exec()
+      User.updateOne({_id: req.user._id}, { $set: {backID: fileName }}).exec()
       .then((newuser) => {
         res.json(newuser);
       })
@@ -162,7 +162,7 @@ function getUserByID(req, res, next, id) {
 }
 
 function getProfile(req, res, next) {
-  User.findById(/*req.user._id*/'5dc954cf56186b33c84ad5a5')
+  User.findById(req.user._id)
   .then((user) => {
     if (!user) {
       res.status(404).json({ message: 'User not found' });
