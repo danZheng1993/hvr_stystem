@@ -34,10 +34,6 @@ class BiddingJob extends React.Component {
       })
     }
   }
-
-  handleContact =() => {
-
-  } 
   
   render() {
     
