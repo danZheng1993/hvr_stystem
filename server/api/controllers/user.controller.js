@@ -162,6 +162,7 @@ function getUserByID(req, res, next, id) {
 }
 
 function getProfile(req, res, next) {
+  console.log('get profile')
   User.findById(req.user._id)
   .then((user) => {
     if (!user) {
