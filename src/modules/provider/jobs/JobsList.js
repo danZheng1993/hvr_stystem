@@ -11,7 +11,7 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import moment from 'moment'
 
-import { Button, Loader,  } from '../../../components';
+import { Button, Loader, NoData} from '../../../components';
 import { fonts, colors } from '../../../styles';
 
 import { getJobs } from '../../../redux/modules/job'
@@ -36,7 +36,7 @@ class JobsList extends React.Component {
         <View style={styles.description}>
          { <Loader
           loading={jobsloading} /> }
-         {jobs.length && jobs.map((job, index) => (
+         {jobs.length ? jobs.map((job, index) => (
            <View key={index} style={styles.componentsSection}>
              <Text size={14}>订单信息:<Text>{job.status}</Text></Text>
              <Text size={14}>订单编号:<Text>{job._id}</Text></Text>
@@ -53,7 +53,7 @@ class JobsList extends React.Component {
             >查看更多</Text>
             </View>
 
-         ))}
+         )) : <NoData />}
          </View>
       </ScrollView>
     );

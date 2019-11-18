@@ -1,45 +1,33 @@
 import { AsyncStorage } from 'react-native';
 
-class deviceStorage  {
-    state = {
-      jwt: '',
-      loading: false
-    }
-    // our AsyncStorage functions will go here :)
-    async saveItem(key, value) {
-      try {
-        await AsyncStorage.setItem(key, value);
-      } catch (error) {
-        console.log('AsyncStorage Error: ' + error.message);
-      }
-    }
+const saveItem = async (key, value)  => {
+  try {
+    await AsyncStorage.setItem(key, value);
+  } catch (error) {
+    console.log('AsyncStorage Error: ' + error.message);
+  }
+}
 
-    async loadJWT() {
-      try {
-        const value = await AsyncStorage.getItem('hvr_auth');
-        if (value !== null) {
-          this.setState({
-            jwt: value,
-            loading: false
-          });
-        } else {
-          this.setState({
-            loading: false
-          });
-        }
-      } catch (error) {
-        console.log('AsyncStorage Error: ' + error.message);
-      }
-    }
+const loadJWT =  async ()  => {
+  try {
+    await AsyncStorage.getItem('hvr_auth');
+
+  } catch (error) {
+    console.log('AsyncStorage Error: ' + error.message);
+  }
+}
+
+const deleteJWT = async() => {
+  try{
+    await AsyncStorage.removeItem('hvr_auth')
     
-    async deleteJWT() {
-      try{
-        await AsyncStorage.removeItem('hvr_auth')
-        
-      } catch (error) {
-        console.log('AsyncStorage Error: ' + error.message);
-      }
-    }
-};
+  } catch (error) {
+    console.log('AsyncStorage Error: ' + error.message);
+  }
+}
 
-export default deviceStorage;
+export {
+  saveItem,
+  loadJWT,
+  deleteJWT
+};

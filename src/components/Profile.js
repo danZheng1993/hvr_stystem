@@ -17,7 +17,7 @@ export default class Profile extends React.Component {
     
   }
   render() {   
-    const url="http://198.18.16.228:4000/"
+    const url="http://192.168.31.207:4000/"
     const {user, navigation} = this.props
     return (
       <View style={styles.componentsSection}>

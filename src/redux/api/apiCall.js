@@ -5,10 +5,10 @@ import { requestFail, requestPending, requestSuccess } from './request'
 import { AsyncStorage } from 'react-native'
 var defaultHeader
 defaultHeaders = async () => {
-  var auth = await AsyncStorage.getItem('hvr_auth') || null;
+  var auth = await AsyncStorage.getItem('hvr_auth');
   console.log("auth",auth)
   //axios.defaults.baseURL = process.env.API_ROOT + '/'
-  axios.defaults.baseURL = 'http://198.18.16.228:4000/'
+  axios.defaults.baseURL = 'http://192.168.31.207:4000/'
   var headers = {
     'Accept': '*/*',
     'Content-Type': 'application/json'

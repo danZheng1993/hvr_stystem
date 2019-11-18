@@ -59,6 +59,7 @@ import ProviderFeedbackJob from '../provider/MyPage/MyJob/FeedbackJob';
 import ProviderFinishingJob from '../provider/MyPage/MyJob/FinishingJob';
 import ProviderGiveFeedback from '../provider/MyPage/MyJob/GiveFeedback';
 
+import Chatting from '../../components/Chatting';
 import Settings from '../settings';
 import PersonalInformation from '../settings/PersonalInformation';
 // import  JobDetails from '../provider/jobs/JobDetails';
@@ -305,8 +306,16 @@ const stackNavigator = createStackNavigator(
         header: null,
       },
     },
+
     Settings: {
       screen: Settings,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    Chatting: {
+      screen: Chatting,
       navigationOptions: {
         header: null,
       },

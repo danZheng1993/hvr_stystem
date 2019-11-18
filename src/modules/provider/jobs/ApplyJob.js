@@ -73,7 +73,7 @@ class ApplyJob extends React.Component {
                 bgColor={colors.warning}
                 style={styles.button}
                 caption="联系需求方"
-                onPress={this.handleContact}
+                onPress={() => this.props.navigation.navigate('Chatting', {to: job.creator})}
               />             
               <TextInput
                 style={styles.input}

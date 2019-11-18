@@ -16,11 +16,19 @@ import { getScenes } from '../../redux/modules/scene'
 import { getServices } from '../../redux/modules/service'
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
-
+import XMPP from 'react-native-xmpp'
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
     timer = null;
+    XMPP.on('message', (message) => console.log('MESSAGE:' + message));
+    XMPP.on('iq', (message) => console.log('IQ:' + message));
+    XMPP.on('presence', (message) => console.log('PRESENCE:' + message));
+    XMPP.on('error', (message) => console.log('ERROR:' + message));
+    XMPP.on('loginError', (message) => console.log('LOGIN ERROR:' + message));
+    XMPP.on('login', (message) => console.log('LOGGED!'));
+    XMPP.on('connect', (message) => console.log('CONNECTED!'));
+    XMPP.on('disconnect', (message) => console.log('DISCONNECTED!'));
   }
 
   componentWillMount() {
@@ -38,7 +46,11 @@ class HomeScreen extends React.Component {
   }
   redirect = () => {  
     const {profile} = this.props
+    console.log("profile", profile)
     var route = 'Auth'
+    if (profile) {
+      XMPP.connect(`${profile._id}@192.168.31.207/spark`, profile.password.slice(0,8),'RNXMPP.PLAIN','192.168.31.207',5222)
+    }
     if (profile && profile.role == 'provider') route = 'Provider'
     else if (profile && profile.role == 'client') route = 'Client'
     this.props.navigation.navigate({ routeName: route })
