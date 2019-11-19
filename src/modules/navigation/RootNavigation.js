@@ -60,6 +60,7 @@ import ProviderFinishingJob from '../provider/MyPage/MyJob/FinishingJob';
 import ProviderGiveFeedback from '../provider/MyPage/MyJob/GiveFeedback';
 
 import Chatting from '../../components/Chatting';
+import WebViewer from '../../components/WebViewer';
 import Notification from '../../components/Notification';
 
 import Settings from '../settings';
@@ -332,6 +333,12 @@ const stackNavigator = createStackNavigator(
     
     PersonalInformation: {
       screen: PersonalInformation,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    WebViewer: {
+      screen: WebViewer,
       navigationOptions: {
         header: null,
       },

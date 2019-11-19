@@ -15,7 +15,6 @@ const defaultHeaders = () => {
 
   if (token) {
     headers['Authorization'] = 'Bearer ' + token
-    console.log('token', token)
   } 
   return headers;
 }

@@ -17,6 +17,7 @@ import Applicants from './Applicants'
 import Profile from './Profile'
 import Notification from './Notification'
 import Confirm from './Confirm'
+import WebViewer from './WebViewer'
 import NoData from './NoData'
 
 export {
@@ -39,5 +40,6 @@ export {
   UsersList,
   Notification,
   Confirm,
+  WebViewer,
   NoData
 };

@@ -30,237 +30,206 @@ class MyPage extends React.Component {
         <View style={styles.componentsSection}>
           <Text style={styles.componentSectionHeader}>我的订单</Text>
           <View style={styles.demoButtonsContainer}>
-            <Button
-              style={styles.demoButton}
-              action
-              bgColor="#958FDA"
-              onPress={() => this.props.navigation.navigate({ routeName: 'ProviderJob' })}
-            >
+          <View style={styles.buttonContainer} >
+              <Button
+                  style={styles.demoButton}
+                  action
+                  bgColor="#958FDA"
+                  onPress={() => this.props.navigation.navigate({ routeName: 'ProviderJob' })}
+                  >
+                <Text>
+                  <Icon name="chat" size={20} color="white" />
+                </Text>
+              </Button>
               <Text>
-                <Icon name="chevron-thin-right" size={20} color="white" />
+                竞标中
               </Text>
-            </Button>
-            <Button
-              style={styles.demoActionButton}
-              action
-              bgColor="#4F44C1"
-              onPress={() => {}}
-            >
+            </View>
+            <View style={styles.buttonContainer} >
+              <Button
+                  style={styles.demoButton}
+                  action
+                  bgColor="#52B1F4"
+                  onPress={() => this.props.navigation.navigate({ routeName: 'ProviderJob' })}
+                >
+                <Text>
+                  <Icon name="chat" size={20} color="white" />
+                </Text>
+              </Button>
               <Text>
-                <Icon name="controller-paus" size={20} color="white" />
+              已选用
               </Text>
-            </Button>
-            <Button
-              style={styles.demoActionButton}
-              action
-              bgColor="#3CD4A0"
-              onPress={() => {}}
-            >
+            </View>
+            <View style={styles.buttonContainer} >
+              <Button
+                  style={styles.demoButton}
+                  action
+                  bgColor="#19D4E6"
+                  onPress={() => this.props.navigation.navigate({ routeName: 'ProviderJob' })}
+                >
+                <Text>
+                  <Icon name="chat" size={20} color="white" />
+                </Text>
+              </Button>
               <Text>
-                <Icon name="magnifying-glass" size={20} color="white" />
+              待支付
               </Text>
-            </Button>
-            <Button
-              style={styles.demoActionButton}
-              action
-              bgColor="#EF1F78"
-              onPress={() => {}}
-            >
+            </View>
+            <View style={styles.buttonContainer} >
+              <Button
+                  style={styles.demoButton}
+                  action
+                  bgColor="#4F44C1"
+                  onPress={() => this.props.navigation.navigate({ routeName: 'ProviderJob' })}
+                >
+                <Text>
+                  <Icon name="chat" size={20} color="white" />
+                </Text>
+              </Button>
               <Text>
-                <Icon name="paper-plane" size={20} color="white" />
+              待拍摄
               </Text>
-            </Button>
-            <Button
-              style={styles.demoActionButton}
-              action
-              bgColor="#52B1F4"
-              onPress={() => {}}
-            >
+            </View>
+            <View style={styles.buttonContainer} >
+              <Button
+                  style={styles.demoButton}
+                  action
+                  bgColor="#3CD4A0"
+                  onPress={() => this.props.navigation.navigate({ routeName: 'ProviderJob' })}
+                >
+                <Text>
+                  <Icon name="chat" size={20} color="white" />
+                </Text>
+              </Button>
               <Text>
-                <Icon name="flash" size={20} color="white" />
+              待验收
               </Text>
-            </Button>
-            <Button
-              style={styles.demoActionButton}
-              action
-              bgColor="#19D4E6"
-              onPress={() => {}}
-            >
-              <Text>
-                <Icon name="reply-all" size={20} color="white" />
-              </Text>
-            </Button>
+            </View>
           </View>
         </View>
 
         <View style={styles.componentsSection}>
-          <Text style={styles.componentSectionHeader}>Icons</Text>
+          <Text style={styles.componentSectionHeader}>常用功能</Text>
 
           <View style={styles.demoIconsContainer}>
-            <Icon
-              style={styles.demoIcon}
-              name="basecamp"
-              size={25}
-              color="#5759CB"
-              onPress={() => this.props.navigation.navigate({ routeName: 'GiveFeedback' })}
-            />
-            <Icon style={styles.demoIcon} name="note" size={25} color="#5759CB" />
-            <Icon
-              style={styles.demoIcon}
-              name="flashlight"
-              size={25}
-              color="#5759CB"
-            />
-            <Icon
-              style={styles.demoIcon}
-              name="app-store"
-              size={25}
-              color="#5759CB"
-            />
-            <Icon
-              style={styles.demoIcon}
-              name="baidu"
-              size={25}
-              color="#5759CB"
-            />
-            <Icon
-              style={styles.demoIcon}
-              name="facebook"
-              size={25}
-              color="#5759CB"
-            />
+            <View style={styles.buttonContainer} >
+              <Button
+                  style={styles.demoButton}
+                  action
+                  bgColor="#958FDA"
+                >
+                <Text>
+                  <Icon name="chat" size={20} color="white" />
+                </Text>
+              </Button>
+              <Text>
+              认证中心
+              </Text>
+            </View>
+            <View style={styles.buttonContainer} >
+              <Button
+                  style={styles.demoButton}
+                  action
+                  bgColor="#4F44C1"
+                >
+                <Text>
+                  <Icon name="chat" size={20} color="white" />
+                </Text>
+              </Button>
+              <Text>
+              我的合同
+              </Text>
+            </View>
+            <View style={styles.buttonContainer} >
+              <Button
+                  style={styles.demoButton}
+                  action
+                  bgColor="#3CD4A0"
+                >
+                <Text>
+                  <Icon name="chat" size={20} color="white" />
+                </Text>
+              </Button>
+              <Text>
+              VR商城
+              </Text>
+            </View>
+            <View style={styles.buttonContainer} >
+              <Button
+                  style={styles.demoButton}
+                  action
+                  bgColor="#EF1F78"
+                >
+                <Text>
+                  <Icon name="chat" size={20} color="white" />
+                </Text>
+              </Button>
+              <Text>
+              直播管理
+              </Text>
+            </View>
           </View>
           <View style={styles.demoIconsContainer}>
-            <Icon
-              style={[styles.demoIcon, { opacity: 0.5 }]}
-              name="bookmark"
-              size={25}
-              color="#5759CB"
-            />
-            <Icon
-              style={[styles.demoIcon, { opacity: 0.5 }]}
-              name="chat"
-              size={25}
-              color="#5759CB"
-            />
-            <Icon
-              style={[styles.demoIcon, { opacity: 0.5 }]}
-              name="behance"
-              size={25}
-              color="#5759CB"
-            />
-            <Icon
-              style={[styles.demoIcon, { opacity: 0.5 }]}
-              name="calendar"
-              size={25}
-              color="#5759CB"
-            />
-            <Icon
-              style={[styles.demoIcon, { opacity: 0.5 }]}
-              name="camera"
-              size={25}
-              color="#5759CB"
-            />
-            <Icon
-              style={[styles.demoIcon, { opacity: 0.5 }]}
-              name="flattr"
-              size={25}
-              color="#5759CB"
-            />
+            <View style={styles.buttonContainer} >
+              <Button
+                  style={styles.demoButton}
+                  action
+                  bgColor="#52B1F4"
+                >
+                <Text>
+                  <Icon name="chat" size={20} color="white" />
+                </Text>
+              </Button>
+              <Text>
+              开具发票
+              </Text>
+            </View>
+            <View style={styles.buttonContainer} >
+              <Button
+                  style={styles.demoButton}
+                  action
+                  bgColor="#958FDA"
+                  onPress={() => this.props.navigation.navigate('WebViewer', {url: 'help.html'})}
+                >
+                <Text>
+                  <Icon name="chat" size={20} color="white" />
+                </Text>
+              </Button>
+              <Text>
+              帮助中心
+              </Text>
+            </View>
+            <View style={styles.buttonContainer} >
+              <Button
+                  style={styles.demoButton}
+                  action
+                  bgColor="#958FDA"
+                  onPress={() => this.props.navigation.navigate('WebViewer', {url: 'About_Us.html'})}
+                >
+                <Text>
+                  <Icon name="chat" size={20} color="white" />
+                </Text>
+              </Button>
+              <Text>
+              关于我们
+              </Text>
+            </View>
+            <View style={styles.buttonContainer} >
+              <Button
+                  style={styles.demoButton}
+                  action
+                  bgColor="#52B1F4"
+                  onPress={() => this.props.navigation.navigate({ routeName: 'GiveFeedback' })}
+                  >
+                <Text>
+                  <Icon name="chat" size={20} color="white" />
+                </Text>
+              </Button>
+              <Text>
+              意见反馈
+              </Text>
+            </View>
           </View>
-          <View style={styles.demoIconsContainer}>
-            <Icon
-              style={styles.demoIcon}
-              name="colours"
-              size={25}
-              color="#EF1F78"
-            />
-            <Icon
-              style={styles.demoIcon}
-              name="compass"
-              size={25}
-              color="#EF1F78"
-            />
-            <Icon
-              style={styles.demoIcon}
-              name="credit"
-              size={25}
-              color="#EF1F78"
-            />
-            <Icon
-              style={styles.demoIcon}
-              name="cycle"
-              size={25}
-              color="#EF1F78"
-            />
-            <Icon
-              style={styles.demoIcon}
-              name="database"
-              size={25}
-              color="#EF1F78"
-            />
-            <Icon
-              style={styles.demoIcon}
-              name="flickr"
-              size={25}
-              color="#EF1F78"
-            />
-          </View>
-          <View style={styles.demoIconsContainer}>
-            <Icon
-              style={[styles.demoIcon, { opacity: 0.5 }]}
-              name="documents"
-              size={25}
-              color="#EF1F78"
-            />
-            <Icon
-              style={[styles.demoIcon, { opacity: 0.5 }]}
-              name="download"
-              size={25}
-              color="#EF1F78"
-            />
-            <Icon
-              style={[styles.demoIcon, { opacity: 0.5 }]}
-              name="dribbble"
-              size={25}
-              color="#EF1F78"
-            />
-            <Icon
-              style={[styles.demoIcon, { opacity: 0.5 }]}
-              name="drop"
-              size={25}
-              color="#EF1F78"
-            />
-            <Icon
-              style={[styles.demoIcon, { opacity: 0.5 }]}
-              name="erase"
-              size={25}
-              color="#EF1F78"
-            />
-            <Icon
-              style={[styles.demoIcon, { opacity: 0.5 }]}
-              name="foursquare"
-              size={25}
-              color="#EF1F78"
-            />
-          </View>
-
-          <Button
-            style={[styles.demoButton, { width: 200, alignSelf: 'center' }]}
-            primary
-            bordered
-            caption="More Icons"
-          />
-        </View>
-
-        <View style={styles.componentsSection}>
-          <Text style={styles.componentSectionHeader}>Dropdown</Text>
-
-          <Dropdown
-            style={{ width: 200, alignSelf: 'center' }}
-            onSelect={() => {}}
-            items={['option 1', 'option 2']}
-          />
         </View>
       </ScrollView>
     );
@@ -307,6 +276,9 @@ const styles = StyleSheet.create({
   },
   demoItem: {
     marginVertical: 15,
+  },
+  buttonContainer: {
+    flexDirection: 'column'
   },
   photo: {
     borderRadius: 100,

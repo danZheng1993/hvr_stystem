@@ -4,7 +4,8 @@ const constants = {
     RECOVER_PASSWORD: 'RECOVER_PASSWORD',
     NORMAL_SIGNUP: 'NORMAL_SIGNUP',
     SEND_SMS: 'SEND_SMS',
-    CHECK_SMS: 'CHECK_SMS'
+    CHECK_SMS: 'CHECK_SMS',
+    BASE_URL: 'http://192.168.31.207:4000/'
 }
 
 export default constants
