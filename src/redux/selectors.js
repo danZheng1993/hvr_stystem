@@ -87,6 +87,18 @@ export const servicesListSelector = (state) =>
 export const serviceStateSelector = (state) =>
   get(state, 'service', {})
 
+  export const chatDetailSelector = (state) =>
+  get(state, 'chat.chat', {})
+
+export const chatsListSelector = (state) =>
+  get(state, 'chat.chats', [])
+
+  export const chatsloadingSelector = (state) =>
+  get(state, 'chat.loading', false)
+
+export const chatStateSelector = (state) =>
+  get(state, 'chat', {})
+
 export const subcategoryDetailSelector = (state) =>
   get(state, 'subcategory.subcategory', {})
 

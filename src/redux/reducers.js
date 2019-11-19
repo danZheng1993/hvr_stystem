@@ -11,6 +11,7 @@ import service from './modules/service'
 import subcategory from './modules/subcategory'
 import user from './modules/user'
 import job from './modules/job'
+import chat from './modules/chat'
 import gallery from '../modules/gallery/GalleryState';
 import app from '../modules/AppState';
 import calendar from '../modules/calendar/CalendarState';
@@ -29,5 +30,6 @@ export default combineReducers({
   service,
   job,
   feedback,
-  subcategory
+  subcategory,
+  chat
 })

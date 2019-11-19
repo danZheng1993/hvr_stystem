@@ -12,6 +12,7 @@ const sceneRoute = require('./scene.route');
 const serviceRoute = require('./service.route');
 const profileRoute = require('./profile.route');
 const jobRoute = require('./job.route');
+const chatRoute = require('./chat.route');
 
 const router = express.Router();
 const authMiddleware = expressJwt({ secret: config.jwtSecret });
@@ -26,5 +27,6 @@ router.use('/scenes', sceneRoute);
 router.use('/subcategorys', subcategoryRoute);
 router.use('/services', serviceRoute);
 router.use('/jobs', authMiddleware, jobRoute);
+router.use('/chats', authMiddleware, chatRoute);
 
 module.exports = router;

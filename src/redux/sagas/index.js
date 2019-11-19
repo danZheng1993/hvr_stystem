@@ -7,6 +7,7 @@ import scene from './scene'
 import feedback from './feedback'
 import service from './service'
 import job from './job'
+import chat from './chat'
 import subcategory from './subcategory'
 
 export default function* rootSaga () {
@@ -20,5 +21,6 @@ export default function* rootSaga () {
     subcategory(),
     job(),
     feedback(),
+    chat()
   ])
 }

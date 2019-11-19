@@ -60,6 +60,8 @@ import ProviderFinishingJob from '../provider/MyPage/MyJob/FinishingJob';
 import ProviderGiveFeedback from '../provider/MyPage/MyJob/GiveFeedback';
 
 import Chatting from '../../components/Chatting';
+import Notification from '../../components/Notification';
+
 import Settings from '../settings';
 import PersonalInformation from '../settings/PersonalInformation';
 // import  JobDetails from '../provider/jobs/JobDetails';
@@ -321,6 +323,13 @@ const stackNavigator = createStackNavigator(
       },
     },
 
+    Notification: {
+      screen: Notification,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    
     PersonalInformation: {
       screen: PersonalInformation,
       navigationOptions: {

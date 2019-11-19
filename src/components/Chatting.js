@@ -1,11 +1,17 @@
 
 import React from 'react';
 import { View, Text, AsyncStorage } from 'react-native';
-import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat';
-import XMPP from 'react-native-xmpp'
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { createStructuredSelector } from 'reselect';
 
-export default class App extends React.Component {
+import { getChats, getChat } from '../redux/modules/chat'
+import { chatsloadingSelector, chatsListSelector } from '../redux/selectors'
+import XMPP from 'react-native-xmpp'
+import { getAllExternalFilesDirs } from 'react-native-fs';
+
+class Chatting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,8 +32,52 @@ export default class App extends React.Component {
     let to = navigation.getParam('to', '')
     if (to != '') {
         this.setState({to})
+        this.props.getChats({
+          body: {toID: to},
+          success: () => this.initMessages()
+        })
     }
   }
+
+  initMessages() {
+    const {to} = this.state
+    const {chatsList} = this.props
+    var message= [
+      {
+        _id: new Date().getTime(),
+        text: 'Hello developer',
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+    ]
+    console.log(">>>>>chats",chatsList)
+    chatsList[0].map((conversation, index) => (
+      (conversation.messageCount == 1) ?
+        this._storeMessages({
+          _id: new Date().getTime(),
+          text: conversation.messages.message.body,
+          createdAt: conversation.messages.message.sentDate,
+          user: {
+            _id: (conversation.messages.message.to == `${to}@desktop-jgen8l2/spark`) ? -1: 2 
+          }
+        })
+      : conversation.messages.message.map((message, messageIndex) => {
+        this._storeMessages({
+          _id: new Date().getTime(),
+          text: message.body,
+          createdAt: message.sentDate,
+          user: {
+            _id: (message.to == `${to}@desktop-jgen8l2/spark`) ? 2: -1 
+          }
+        });
+      })
+    ))
+  }
+
   onReceivedMessage(messages) {
       console.log(messages)
       var message= [
@@ -85,3 +135,16 @@ export default class App extends React.Component {
     });
   }
 }
+
+const mapStateToProps = createStructuredSelector({
+  loading: chatsloadingSelector,
+  chatsList: chatsListSelector
+});
+
+const mapDispatchToProps = {
+  getChats,
+};
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(Chatting);

@@ -4,30 +4,31 @@ const saveItem = async (key, value)  => {
   try {
     await AsyncStorage.setItem(key, value);
   } catch (error) {
-    console.log('AsyncStorage Error: ' + error.message);
+    console.log('AsyncStorage Saving Error: ' + error.message);
   }
 }
 
-const loadJWT =  async ()  => {
+const loadItem =  async (key)  => {
   try {
-    await AsyncStorage.getItem('hvr_auth');
-
+    var value = await AsyncStorage.getItem(key);
+    console.log("Ansyc Item Loaded.",value)
+    return value
   } catch (error) {
-    console.log('AsyncStorage Error: ' + error.message);
+    console.log('AsyncStorage Loading Error: ' + error.message);
   }
 }
 
-const deleteJWT = async() => {
+const deleteItem = async(key) => {
   try{
-    await AsyncStorage.removeItem('hvr_auth')
+    await AsyncStorage.removeItem(key)
     
   } catch (error) {
-    console.log('AsyncStorage Error: ' + error.message);
+    console.log('AsyncStorage Delete Error: ' + error.message);
   }
 }
 
 export {
   saveItem,
-  loadJWT,
-  deleteJWT
+  loadItem,
+  deleteItem
 };

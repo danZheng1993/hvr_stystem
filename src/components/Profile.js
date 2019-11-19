@@ -27,6 +27,7 @@ export default class Profile extends React.Component {
             name="bell"
             size={25}
             color="#5759CB"
+            onPress={() => navigation.navigate('Notification')}
           />
           <Icon
             style={styles.demoIcon}

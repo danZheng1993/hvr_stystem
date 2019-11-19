@@ -11,7 +11,6 @@ import { createStructuredSelector } from 'reselect';
 import { Button, Dropdown, Profile } from '../../../components';
 
 import { profileSelector } from '../../../redux/selectors'
-
 class MyPage extends React.Component {
   constructor(props) {
     super(props)
@@ -22,7 +21,6 @@ class MyPage extends React.Component {
 
   render () {
     const {profile} = this.props
-
     return (
       <ScrollView
         style={styles.container}

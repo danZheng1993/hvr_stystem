@@ -15,6 +15,7 @@ import JobDetail from './JobDetail'
 import UsersList from './UsersList'
 import Applicants from './Applicants'
 import Profile from './Profile'
+import Notification from './Notification'
 import Confirm from './Confirm'
 import NoData from './NoData'
 
@@ -36,6 +37,7 @@ export {
   JobDetail,
   Applicants,
   UsersList,
+  Notification,
   Confirm,
   NoData
 };

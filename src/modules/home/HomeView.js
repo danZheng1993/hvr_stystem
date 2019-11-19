@@ -16,12 +16,14 @@ import { getScenes } from '../../redux/modules/scene'
 import { getServices } from '../../redux/modules/service'
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
+import { saveItem, loadItem} from '../../redux/api/storage'
+
 import XMPP from 'react-native-xmpp'
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
     timer = null;
-    XMPP.on('message', (message) => console.log('MESSAGE:' + message));
+    XMPP.on('message', (message) => this.handleMessage(message));
     XMPP.on('iq', (message) => console.log('IQ:' + message));
     XMPP.on('presence', (message) => console.log('PRESENCE:' + message));
     XMPP.on('error', (message) => console.log('ERROR:' + message));
@@ -37,6 +39,22 @@ class HomeScreen extends React.Component {
     getTypes()
     getServices()
     getSubcategorys()
+  }
+
+  handleMessage(message) {
+    console.log("message>>>", message)
+    if (String(message.from).indexOf("bbb") != -1 && message.body) {
+      loadItem('notification')
+      .then((res) =>  {
+        let notification = res || ''
+        notification += notification ? (',' + message.body) : message.body
+        console.log(notification)
+        saveItem('notification', notification).then(() => console.log("success"))
+      })
+
+    } else {
+
+    }
   }
 
   componentDidMount() {

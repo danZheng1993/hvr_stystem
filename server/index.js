@@ -16,7 +16,6 @@ var server = 'localhost';
 
 xmpp.on('online', function(data) {
     console.log('Connected with JID: ' + data.jid.user);
-    xmpp.send('testjs@007jabber.com', 'hello! time is '+new Date(), false);
 });
 
 xmpp.on('error', function(err) {

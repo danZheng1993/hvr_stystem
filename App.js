@@ -6,7 +6,6 @@ import { colors } from './src/styles';
 // import configureStore from './src/configureStore';
 
 import {  store, persistor } from './src/redux/store';
-
 import AppView from './src/modules/AppViewContainer';
 
 const initialState = {};

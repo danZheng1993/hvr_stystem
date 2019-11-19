@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Job = require('../models/job.model');
 const ROLES = require('../constants/role');
 const STATUS = require('../constants/status')
+const xmpp = require('simple-xmpp')
 function create(req, res, next) {
   const job = new Job(req.body);
  // job.user = req.user._id;
@@ -39,11 +40,12 @@ function apply(req, res, next) {
 
 function hire(req, res, next) {
   console.log("hire!!!")
-
+  console.log(req.user, req.body)
   Object.assign(req.job, {...req.body, status: STATUS.NOT_PAID});
   console.log(req.body)
   req.job.save()
   .then((updatedJob) => {
+    xmpp.send(`${req.body.hired}@desktop-jgen8l2/spark`, 'congratulations! you were hired ', false);
     res.json(updatedJob);
   })
   .catch(next);
