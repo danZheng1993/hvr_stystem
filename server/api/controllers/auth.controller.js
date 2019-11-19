@@ -10,7 +10,7 @@ const ip = require('ip')
 
 function login(req, res, next) {
   User.findOne({ phoneNumber: req.body.phoneNumber })
-    .select('_id password phoneNumber userName role permission photo overview')
+    .select('_id password phoneNumber userName role permission photo overview password')
     .exec()
     .then((user) => {
       if (!user) {

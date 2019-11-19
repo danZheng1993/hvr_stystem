@@ -118,6 +118,7 @@ function updateOne(req, res, next) {
 
   req.userModel.save()
   .then((updatedUser) => {
+    console.log(updatedUser)
     res.json(updatedUser);
   })
   .catch(next);

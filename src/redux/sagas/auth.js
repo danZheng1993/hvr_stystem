@@ -2,14 +2,16 @@ import { takeLatest } from 'redux-saga/effects'
 import { DO_LOGIN, DO_SIGNUP, GET_PROFILE, SAVE_PROFILE, SEND_CODE, CHECK_CODE } from '../modules/auth'
 import apiCall from '../api/apiCall'
 import { AsyncStorage } from 'react-native';
-import {saveItem} from '../api/storage'
+import {saveItem, loadItem} from '../api/storage'
+import syncStorage from 'sync-storage';
 
 const doLogin = apiCall({
   type: DO_LOGIN,
   method: 'post',
   path: () => '/auth/login/',
   success: (res, action) => {
-    saveItem('hvr_auth', JSON.stringify(res.data)).then(() => (console.log("success")))
+    syncStorage.set('token', res.data.token)
+    saveItem('hvr_auth', JSON.stringify(res.data)).then(() => (console.log("auth saving success!!!")))
     // AsyncStorage.setItem('hvr_auth', JSON.stringify(res.data)).then(console.log("success"))
     }
 })
@@ -49,14 +51,14 @@ const doSaveProfile = apiCall({
   path: () => '/profile/me/',
   success: (res, action) => {
     console.log(res)
-    let token
-    AsyncStorage.getItem('hvr_auth').then(res => {
-      token = JSON.parse(res).token
+    loadItem('hvr_auth')
+    .then(val => {
+      let token = JSON.parse(val).token
+      saveItem('hvr_auth', JSON.stringify({
+        info: res.data,
+        token: token
+      })).then(() => console.log("Profile Change Success!"))
     })
-    saveItem('hvr_auth', JSON.stringify({
-      info: res.data,
-      token: token
-    })).then(() => (console.log("success")))
   }
 })
 

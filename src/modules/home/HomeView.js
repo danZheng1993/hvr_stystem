@@ -17,6 +17,7 @@ import { getServices } from '../../redux/modules/service'
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
 import { saveItem, loadItem} from '../../redux/api/storage'
+import SyncStorage from 'sync-storage';
 
 import XMPP from 'react-native-xmpp'
 class HomeScreen extends React.Component {
@@ -32,14 +33,15 @@ class HomeScreen extends React.Component {
     XMPP.on('connect', (message) => console.log('CONNECTED!'));
     XMPP.on('disconnect', (message) => console.log('DISCONNECTED!'));
   }
-
-  componentWillMount() {
+  async componentWillMount(): void {
+    const data = await SyncStorage.init();
+    console.log('AsyncStorage is ready!', data);
     const {getTypes, getScenes, getServices, getSubcategorys} = this.props
     getScenes()
     getTypes()
     getServices()
     getSubcategorys()
-  }
+   }
 
   handleMessage(message) {
     console.log("message>>>", message)

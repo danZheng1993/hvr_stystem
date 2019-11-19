@@ -27,8 +27,16 @@ const deleteItem = async(key) => {
   }
 }
 
+const clearItem = async() => {
+  try{
+    await AsyncStorage.clear()
+  } catch (error) {
+    console.log('AsyncStorage Clear Error: ', + error.message)
+  }
+}
 export {
   saveItem,
   loadItem,
-  deleteItem
+  deleteItem,
+  clearItem
 };

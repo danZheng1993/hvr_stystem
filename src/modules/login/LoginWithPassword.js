@@ -19,6 +19,7 @@ import toaster from 'toasted-notes';
 import {login, getProfile} from '../../redux/modules/auth'
 import { profileSelector, authloadingSelector } from '../../redux/selectors'
 import XMPP from 'react-native-xmpp'
+import { loadItem } from '../../redux/api/storage';
 
 class LoginWithPassword extends React.Component {
   constructor(props) {
@@ -32,26 +33,25 @@ class LoginWithPassword extends React.Component {
     const { phoneNumber, password} = this.state  
     this.props.login({
       body: {phoneNumber, password},
-      // success: () =>     XMPP.connect('aaa@192.168.31.207/spark', 'aaa','RNXMPP.PLAIN','192.168.31.207',5222),
+      success: () =>     this.redirect(),
       // fail: () => toast("Phone number or password is wrong!")
     })
   };
   
   redirect() {
-    const {profile} = this.props
-    if (!profile) return
-    toast("login success!")
-    console.log(">>>>>>>>>Profile",profile)
-    // XMPP.connect(`${Profile._id}@192.168.31.207/spark`, profile.password,'RNXMPP.PLAIN','192.168.31.207',5222)
-    XMPP.connect(`${profile._id}@192.168.31.207/spark`, profile.password.slice(0,8),'RNXMPP.PLAIN','192.168.31.207',5222)
-    if (profile.role == 'provider') {
-      this.props.navigation.navigate({ routeName: 'Provider' })
-    } else if (profile.role =='client'){
-      this.props.navigation.navigate({ routeName: 'Client' })
-    }
-  }
-  componentDidUpdate() {
-    this.redirect()
+    loadItem('hvr_auth').then((val) => {
+      const {profile} = this.props
+      if (!profile) return
+      toast("login success!")
+      console.log(">>>>>>>>>Profile",profile)
+      // XMPP.connect(`${Profile._id}@192.168.31.207/spark`, profile.password,'RNXMPP.PLAIN','192.168.31.207',5222)
+      XMPP.connect(`${profile._id}@192.168.31.207/spark`, profile.password.slice(0,8),'RNXMPP.PLAIN','192.168.31.207',5222)
+      if (profile.role == 'provider') {
+        this.props.navigation.navigate({ routeName: 'Provider' })
+      } else if (profile.role =='client'){
+        this.props.navigation.navigate({ routeName: 'Client' })
+      }
+    })
   }
 
   render() {

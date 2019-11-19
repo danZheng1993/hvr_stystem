@@ -3,10 +3,9 @@ import { call, put } from 'redux-saga/effects'
 import { get } from 'lodash'
 import { requestFail, requestPending, requestSuccess } from './request'
 import { AsyncStorage } from 'react-native'
-var defaultHeader
-defaultHeaders = async () => {
-  var auth = await AsyncStorage.getItem('hvr_auth');
-  console.log("auth",auth)
+import SyncStorage from 'sync-storage';
+const defaultHeaders = () => {
+  const token = SyncStorage.get('token') || null;
   //axios.defaults.baseURL = process.env.API_ROOT + '/'
   axios.defaults.baseURL = 'http://192.168.31.207:4000/'
   var headers = {
@@ -14,14 +13,12 @@ defaultHeaders = async () => {
     'Content-Type': 'application/json'
   }
 
-  if (auth) {
-    const token = JSON.parse(auth).token
+  if (token) {
     headers['Authorization'] = 'Bearer ' + token
     console.log('token', token)
   } 
   return headers;
 }
-defaultHeaders().then((header => defaultHeader = header))
 export default ({
   type,
   method, // one of 'get', 'post', 'put', 'delete'
@@ -44,7 +41,7 @@ export default ({
     console.log({
       url: typeof path === 'function' ? path(action) : path,
       method: method.toLowerCase(),
-      headers: Object.assign({}, defaultHeader),
+      headers: Object.assign({}, defaultHeaders()),
       data: body,
       params
     })
@@ -56,7 +53,7 @@ export default ({
     const res = yield call(axios.request, {
       url: typeof path === 'function' ? path(action) : path,
       method: method.toLowerCase(),
-      headers: Object.assign({}, defaultHeader, headers),
+      headers: Object.assign({}, defaultHeaders(), headers),
       data: body,
       params: body
     })

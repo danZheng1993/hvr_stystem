@@ -15,8 +15,13 @@ const resetAction = () => NavigationActions.reset({
   ]
 })
 import {logout} from '../../redux/modules/auth'
-import deviceStorage from '../../redux/api/storage'
+import { clearItem } from '../../redux/api/storage'
 const settings = props => {
+    clearStorage = ()=> {
+        clearItem().then(() => {
+            props.logout(props.navigation.navigate('Auth'))
+        })
+    }
     return (
         <View>
             <ListItem
@@ -42,7 +47,7 @@ const settings = props => {
                 <Button
                     large
                     caption="退出登录"
-                    onPress={() => props.logout(props.navigation.navigate('Auth'))}
+                    onPress={() => clearStorage()}
                 />
         </View>
     )

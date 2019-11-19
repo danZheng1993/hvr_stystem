@@ -171,7 +171,7 @@ export default handleActions({
   [requestSuccess(SAVE_PROFILE)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(SAVE_PROFILE),
-    me: payload.info,
+    me: payload,
     error: null,
     loading: false
   })
