@@ -9,11 +9,10 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'recompose';
 
 import { fonts, colors } from '../../../../styles';
-import { Loader, toast, JobDetail} from '../../../../components';
+import { Loader, toast, JobDetail, Button} from '../../../../components';
 
 import { getJob } from '../../../../redux/modules/job'
 import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
-import { WaitingAction } from '../../../../components/JobActions';
 
 class WaitingJob extends React.Component {
   constructor(props) {
@@ -37,12 +36,12 @@ class WaitingJob extends React.Component {
     
     const {job, jobsloading} = this.props
     console.log(job)
-
+    if (!job) return (<></>)
     return (
       <View style={styles.container}>
         <View style={styles.description}>
-         { <Loader
-          loading={jobsloading} /> }
+         <Loader
+          loading={jobsloading} />
          <JobDetail job={job} />
          <View style={styles.componentsSection}>
           <Text size={14}>项目定价 : ¥{job.price}</Text>
@@ -52,7 +51,6 @@ class WaitingJob extends React.Component {
           <Text size={14}>尾款支付时间 : </Text>
           <Text size={14}>定价 : ¥{job.price}</Text>
           <Text size={14}>已支付首付款 : ¥{job.price / 5}</Text>
-          <WaitingAction />
          </View>
          </View>
       </View>

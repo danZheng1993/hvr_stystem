@@ -27,7 +27,10 @@ class MyJobList extends React.Component {
   }
 
   componentWillMount() {
-    const {searchJob, profile} = this.props
+    const {searchJob, profile, navigation} = this.props
+    const selected = navigation.getParam('selected', 0)
+    this.props.setRadioGroupsState({ ...this.props.radioGroupsState, 0: selected })
+    this.setState({selected})
     searchJob({
       body: {creator: profile._id}
     })

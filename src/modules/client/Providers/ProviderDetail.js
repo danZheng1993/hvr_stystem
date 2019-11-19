@@ -33,7 +33,7 @@ class ProviderDetail extends React.Component {
     let id = navigation.getParam('id', 'NO-ID')
     if (id != 'NO-ID') {
       getUser({
-        id: id,
+        id,
       })
     }
   }
@@ -46,13 +46,13 @@ class ProviderDetail extends React.Component {
   render() {
     const {user, usersloading} = this.props
     const {select} = this.state
+    if (!user) return (<></>)
     return (
       <ScrollView style={styles.container}>
-        <Profile user={user} navigation={this.props.navigation}/>
-        <View style={styles.description}>
-         { <Loader
-          loading={usersloading} /> }
-         </View>
+
+          <Loader
+          loading={usersloading} /> 
+          <Profile user={user} navigation={this.props.navigation}/>
         <View style={styles.componentsSection}>
           <RadioGroup
             underline

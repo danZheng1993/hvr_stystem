@@ -59,12 +59,12 @@ class ApplyJob extends React.Component {
   } 
   render() {  
     const {job, jobsloading} = this.props
-
+    if (!job) return (<></>)
     return (
       <ScrollView style={styles.container}>
         <View style={styles.description}>
-         { <Loader
-          loading={jobsloading} /> }
+         <Loader
+          loading={jobsloading} />
          {job && <>
             <JobDetail job={job} />
             <View>

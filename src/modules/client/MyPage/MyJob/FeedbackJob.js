@@ -43,6 +43,7 @@ class FeedbackJob extends React.Component {
   render() {
     
     const {job, jobsloading} = this.props
+    if (!job) return (<></>)
     return (
       <View style={styles.container}>
        

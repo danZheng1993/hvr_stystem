@@ -55,9 +55,7 @@ import ProviderBiddingJob from '../provider/MyPage/MyJob/BiddingJob';
 import ProviderNotPaidJob from '../provider/MyPage/MyJob/NotPaidJob';
 import ProviderWaitingJob from '../provider/MyPage/MyJob/WaitingJob';
 import ProviderTestingJob from '../provider/MyPage/MyJob/TestingJob';
-import ProviderFeedbackJob from '../provider/MyPage/MyJob/FeedbackJob';
-import ProviderFinishingJob from '../provider/MyPage/MyJob/FinishingJob';
-import ProviderGiveFeedback from '../provider/MyPage/MyJob/GiveFeedback';
+import ProviderSelectingJob from '../provider/MyPage/MyJob/SelectingJob';
 
 import Chatting from '../../components/Chatting';
 import WebViewer from '../../components/WebViewer';
@@ -282,22 +280,8 @@ const stackNavigator = createStackNavigator(
       },
     },
 
-    ProviderFeedbackJob: {
-      screen: ProviderFeedbackJob,
-      navigationOptions: {
-        header: null,
-      },
-    },
-
-    ProviderGiveFeedback: {
-      screen: ProviderGiveFeedback,
-      navigationOptions: {
-        header: null,
-      },
-    },
-
-    ProviderFinishingJob: {
-      screen: ProviderFinishingJob,
+    ProviderSelectingJob: {
+      screen: ProviderSelectingJob,
       navigationOptions: {
         header: null,
       },

@@ -26,11 +26,10 @@ export default class ProviderJobsList extends React.Component {
   handleNavigate = (status, id) => {
     const {navigation} = this.props
     if (status == '竞标中') navigation.navigate('ProviderBiddingJob', {id: id})
+    if (status == '已选用') navigation.navigate('ProviderSelectingJog', {id: id})
     if (status == '待付款') navigation.navigate('ProviderNotPaidJob', {id: id})
     if (status == '待拍摄') navigation.navigate('ProviderWaitingJob', {id: id})
     if (status == '待验收') navigation.navigate('ProviderTestingJob', {id: id})
-    if (status == '评价') navigation.navigate('ProviderFeedbackJob', {id: id})
-    if (status == '已完成') navigation.navigate('ProviderFinishingJob', {id: id})
   } 
 
   render() {   
@@ -47,54 +46,77 @@ export default class ProviderJobsList extends React.Component {
              <Text size={14}>服务项目 : <Text>{job.type}</Text></Text>
              <Text size={14}>拍摄城市 : <Text>{job.location}</Text></Text>
              {job.status == '竞标中' && 
-              <View style={styles.textContainer}>
-                <Text size={14}>预算价格:<Text>¥{job.budget}</Text></Text>
-                <Text size={14} onPress={() => {
-                  navigation.navigate('BiddingJob', {
-                    id: job._id,
-                  });
-                }}
-                >查看更多</Text>
+              <View style={styles.buttonsContainer}>
+                <Button
+                small
+                style={styles.button}
+                caption="联系需求方"
+                onPress={this.handleClick}
+                />
               </View>}
+             {job.status == '已选用' && 
+              <View style={styles.buttonsContainer}>
+              <Button
+              small
+              style={styles.button}
+              caption="联系需求方"
+              onPress={this.handleClick}
+              />
+            </View>}
              {job.status == '待付款' && 
               <View>
-                <Text size={14}>签订合同 : <Text onPress={() => {
-                  navigation.navigate('BiddingJob', {
-                    id: job._id,
-                  });}}>电子合同</Text>
-                </Text>
-                <View stye={styles.textContainer}>
-                  <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
-                  <Text size={14}>首付款50% : <Text>¥{job.price}</Text></Text>
+              <View stye={styles.textContainer}>
+                <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
+                <Text size={14}>首付款(20%) : <Text>¥{job.price}</Text></Text>
+                <Text size={14}>尾款(80%) : <Text>¥{job.price}</Text></Text>
+                <View style={styles.buttonsContainer}>
+                  <Button
+                  small
+                  style={styles.button}
+                  caption="联系需求方"
+                  onPress={this.handleClick}
+                  />
                 </View>
-              </View>}
+              </View>
+            </View>}
              {job.status == '待拍摄' && 
               <View>
               <View stye={styles.textContainer}>
-                <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
-                <Text size={14}>首付款已支付 : <Text>¥{job.price}</Text></Text>
+                <View style={styles.buttonsContainer}>
+                  <Button
+                  small
+                  style={styles.button}
+                  caption="联系需求方"
+                  onPress={this.handleClick}
+                  />
+                  <Button
+                  small
+                  style={styles.button}
+                  caption="上传视频链接"
+                  onPress={this.handleClick}
+                  />
+                </View>
               </View>
             </View>}
              {job.status == '待验收' && 
-              <View>
-              <View stye={styles.textContainer}>
-                <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
-                <Text size={14}>已支付首付款 : <Text>¥{job.price}</Text></Text>
-              </View>
-            </View>}
-             {job.status == '评价' && 
                <View>
                <View stye={styles.textContainer}>
-                 <Text size={14}>订单总金额 : <Text>¥{job.price}</Text></Text>
+                <View style={styles.buttonsContainer}>
+                    <Button
+                    small
+                    style={styles.button}
+                    caption="联系需求方"
+                    onPress={this.handleClick}
+                    />
+                    <Button
+                    small
+                    style={styles.button}
+                    caption="上传视频链接"
+                    onPress={this.handleClick}
+                    />
+                  </View>
                </View>
              </View>}
-             {job.status == '已完成' && 
-              <View>
-              <View stye={styles.textContainer}>
-                <Text size={14}>订单总金额 : <Text>¥{job.price}</Text></Text>
-              </View>
-            </View>}
-             
             </View>
             </TouchableRipple>
          )) : <NoData />}

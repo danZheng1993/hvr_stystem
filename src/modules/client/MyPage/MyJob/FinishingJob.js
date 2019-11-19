@@ -37,12 +37,12 @@ class FinishingJob extends React.Component {
     
     const {job, jobsloading} = this.props
     console.log(job)
-
+    if (!job) return (<></>)
     return (
       <View style={styles.container}>
         <View style={styles.description}>
-         { <Loader
-          loading={jobsloading} /> }
+         <Loader
+          loading={jobsloading} />
          <JobDetail job={job} />
          <View style={styles.componentsSection}>
          <Text size={14}>项目定价 : ¥{job.price}</Text>

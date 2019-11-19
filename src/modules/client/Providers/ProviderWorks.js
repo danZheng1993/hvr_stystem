@@ -12,9 +12,6 @@ import { createStructuredSelector } from 'reselect';
 import { Button, Loader,} from '../../../components';
 import { fonts, colors } from '../../../styles';
 
-import { getUser } from '../../../redux/modules/user'
-import { userDetailSelector, usersloadingSelector } from '../../../redux/selectors'
-
 class ProviderWorks extends React.Component {
   constructor(props) {
     super(props)
@@ -33,12 +30,11 @@ class ProviderWorks extends React.Component {
 
 
   render() {
-    const {user, usersloading} = this.props
     return (
       <ScrollView style={styles.container}>
         <View style={styles.description}>
-         { <Loader
-          loading={usersloading} /> }
+         <Loader
+          loading={false} />
          </View>
           <Text>Provider Work</Text>
       </ScrollView>
@@ -93,12 +89,9 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  user: userDetailSelector,
-  usersloading: usersloadingSelector,
 });
 
 const mapDispatchToProps = {
-  getUser
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

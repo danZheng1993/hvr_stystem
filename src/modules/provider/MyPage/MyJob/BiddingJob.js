@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Text
+  Text,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { TextInput } from 'react-native-paper'
@@ -43,7 +43,7 @@ class BiddingJob extends React.Component {
     
     const {job, jobsloading} = this.props
     console.log(job)
-
+    if (!job) return (<></>)
     return (
       <View style={styles.container}>
         <View style={styles.description}>
@@ -52,8 +52,15 @@ class BiddingJob extends React.Component {
          {job && <JobDetail job={job} />
 
          }
-         {<Applicants applicants={job.applicants} navigation={this.props.navigation} jobID={job._id}/> }
-         </View>
+          <View style={styles.buttonsContainer}>
+            <Button
+            small
+            style={styles.button}
+            caption="联系需求方"
+            onPress={this.handleClick}
+            />
+          </View>
+        </View>
       </View>
     );
     }

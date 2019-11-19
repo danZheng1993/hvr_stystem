@@ -35,8 +35,8 @@ class Providers extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.description}>
-         { <Loader
-          loading={usersloading} /> }
+         <Loader
+          loading={usersloading} />
          </View>
          <UsersList users={users} navigation={this.props.navigation}/>
       </ScrollView>

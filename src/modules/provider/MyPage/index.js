@@ -35,7 +35,7 @@ class MyPage extends React.Component {
                   style={styles.demoButton}
                   action
                   bgColor="#958FDA"
-                  onPress={() => this.props.navigation.navigate({ routeName: 'ProviderJob' })}
+                  onPress={() => this.props.navigation.navigate('ProviderJob', {selected: 1})}
                   >
                 <Text>
                   <Icon name="chat" size={20} color="white" />
@@ -50,7 +50,7 @@ class MyPage extends React.Component {
                   style={styles.demoButton}
                   action
                   bgColor="#52B1F4"
-                  onPress={() => this.props.navigation.navigate({ routeName: 'ProviderJob' })}
+                  onPress={() => this.props.navigation.navigate('ProviderJob', {selected: 2})}
                 >
                 <Text>
                   <Icon name="chat" size={20} color="white" />
@@ -65,7 +65,7 @@ class MyPage extends React.Component {
                   style={styles.demoButton}
                   action
                   bgColor="#19D4E6"
-                  onPress={() => this.props.navigation.navigate({ routeName: 'ProviderJob' })}
+                  onPress={() => this.props.navigation.navigate('ProviderJob', {selected: 3})}
                 >
                 <Text>
                   <Icon name="chat" size={20} color="white" />
@@ -80,7 +80,7 @@ class MyPage extends React.Component {
                   style={styles.demoButton}
                   action
                   bgColor="#4F44C1"
-                  onPress={() => this.props.navigation.navigate({ routeName: 'ProviderJob' })}
+                  onPress={() => this.props.navigation.navigate('ProviderJob', {selected: 4})}
                 >
                 <Text>
                   <Icon name="chat" size={20} color="white" />
@@ -95,7 +95,7 @@ class MyPage extends React.Component {
                   style={styles.demoButton}
                   action
                   bgColor="#3CD4A0"
-                  onPress={() => this.props.navigation.navigate({ routeName: 'ProviderJob' })}
+                  onPress={() => this.props.navigation.navigate('ProviderJob', {selected: 5})}
                 >
                 <Text>
                   <Icon name="chat" size={20} color="white" />

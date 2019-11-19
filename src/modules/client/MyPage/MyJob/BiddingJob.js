@@ -39,7 +39,7 @@ class BiddingJob extends React.Component {
     
     const {job, jobsloading} = this.props
     console.log(job)
-
+    if (!job) return (<></>)
     return (
       <View style={styles.container}>
         <View style={styles.description}>

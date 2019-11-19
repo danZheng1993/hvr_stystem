@@ -16,7 +16,7 @@ import { fonts, colors } from '../../../../styles';
 import { searchJob } from '../../../../redux/modules/job'
 import { jobsListSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
 
-const status = ['全部', '竞标中', '待付款','待拍摄', '待验收', '评价', '已完成']
+const status = ['全部', '竞标中', '已选用','待付款','待拍摄', '待验收']
 
 class MyJobList extends React.Component {
   constructor(props) {
@@ -27,7 +27,10 @@ class MyJobList extends React.Component {
   }
 
   componentWillMount() {
-    const {searchJob, profile} = this.props
+    const {searchJob, profile, navigation} = this.props
+    const selected = navigation.getParam('selected', 0)
+    this.props.setRadioGroupsState({ ...this.props.radioGroupsState, 0: selected })
+    this.setState({selected})
     searchJob({
       body: {hired: profile._id}
     })
@@ -48,12 +51,10 @@ class MyJobList extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <Loader loading={jobsloading} />
-        { <Loader
-          loading={jobsloading} /> }
         <View style={styles.componentsSection}>
           <RadioGroup
             style={styles.demoItem}
-            items={['全部', '竞标中', '待付款','待拍摄', '待验收', '评价', '已完成']}
+            items={['全部', '竞标中', '已选用','待支付', '待拍摄', '待验收']}
             selectedIndex={this.props.radioGroupsState[0]}
             onChange={index => this.handleClick(index)}
           />
