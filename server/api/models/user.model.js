@@ -21,7 +21,7 @@ const userSchema = new Schema({
   companyName: { type: String, select: false, default: ''},
   companyLicense: { type: String, select: false, default: 'default.png'},
   balance: { type: Number, trim: true, default: 0 }, 
-
+  contacts: {type: Array},
   role: { type: String, enum: Object.values(ROLES), default: ROLES.PROVIDER },
   permission: { type: String, enum: Object.values(PERMISSION), default: PERMISSION.NOT_ALLOWED },
 });

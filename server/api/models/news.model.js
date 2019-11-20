@@ -17,6 +17,10 @@ const NewsSchema = new Schema({
   created: {
     type: Date,
     default: new Date()
+  },
+  source: {
+    type: String,
+    default: ''
   }
 }, {
   timestamp: true,

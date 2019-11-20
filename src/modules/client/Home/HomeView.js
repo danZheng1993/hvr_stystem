@@ -12,10 +12,16 @@ import {
 import { colors, fonts } from '../../../styles';
 import Icon from 'react-native-vector-icons/Entypo';
 import { SliderBox } from 'react-native-image-slider-box';
+import constants from '../../../constants'
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { createStructuredSelector } from 'reselect';
 
+import { bannersListSelector, newssListSelector} from '../../../redux/selectors'
 import { RadioGroup, GridRow, Button } from '../../../components';
+import { ListItem } from 'react-native-elements'
 
-export default class HomeView extends React.Component {
+ class HomeView extends React.Component {
   _getRenderItemFunction = () =>
     [this.renderRowOne, this.renderRowTwo, this.renderRowThree][
       this.props.tabIndex
@@ -122,7 +128,11 @@ export default class HomeView extends React.Component {
       this.props.tabIndex === 2
         ? GridRow.groupByRows(this.props.data, 2)
         : this.props.data;
-    const {tabIndex} = this.props
+    const {tabIndex, banners, news} = this.props
+    let bannerImages = []
+    banners && banners.map((banner, index) => {
+      typeof(banner) == 'object' && bannerImages.push(constants.BANNER_BASE_URL + banner.image)
+    })
     return (
       <View style={styles.container}>
         <View style={{ height: 50, flexDirection: "row" }}>
@@ -140,17 +150,25 @@ export default class HomeView extends React.Component {
           />
         </View>
         {tabIndex == 0 &&
-          <SliderBox
-            images={[
-              'https://source.unsplash.com/1024x768/?nature',
-              'https://source.unsplash.com/1024x768/?water',
-              'https://source.unsplash.com/1024x768/?girl',
-              'https://source.unsplash.com/1024x768/?tree'
-            ]}
-            onCurrentImagePressed={index =>
-                console.warn(`image ${index} pressed`)
-            }
-          />
+          <>
+            <SliderBox
+              images={bannerImages}
+              onCurrentImagePressed={index =>
+                  console.warn(`image ${index} pressed`)
+              }
+            />
+            {news && news.map((l, i) => (
+              typeof(l) == "object" &&
+            <ListItem
+              key={i}
+              rightAvatar={{ source: { uri: constants.NEWS_BASE_URL + l.image } }}
+              avatarStyle={{ width: 100, height: 100, backgroundColor: 'white'}}
+              title={l.title}
+              subtitle={l.content}
+              bottomDivider
+            />
+          ))}
+          </>
         }
         {/* // <FlatList
         //   keyExtractor={item =>
@@ -310,3 +328,15 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
 });
+
+const mapStateToProps = createStructuredSelector({
+  news: newssListSelector,
+  banners : bannersListSelector,
+});
+
+const mapDispatchToProps = {
+};
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(HomeView);
