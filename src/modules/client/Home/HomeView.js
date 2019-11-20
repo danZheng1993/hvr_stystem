@@ -10,8 +10,9 @@ import {
   Dimensions,
 } from 'react-native';
 import { colors, fonts } from '../../../styles';
+import Icon from 'react-native-vector-icons/Entypo';
 
-import { RadioGroup, GridRow } from '../../../components';
+import { RadioGroup, GridRow, Button } from '../../../components';
 
 export default class HomeView extends React.Component {
   _getRenderItemFunction = () =>
@@ -122,7 +123,13 @@ export default class HomeView extends React.Component {
 
     return (
       <View style={styles.container}>
-        <View style={{ height: 50 }}>
+        <View style={{ height: 50, flexDirection: "row" }}>
+          <TouchableOpacity 
+            style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
+            onPress={() => this.props.navigation.navigate('SearchBar')}
+            >
+            <Icon name="magnifying-glass" size={30} color="black" />
+          </TouchableOpacity>
           <RadioGroup
             selectedIndex={this.props.tabIndex}
             items={this.props.tabs}

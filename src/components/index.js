@@ -19,6 +19,7 @@ import Notification from './Notification'
 import Confirm from './Confirm'
 import WebViewer from './WebViewer'
 import NoData from './NoData'
+import SearchBar from './SearchBar'
 
 export {
   // ## Generator Components Exports
@@ -41,5 +42,6 @@ export {
   Notification,
   Confirm,
   WebViewer,
-  NoData
+  NoData,
+  SearchBar
 };

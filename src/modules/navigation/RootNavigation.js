@@ -59,6 +59,7 @@ import ProviderSelectingJob from '../provider/MyPage/MyJob/SelectingJob';
 
 import Chatting from '../../components/Chatting';
 import WebViewer from '../../components/WebViewer';
+import SearchBar from '../../components/SearchBar';
 import Notification from '../../components/Notification';
 
 import Settings from '../settings';
@@ -321,8 +322,16 @@ const stackNavigator = createStackNavigator(
         header: null,
       },
     },
+
     WebViewer: {
       screen: WebViewer,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    SearchBar: {
+      screen: SearchBar,
       navigationOptions: {
         header: null,
       },
