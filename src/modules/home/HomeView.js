@@ -9,11 +9,14 @@ import { Button } from '../../components';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { getSubcategorys } from '../../redux/modules/subcategory';
 
+import { getSubcategorys } from '../../redux/modules/subcategory';
 import { getTypes } from '../../redux/modules/type'
 import { getScenes } from '../../redux/modules/scene'
 import { getServices } from '../../redux/modules/service'
+import { getNewss } from '../../redux/modules/news'
+import { getBanners } from '../../redux/modules/banner'
+
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
 import { saveItem, loadItem} from '../../redux/api/storage'
@@ -36,11 +39,13 @@ class HomeScreen extends React.Component {
   async componentWillMount(): void {
     const data = await SyncStorage.init();
     console.log('AsyncStorage is ready!', data);
-    const {getTypes, getScenes, getServices, getSubcategorys} = this.props
+    const {getTypes, getScenes, getServices, getSubcategorys, getBanners, getNewss} = this.props
     getScenes()
     getTypes()
     getServices()
     getSubcategorys()
+    getBanners()
+    getNewss()
    }
 
   handleMessage(message) {
@@ -115,7 +120,9 @@ const mapDispatchToProps = {
   getTypes,
   getScenes,
   getServices,
-  getSubcategorys
+  getSubcategorys,
+  getNewss,
+  getBanners
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

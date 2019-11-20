@@ -33,7 +33,7 @@ const doUpdateFeedback = apiCall({
 })
 
 const doDeleteFeedback = apiCall({
-  feedback: DELETE_FEEDBACK,
+  type: DELETE_FEEDBACK,
   method: 'delete',
   path: ({ payload }) => `/feedbacks/${payload.id}`,
   payloadOnSuccess: (res, { payload }) => ({ id: payload.id })

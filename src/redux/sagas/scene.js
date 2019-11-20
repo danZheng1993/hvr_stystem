@@ -33,7 +33,7 @@ const doUpdateScene = apiCall({
 })
 
 const doDeleteScene = apiCall({
-  scene: DELETE_SCENE,
+  type: DELETE_SCENE,
   method: 'delete',
   path: ({ payload }) => `/scenes/${payload.id}`,
   payloadOnSuccess: (res, { payload }) => ({ id: payload.id })

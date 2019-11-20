@@ -33,7 +33,7 @@ const doUpdateSubcategory = apiCall({
 })
 
 const doDeleteSubcategory = apiCall({
-  subcategory: DELETE_SUBCATEGORY,
+  type: DELETE_SUBCATEGORY,
   method: 'delete',
   path: ({ payload }) => `/subcategorys/${payload.id}`,
   payloadOnSuccess: (res, { payload }) => ({ id: payload.id })

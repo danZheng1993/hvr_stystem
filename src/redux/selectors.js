@@ -99,6 +99,30 @@ export const chatsListSelector = (state) =>
 export const chatStateSelector = (state) =>
   get(state, 'chat', {})
 
+  export const newsDetailSelector = (state) =>
+  get(state, 'news.news', {})
+
+export const newssListSelector = (state) =>
+  get(state, 'news.newss', [])
+
+  export const newssloadingSelector = (state) =>
+  get(state, 'news.loading', false)
+
+export const newsStateSelector = (state) =>
+  get(state, 'news', {})
+
+  export const bannerDetailSelector = (state) =>
+  get(state, 'banner.banner', {})
+
+export const bannersListSelector = (state) =>
+  get(state, 'banner.banners', [])
+
+  export const bannersloadingSelector = (state) =>
+  get(state, 'banner.loading', false)
+
+export const bannerStateSelector = (state) =>
+  get(state, 'banner', {})
+
 export const subcategoryDetailSelector = (state) =>
   get(state, 'subcategory.subcategory', {})
 
