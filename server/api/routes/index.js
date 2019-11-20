@@ -13,6 +13,8 @@ const serviceRoute = require('./service.route');
 const profileRoute = require('./profile.route');
 const jobRoute = require('./job.route');
 const chatRoute = require('./chat.route');
+const newsRoute = require('./news.route');
+const bannerRoute = require('./banner.route');
 
 const router = express.Router();
 const authMiddleware = expressJwt({ secret: config.jwtSecret });
@@ -28,5 +30,7 @@ router.use('/subcategorys', subcategoryRoute);
 router.use('/services', serviceRoute);
 router.use('/jobs', authMiddleware, jobRoute);
 router.use('/chats', authMiddleware, chatRoute);
+router.use('/news', newsRoute);
+router.use('/banners', bannerRoute);
 
 module.exports = router;

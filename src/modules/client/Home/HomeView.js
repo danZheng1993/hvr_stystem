@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { colors, fonts } from '../../../styles';
 import Icon from 'react-native-vector-icons/Entypo';
+import { SliderBox } from 'react-native-image-slider-box';
 
 import { RadioGroup, GridRow, Button } from '../../../components';
 
@@ -76,6 +77,7 @@ export default class HomeView extends React.Component {
   );
 
   renderRowOne = ({ item }) => (
+
     <TouchableOpacity
       key={item.id}
       style={styles.itemThreeContainer}
@@ -120,7 +122,7 @@ export default class HomeView extends React.Component {
       this.props.tabIndex === 2
         ? GridRow.groupByRows(this.props.data, 2)
         : this.props.data;
-
+    const {tabIndex} = this.props
     return (
       <View style={styles.container}>
         <View style={{ height: 50, flexDirection: "row" }}>
@@ -137,16 +139,29 @@ export default class HomeView extends React.Component {
             underline
           />
         </View>
-        <FlatList
-          keyExtractor={item =>
-            item.id
-              ? `${this.props.tabIndex}-${item.id}`
-              : `${item[0] && item[0].id}`
-          }
-          style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
-          data={groupedData}
-          renderItem={this._getRenderItemFunction()}
-        />
+        {tabIndex == 0 &&
+          <SliderBox
+            images={[
+              'https://source.unsplash.com/1024x768/?nature',
+              'https://source.unsplash.com/1024x768/?water',
+              'https://source.unsplash.com/1024x768/?girl',
+              'https://source.unsplash.com/1024x768/?tree'
+            ]}
+            onCurrentImagePressed={index =>
+                console.warn(`image ${index} pressed`)
+            }
+          />
+        }
+        {/* // <FlatList
+        //   keyExtractor={item =>
+        //     item.id
+        //       ? `${this.props.tabIndex}-${item.id}`
+        //       : `${item[0] && item[0].id}`
+        //   }
+        //   style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
+        //   data={groupedData}
+        //   renderItem={this._getRenderItemFunction()}
+        // /> */}
       </View>
     );
   }
