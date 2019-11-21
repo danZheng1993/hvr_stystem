@@ -3,6 +3,8 @@ package com.reactnativestarter;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.proyecto26.inappbrowser.RNInAppBrowserPackage;
+import com.reactnativecommunity.webview.RNCWebViewPackage;
 import rnxmpp.RNXMPPPackage;
 import com.rnfs.RNFSPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
@@ -33,6 +35,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNInAppBrowserPackage(),
+            new RNCWebViewPackage(),
             new RNXMPPPackage(),
             new RNFSPackage(),
             new ImageResizerPackage(),

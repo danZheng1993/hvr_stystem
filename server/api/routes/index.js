@@ -15,6 +15,7 @@ const jobRoute = require('./job.route');
 const chatRoute = require('./chat.route');
 const newsRoute = require('./news.route');
 const bannerRoute = require('./banner.route');
+const mediaRoute = require('./media.route');
 
 const router = express.Router();
 const authMiddleware = expressJwt({ secret: config.jwtSecret });
@@ -32,5 +33,6 @@ router.use('/jobs', authMiddleware, jobRoute);
 router.use('/chats', authMiddleware, chatRoute);
 router.use('/news', newsRoute);
 router.use('/banners', bannerRoute);
+router.use('/medias', mediaRoute);
 
 module.exports = router;

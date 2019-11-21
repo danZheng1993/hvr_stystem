@@ -21,31 +21,50 @@ export default class Profile extends React.Component {
     const {user, navigation} = this.props
     return (
       <View style={styles.componentsSection}>
-        <View style={styles.demoIconsContainer}>
-          <Icon
-            style={styles.demoIcon}
-            name="bell"
-            size={25}
-            color="#5759CB"
-            onPress={() => navigation.navigate('Notification')}
-          />
-          <Icon
-            style={styles.demoIcon}
-            name="settings"
-            size={25}
-            color="#5759CB"
-            onPress={() => navigation.navigate('Settings')}
-          />
-        </View>
+
 
         {user && <>
-          <Image
-            source={{uri: url + (user.photo ? user.photo: 'default.png')}}
-            style={styles.photo}
-          />
-        <Text size={14}><Text>{user.userName}</Text></Text>
-        <Text size={14}><Text>{user.overview}</Text></Text>
-        </>
+          <View style = {styles.row}>
+            <Image
+              source={{uri: url + (user.photo ? user.photo: 'default.png')}}
+              style={styles.photo}
+            />
+            <View style={{justifyContent: 'center',}}>
+              <Text size={14}><Text>{user.userName}</Text></Text>
+              <Text size={14}><Text>{user.overview}</Text></Text>
+            </View>
+            <View style={styles.demoIconsContainer}>
+              <Icon
+                style={styles.demoIcon}
+                name="bell"
+                size={30}
+                color="#5759CB"
+                onPress={() => navigation.navigate('Notification')}
+              />
+              <Icon
+                style={styles.demoIcon}
+                name="settings"
+                size={30}
+                color="#5759CB"
+                onPress={() => navigation.navigate('Settings')}
+              />
+            </View>
+          </View>
+          <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
+            <View style={{alignItems: 'center'}}>
+              <Text>39</Text>
+              <Text>我的收藏</Text>
+            </View>
+            <View style={{alignItems: 'center'}}>
+              <Text>45</Text>
+              <Text>我的关注</Text>
+            </View>
+            <View style={{alignItems: 'center'}}>
+              <Text>4</Text>
+              <Text>我的VR</Text>
+            </View>
+          </View>
+          </>
         }
         
       </View>
@@ -59,6 +78,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bluish,
     paddingHorizontal: 15,
     paddingTop: 20,
+  },
+  row: {
+    flexDirection: 'row'
   },
 
   description: {
@@ -74,17 +96,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   photo: {
-    borderRadius: 100,
+    borderRadius: 50,
     borderColor: colors.gray,
     backgroundColor: colors.info,
-    width: 100,
-    height: 100
+    width: 70,
+    height: 70
   },
   demoIconsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     flex: 1,
-    alignItems: 'flex-end',
+    alignItems: 'flex-start',
     justifyContent: 'flex-end',
     marginBottom: 20,
   },

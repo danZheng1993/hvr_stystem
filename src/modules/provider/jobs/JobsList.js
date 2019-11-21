@@ -4,12 +4,14 @@ import {
   View,
   ScrollView,
   Picker,
-  Text
+  Text,
+  TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import moment from 'moment'
+import Icon from 'react-native-vector-icons/Entypo';
 
 import { Button, Loader, NoData} from '../../../components';
 import { fonts, colors } from '../../../styles';
@@ -32,6 +34,20 @@ class JobsList extends React.Component {
   render() {
     const {jobs, jobsloading} = this.props
     return (
+      <>
+        <View style={{ height: 50, flexDirection: "row" }}>
+          <TouchableOpacity 
+            style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
+            onPress={() => this.props.navigation.navigate('SearchBar')}
+            >
+            <Icon name="location" size={30} color="black" />
+          </TouchableOpacity>   
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Text size={28}>
+              接单列表
+            </Text> 
+          </View>
+        </View>
       <ScrollView style={styles.container}>
         <View style={styles.description}>
          <Loader
@@ -56,6 +72,7 @@ class JobsList extends React.Component {
          )) : <NoData />}
          </View>
       </ScrollView>
+      </> 
     );
     }
 }

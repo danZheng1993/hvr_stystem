@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {WebView} from 'react-native';
+import {WebView} from 'react-native-webview';
 import constants from '../constants'
 export default class WebViewer extends Component {
 	constructor(props) {
@@ -18,6 +18,7 @@ export default class WebViewer extends Component {
     return (
       <WebView
         source={{uri: (constants.BASE_URL + url)}}
+        // source={{uri: `https://720yun.com/`}}
         style={{marginTop: 20}}
       />
     );
