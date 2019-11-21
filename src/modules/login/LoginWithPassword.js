@@ -20,6 +20,7 @@ import {login, getProfile} from '../../redux/modules/auth'
 import { profileSelector, authloadingSelector } from '../../redux/selectors'
 import XMPP from 'react-native-xmpp'
 import { loadItem } from '../../redux/api/storage';
+import syncStorage from 'sync-storage';
 
 class LoginWithPassword extends React.Component {
   constructor(props) {
@@ -42,10 +43,11 @@ class LoginWithPassword extends React.Component {
     loadItem('hvr_auth').then((val) => {
       const {profile} = this.props
       if (!profile) return
+      const token = syncStorage.get('token') || ''
       toast("login success!")
       console.log(">>>>>>>>>Profile",profile)
       // XMPP.connect(`${Profile._id}@192.168.31.207/spark`, profile.password,'RNXMPP.PLAIN','192.168.31.207',5222)
-      XMPP.connect(`${profile._id}@192.168.31.207/spark`, profile.password.slice(0,8),'RNXMPP.PLAIN','192.168.31.207',5222)
+      XMPP.connect(`${profile._id}@192.168.31.207/spark`, token.slice(0,8),'RNXMPP.PLAIN','192.168.31.207',5222)
       if (profile.role == 'provider') {
         this.props.navigation.navigate({ routeName: 'Provider' })
       } else if (profile.role =='client'){

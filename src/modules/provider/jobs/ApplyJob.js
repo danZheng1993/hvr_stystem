@@ -15,13 +15,14 @@ import moment from 'moment'
 import { Button, Loader, toast, JobDetail} from '../../../components';
 import { fonts, colors } from '../../../styles';
 import { getJob, applyJob } from '../../../redux/modules/job'
+import { addToContacts } from '../../../redux/modules/auth'
 import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../redux/selectors'
 
 class ApplyJob extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      price: 0
+      price: ''
     }
   }
 
@@ -54,8 +55,14 @@ class ApplyJob extends React.Component {
     })  
   };
 
-  handleContact =() => {
-
+  handleContact = (id) => {
+    const {profile} = this.props
+    if (profile.contacts.indexOf(id) == -1) {
+      this.props.addToContacts({
+        body: {contact: id}
+      })
+    }
+    this.props.navigation.navigate('Chatting', {to: id})
   } 
   render() {  
     const {job, jobsloading} = this.props
@@ -73,7 +80,7 @@ class ApplyJob extends React.Component {
                 bgColor={colors.warning}
                 style={styles.button}
                 caption="联系需求方"
-                onPress={() => this.props.navigation.navigate('Chatting', {to: job.creator})}
+                onPress={() => this.handleContact(job.creator)}
               />             
               <TextInput
                 style={styles.input}
@@ -154,7 +161,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   getJob,
-  applyJob
+  applyJob,
+  addToContacts
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

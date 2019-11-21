@@ -6,8 +6,7 @@ const policies = require('../policies');
 const router = express.Router();
 // router.use(policies.checkRoles([ROLES.CLIENT, ROLES.PROVIDER, ROLES.ADMIN]));
 
-router.route('/')
+router.route('/:to')
   .get(chatCtrl.getArchivedMessages)
-
 
 module.exports = router;

@@ -7,17 +7,13 @@ import apiCall from '../api/apiCall'
 const doGetChat = apiCall({
   type: GET_CHAT,
   method: 'get',
-  path: ({ payload }) => `/chats/${payload.id}/`
+  path: ({ payload }) => `/chats/${payload.params.to}/`
 })
 
 const doGetChats = apiCall({
   type: GET_CHATS,
   method: 'get',
   path: () => `/chats/`,
-  payloadOnSuccess: (res, { payload }) => ({
-    ...res,
-    payload
-  })
 })
 
 const doCreateChat = apiCall({

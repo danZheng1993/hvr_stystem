@@ -9,6 +9,8 @@ export const DO_LOGOUT = 'DO_LOGOUT'
 export const DO_SIGNUP = 'DO_SIGNUP'
 export const GET_PROFILE = 'GET_PROFILE'
 export const SAVE_PROFILE = 'SAVE_PROFILE'
+export const GET_CONTACTS = 'GET_CONTACTS'
+export const ADD_TO_CONTACTS = 'ADD_TO_CONTACTS'
 export const SEND_CODE = 'SEND_CODE'
 export const CHECK_CODE = 'CHECK_CODE'
 // ------------------------------------
@@ -24,6 +26,8 @@ export const checkcode = createAction(CHECK_CODE)
 export const sendcode = createAction(SEND_CODE)
 export const getProfile = createAction(GET_PROFILE)
 export const saveProfile = createAction(SAVE_PROFILE)
+export const getContacts = createAction(GET_CONTACTS)
+export const addToContacts = createAction(ADD_TO_CONTACTS)
 
 const getInitialState = async () => {
   let authRestore = await AsyncStorage.getItem('hvr_auth') || null    
@@ -34,14 +38,16 @@ const getInitialState = async () => {
     status: 'INIT',
     error: null,
     verified: false,
-    loading: false
+    loading: false,
+    contacts: []
   } : {
     token: null,
     me: null,
     status: 'INIT',
     error: null,
     verified: false,
-    loading: false
+    loading: false,
+    contacts: []
   }
 }
 var initialState = {}
@@ -172,6 +178,38 @@ export default handleActions({
     ...state,
     status: requestSuccess(SAVE_PROFILE),
     me: payload,
+    error: null,
+    loading: false
+  }),
+
+  [requestPending(ADD_TO_CONTACTS)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(ADD_TO_CONTACTS),
+    error: null,
+    loading: true,
+    
+  }),
+
+  [requestSuccess(ADD_TO_CONTACTS)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(ADD_TO_CONTACTS),
+    me: payload,
+    error: null,
+    loading: false
+  }),
+
+  [requestPending(GET_CONTACTS)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(GET_CONTACTS),
+    error: null,
+    loading: true,
+    
+  }),
+
+  [requestSuccess(GET_CONTACTS)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(GET_CONTACTS),
+    contacts: Object.values(payload),
     error: null,
     loading: false
   })

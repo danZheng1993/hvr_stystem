@@ -54,7 +54,7 @@ export default ({
       method: method.toLowerCase(),
       headers: Object.assign({}, defaultHeaders(), headers),
       data: body,
-      params: body
+      params
     })
 
     successCallback && successCallback(res)

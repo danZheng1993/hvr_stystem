@@ -10,7 +10,7 @@ const ip = require('ip')
 
 function login(req, res, next) {
   User.findOne({ phoneNumber: req.body.phoneNumber })
-    .select('_id password phoneNumber userName role permission photo overview password')
+    .select('_id password phoneNumber userName role permission photo overview password contacts')
     .exec()
     .then((user) => {
       if (!user) {
@@ -54,11 +54,17 @@ function signup(req, res, next) {
 
   return user.save()
   .then((newUser) => {
+    const token = jwt.sign({
+      _id: newUser._id, // eslint-disable-line
+      userName: newUser.userName,
+      phoneNumber: newUser.phoneNumber,
+      role: newUser.role,
+    }, config.jwtSecret, { expiresIn: config.jwtExpires });
     console.log(newUser)
     let data = {
       username: newUser._id,
       name: newUser._id,
-      password: newUser.password.slice(0,8)
+      password: token.slice(0,8)
     }
     console.log(JSON.stringify(data), `http://${ip.address()}:9090/plugins/restapi/v1/users`)
     axios.request({
@@ -71,13 +77,6 @@ function signup(req, res, next) {
       },
       data: JSON.stringify(data),
     })
-    const token = jwt.sign({
-      _id: newUser._id, // eslint-disable-line
-      userName: newUser.userName,
-      phoneNumber: newUser.phoneNumber,
-      role: newUser.role,
-    }, config.jwtSecret, { expiresIn: config.jwtExpires });
-
     res.json({
       info: newUser,
       _id: newUser._id, // eslint-disable-line

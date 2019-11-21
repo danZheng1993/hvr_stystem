@@ -8,15 +8,9 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { NavigationActions } from 'react-navigation'
-
-const resetAction = () => NavigationActions.reset({
-  index: 1,
-  actions: [
-    NavigationActions.navigate({ routeName: 'Auth'}),
-  ]
-})
-import {logout} from '../redux/modules/auth'
-
+import {getContacts} from '../redux/modules/auth'
+import { contactsSelector} from '../redux/selectors'
+import constants from '../constants'
 import SyncStorage from 'sync-storage';
 import { loadItem, deleteItem } from '../redux/api/storage';
 
@@ -30,8 +24,10 @@ class Notification extends React.Component {
 
     componentWillMount() {
         loadItem('notification').then(res => {
-            this.setState({notification: res.split(',')})
+            const items = res || ''
+            this.setState({notification: items.split(',')})
         })
+        this.props.getContacts()
     }
 
     clearItems = () => {
@@ -44,8 +40,13 @@ class Notification extends React.Component {
         )
     }
 
+    startChat = (id) => {
+        this.props.navigation.navigate('Chatting', {to: id})
+    }
+
     render () {
         const {notification} = this.state
+        const {contacts} = this.props
         return (
             <View style={styles.container}>
               <View style={styles.demoIconsContainer}>
@@ -93,7 +94,7 @@ class Notification extends React.Component {
                 </View>
             </View>
             
-                {notification.length ? notification.map((notificationItem, index) => (
+                {/* {notification.length ? notification.map((notificationItem, index) => (
                     <ListItem
                         key={index}
                         title= {notificationItem}
@@ -102,12 +103,19 @@ class Notification extends React.Component {
                         bottomDivider
                     />
                 )) : <Text>No Items to display</Text> 
-                }
-                <Button
-                    large
-                    caption="Clear Items"
-                    onPress={() => this.clearItems()}
-                />
+                } */}
+                {contacts && contacts.map((contact, i) => (
+                    typeof(contact) == "object" &&
+                    <ListItem
+                    key={i}
+                    leftAvatar={{ source: { uri: constants.BASE_URL + contact.photo } }}
+                    avatarStyle={{ width: 100, height: 100, backgroundColor: 'white'}}
+                    title={contact.userName}
+                    subtitle={contact.overview}
+                    onPress={() => this.startChat(contact._id)}
+                    bottomDivider
+                    />
+                ))}
             </View>
         )
     }
@@ -137,9 +145,11 @@ const styles= StyleSheet.create({
   },
 })
 const mapStateToProps = createStructuredSelector({
+    contacts: contactsSelector
 });
 
 const mapDispatchToProps = {
+    getContacts
 };
   
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

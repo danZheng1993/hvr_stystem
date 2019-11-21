@@ -16,6 +16,7 @@ import { getScenes } from '../../redux/modules/scene'
 import { getServices } from '../../redux/modules/service'
 import { getNewss } from '../../redux/modules/news'
 import { getBanners } from '../../redux/modules/banner'
+import { addToContacts } from '../../redux/modules/auth'
 
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
@@ -23,6 +24,7 @@ import { saveItem, loadItem} from '../../redux/api/storage'
 import SyncStorage from 'sync-storage';
 
 import XMPP from 'react-native-xmpp'
+
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -49,8 +51,13 @@ class HomeScreen extends React.Component {
    }
 
   handleMessage(message) {
+
     console.log("message>>>", message)
-    if (String(message.from).indexOf("bbb") != -1 && message.body) {
+    if (!message.body) return
+    const {profile} = this.props
+    const from = String(message.from).split('@')[0]
+    console.warn(from)
+    if (from == 'system' && message.body) {
       loadItem('notification')
       .then((res) =>  {
         let notification = res || ''
@@ -58,9 +65,12 @@ class HomeScreen extends React.Component {
         console.log(notification)
         saveItem('notification', notification).then(() => console.log("success"))
       })
-
     } else {
-
+      if (profile.contacts.indexOf(from) == -1) {
+        this.props.addToContacts({
+          body: {contact: from}
+        })
+      }
     }
   }
 
@@ -72,9 +82,10 @@ class HomeScreen extends React.Component {
   redirect = () => {  
     const {profile} = this.props
     console.log("profile", profile)
+    const token = SyncStorage.get('token') || '';
     var route = 'Auth'
     if (profile) {
-      XMPP.connect(`${profile._id}@192.168.31.207/spark`, profile.password.slice(0,8),'RNXMPP.PLAIN','192.168.31.207',5222)
+      XMPP.connect(`${profile._id}@192.168.31.207/spark`, token.slice(0,8),'RNXMPP.PLAIN','192.168.31.207',5222)
     }
     if (profile && profile.role == 'provider') route = 'Provider'
     else if (profile && profile.role == 'client') route = 'Client'
@@ -122,7 +133,8 @@ const mapDispatchToProps = {
   getServices,
   getSubcategorys,
   getNewss,
-  getBanners
+  getBanners,
+  addToContacts
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

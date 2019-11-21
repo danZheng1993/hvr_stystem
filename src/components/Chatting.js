@@ -5,11 +5,10 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-
-import { getChats, getChat } from '../redux/modules/chat'
+import {Loader} from '../components'
+import { getChat } from '../redux/modules/chat'
 import { chatsloadingSelector, chatsListSelector } from '../redux/selectors'
 import XMPP from 'react-native-xmpp'
-import { getAllExternalFilesDirs } from 'react-native-fs';
 
 class Chatting extends React.Component {
   constructor(props) {
@@ -27,15 +26,15 @@ class Chatting extends React.Component {
 
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const {navigation} = this.props
     let to = navigation.getParam('to', '')
     if (to != '') {
-        this.setState({to})
-        this.props.getChats({
-          body: {toID: to},
-          success: () => this.initMessages()
-        })
+      this.props.getChat({
+        params: {to},
+        success: () => this.initMessages()
+      })
+      this.setState({to})
     }
   }
 
@@ -55,7 +54,7 @@ class Chatting extends React.Component {
       },
     ]
     console.log(">>>>>chats",chatsList)
-    chatsList[0].map((conversation, index) => (
+    chatsList.length && chatsList[0].map((conversation, index) => (
       (conversation.messageCount == 1) ?
         this._storeMessages({
           _id: new Date().getTime(),
@@ -65,16 +64,16 @@ class Chatting extends React.Component {
             _id: (conversation.messages.message.to == `${to}@desktop-jgen8l2/spark`) ? -1: 2 
           }
         })
-      : conversation.messages.message.map((message, messageIndex) => {
+      : conversation.messages.message.map((messageItem, messageIndex) => (
         this._storeMessages({
           _id: new Date().getTime(),
-          text: message.body,
-          createdAt: message.sentDate,
+          text: messageItem.body,
+          createdAt: messageItem.sentDate,
           user: {
-            _id: (message.to == `${to}@desktop-jgen8l2/spark`) ? 2: -1 
+            _id: (messageItem.to == `${to}@desktop-jgen8l2/spark`) ? -1: 2 
           }
-        });
-      })
+        })
+      ))
     ))
   }
 
@@ -116,13 +115,16 @@ class Chatting extends React.Component {
 
   render() {
     var user = { _id: this.state.userId || -1 };
-
+    const {loading} = this.props
     return (
-      <GiftedChat
-        messages={this.state.messages}
-        onSend={this.onSend}
-        user={user}
-      />
+      <>
+        <Loader loading={loading} />
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={this.onSend}
+          user={user}
+        />
+      </>
     );
   }
 
@@ -142,7 +144,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  getChats,
+  getChat,
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

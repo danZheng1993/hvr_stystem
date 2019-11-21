@@ -25,7 +25,7 @@ export const deleteChat = createAction(DELETE_CHAT)
 const initialState = {
   chat: null,
   status: 'INIT',
-  chats: {},
+  chats: [],
   loading: false,
 }
 
@@ -43,7 +43,7 @@ export default handleActions({
   [requestSuccess(GET_CHAT)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(GET_CHAT),
-    chat: payload,
+    chats: Object.values(payload),
     error: null,
     loading: false
   }),

@@ -124,6 +124,38 @@ function updateOne(req, res, next) {
   .catch(next);
 }
 
+function addToContacts(req, res, next) {
+  console.log("addToContacts")
+  console.log(req.body)
+
+  if (req.body.contact) {
+    let contacts = req.userModel.contacts
+    contacts.push(req.body.contact)
+    req.userModel.contacts = contacts;
+  }
+
+  req.userModel.save()
+  .then((updatedUser) => {
+    console.log(updatedUser)
+    res.json(updatedUser);
+  })
+  .catch(next);
+}
+
+function getContacts(req, res, next) {
+  console.log("getContacts")
+  console.log(req.body)
+
+  User.find({_id: req.userModel.contacts})
+  .select('_id userName photo overview')
+  .exec()
+  .then((contacts) => {
+    console.log(contacts)
+    res.json(contacts);
+  })
+  .catch(next);
+}
+
 function read(req, res) {
   res.json(req.userModel);
 }
@@ -201,5 +233,7 @@ module.exports = {
   remove,
   getUserByID,
   getProfile,
-  uploadFile
+  uploadFile,
+  addToContacts,
+  getContacts
 };
