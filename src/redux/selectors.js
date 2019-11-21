@@ -66,6 +66,18 @@ export const scenesListSelector = (state) =>
 export const sceneStateSelector = (state) =>
   get(state, 'scene', {})
 
+export const mediaDetailSelector = (state) =>
+  get(state, 'media.media', {})
+
+export const mediasListSelector = (state) =>
+  get(state, 'media.medias', [])
+
+  export const mediasloadingSelector = (state) =>
+  get(state, 'media.loading', false)
+
+export const mediaStateSelector = (state) =>
+  get(state, 'media', {})
+
 export const feedbackDetailSelector = (state) =>
   get(state, 'feedback.feedback', {})
 

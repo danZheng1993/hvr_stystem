@@ -16,9 +16,8 @@ import constants from '../../../constants'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-
-import { bannersListSelector, newssListSelector} from '../../../redux/selectors'
-import { RadioGroup, GridRow, Button } from '../../../components';
+import { bannersListSelector, newssListSelector, mediasListSelector} from '../../../redux/selectors'
+import { RadioGroup, GridRow, Button, MediaList } from '../../../components';
 import { ListItem } from 'react-native-elements'
 
  class HomeView extends React.Component {
@@ -128,7 +127,7 @@ import { ListItem } from 'react-native-elements'
       this.props.tabIndex === 2
         ? GridRow.groupByRows(this.props.data, 2)
         : this.props.data;
-    const {tabIndex, banners, news} = this.props
+    const {tabIndex, banners, news, medias} = this.props
     let bannerImages = []
     banners && banners.map((banner, index) => {
       typeof(banner) == 'object' && bannerImages.push(constants.BANNER_BASE_URL + banner.image)
@@ -169,6 +168,9 @@ import { ListItem } from 'react-native-elements'
             />
           ))}
           </>
+        }
+        {tabIndex == 1 &&
+          medias && <MediaList medias={medias} navigation={this.props.navigation} />
         }
         {/* // <FlatList
         //   keyExtractor={item =>
@@ -332,6 +334,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = createStructuredSelector({
   news: newssListSelector,
   banners : bannersListSelector,
+  medias: mediasListSelector
 });
 
 const mapDispatchToProps = {

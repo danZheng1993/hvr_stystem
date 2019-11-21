@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const config = require('../config');
 const apiRoutes = require('../api/routes');
-
+const cors = require('cors')
 module.exports = (app, cb) => {
   mongoose.Promise = global.Promise;
   mongoose.connect(config.mongoURL, (error) => {
@@ -17,7 +17,7 @@ module.exports = (app, cb) => {
       cb();
     }
   });
-
+  app.use(cors())
   app.use(bodyParser.json({ limit: '20mb' }));
   app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
   app.use('/', apiRoutes);

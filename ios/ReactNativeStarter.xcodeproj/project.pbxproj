@@ -78,6 +78,7 @@
 		E904E264B5804B55906DC146 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 943BB71F054845B189EDF814 /* libRNXMPP.a */; };
 		EC4D3C15BB594C5BAF94D237 /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2A9AACE3AF443D8A7E7A7F /* libRNCWebView.a */; };
 		C2D051763F344629ADE58646 /* libRNInAppBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E75ED2E67046FFA03602AA /* libRNInAppBrowser.a */; };
+		FB20F361286744A39ABAD540 /* libRNnyt360Video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 695DDA711B1F484F9B45F2DA /* libRNnyt360Video.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -437,6 +438,8 @@
 		CD2A9AACE3AF443D8A7E7A7F /* libRNCWebView.a */ = {isa = PBXFileReference; name = "libRNCWebView.a"; path = "libRNCWebView.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		C2CE5E5F0D864D6284C3BD65 /* RNInAppBrowser.xcodeproj */ = {isa = PBXFileReference; name = "RNInAppBrowser.xcodeproj"; path = "../node_modules/react-native-inappbrowser-reborn/ios/RNInAppBrowser.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		32E75ED2E67046FFA03602AA /* libRNInAppBrowser.a */ = {isa = PBXFileReference; name = "libRNInAppBrowser.a"; path = "libRNInAppBrowser.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		E678EE1C7BCA40D78CD48BE7 /* RNnyt360Video.xcodeproj */ = {isa = PBXFileReference; name = "RNnyt360Video.xcodeproj"; path = "../node_modules/react-native-nyt-360-video/ios/RNnyt360Video.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		695DDA711B1F484F9B45F2DA /* libRNnyt360Video.a */ = {isa = PBXFileReference; name = "libRNnyt360Video.a"; path = "libRNnyt360Video.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -478,6 +481,7 @@
 				E904E264B5804B55906DC146 /* libRNXMPP.a in Frameworks */,
 				EC4D3C15BB594C5BAF94D237 /* libRNCWebView.a in Frameworks */,
 				C2D051763F344629ADE58646 /* libRNInAppBrowser.a in Frameworks */,
+				FB20F361286744A39ABAD540 /* libRNnyt360Video.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -682,6 +686,7 @@
 				16887A6D43534FC3B2F7C67C /* RNXMPP.xcodeproj */,
 				1C2C090BAA1E48128725DF77 /* RNCWebView.xcodeproj */,
 				C2CE5E5F0D864D6284C3BD65 /* RNInAppBrowser.xcodeproj */,
+				E678EE1C7BCA40D78CD48BE7 /* RNnyt360Video.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1381,6 +1386,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1397,6 +1403,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-xmpp\RNXMPP/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)\..\node_modules\react-native-inappbrowser-reborn\ios",
+					"$(SRCROOT)\..\node_modules\react-native-nyt-360-video\ios\RNnyt360Video",
 				);
 			};
 			name = Debug;
@@ -1433,6 +1440,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1449,6 +1457,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-xmpp\RNXMPP/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)\..\node_modules\react-native-inappbrowser-reborn\ios",
+					"$(SRCROOT)\..\node_modules\react-native-nyt-360-video\ios\RNnyt360Video",
 				);
 			};
 			name = Release;
@@ -1484,6 +1493,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-xmpp\RNXMPP/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)\..\node_modules\react-native-inappbrowser-reborn\ios",
+					"$(SRCROOT)\..\node_modules\react-native-nyt-360-video\ios\RNnyt360Video",
 				);
 			};
 			name = Debug;
@@ -1518,6 +1528,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-xmpp\RNXMPP/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)\..\node_modules\react-native-inappbrowser-reborn\ios",
+					"$(SRCROOT)\..\node_modules\react-native-nyt-360-video\ios\RNnyt360Video",
 				);
 			};
 			name = Release;
@@ -1562,6 +1573,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1578,6 +1590,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-xmpp\RNXMPP/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)\..\node_modules\react-native-inappbrowser-reborn\ios",
+					"$(SRCROOT)\..\node_modules\react-native-nyt-360-video\ios\RNnyt360Video",
 				);
 			};
 			name = Debug;
@@ -1622,6 +1635,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1638,6 +1652,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-xmpp\RNXMPP/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)\..\node_modules\react-native-inappbrowser-reborn\ios",
+					"$(SRCROOT)\..\node_modules\react-native-nyt-360-video\ios\RNnyt360Video",
 				);
 			};
 			name = Release;
@@ -1681,6 +1696,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1697,6 +1713,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-xmpp\RNXMPP/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)\..\node_modules\react-native-inappbrowser-reborn\ios",
+					"$(SRCROOT)\..\node_modules\react-native-nyt-360-video\ios\RNnyt360Video",
 				);
 			};
 			name = Debug;
@@ -1740,6 +1757,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1756,6 +1774,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-xmpp\RNXMPP/**",
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)\..\node_modules\react-native-inappbrowser-reborn\ios",
+					"$(SRCROOT)\..\node_modules\react-native-nyt-360-video\ios\RNnyt360Video",
 				);
 			};
 			name = Release;

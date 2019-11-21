@@ -61,6 +61,7 @@ import Chatting from '../../components/Chatting';
 import WebViewer from '../../components/WebViewer';
 import SearchBar from '../../components/SearchBar';
 import Notification from '../../components/Notification';
+import Player from '../../components/Player';
 
 import Settings from '../settings';
 import PersonalInformation from '../settings/PersonalInformation';
@@ -332,6 +333,13 @@ const stackNavigator = createStackNavigator(
 
     SearchBar: {
       screen: SearchBar,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    Player: {
+      screen: Player,
       navigationOptions: {
         header: null,
       },

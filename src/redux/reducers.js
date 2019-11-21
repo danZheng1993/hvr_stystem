@@ -14,6 +14,7 @@ import job from './modules/job'
 import chat from './modules/chat'
 import banner from './modules/banner'
 import news from './modules/news'
+import media from './modules/media'
 import gallery from '../modules/gallery/GalleryState';
 import app from '../modules/AppState';
 import calendar from '../modules/calendar/CalendarState';
@@ -35,5 +36,6 @@ export default combineReducers({
   subcategory,
   chat,
   banner,
-  news
+  news,
+  media
 })

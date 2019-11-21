@@ -20,6 +20,8 @@ import Confirm from './Confirm'
 import WebViewer from './WebViewer'
 import NoData from './NoData'
 import SearchBar from './SearchBar'
+import MediaList from './MediaList'
+import Player from './Player'
 
 export {
   // ## Generator Components Exports
@@ -43,5 +45,7 @@ export {
   Confirm,
   WebViewer,
   NoData,
-  SearchBar
+  SearchBar,
+  MediaList,
+  Player
 };
