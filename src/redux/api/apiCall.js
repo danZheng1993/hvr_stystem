@@ -37,13 +37,6 @@ export default ({
   } = (action.payload || {})
 
   try {
-    console.log({
-      url: typeof path === 'function' ? path(action) : path,
-      method: method.toLowerCase(),
-      headers: Object.assign({}, defaultHeaders()),
-      data: body,
-      params
-    })
     yield put({
       type: requestPending(type),
       loading: true

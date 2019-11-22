@@ -14,10 +14,6 @@ const doGetScenes = apiCall({
   type: GET_SCENES,
   method: 'get',
   path: () => `/scenes/`,
-  payloadOnSuccess: (res, { payload }) => ({
-    ...res,
-    payload
-  })
 })
 
 const doCreateScene = apiCall({

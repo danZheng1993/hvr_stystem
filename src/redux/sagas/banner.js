@@ -14,10 +14,6 @@ const doGetBanners = apiCall({
   type: GET_BANNERS,
   method: 'get',
   path: () => `/banners/`,
-  payloadOnSuccess: (res, { payload }) => ({
-    ...res,
-    payload
-  })
 })
 
 const doCreateBanner = apiCall({

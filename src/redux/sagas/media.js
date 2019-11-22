@@ -14,10 +14,6 @@ const doGetMedias = apiCall({
   type: GET_MEDIAS,
   method: 'get',
   path: () => `/medias/`,
-  payloadOnSuccess: (res, { payload }) => ({
-    ...res,
-    payload
-  })
 })
 
 const doCreateMedia = apiCall({

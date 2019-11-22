@@ -7,10 +7,17 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-import moment from 'moment'
+
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { createStructuredSelector } from 'reselect';
+
 import { fonts, colors } from '../styles';
 import constants from '../constants'
-export default class MediaList extends React.Component {
+import {Loader} from '../components'
+import { addToCollections } from '../redux/modules/auth'
+import { authloadingSelector } from '../redux/selectors'
+class MediaList extends React.Component {
   constructor(props) {
     super(props)
     
@@ -18,6 +25,13 @@ export default class MediaList extends React.Component {
   handlePlay(path) {
     this.props.navigation.navigate('Player')
   }
+
+  handleCollect(id) {
+    this.props.addToCollections({
+      body: {collections: id}
+    })
+  }
+  
   render() {   
     const {medias, navigation} = this.props
     console.log(medias)
@@ -32,7 +46,10 @@ export default class MediaList extends React.Component {
                 />
               {/* <Text size={14}>观看 : {media.visits}</Text> */}
               </TouchableOpacity>
-              <Text size={14}>{media.title}</Text>
+              <View style={{flexDirection: 'row'}} >
+                <Text size={14}>{media.title}</Text>
+                <Text size={14} onPress={() => {this.handleCollect(media._id)}}>collect</Text>
+              </View>
             </View>
 
          ))}
@@ -73,3 +90,15 @@ const styles = StyleSheet.create({
     height: 200
   },
 });
+
+const mapStateToProps = createStructuredSelector({
+  loading: authloadingSelector
+});
+
+const mapDispatchToProps = {
+  addToCollections
+};
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(MediaList);

@@ -14,10 +14,6 @@ const doGetSubcategorys = apiCall({
   type: GET_SUBCATEGORYS,
   method: 'get',
   path: () => `/subcategorys/`,
-  payloadOnSuccess: (res, { payload }) => ({
-    ...res,
-    payload
-  })
 })
 
 const doCreateSubcategory = apiCall({

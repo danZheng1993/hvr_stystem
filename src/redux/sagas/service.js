@@ -14,10 +14,6 @@ const doGetServices = apiCall({
   type: GET_SERVICES,
   method: 'get',
   path: () => `/services/`,
-  payloadOnSuccess: (res, { payload }) => ({
-    ...res,
-    payload
-  })
 })
 
 const doCreateService = apiCall({

@@ -12,4 +12,8 @@ router.route('/me')
 router.route('/contacts')
   .get(userCtrl.getContacts)
   .patch(userCtrl.addToContacts)
+router.route('/collections')
+  .patch(userCtrl.addToCollections)
+router.route('/attentions')
+  .patch(userCtrl.addToAttentions)
 module.exports = router;

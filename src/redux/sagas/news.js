@@ -14,10 +14,6 @@ const doGetNewss = apiCall({
   type: GET_NEWSS,
   method: 'get',
   path: () => `/news/`,
-  payloadOnSuccess: (res, { payload }) => ({
-    ...res,
-    payload
-  })
 })
 
 const doCreateNews = apiCall({

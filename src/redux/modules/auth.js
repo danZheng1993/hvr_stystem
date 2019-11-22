@@ -11,6 +11,8 @@ export const GET_PROFILE = 'GET_PROFILE'
 export const SAVE_PROFILE = 'SAVE_PROFILE'
 export const GET_CONTACTS = 'GET_CONTACTS'
 export const ADD_TO_CONTACTS = 'ADD_TO_CONTACTS'
+export const ADD_TO_COLLECTIONS = 'ADD_TO_COLLECTIONS'
+export const ADD_TO_ATTENTIONS = 'ADD_TO_ATTENTIONSS'
 export const SEND_CODE = 'SEND_CODE'
 export const CHECK_CODE = 'CHECK_CODE'
 // ------------------------------------
@@ -28,6 +30,8 @@ export const getProfile = createAction(GET_PROFILE)
 export const saveProfile = createAction(SAVE_PROFILE)
 export const getContacts = createAction(GET_CONTACTS)
 export const addToContacts = createAction(ADD_TO_CONTACTS)
+export const addToCollections = createAction(ADD_TO_COLLECTIONS)
+export const addToAttentions = createAction(ADD_TO_ATTENTIONS)
 
 const getInitialState = async () => {
   let authRestore = await AsyncStorage.getItem('hvr_auth') || null    
@@ -182,6 +186,13 @@ export default handleActions({
     loading: false
   }),
 
+  [requestFail(SAVE_PROFILE)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(SAVE_PROFILE),
+    error: payload,
+    loading: false
+  }),
+
   [requestPending(ADD_TO_CONTACTS)]: (state, { payload }) => ({
     ...state,
     status: requestPending(ADD_TO_CONTACTS),
@@ -195,6 +206,13 @@ export default handleActions({
     status: requestSuccess(ADD_TO_CONTACTS),
     me: payload,
     error: null,
+    loading: false
+  }),
+
+  [requestFail(ADD_TO_CONTACTS)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(ADD_TO_CONTACTS),
+    error: payload,
     loading: false
   }),
 
@@ -212,6 +230,58 @@ export default handleActions({
     contacts: Object.values(payload),
     error: null,
     loading: false
-  })
+  }),
+
+  [requestFail(GET_CONTACTS)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(GET_CONTACTS),
+    error: payload,
+    loading: false
+  }),
+
+  [requestPending(ADD_TO_COLLECTIONS)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(ADD_TO_COLLECTIONS),
+    error: null,
+    loading: true,
+    
+  }),
+
+  [requestSuccess(ADD_TO_COLLECTIONS)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(ADD_TO_COLLECTIONS),
+    me: payload,
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(ADD_TO_COLLECTIONS)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(ADD_TO_COLLECTIONS),
+    error: payload,
+    loading: false
+  }),
+  [requestPending(ADD_TO_ATTENTIONS)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(ADD_TO_ATTENTIONS),
+    error: null,
+    loading: true,
+    
+  }),
+
+  [requestSuccess(ADD_TO_ATTENTIONS)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(ADD_TO_ATTENTIONS),
+    me: payload,
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(ADD_TO_ATTENTIONS)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(ADD_TO_ATTENTIONS),
+    error: payload,
+    loading: false
+  }),
 
 }, initialState)

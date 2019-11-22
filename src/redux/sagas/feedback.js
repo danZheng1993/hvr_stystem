@@ -14,10 +14,6 @@ const doGetFeedbacks = apiCall({
   type: GET_FEEDBACKS,
   method: 'get',
   path: () => `/feedbacks/`,
-  payloadOnSuccess: (res, { payload }) => ({
-    ...res,
-    payload
-  })
 })
 
 const doCreateFeedback = apiCall({

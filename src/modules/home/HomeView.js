@@ -41,7 +41,7 @@ class HomeScreen extends React.Component {
   }
   async componentWillMount(): void {
     const data = await SyncStorage.init();
-    console.log('AsyncStorage is ready!', data);
+    console.log('AsyncStorage is ready!');
     const {getTypes, getScenes, getServices, getSubcategorys, getBanners, getNewss, getMedias} = this.props
     getScenes()
     getTypes()

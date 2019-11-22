@@ -14,10 +14,6 @@ const doGetTypes = apiCall({
   type: GET_TYPES,
   method: 'get',
   path: () => `/types/`,
-  payloadOnSuccess: (res, { payload }) => ({
-    ...res,
-    payload
-  })
 })
 
 const doCreateType = apiCall({

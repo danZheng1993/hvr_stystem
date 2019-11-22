@@ -13,15 +13,19 @@ const userSchema = new Schema({
   userName: { type: String, trim: true, default: '' },
   location: { type: String, trim: true, default: '' },
   overview: { type: String, trim: true, default: '' },
-  
-  photo: { type: String, trim: true, default: 'default.png' },
-  frontID: { type: String, select: false, trim: true, default: 'default.png' },
-  backID: { type: String, select: false, trim: true,  default: 'default.png'},
   password: { type: String, select: false, required: true },
-  companyName: { type: String, default: ''},
-  companyLicense: { type: String, select: false, default: 'default.png'},
-  balance: { type: Number, trim: true, default: 0 }, 
+  photo: { type: String, trim: true, default: 'default.png' },
   contacts: {type: Array},
+  
+  frontID: { type: String, select: false, trim: true,},
+  backID: { type: String, select: false, trim: true,},
+  companyName: { type: String,},
+  companyLicense: { type: String, select: false,},
+  balance: { type: Number, trim: true, default: 0 }, 
+
+  collections: {type: Array},
+  attentions: {type: Array},
+
   role: { type: String, enum: Object.values(ROLES), default: ROLES.PROVIDER },
   permission: { type: String, enum: Object.values(PERMISSION), default: PERMISSION.NOT_ALLOWED },
 });

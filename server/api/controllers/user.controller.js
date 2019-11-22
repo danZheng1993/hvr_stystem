@@ -130,16 +130,67 @@ function addToContacts(req, res, next) {
 
   if (req.body.contact) {
     let contacts = req.userModel.contacts
+    if (contacts.indexOf(req.body.contact) != -1) {
+      res.status(500).json({message: 'Duplication Error'})
+      return;
+    }
     contacts.push(req.body.contact)
     req.userModel.contacts = contacts;
+    req.userModel.save()
+    .then((updatedUser) => {
+      console.log(updatedUser)
+      res.json(updatedUser);
+    })
+    .catch(next);
+  } else {
+    res.status(500).json({message: 'Invalid request'})
   }
+}
 
-  req.userModel.save()
-  .then((updatedUser) => {
-    console.log(updatedUser)
-    res.json(updatedUser);
-  })
-  .catch(next);
+function addToCollections(req, res, next) {
+  console.log("addToCollections")
+  console.log(req.body)
+
+  if (req.body.collection) {
+    let collections = req.userModel.collections
+    if (collections.indexOf(req.body.collection) != -1) {
+      res.status(500).json({message: 'Duplication Error'})
+      return;
+    }
+    collections.push(req.body.collection)
+    req.userModel.collections = collections;
+    req.userModel.save()
+    .then((updatedUser) => {
+      console.log(updatedUser)
+      res.json(updatedUser);
+    })
+    .catch(next);
+  } else {
+    res.status(500).json({message: 'Invalid request'})
+  }
+}
+
+function addToAttentions(req, res, next) {
+  console.log("addToAttentions")
+  console.log(req.body)
+
+  if (req.body.attention) {
+    let attentions = req.userModel.attentions
+    if (attentions.indexOf(req.body.attention) != -1) {
+      res.status(500).json({message: 'Duplication Error'})
+      return;
+    }
+    attentions.push(req.body.attention)
+    req.userModel.attentions = attentions;
+    req.userModel.save()
+    .then((updatedUser) => {
+      console.log(updatedUser)
+      res.json(updatedUser);
+    })
+    .catch(next);
+  } else {
+    res.status(500).json({message: 'Invalid request'})
+  }
 }
 
 function getContacts(req, res, next) {
@@ -235,5 +286,7 @@ module.exports = {
   getProfile,
   uploadFile,
   addToContacts,
+  addToCollections,
+  addToAttentions,
   getContacts
 };
