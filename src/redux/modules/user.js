@@ -11,6 +11,7 @@ export const CREATE_USER = 'CREATE_USER'
 export const UPDATE_USER = 'UPDATE_USER'
 export const DELETE_USER = 'DELETE_USER'
 export const SEARCH_USER = 'SEARCH_USER'
+export const REMOVE_ATTENTION = 'REMOVE_ATTENTION'
 export const GET_USER_REPORT = 'GET_USER_REPORT'
 
 // ------------------------------------
@@ -23,6 +24,7 @@ export const createUser = createAction(CREATE_USER)
 export const updateUser = createAction(UPDATE_USER)
 export const deleteUser = createAction(DELETE_USER)
 export const searchUser = createAction(SEARCH_USER)
+export const removeAttention = createAction(REMOVE_ATTENTION)
 export const getReport = createAction(GET_USER_REPORT)
 
 const initialState = {
@@ -109,6 +111,14 @@ export default handleActions({
       ...state.params,
       ...omit(payload, 'results')
     },
+    error: null,
+    loading: false
+  }),
+
+  [REMOVE_ATTENTION]: (state, { payload }) => ({
+    ...state,
+    status: REMOVE_ATTENTION,
+    searchResult: reject(state.searchResult, { _id: payload.id }),
     error: null,
     loading: false
   }),

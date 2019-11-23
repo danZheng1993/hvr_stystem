@@ -12,7 +12,7 @@ export const authloadingSelector = (state) =>
 export const profileSelector = (state) =>
   get(state, 'auth.me', null)
 
-  export const contactsSelector = (state) =>
+export const contactsSelector = (state) =>
   get(state, 'auth.contacts', null)
 
 export const userDetailSelector = (state) =>

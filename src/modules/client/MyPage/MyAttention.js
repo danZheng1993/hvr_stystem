@@ -16,6 +16,7 @@ import { fonts, colors } from '../../../styles';
 
 import { searchUser } from '../../../redux/modules/user'
 import { removeFromAttentions } from '../../../redux/modules/auth'
+import { removeAttention } from '../../../redux/modules/user'
 import { usersSearchResultSelector , usersloadingSelector,  profileSelector } from '../../../redux/selectors'
 
 
@@ -35,8 +36,10 @@ class MyAttention extends React.Component {
 
   handleCancel = (id) => {
     this.props.removeFromAttentions({
-      body: {attention: id}
+      body: {attention: id},
+      success: () => this.props.removeAttention({id})
     })
+
   }
 
   render() {    
@@ -80,7 +83,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   searchUser,
-  removeFromAttentions
+  removeFromAttentions,
+  removeAttention
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

@@ -11,6 +11,7 @@ export const CREATE_MEDIA = 'CREATE_MEDIA'
 export const UPDATE_MEDIA = 'UPDATE_MEDIA'
 export const DELETE_MEDIA = 'DELETE_MEDIA'
 export const SEARCH_MEDIA = 'SEARCH_MEDIA'
+export const REMOVE_COLLECTION = 'REMOVE_COLLECTION'
 export const SET_MEDIAS_PAGINATION = 'SET_MEDIAS_PAGINATION'
 
 // ------------------------------------
@@ -23,6 +24,7 @@ export const createMedia = createAction(CREATE_MEDIA)
 export const updateMedia = createAction(UPDATE_MEDIA)
 export const deleteMedia = createAction(DELETE_MEDIA)
 export const searchMedia = createAction(SEARCH_MEDIA)
+export const removeCollection = createAction(REMOVE_COLLECTION)
 
 const initialState = {
   media: null,
@@ -99,6 +101,14 @@ export default handleActions({
     ...state,
     status: requestFail(SEARCH_MEDIA),
     error: payload,
+    loading: false
+  }),
+
+  [REMOVE_COLLECTION]: (state, { payload }) => ({
+    ...state,
+    status: REMOVE_COLLECTION,
+    searchResult: reject(state.searchResult, { _id: payload.id }),
+    error: null,
     loading: false
   }),
 
