@@ -17,6 +17,7 @@ import constants from '../constants'
 import {Loader} from '../components'
 import { addToCollections, removeFromCollections } from '../redux/modules/auth'
 import { authloadingSelector, profileSelector } from '../redux/selectors'
+import NoData from './NoData';
 class MediaList extends React.Component {
   constructor(props) {
     super(props)
@@ -44,7 +45,7 @@ class MediaList extends React.Component {
     const collections = profile.collections
     return (
         <ScrollView>      
-         {medias.length && medias.map((media, index) => (
+         {medias.length ? medias.map((media, index) => (
            typeof(media) == 'object' && <View key={index} style={styles.componentsSection}>
               <TouchableOpacity onPress={() => this.handlePlay(media.path)} style={styles.touch}>
                 <Image
@@ -57,13 +58,13 @@ class MediaList extends React.Component {
                 <Text size={14}>{media.title}</Text>
                 {
                   collections.indexOf(media._id) == -1?
-                  <Text size={14} onPress={() => {this.handleCollect(media._id)}}>collect</Text> :
-                  <Text size={14} onPress={() => {this.handleCancel(media._id)}}>cancel</Text>
+                  <Text size={14} onPress={() => {this.handleCollect(media._id)}}>收藏</Text> :
+                  <Text size={14} onPress={() => {this.handleCancel(media._id)}}>取消收藏</Text>
                 }
               </View>
             </View>
 
-         ))}
+         )) : <NoData />}
          </ScrollView>
     );
     }

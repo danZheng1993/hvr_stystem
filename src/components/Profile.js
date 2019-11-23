@@ -4,7 +4,8 @@ import {
   View,
   ScrollView,
   Text,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -50,20 +51,32 @@ export default class Profile extends React.Component {
               />
             </View>
           </View>
+          {user.role == 'client' ?
           <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
-            <View style={{alignItems: 'center'}}>
-              <Text>39</Text>
+            <TouchableOpacity style={{alignItems: 'center'}} onPress={() => navigation.navigate('MyCollection')}>
+              <Text>{user.collections.length}</Text>
               <Text>我的收藏</Text>
-            </View>
+            </TouchableOpacity>
             <View style={{alignItems: 'center'}}>
-              <Text>45</Text>
+              <Text>{user.attentions.length}</Text>
               <Text>我的关注</Text>
             </View>
             <View style={{alignItems: 'center'}}>
               <Text>4</Text>
               <Text>我的VR</Text>
             </View>
-          </View>
+          </View> :
+          <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
+            <View style={{alignItems: 'center'}}>
+              <Text>39</Text>
+              <Text>我发布的</Text>
+            </View>
+            <View style={{alignItems: 'center'}}>
+              <Text>45</Text>
+              <Text>我的余额</Text>
+            </View>
+          </View> 
+          }
           </>
         }
         

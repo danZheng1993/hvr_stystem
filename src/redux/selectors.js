@@ -72,7 +72,10 @@ export const mediaDetailSelector = (state) =>
 export const mediasListSelector = (state) =>
   get(state, 'media.medias', [])
 
-  export const mediasloadingSelector = (state) =>
+export const mediasSearchResultSelector = (state) =>
+  get(state, 'media.searchResult', [])
+
+export const mediasloadingSelector = (state) =>
   get(state, 'media.loading', false)
 
 export const mediaStateSelector = (state) =>

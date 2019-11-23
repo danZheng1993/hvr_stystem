@@ -10,6 +10,9 @@ router.route('/')
   .get(mediaCtrl.list)
   .post(mediaCtrl.create);
 
+router.route('/search/')
+  .post(mediaCtrl.search);
+
 router.route('/:mediaId')
   .get(mediaCtrl.read)
   .put(mediaCtrl.update)

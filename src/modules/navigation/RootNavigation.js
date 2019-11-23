@@ -42,6 +42,7 @@ import  Provider from '../provider';
 import  ApplyJob from '../provider/jobs/ApplyJob';
 import MyPage from '../client/MyPage';
 import MyJob from '../client/MyPage/MyJob/JobsList';
+import MyCollection from '../client/MyPage/MyCollection';
 import BiddingJob from '../client/MyPage/MyJob/BiddingJob';
 import NotPaidJob from '../client/MyPage/MyJob/NotPaidJob';
 import WaitingJob from '../client/MyPage/MyJob/WaitingJob';
@@ -148,6 +149,12 @@ const stackNavigator = createStackNavigator(
       screen: MyJob,
       navigationOptions: {
         title: '',
+      },
+    },
+    MyCollection: {
+      screen: MyCollection,
+      navigationOptions: {
+        header: null,
       },
     },
     LoginWithSMS: {

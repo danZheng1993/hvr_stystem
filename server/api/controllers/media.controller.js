@@ -39,6 +39,22 @@ function list(req, res, next) {
   .catch(next);
 }
 
+function search(req, res, next) {
+  let where = {};
+  // if (req.user.role === ROLES.CLIENT) {
+  //   where = { user: req.user._id };
+  // }
+  if (req.body.collections) {
+    where = {_id: req.body.collections}
+  }
+  console.log("search", where)
+  Media.find(where)
+  .then((entries) => {
+    res.json(entries);
+  })
+  .catch(next);
+}
+
 function remove(req, res, next) {
   req.media.remove(() => {
     res.json(req.media);
@@ -72,4 +88,5 @@ module.exports = {
   list,
   remove,
   getMediaByID,
+  search
 };
