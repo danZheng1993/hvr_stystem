@@ -259,13 +259,35 @@ export default handleActions({
     loading: false
   }),
 
-  [requestFail(ADD_TO_COLLECTIONS)]: (state, { payload }) => ({
+  [requestFail(ADD_TO_ATTENTIONS)]: (state, { payload }) => ({
     ...state,
-    status: requestFail(ADD_TO_COLLECTIONS),
+    status: requestFail(ADD_TO_ATTENTIONS),
     error: payload,
     loading: false
   }),
-  
+
+  [requestPending(ADD_TO_ATTENTIONS)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(ADD_TO_ATTENTIONS),
+    error: null,
+    loading: true,
+    
+  }),
+
+  [requestSuccess(ADD_TO_ATTENTIONS)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(ADD_TO_ATTENTIONS),
+    me: payload,
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(ADD_TO_ATTENTIONS)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(ADD_TO_ATTENTIONS),
+    error: payload,
+    loading: false
+  }),
 
   [requestPending(REMOVE_FROM_COLLECTIONS)]: (state, { payload }) => ({
     ...state,

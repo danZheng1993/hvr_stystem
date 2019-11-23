@@ -8,10 +8,10 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { Button, Loader, UsersList,  } from '../../../components';
+import { Button, Loader, UsersList, NoData,  } from '../../../components';
 import { fonts, colors } from '../../../styles';
 
-import { searchUser } from '../../../redux/modules/user'
+import user, { searchUser } from '../../../redux/modules/user'
 import { usersListSelector, usersloadingSelector } from '../../../redux/selectors'
 
 class Providers extends React.Component {
@@ -38,7 +38,11 @@ class Providers extends React.Component {
          <Loader
           loading={usersloading} />
          </View>
-         <UsersList users={users} navigation={this.props.navigation}/>
+         {users.length? users.map((user, index) => (
+           <View style={styles.componentsSection} key={index}>
+             <UsersList user={user} navigation={this.props.navigation}/>
+           </View>
+         )): <NoData />}
       </ScrollView>
     );
   }

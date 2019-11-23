@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   ScrollView,
+  Text,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -12,6 +13,7 @@ import { Button, Loader, UsersList, Profile, RadioGroup} from '../../../componen
 import { fonts, colors } from '../../../styles';
 
 import { getUser } from '../../../redux/modules/user'
+import { addToAttentions } from '../../../redux/modules/auth'
 import { userDetailSelector, usersloadingSelector } from '../../../redux/selectors'
 import ProviderWorks from './ProviderWorks';
 import ProviderFeedbacks from './ProviderFeedbacks';
@@ -43,6 +45,11 @@ class ProviderDetail extends React.Component {
     this.setState( {select: index} )
   }
 
+  handleAttentions = (id) => {
+    this.props.addToAttentions({
+      body: {attention: id}
+    })
+  }
   render() {
     const {user, usersloading} = this.props
     const {select} = this.state
@@ -52,7 +59,28 @@ class ProviderDetail extends React.Component {
 
           <Loader
           loading={usersloading} /> 
-          <Profile user={user} navigation={this.props.navigation}/>
+          <View style={styles.componentsSection}>
+            <View style={{flexDirection: 'row'}}>
+              <Profile user={user} navigation={this.props.navigation}/>
+              <View style={styles.settingsContainer}>
+                <Text onPress={() => this.handleAttentions(user._id)}>关注</Text>
+              </View>
+            </View>
+            <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
+              <View style={{alignItems: 'center'}} onPress={() => this.props.navigation.navigate('MyCollection')}>
+                <Text>33</Text>
+                <Text>服务用户数</Text>
+              </View>
+              <View style={{alignItems: 'center'}}>
+                <Text>2343</Text>
+                <Text>项目作品</Text>
+              </View>
+              <View style={{alignItems: 'center'}}>
+                <Text>4</Text>
+                <Text>播放数量</Text>
+              </View>
+            </View>
+          </View>
         <View style={styles.componentsSection}>
           <RadioGroup
             underline
@@ -139,6 +167,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 5,
   },
+  settingsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end',
+    marginBottom: 20,
+  },
 });
 
 
@@ -148,7 +184,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  getUser
+  getUser,
+  addToAttentions
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

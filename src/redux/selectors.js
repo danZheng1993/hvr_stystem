@@ -21,6 +21,9 @@ export const userDetailSelector = (state) =>
 export const usersListSelector = (state) =>
   get(state, 'user.users', [])
 
+export const usersSearchResultSelector = (state) =>
+  get(state, 'user.searchResult', [])
+  
 export const recordDetailSelector = (state) =>
   get(state, 'tracking.record', {})
 

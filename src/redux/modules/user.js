@@ -36,6 +36,7 @@ const initialState = {
     page_size: 10,
     page: 1
   },
+  searchResult: [],
   report: null,
   loading: false,
 }
@@ -103,7 +104,7 @@ export default handleActions({
   [requestSuccess(SEARCH_USER)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(SEARCH_USER),
-    users: Object.values(payload),
+    searchResult: Object.values(payload),
     params: {
       ...state.params,
       ...omit(payload, 'results')

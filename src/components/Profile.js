@@ -21,10 +21,8 @@ export default class Profile extends React.Component {
     const url="http://192.168.31.207:4000/"
     const {user, navigation} = this.props
     return (
-      <View style={styles.componentsSection}>
-
-
-        {user && <>
+      <View>
+        {user &&
           <View style = {styles.row}>
             <Image
               source={{uri: url + (user.photo ? user.photo: 'default.png')}}
@@ -34,52 +32,8 @@ export default class Profile extends React.Component {
               <Text size={14}><Text>{user.userName}</Text></Text>
               <Text size={14}><Text>{user.overview}</Text></Text>
             </View>
-            <View style={styles.demoIconsContainer}>
-              <Icon
-                style={styles.demoIcon}
-                name="bell"
-                size={30}
-                color="#5759CB"
-                onPress={() => navigation.navigate('Notification')}
-              />
-              <Icon
-                style={styles.demoIcon}
-                name="settings"
-                size={30}
-                color="#5759CB"
-                onPress={() => navigation.navigate('Settings')}
-              />
-            </View>
           </View>
-          {user.role == 'client' ?
-          <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
-            <TouchableOpacity style={{alignItems: 'center'}} onPress={() => navigation.navigate('MyCollection')}>
-              <Text>{user.collections.length}</Text>
-              <Text>我的收藏</Text>
-            </TouchableOpacity>
-            <View style={{alignItems: 'center'}}>
-              <Text>{user.attentions.length}</Text>
-              <Text>我的关注</Text>
-            </View>
-            <View style={{alignItems: 'center'}}>
-              <Text>4</Text>
-              <Text>我的VR</Text>
-            </View>
-          </View> :
-          <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
-            <View style={{alignItems: 'center'}}>
-              <Text>39</Text>
-              <Text>我发布的</Text>
-            </View>
-            <View style={{alignItems: 'center'}}>
-              <Text>45</Text>
-              <Text>我的余额</Text>
-            </View>
-          </View> 
-          }
-          </>
         }
-        
       </View>
     );
     }
@@ -114,13 +68,5 @@ const styles = StyleSheet.create({
     backgroundColor: colors.info,
     width: 70,
     height: 70
-  },
-  demoIconsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-end',
-    marginBottom: 20,
   },
 });

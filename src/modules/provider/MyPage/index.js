@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { colors, fonts } from '../../../styles';
 
 import { connect } from 'react-redux';
@@ -26,7 +26,37 @@ class MyPage extends React.Component {
         style={styles.container}
         contentContainerStyle={{ paddingBottom: 20 }}
       >
-        <Profile user = {profile} navigation={this.props.navigation} />
+        <View style={styles.componentsSection}>
+          <View style={{flexDirection: 'row'}}>
+            <Profile user = {profile} navigation={this.props.navigation} />
+            <View style={styles.settingsContainer}>
+                <Icon
+                  style={styles.demoIcon}
+                  name="bell"
+                  size={30}
+                  color="#5759CB"
+                  onPress={() => this.props.navigation.navigate('Notification')}
+                />
+                <Icon
+                  style={styles.demoIcon}
+                  name="gear"
+                  size={30}
+                  color="#5759CB"
+                  onPress={() => this.props.navigation.navigate('Settings')}
+                />
+            </View>
+          </View>
+          <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
+            <View style={{alignItems: 'center'}}>
+              <Text>39</Text>
+              <Text>我发布的</Text>
+            </View>
+            <View style={{alignItems: 'center'}}>
+              <Text>45</Text>
+              <Text>我的余额</Text>
+            </View>
+          </View> 
+        </View>
         <View style={styles.componentsSection}>
           <Text style={styles.componentSectionHeader}>我的订单</Text>
           <View style={styles.demoButtonsContainer}>
@@ -38,7 +68,7 @@ class MyPage extends React.Component {
                   onPress={() => this.props.navigation.navigate('ProviderJob', {selected: 1})}
                   >
                 <Text>
-                  <Icon name="chat" size={20} color="white" />
+                  <Icon name="tags" size={20} color="white" />
                 </Text>
               </Button>
               <Text>
@@ -53,7 +83,7 @@ class MyPage extends React.Component {
                   onPress={() => this.props.navigation.navigate('ProviderJob', {selected: 2})}
                 >
                 <Text>
-                  <Icon name="chat" size={20} color="white" />
+                  <Icon name="tags" size={20} color="white" />
                 </Text>
               </Button>
               <Text>
@@ -68,7 +98,7 @@ class MyPage extends React.Component {
                   onPress={() => this.props.navigation.navigate('ProviderJob', {selected: 3})}
                 >
                 <Text>
-                  <Icon name="chat" size={20} color="white" />
+                  <Icon name="tags" size={20} color="white" />
                 </Text>
               </Button>
               <Text>
@@ -83,7 +113,7 @@ class MyPage extends React.Component {
                   onPress={() => this.props.navigation.navigate('ProviderJob', {selected: 4})}
                 >
                 <Text>
-                  <Icon name="chat" size={20} color="white" />
+                  <Icon name="tags" size={20} color="white" />
                 </Text>
               </Button>
               <Text>
@@ -98,7 +128,7 @@ class MyPage extends React.Component {
                   onPress={() => this.props.navigation.navigate('ProviderJob', {selected: 5})}
                 >
                 <Text>
-                  <Icon name="chat" size={20} color="white" />
+                  <Icon name="tags" size={20} color="white" />
                 </Text>
               </Button>
               <Text>
@@ -119,7 +149,7 @@ class MyPage extends React.Component {
                   bgColor="#958FDA"
                 >
                 <Text>
-                  <Icon name="chat" size={20} color="white" />
+                  <Icon name="tags" size={20} color="white" />
                 </Text>
               </Button>
               <Text>
@@ -133,7 +163,7 @@ class MyPage extends React.Component {
                   bgColor="#4F44C1"
                 >
                 <Text>
-                  <Icon name="chat" size={20} color="white" />
+                  <Icon name="tags" size={20} color="white" />
                 </Text>
               </Button>
               <Text>
@@ -147,7 +177,7 @@ class MyPage extends React.Component {
                   bgColor="#3CD4A0"
                 >
                 <Text>
-                  <Icon name="chat" size={20} color="white" />
+                  <Icon name="tags" size={20} color="white" />
                 </Text>
               </Button>
               <Text>
@@ -161,7 +191,7 @@ class MyPage extends React.Component {
                   bgColor="#EF1F78"
                 >
                 <Text>
-                  <Icon name="chat" size={20} color="white" />
+                  <Icon name="tags" size={20} color="white" />
                 </Text>
               </Button>
               <Text>
@@ -177,7 +207,7 @@ class MyPage extends React.Component {
                   bgColor="#52B1F4"
                 >
                 <Text>
-                  <Icon name="chat" size={20} color="white" />
+                  <Icon name="tags" size={20} color="white" />
                 </Text>
               </Button>
               <Text>
@@ -192,7 +222,7 @@ class MyPage extends React.Component {
                   onPress={() => this.props.navigation.navigate('WebViewer', {url: 'help.html'})}
                 >
                 <Text>
-                  <Icon name="chat" size={20} color="white" />
+                  <Icon name="tags" size={20} color="white" />
                 </Text>
               </Button>
               <Text>
@@ -207,7 +237,7 @@ class MyPage extends React.Component {
                   onPress={() => this.props.navigation.navigate('WebViewer', {url: 'About_Us.html'})}
                 >
                 <Text>
-                  <Icon name="chat" size={20} color="white" />
+                  <Icon name="tags" size={20} color="white" />
                 </Text>
               </Button>
               <Text>
@@ -222,7 +252,7 @@ class MyPage extends React.Component {
                   onPress={() => this.props.navigation.navigate({ routeName: 'GiveFeedback' })}
                   >
                 <Text>
-                  <Icon name="chat" size={20} color="white" />
+                  <Icon name="tags" size={20} color="white" />
                 </Text>
               </Button>
               <Text>
@@ -286,6 +316,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.info,
     width: 100,
     height: 100
+  },
+  settingsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end',
+    marginBottom: 20,
   },
 });
 

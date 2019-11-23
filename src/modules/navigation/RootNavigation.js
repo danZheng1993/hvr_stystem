@@ -43,6 +43,7 @@ import  ApplyJob from '../provider/jobs/ApplyJob';
 import MyPage from '../client/MyPage';
 import MyJob from '../client/MyPage/MyJob/JobsList';
 import MyCollection from '../client/MyPage/MyCollection';
+import MyAttention from '../client/MyPage/MyAttention';
 import BiddingJob from '../client/MyPage/MyJob/BiddingJob';
 import NotPaidJob from '../client/MyPage/MyJob/NotPaidJob';
 import WaitingJob from '../client/MyPage/MyJob/WaitingJob';
@@ -153,6 +154,13 @@ const stackNavigator = createStackNavigator(
     },
     MyCollection: {
       screen: MyCollection,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    MyAttention: {
+      screen: MyAttention,
       navigationOptions: {
         header: null,
       },

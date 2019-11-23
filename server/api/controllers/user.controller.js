@@ -310,9 +310,12 @@ function getProfile(req, res, next) {
 }
 
 function search(req, res, next) {
-  console.log("here",req.body)
-
-  User.find(req.body)
+  console.log("search",req.body)
+  let where = {}
+  if (req.body.attentions) {
+    where = {_id: req.body.attentions}
+  }
+  User.find(where)
   .sort({ userName: -1 })
 //  .limit(limit)
  // .populate('user')
