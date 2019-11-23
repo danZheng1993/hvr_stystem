@@ -170,6 +170,30 @@ function addToCollections(req, res, next) {
   }
 }
 
+function removeFromCollections(req, res, next) {
+  console.log("removeFromCollections")
+  console.log(req.body)
+
+  if (req.body.collection) {
+    let collections = req.userModel.collections
+    let index = collections.indexOf(req.body.collection) 
+      if (index == -1) {
+      res.status(500).json({message: 'Collection Not Found'})
+      return;
+    }
+    collections.splice(index, 1)
+    req.userModel.collections = collections;
+    req.userModel.save()
+    .then((updatedUser) => {
+      console.log(updatedUser)
+      res.json(updatedUser);
+    })
+    .catch(next);
+  } else {
+    res.status(500).json({message: 'Invalid request'})
+  }
+}
+
 function addToAttentions(req, res, next) {
   console.log("addToAttentions")
   console.log(req.body)
@@ -181,6 +205,30 @@ function addToAttentions(req, res, next) {
       return;
     }
     attentions.push(req.body.attention)
+    req.userModel.attentions = attentions;
+    req.userModel.save()
+    .then((updatedUser) => {
+      console.log(updatedUser)
+      res.json(updatedUser);
+    })
+    .catch(next);
+  } else {
+    res.status(500).json({message: 'Invalid request'})
+  }
+}
+
+function removeFromAttentions(req, res, next) {
+  console.log("removeFromAttentions")
+  console.log(req.body)
+
+  if (req.body.attention) {
+    let attentions = req.userModel.attentions
+    let index = attentions.indexOf(req.body.attention) 
+      if (index == -1) {
+      res.status(500).json({message: 'Collection Not Found'})
+      return;
+    }
+    attentions.splice(index, 1)
     req.userModel.attentions = attentions;
     req.userModel.save()
     .then((updatedUser) => {
@@ -288,5 +336,7 @@ module.exports = {
   addToContacts,
   addToCollections,
   addToAttentions,
+  removeFromCollections,
+  removeFromAttentions,
   getContacts
 };

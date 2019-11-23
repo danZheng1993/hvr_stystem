@@ -11,6 +11,7 @@ import moment from 'moment'
 import { fonts, colors } from '../styles';
 import constants from '../constants'
 import Nyt360Video from 'react-native-nyt-360-video';
+import JWPlayer from 'react-native-jwplayer';
 
 export default class Player extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ export default class Player extends React.Component {
       <Nyt360Video
       ref={ref => this.player = ref}
       style={{flex: 1, backgroundColor:'#000000'}}
-      source={{ uri:constants.MEDIA_BASE_URL + 'media1.mp4',
+      source={{ uri:constants.MEDIA_BASE_URL + 'media3.mp4',
         type: 'mono'}}
       displayMode={'embedded'}
       volume={1.0}
@@ -37,7 +38,21 @@ export default class Player extends React.Component {
       enableTouchTracking={false}
       hidesTransitionView={false}
       enableInfoButton={false} />
+//     <View style={styles.container}>
+//   <JWPlayer
+//     style={styles.player}
+//     autostart={false}
+//     file={'https://content.jwplatform.com/manifests/vM7nH0Kl.m3u8'}
+//     onBeforePlay={() => this.onBeforePlay()}
+//     onPlay={() => this.onPlay()}
+//     onPlayerError={e => this.onPlayerError(e)}
+//     onBuffer={() => this.onBuffer()}
+//     onTime={time => this.onTime(time)}
+//   />
+// </View>
+ 
     );
+
     }
 }
 
@@ -48,7 +63,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 20,
   },
-
+  player: {
+    flex: 1,
+  },
   description: {
     padding: 20,
     marginBottom: 20,

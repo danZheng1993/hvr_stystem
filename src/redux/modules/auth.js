@@ -12,7 +12,9 @@ export const SAVE_PROFILE = 'SAVE_PROFILE'
 export const GET_CONTACTS = 'GET_CONTACTS'
 export const ADD_TO_CONTACTS = 'ADD_TO_CONTACTS'
 export const ADD_TO_COLLECTIONS = 'ADD_TO_COLLECTIONS'
-export const ADD_TO_ATTENTIONS = 'ADD_TO_ATTENTIONSS'
+export const REMOVE_FROM_COLLECTIONS = 'REMOVE_FROM_COLLECTIONS'
+export const ADD_TO_ATTENTIONS = 'ADD_TO_ATTENTIONS'
+export const REMOVE_FROM_ATTENTIONS = 'REMOVE_FROM_ATTENTIONS'
 export const SEND_CODE = 'SEND_CODE'
 export const CHECK_CODE = 'CHECK_CODE'
 // ------------------------------------
@@ -31,7 +33,9 @@ export const saveProfile = createAction(SAVE_PROFILE)
 export const getContacts = createAction(GET_CONTACTS)
 export const addToContacts = createAction(ADD_TO_CONTACTS)
 export const addToCollections = createAction(ADD_TO_COLLECTIONS)
+export const removeFromCollections = createAction(REMOVE_FROM_COLLECTIONS)
 export const addToAttentions = createAction(ADD_TO_ATTENTIONS)
+export const removeFromAttentions = createAction(REMOVE_FROM_ATTENTIONS)
 
 const getInitialState = async () => {
   let authRestore = await AsyncStorage.getItem('hvr_auth') || null    
@@ -261,25 +265,50 @@ export default handleActions({
     error: payload,
     loading: false
   }),
-  [requestPending(ADD_TO_ATTENTIONS)]: (state, { payload }) => ({
+  
+
+  [requestPending(REMOVE_FROM_COLLECTIONS)]: (state, { payload }) => ({
     ...state,
-    status: requestPending(ADD_TO_ATTENTIONS),
+    status: requestPending(REMOVE_FROM_COLLECTIONS),
     error: null,
     loading: true,
     
   }),
 
-  [requestSuccess(ADD_TO_ATTENTIONS)]: (state, { payload }) => ({
+  [requestSuccess(REMOVE_FROM_COLLECTIONS)]: (state, { payload }) => ({
     ...state,
-    status: requestSuccess(ADD_TO_ATTENTIONS),
+    status: requestSuccess(REMOVE_FROM_COLLECTIONS),
     me: payload,
     error: null,
     loading: false
   }),
 
-  [requestFail(ADD_TO_ATTENTIONS)]: (state, { payload }) => ({
+  [requestFail(REMOVE_FROM_COLLECTIONS)]: (state, { payload }) => ({
     ...state,
-    status: requestFail(ADD_TO_ATTENTIONS),
+    status: requestFail(REMOVE_FROM_COLLECTIONS),
+    error: payload,
+    loading: false
+  }),
+
+  [requestPending(REMOVE_FROM_ATTENTIONS)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(REMOVE_FROM_ATTENTIONS),
+    error: null,
+    loading: true,
+    
+  }),
+
+  [requestSuccess(REMOVE_FROM_ATTENTIONS)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(REMOVE_FROM_ATTENTIONS),
+    me: payload,
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(REMOVE_FROM_ATTENTIONS)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(REMOVE_FROM_ATTENTIONS),
     error: payload,
     loading: false
   }),

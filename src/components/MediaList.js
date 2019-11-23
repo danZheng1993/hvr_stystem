@@ -15,8 +15,8 @@ import { createStructuredSelector } from 'reselect';
 import { fonts, colors } from '../styles';
 import constants from '../constants'
 import {Loader} from '../components'
-import { addToCollections } from '../redux/modules/auth'
-import { authloadingSelector } from '../redux/selectors'
+import { addToCollections, removeFromCollections } from '../redux/modules/auth'
+import { authloadingSelector, profileSelector } from '../redux/selectors'
 class MediaList extends React.Component {
   constructor(props) {
     super(props)
@@ -28,13 +28,20 @@ class MediaList extends React.Component {
 
   handleCollect(id) {
     this.props.addToCollections({
-      body: {collections: id}
+      body: {collection: id}
     })
   }
   
+  handleCancel(id) {
+    this.props.removeFromCollections({
+      body: {collection: id}
+    })
+  }
+
   render() {   
-    const {medias, navigation} = this.props
+    const {medias, navigation, profile} = this.props
     console.log(medias)
+    const collections = profile.collections
     return (
         <ScrollView>      
          {medias.length && medias.map((media, index) => (
@@ -48,7 +55,11 @@ class MediaList extends React.Component {
               </TouchableOpacity>
               <View style={{flexDirection: 'row'}} >
                 <Text size={14}>{media.title}</Text>
-                <Text size={14} onPress={() => {this.handleCollect(media._id)}}>collect</Text>
+                {
+                  collections.indexOf(media._id) == -1?
+                  <Text size={14} onPress={() => {this.handleCollect(media._id)}}>collect</Text> :
+                  <Text size={14} onPress={() => {this.handleCancel(media._id)}}>cancel</Text>
+                }
               </View>
             </View>
 
@@ -92,11 +103,13 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = createStructuredSelector({
-  loading: authloadingSelector
+  loading: authloadingSelector,
+  profile: profileSelector
 });
 
 const mapDispatchToProps = {
-  addToCollections
+  addToCollections,
+  removeFromCollections
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

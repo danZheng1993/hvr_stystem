@@ -14,6 +14,8 @@ router.route('/contacts')
   .patch(userCtrl.addToContacts)
 router.route('/collections')
   .patch(userCtrl.addToCollections)
+  .delete(userCtrl.removeFromCollections)
 router.route('/attentions')
   .patch(userCtrl.addToAttentions)
+  .delete(userCtrl.removeFromAttentions)
 module.exports = router;
