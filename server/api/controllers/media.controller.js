@@ -46,6 +46,8 @@ function search(req, res, next) {
   // }
   if (req.body.collections) {
     where = {_id: req.body.collections}
+  } else if (req.body.title) {
+    where = {title: {$regex: req.body.title, $options:"$i"}}
   }
   console.log("search", where)
   Media.find(where)

@@ -10,6 +10,9 @@ router.route('/')
   .get(newsCtrl.list)
   .post(newsCtrl.create);
 
+router.route('/search/')
+  .post(newsCtrl.search);
+
 router.route('/:newsId')
   .get(newsCtrl.read)
   .put(newsCtrl.update)

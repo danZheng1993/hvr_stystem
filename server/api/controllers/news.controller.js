@@ -39,6 +39,23 @@ function list(req, res, next) {
   .catch(next);
 }
 
+function search(req, res, next) {
+  let where = {};
+  // if (req.user.role === ROLES.CLIENT) {
+  //   where = { user: req.user._id };
+  // }
+  if (req.body.title) {
+    where = {title: {$regex: req.body.title, $options:"$i"}}
+  }
+  console.log("search News", where)
+  News.find(where)
+  .then((entries) => {
+    res.json(entries);
+  })
+  .catch(next);
+}
+
+
 function remove(req, res, next) {
   req.news.remove(() => {
     res.json(req.news);
@@ -72,4 +89,5 @@ module.exports = {
   list,
   remove,
   getNewsByID,
+  search
 };

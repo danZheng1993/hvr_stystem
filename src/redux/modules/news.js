@@ -10,6 +10,7 @@ export const GET_NEWSS = 'GET_NEWSS'
 export const CREATE_NEWS = 'CREATE_NEWS'
 export const UPDATE_NEWS = 'UPDATE_NEWS'
 export const DELETE_NEWS = 'DELETE_NEWS'
+export const SEARCH_NEWS = 'SEARCH_NEWS'
 export const SET_NEWSS_PAGINATION = 'SET_NEWSS_PAGINATION'
 
 // ------------------------------------
@@ -20,13 +21,15 @@ export const getNews = createAction(GET_NEWS)
 export const getNewss = createAction(GET_NEWSS)
 export const createNews = createAction(CREATE_NEWS)
 export const updateNews = createAction(UPDATE_NEWS)
+export const searchNews = createAction(SEARCH_NEWS)
 export const deleteNews = createAction(DELETE_NEWS)
 
 const initialState = {
   news: null,
   status: 'INIT',
-  newss: {},
+  newss: [],
   loading: false,
+  searchResult: []
 }
 
 // ------------------------------------
@@ -73,6 +76,28 @@ export default handleActions({
   [requestFail(GET_NEWSS)]: (state, { payload }) => ({
     ...state,
     status: requestFail(GET_NEWSS),
+    error: payload,
+    loading: false
+  }),
+
+  [requestPending(SEARCH_NEWS)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(SEARCH_NEWS),
+    error: null,
+    loading: true,
+  }),
+
+  [requestSuccess(SEARCH_NEWS)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(SEARCH_NEWS),
+    searchResult: Object.values(payload),
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(SEARCH_NEWS)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(SEARCH_NEWS),
     error: payload,
     loading: false
   }),

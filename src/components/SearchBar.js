@@ -8,7 +8,10 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { NavigationActions } from 'react-navigation'
 import { searchUser } from '../redux/modules/user'
-import { usersListSelector, usersloadingSelector } from '../redux/selectors'
+import { searchMedia } from '../redux/modules/media'
+import { searchNews } from '../redux/modules/news'
+// import {  } from '../redux/modules/news'
+import { usersloadingSelector, mediasloadingSelector, newssloadingSelector } from '../redux/selectors'
 
 import { clearItem } from '../redux/api/storage'
 class Search extends React.Component {
@@ -16,19 +19,38 @@ class Search extends React.Component {
         super(props)
         this.state = {
             search: '',
-            type: ''
+            type: 'media'
         }
     }
     updateSearch = search => {
         this.setState({ search });
     }
     searchContent = () => {
-        const {search} = this.state
-        const {searchUser} = this.props
-        searchUser({
-            body :{ role: 'provider'},
-            success: () => alert("success")
-        })
+        const {search, type} = this.state
+        const {searchUser, searchMedia, searchNews} = this.props
+        switch(type) {
+            case 'media':
+                searchMedia({
+                    body: {title: search},
+                    success: () => this.props.navigation.navigate('SearchResult', {type})
+                })
+                break;
+            case 'user':
+                searchUser({
+                    body :{ userName: search},
+                    success: () => this.props.navigation.navigate('SearchResult', {type})
+                })
+            case 'news':
+                searchNews({
+                    body: {title: search},
+                    success: () => this.props.navigation.navigate('SearchResult', {type})
+                })
+                break;
+            default:
+                break;
+        }
+
+
     }
     render() {
         const {search} = this.state
@@ -43,9 +65,9 @@ class Search extends React.Component {
                         onValueChange={(itemValue, itemIndex) =>
                             this.setState({type: itemValue})
                         }>
-                            <Picker.Item key={1} label='视频' value='视频' />
-                            <Picker.Item key={2} label='服务商' value='服务商' />
-                            <Picker.Item key={3} label='资讯' value='资讯' />
+                            <Picker.Item key={1} label='视频' value='media' />
+                            <Picker.Item key={2} label='服务商' value='user' />
+                            <Picker.Item key={3} label='资讯' value='news' />
                         </Picker>
                     </View>
                     <View style={{flex: 4}}>
@@ -73,12 +95,13 @@ const styles = StyleSheet.create({
     },
 })
 const mapStateToProps = createStructuredSelector({
-    usersList: usersListSelector,
-    loading: usersloadingSelector
+    loading: usersloadingSelector || mediasloadingSelector || newssloadingSelector
 });
 
 const mapDispatchToProps = {
-    searchUser
+    searchUser,
+    searchMedia,
+    searchNews
 };
   
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

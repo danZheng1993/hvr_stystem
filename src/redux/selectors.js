@@ -132,7 +132,10 @@ export const newssListSelector = (state) =>
 export const newsStateSelector = (state) =>
   get(state, 'news', {})
 
-  export const bannerDetailSelector = (state) =>
+export const newsSearchResultSelector = (state) =>
+  get(state, 'news.searchResult', [])
+
+export const bannerDetailSelector = (state) =>
   get(state, 'banner.banner', {})
 
 export const bannersListSelector = (state) =>

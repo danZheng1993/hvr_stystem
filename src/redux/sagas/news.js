@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects'
 import { get, pick } from 'lodash'
-import { GET_NEWS, GET_NEWSS, CREATE_NEWS, UPDATE_NEWS, DELETE_NEWS }
+import { GET_NEWS, GET_NEWSS, CREATE_NEWS, UPDATE_NEWS, DELETE_NEWS, SEARCH_NEWS }
   from '../modules/news'
 import apiCall from '../api/apiCall'
 
@@ -14,6 +14,12 @@ const doGetNewss = apiCall({
   type: GET_NEWSS,
   method: 'get',
   path: () => `/news/`,
+})
+
+const doSearchNews = apiCall({
+  type: SEARCH_NEWS,
+  method: 'post',
+  path: () => `/news/search`,
 })
 
 const doCreateNews = apiCall({
@@ -40,5 +46,6 @@ export default function* rootSaga () {
   yield takeLatest(GET_NEWSS, doGetNewss)
   yield takeLatest(CREATE_NEWS, doCreateNews)
   yield takeLatest(UPDATE_NEWS, doUpdateNews)
+  yield takeLatest(SEARCH_NEWS, doSearchNews)
   yield takeLatest(DELETE_NEWS, doDeleteNews)
 }

@@ -64,6 +64,7 @@ import WebViewer from '../../components/WebViewer';
 import SearchBar from '../../components/SearchBar';
 import Notification from '../../components/Notification';
 import Player from '../../components/Player';
+import SearchResult from '../../components/SearchResult';
 
 import Settings from '../settings';
 import PersonalInformation from '../settings/PersonalInformation';
@@ -355,6 +356,13 @@ const stackNavigator = createStackNavigator(
 
     Player: {
       screen: Player,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    SearchResult: {
+      screen: SearchResult,
       navigationOptions: {
         header: null,
       },

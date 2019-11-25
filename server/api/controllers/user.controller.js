@@ -311,9 +311,11 @@ function getProfile(req, res, next) {
 
 function search(req, res, next) {
   console.log("search",req.body)
-  let where = {}
+  let where = {role: 'provider'}
   if (req.body.attentions) {
-    where = {_id: req.body.attentions}
+    where = {_id: req.body.attentions, role: 'provider'}
+  } else if (req.body.userName) {
+    where = {userName: {$regex: req.body.userName, $options:"$i"}, role: 'provider'}
   }
   User.find(where)
   .sort({ userName: -1 })
