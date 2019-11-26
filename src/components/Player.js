@@ -11,7 +11,7 @@ import moment from 'moment'
 import { fonts, colors } from '../styles';
 import constants from '../constants'
 import Nyt360Video from 'react-native-nyt-360-video';
-import JWPlayer from 'react-native-jwplayer';
+// import JWPlayer from 'react-native-jwplayer';
 
 export default class Player extends React.Component {
   constructor(props) {

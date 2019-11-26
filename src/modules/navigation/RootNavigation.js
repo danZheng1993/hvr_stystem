@@ -68,6 +68,7 @@ import SearchResult from '../../components/SearchResult';
 
 import Settings from '../settings';
 import PersonalInformation from '../settings/PersonalInformation';
+import MediaSearch from '../client/MediaSearch';
 // import  JobDetails from '../provider/jobs/JobDetails';
 
 const headerBackground = require('../../../assets/images/topBarBg.png');
@@ -210,6 +211,12 @@ const stackNavigator = createStackNavigator(
     },
     PostJob: {
       screen: PostJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    MediaSearch: {
+      screen: MediaSearch,
       navigationOptions: {
         header: null,
       },

@@ -62,7 +62,8 @@ class SignupAsProvider extends React.Component {
     this.setState({counter})
   }
 
-  handleSubmit = () => {
+  submit = () => {
+    alert("submit")
     const { phoneNumber, verificationCode, password, passwordConfirm, counter} = this.state
 
     if (!phoneNumber || !verificationCode || !password || !passwordConfirm || password!=passwordConfirm) return;
@@ -77,16 +78,21 @@ class SignupAsProvider extends React.Component {
       fail:() => alert("invalid code")
     })
   }
+
+  handleSubmit = () => {
+      this.refs.form.submit();
+  }
+
   render(){
     const { counter } = this.state
     return (
-      <View style={styles.description}>
+      <View style={styles.container}>
         <Text size={14}>
           {counter}
         </Text>
         <Form
             ref="form"
-            onSubmit={this.handleSubmit}
+            onSubmit={this.submit}
         >
           <TextValidator
             name="phoneNumber"
@@ -95,27 +101,27 @@ class SignupAsProvider extends React.Component {
             errorMessages={['This field is required', 'invalid phone number']}
             placeholder="输入手机号"
             type="text"
-            keyboardType="email-address"
+            keyboardType="numeric"
             value={this.state.phoneNumber}
             onChangeText={phoneNumber => this.setState({ phoneNumber })}
           />
           <View style={styles.verificationCode}>
-            <TextValidator
-              name="verificationCode"
-              style={{ marginBottom: 15}}
-              validators={['required', 'matchRegexp:^[0-9]{4}$']}                 
-              errorMessages={['This field is required', 'invalid code']}
-              outlined
-              label='输入验证码'
-              type="text"
-              placeholder="输入验证码"
-              value={this.state.verificationCode}
-              onChangeText={verificationCode => this.setState({ verificationCode })}
-            />
+            <View style={{ marginBottom: 15, flex: 3}}>
+              <TextValidator
+                name="verificationCode"
+                validators={['required', 'matchRegexp:^[0-9]{4}$']}                 
+                errorMessages={['This field is required', 'invalid code']}
+                outlined
+                label='输入验证码'
+                type="text"
+                placeholder="输入验证码"
+                value={this.state.verificationCode}
+                onChangeText={verificationCode => this.setState({ verificationCode })}
+              />
+            </View>
             <Button
-              large
               bgColor={colors.info}
-              style={styles.button}
+              style={{ marginBottom: 20, flex: 2,}}
               caption="获取验证码"
               onPress={() => this.sendCode()}
             />
@@ -160,10 +166,8 @@ class SignupAsProvider extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // flexDirection: 'column',
-    // alignItems: 'center',
-    // justifyContent: 'space-between',
+    flex: 1,
+    padding: 20
   },
   description: {
     marginBottom: 20,
@@ -178,7 +182,6 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: 20,
-    alignSelf: 'flex-end',
   },
   description: {
     flex: 1,

@@ -102,7 +102,7 @@ class LoginWithPassword extends React.Component {
                     bgColor={colors.warning}
                     style={styles.button}
                     caption="确定"
-                    onPress={this.handleClick}
+                    onPress={() => this.refs.form.submit()}
                   />
                 </View>
             </Form>   

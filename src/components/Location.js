@@ -36,6 +36,8 @@ class SectionHeader extends Component {
 			<TouchableOpacity onPress={() => alert(this.props.item)} style={{backgroundColor: 'white'}}>
 		<View style={{height:50, margin: 5, backgroundColor: 'white', borderBottomColor: 'gray', borderBottomWidth:1}}>
 				<Text size={58}>{this.props.item}</Text>	
+				<Text size={58}>{this.props.item}</Text>	
+				<Text size={58}>{this.props.item}</Text>	
 		</View>
 			</TouchableOpacity>
 	  );

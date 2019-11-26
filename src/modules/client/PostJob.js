@@ -10,6 +10,7 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Form, TextValidator } from 'react-native-validator-form';
 import RadioForm from 'react-native-simple-radio-button';
+import DatePicker from 'react-native-datepicker'
 
 import { Button, Loader,  Location, toast } from '../../components';
 import { fonts, colors } from '../../styles';
@@ -36,10 +37,6 @@ class PostJob extends React.Component {
       type: '',
       subcategory: '',
       scene: '',
-      types: [],
-      services: [],
-      subcategories: [],
-      scenes: [],
       radioGroup: [
         {
             label: '是',
@@ -55,28 +52,35 @@ class PostJob extends React.Component {
       budget: '',
       count: '',
       isPublic: false,
-      serviceOptions : []
+      serviceOptions : [],
+      isLive: false,
+      start: new Date(),
+      end: new Date()
     }
   }
 
   componentWillMount() {
     const {types, services, subcategories, scenes} = this.props
-    console.log(types, subcategories, scenes)
     types.length && this.setState({type: types[0].name})
     scenes.length && this.setState({scene: scenes[0].name})
     subcategories.length && this.setState({subcategory: subcategories[0].name})
-    this.setState({ types, services, subcategories, scenes})
   }
 
   handleClick = () => {
-    const {subcategory, scene, type, description, budget, isPublic, serviceOptions, services, count} = this.state
+    const {subcategory, scene, type, description, budget, isPublic, serviceOptions, services, count, start, end} = this.state
     const { profile} = this.props
     let str = ''
     for (let i=0; i<serviceOptions.length; i++) {
       str += services[serviceOptions[i]].service + ' '
     }
+    var body = {subcategory, scene, type, description, budget, isPublic, creator: profile._id, location: '北京', services: str}
+    if (type == 'VR全景直播') {
+      body = {...body, start, end}
+    } else {
+      body = {...body, count}
+    }
     this.props.createJob({
-      body: {subcategory, scene, type, description, budget, isPublic, creator: profile._id, location: '北京', services: str, count},
+      body
     })
   };
 
@@ -91,15 +95,22 @@ class PostJob extends React.Component {
     this.setState({serviceOptions})
   }
 
-  render() { 
-    const {jobsloading} = this.props
-    const {types, scenes, services, subcategories} = this.state
+  setType = (type) => {
+    const {isLive} = this.state
+    if (type == 'VR全景直播' && !isLive)
+      this.setState({isLive: true})
+    else if(isLive)
+      this.setState({isLive: false})
+    this.setState({type})
+  }
 
+  render() { 
+    const {types, scenes, services, subcategories, jobsloading} = this.props
+    const {isLive} = this.state
     return (
       <ScrollView style={styles.container}>
         <Loader
           loading={ jobsloading } />      
-        <View style={styles.description}>
           <Form
               ref="form"
               onSubmit={this.handleClick}
@@ -109,20 +120,49 @@ class PostJob extends React.Component {
               <Picker
                   selectedValue={this.state.type}
                   onValueChange={(itemValue, itemIndex) =>
-                    this.setState({type: itemValue})
+                    this.setType(itemValue)
                   }>
                   {  types && types.map((item, index) => (
                       <Picker.Item key={index} label={item.name} value={item.name} />
                   )) }
               </Picker>
+              { !isLive ?
               <TextValidator
-                  validators={['required']}                 
-                  errorMessages={['This field is required']}
+                  validators={['required', 'isNumber']}                 
+                  errorMessages={['This field is required', 'Input Number']}
                   label='场景数量'
                   placeholder="场景数量"
+                  keyboardType='numeric'
                   value={this.state.count}
                   onChangeText={count => this.setState({ count })}
               />
+              : <>
+               <DatePicker
+                style={{width: 200}}
+                date={this.state.start}
+                mode="datetime"
+                placeholder="select date"
+                format="YYYY-MM-DD HH:MM:SS"
+                minDate="2019-12-01"
+                maxDate="2049-12-31"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                onDateChange={(start) => {this.setState({start: start})}}
+              />
+               <DatePicker
+                style={{width: 200}}
+                date={this.state.end}
+                mode="datetime"
+                placeholder="select date"
+                format="YYYY-MM-DD HH:MM:SS"
+                minDate="2019-12-01"
+                maxDate="2049-12-31"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                onDateChange={(end) => {this.setState({end: end})}}
+              />
+              </>
+              }
               <Picker              
                   selectedValue={this.state.scene}
                   onValueChange={(itemValue, itemIndex) =>
@@ -158,7 +198,7 @@ class PostJob extends React.Component {
                   initial={1}
                   formHorizontal={true}
                   labelHorizontal={true}
-                  buttonColor={'#2196f3'}
+                  buttonColor={'#000000'}
                   animation={true}
                   onPress={(value) => {this.onhandleService(value, index)}}
                 />
@@ -170,24 +210,28 @@ class PostJob extends React.Component {
               <TextValidator
                   style={styles.input}
                   outlined
-                  label='设置密码'
-                  placeholder="设置密码（6-20位字母数字组合)"
+                  label='需求描述'
+                  placeholder="需求描述"
                   multiline
                   maxLength={200}
                   numberOfLines={6}
                   value={this.state.description}
                   onChangeText={description => this.setState({ description })}
               />
-              <TextValidator
+            </View>
+            <View style={{...styles.componentsSection, flexDirection: 'row'}}>
+              <View style={{flex: 1}}><Text>预算价格</Text></View>
+              <View style={{flex: 2}}><TextValidator
                   style={styles.input}
                   outlined
-                  validators={['required']}                 
-                  errorMessages={['This field is required']}
+                  validators={['required', 'isNumber']}                 
+                  errorMessages={['This field is required', 'Input Number']}
                   label='预算价格'
                   placeholder="输入预算金额"
+                  keyboardType='numeric'
                   value={this.state.budget}
                   onChangeText={budget => this.setState({ budget })}
-              />
+              /></View>
             </View>
 
             <View style = {styles.componentsSection}>
@@ -199,7 +243,7 @@ class PostJob extends React.Component {
                 initial={1}
                 formHorizontal={true}
                 labelHorizontal={true}
-                buttonColor={'#2196f3'}
+                buttonColor={'#000000'}
                 animation={true}
                 onPress = {(value) => {this.setState({isPublic: value})}}
               />
@@ -211,11 +255,10 @@ class PostJob extends React.Component {
                 bgColor={colors.warning}
                 style={styles.button}
                 caption="提交"
-                onPress={this.handleClick}
+                onPress={() => this.refs.form.submit()}
               />
             </View>          
           </Form>   
-        </View>
       </ScrollView>
     );
     }

@@ -5,10 +5,11 @@ import { createBottomTabNavigator } from 'react-navigation';
 import { colors, fonts } from '../../styles';
 
 import HomeView from './Home/HomeContainer';
-import PagesScreen from '../pages/PagesViewContainer';
 import PostJob from './PostJob'
 import MyPage from './MyPage'
 import Providers from './Providers';
+import Location from '../../components/Location';
+import MediaSearch from './MediaSearch';
 
 
 const styles = StyleSheet.create({
@@ -55,7 +56,7 @@ export default createBottomTabNavigator(
       },
     },
     发现: {
-      screen: PagesScreen,
+      screen: Location,
       navigationOptions: {
         
       },
