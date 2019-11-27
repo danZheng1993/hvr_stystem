@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Picker
+  Picker,
+  TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -11,8 +12,9 @@ import { createStructuredSelector } from 'reselect';
 import { Form, TextValidator } from 'react-native-validator-form';
 import RadioForm from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker'
-
 import { Button, Loader,  Location, toast } from '../../components';
+import Modal from "react-native-modal";
+
 import { fonts, colors } from '../../styles';
 import { Text } from '../../components/StyledText';
 import { createJob } from '../../redux/modules/job'
@@ -54,6 +56,7 @@ class PostJob extends React.Component {
       isPublic: false,
       serviceOptions : [],
       isLive: false,
+      isConfirm: false,
       start: new Date(),
       end: new Date()
     }
@@ -67,22 +70,29 @@ class PostJob extends React.Component {
   }
 
   handleClick = () => {
-    const {subcategory, scene, type, description, budget, isPublic, serviceOptions, services, count, start, end} = this.state
+    const {subcategory, scene, type, description, budget, isPublic, service, count, start, end} = this.state
     const { profile} = this.props
-    let str = ''
-    for (let i=0; i<serviceOptions.length; i++) {
-      str += services[serviceOptions[i]].service + ' '
-    }
-    var body = {subcategory, scene, type, description, budget, isPublic, creator: profile._id, location: '北京', services: str}
+    var body = {subcategory, scene, type, description, budget, isPublic, creator: profile._id, location: '北京', services: service}
     if (type == 'VR全景直播') {
       body = {...body, start, end}
     } else {
       body = {...body, count}
     }
+    this.setState({isConfirm: false})
     this.props.createJob({
-      body
+      body,
+      success: () => this.props.navigation.navigate('MyJob')
     })
   };
+  handleConfirm = () => {
+    const {serviceOptions} = this.state
+    const {services} = this.props
+    let str = ''
+    for (let i=0; i<serviceOptions.length; i++) {
+      str += services[serviceOptions[i]].service + ' '
+    }
+    this.setState({isConfirm: true, service: str})
+  }
 
   onhandleService = (value, index) => {
     let {serviceOptions} = this.state
@@ -106,14 +116,31 @@ class PostJob extends React.Component {
 
   render() { 
     const {types, scenes, services, subcategories, jobsloading} = this.props
-    const {isLive} = this.state
+    const {isLive, isConfirm, location, type, count, scene, subcategory, service, description, isPublic, budget} = this.state
+
     return (
       <ScrollView style={styles.container}>
         <Loader
-          loading={ jobsloading } />      
+          loading={ jobsloading } />   
+          {isConfirm ?
+        <Modal isVisible={true} onBackdropPress={() => this.setState({isConfirm: false})}>
+          <View style={{...styles.componentsSection, alignItems: 'stretch', alignSelf: 'stretch', alignContent: 'stretch', justifyContent: 'center'}}>
+            <Text>拍摄城市 : {location}</Text>
+            <Text>服务类别 : {type}</Text>
+            <Text>场景数量 : {count}</Text>
+            <Text>拍摄场景 : {scene}</Text>
+            <Text>行业类别 : {subcategory}</Text>
+            <Text>其他需求 : {service}</Text>
+            <Text>是否公开 : {isPublic? '公开': 'No'}</Text>
+            <Text>需求描述 : {description} </Text>
+            <Text>平台预估价格 : {budget}</Text>
+            <Text>预算金额 : {budget}</Text>
+              <Button caption="Post" onPress={() => this.handleClick()} />
+          </View>
+        </Modal> :
           <Form
               ref="form"
-              onSubmit={this.handleClick}
+              onSubmit={this.handleConfirm}
           >
 
             <View style={styles.componentsSection} >
@@ -259,6 +286,7 @@ class PostJob extends React.Component {
               />
             </View>          
           </Form>   
+      }
       </ScrollView>
     );
     }

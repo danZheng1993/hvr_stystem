@@ -8,36 +8,48 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
+import constants from '../../../constants'
 import { Button, Loader, UsersList, NoData,  } from '../../../components';
 import { fonts, colors } from '../../../styles';
-
+import { SliderBox } from 'react-native-image-slider-box';
 import user, { searchUser } from '../../../redux/modules/user'
-import { usersListSelector, usersloadingSelector } from '../../../redux/selectors'
+import { usersloadingSelector, usersSearchResultSelector, bannersListSelector } from '../../../redux/selectors'
 
 class Providers extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      
+      bannerImages: []
     }
   }
 
   componentWillMount() {
-    const {searchUser} = this.props
+    const {searchUser, banners} = this.props
+
+    let bannerImages = []
+    banners && banners.map((banner, index) => {
+      typeof(banner) == 'object' && bannerImages.push(constants.BANNER_BASE_URL + banner.image)
+    })
+    this.setState({bannerImages})
     searchUser({
         body: {role: 'provider'}
     })
+
   }
 
   render() {
     const {users, usersloading} = this.props
-
+    const {bannerImages} = this.state
     return (
       <ScrollView style={styles.container}>
-        <View style={styles.description}>
          <Loader
           loading={usersloading} />
-         </View>
+            <SliderBox
+              images={bannerImages}
+              onCurrentImagePressed={index =>
+                  console.warn(`image ${index} pressed`)
+              }
+            />
          {users.length? users.map((user, index) => (
            <View style={styles.componentsSection} key={index}>
              <UsersList user={user} navigation={this.props.navigation}/>
@@ -95,8 +107,9 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  users: usersListSelector,
+  users: usersSearchResultSelector,
   usersloading: usersloadingSelector,
+  banners: bannersListSelector
 });
 
 const mapDispatchToProps = {
