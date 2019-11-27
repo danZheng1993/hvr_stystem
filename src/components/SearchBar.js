@@ -82,6 +82,15 @@ class Search extends React.Component {
                             size={24} onPress = {() => this.searchContent()}>搜索</Text>
                     </View>
                 </View>
+                <View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>历史记录</Text>
+                        <Text>清除</Text>
+                    </View>
+                    <View>
+                        <Text>热门搜索</Text>
+                    </View>
+                </View>
             </View>
         )
     }

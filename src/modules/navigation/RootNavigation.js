@@ -65,6 +65,7 @@ import SearchBar from '../../components/SearchBar';
 import Notification from '../../components/Notification';
 import Player from '../../components/Player';
 import SearchResult from '../../components/SearchResult';
+import Location from '../../components/Location';
 
 import Settings from '../settings';
 import PersonalInformation from '../settings/PersonalInformation';
@@ -370,6 +371,13 @@ const stackNavigator = createStackNavigator(
 
     SearchResult: {
       screen: SearchResult,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    Location: {
+      screen: Location,
       navigationOptions: {
         header: null,
       },
