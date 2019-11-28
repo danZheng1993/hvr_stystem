@@ -13,7 +13,7 @@ import { Button, Loader,} from '../../../components';
 import { fonts, colors } from '../../../styles';
 
 import { searchJob } from '../../../redux/modules/job'
-import { jobsListSelector, jobsloadingSelector } from '../../../redux/selectors'
+import { jobsloadingSelector, jobsSearchResultSelector } from '../../../redux/selectors'
 
 class ProviderFeedbacks extends React.Component {
   constructor(props) {
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  jobs: jobsListSelector,
+  jobs: jobsSearchResultSelector,
   loading: jobsloadingSelector,
 });
 

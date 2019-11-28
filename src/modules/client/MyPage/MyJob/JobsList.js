@@ -14,7 +14,7 @@ import { Button, Loader, JobsList, RadioGroup } from '../../../../components'
 import { fonts, colors } from '../../../../styles';
 
 import { searchJob } from '../../../../redux/modules/job'
-import { jobsListSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
+import { jobsListSelector, jobsloadingSelector, profileSelector, jobsSearchResultSelector } from '../../../../redux/selectors'
 
 const status = ['全部', '竞标中', '待付款','待拍摄', '待验收', '评价', '已完成']
 
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  jobs: jobsListSelector,
+  jobs: jobsSearchResultSelector,
   jobsloading: jobsloadingSelector,
   profile: profileSelector
 });

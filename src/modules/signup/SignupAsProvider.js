@@ -63,7 +63,6 @@ class SignupAsProvider extends React.Component {
   }
 
   submit = () => {
-    alert("submit")
     const { phoneNumber, verificationCode, password, passwordConfirm, counter} = this.state
 
     if (!phoneNumber || !verificationCode || !password || !passwordConfirm || password!=passwordConfirm) return;

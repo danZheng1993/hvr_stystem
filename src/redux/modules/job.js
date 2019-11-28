@@ -33,8 +33,9 @@ export const searchJob = createAction(SEARCH_JOB)
 const initialState = {
   job: null,
   status: 'INIT',
-  jobs: {},
+  jobs: [],
   loading: false,
+  searchResult: []
 }
 
 // ------------------------------------
@@ -95,7 +96,7 @@ export default handleActions({
   [requestSuccess(SEARCH_JOB)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(SEARCH_JOB),
-    jobs: Object.values(payload),
+    searchResult: Object.values(payload),
     error: null,
     loading: false
   }),

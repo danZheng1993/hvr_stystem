@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import { TextInput } from 'react-native-paper';
 import PhotoUpload from 'react-native-photo-upload'
 
@@ -21,7 +21,8 @@ class BasicProfile extends React.Component {
       photo: null,
       userName: '',
       overview: '',
-      update: ''
+      update: '',
+      location: '北京'
     }
   }
 
@@ -34,7 +35,7 @@ class BasicProfile extends React.Component {
   }
 
   handleClick = () => {
-    const {userName, photo, overview,update} = this.state
+    const {userName, photo, overview,update, location} = this.state
     const {profile} = this.props
     console.log(profile)
     if (photo) {
@@ -44,7 +45,7 @@ class BasicProfile extends React.Component {
     }
     if (userName || overview) {
       this.props.saveProfile({
-        body: {userName, overview}
+        body: {userName, overview, location}
       })
     }
     if (update == '')
@@ -100,8 +101,12 @@ class BasicProfile extends React.Component {
     return data;
   };
 
+  chooseLocation = (location) => {
+    this.setState({location})
+  }
+
   render() {
-    const { photo , update} = this.state
+    const { photo , update, location} = this.state
     return (
       <View style={styles.container}>
         {(update == '' || update == 'photo') && 
@@ -128,6 +133,8 @@ class BasicProfile extends React.Component {
             value={this.state.userName}
             onChangeText={userName => this.setState({ userName })}
         />}
+        { update == '' && 
+        <Text onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}>所在城市 : {location}</Text> }
         {(update == '' || update == 'overview') && 
         <TextInput
             style={styles.input}

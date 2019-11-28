@@ -112,6 +112,9 @@ function updateOne(req, res, next) {
   if (req.body.overview) {
     req.userModel.overview = req.body.overview;
   }
+  if (req.body.location) {
+    req.userModel.location = req.body.location;
+  }
   if (req.body.companyName) {
     req.userModel.companyName = req.body.companyName;
   }
