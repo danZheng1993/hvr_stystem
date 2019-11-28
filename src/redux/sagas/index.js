@@ -3,6 +3,7 @@ import auth from './auth'
 import tracking from './tracking'
 import user from './user'
 import type from './type'
+import setting from './setting'
 import scene from './scene'
 import feedback from './feedback'
 import service from './service'
@@ -19,6 +20,7 @@ export default function* rootSaga () {
     tracking(),
     user(),
     type(),
+    setting(),
     scene(),
     service(),
     subcategory(),

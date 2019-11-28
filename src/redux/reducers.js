@@ -5,6 +5,7 @@ import { reducer as modal } from 'redux-modal'
 import auth from './modules/auth'
 import tracking from './modules/tracking'
 import type from './modules/type'
+import setting from './modules/setting'
 import scene from './modules/scene'
 import feedback from './modules/feedback'
 import service from './modules/service'
@@ -29,6 +30,7 @@ export default combineReducers({
   app,
   calendar,
   type,
+  setting,
   scene,
   service,
   job,

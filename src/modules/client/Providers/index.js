@@ -3,11 +3,14 @@ import {
   StyleSheet,
   View,
   ScrollView,
+  TouchableOpacity,
+  Text,
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
+import Icon from 'react-native-vector-icons/Entypo'
 import constants from '../../../constants'
 import { Button, Loader, UsersList, NoData,  } from '../../../components';
 import { fonts, colors } from '../../../styles';
@@ -19,7 +22,8 @@ class Providers extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      bannerImages: []
+      bannerImages: [],
+      location: ''
     }
   }
 
@@ -37,10 +41,28 @@ class Providers extends React.Component {
 
   }
 
+  chooseLocation = (location) => {
+    this.setState({location})
+  }
   render() {
     const {users, usersloading} = this.props
-    const {bannerImages} = this.state
+    const {bannerImages, location} = this.state
     return (
+      <>
+      <View style={{ height: 50, flexDirection: "row" }}>
+        <TouchableOpacity 
+          style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
+          onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation})}
+          >
+          <Icon name="location" size={30} color="black" />
+          <Text>{location}</Text>
+        </TouchableOpacity>   
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <Text size={28}>
+            接单列表
+          </Text> 
+        </View>
+      </View>
       <ScrollView style={styles.container}>
          <Loader
           loading={usersloading} />
@@ -56,6 +78,7 @@ class Providers extends React.Component {
            </View>
          )): <NoData />}
       </ScrollView>
+      </>
     );
   }
 }

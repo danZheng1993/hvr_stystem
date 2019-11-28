@@ -11,6 +11,7 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
 import { getSubcategorys } from '../../redux/modules/subcategory';
+import { getSettings } from '../../redux/modules/setting'
 import { getTypes } from '../../redux/modules/type'
 import { getScenes } from '../../redux/modules/scene'
 import { getServices } from '../../redux/modules/service'
@@ -42,7 +43,7 @@ class HomeScreen extends React.Component {
   async componentWillMount(): void {
     const data = await SyncStorage.init();
     console.log('AsyncStorage is ready!');
-    const {getTypes, getScenes, getServices, getSubcategorys, getBanners, getNewss, getMedias} = this.props
+    const {getTypes, getScenes, getServices, getSubcategorys, getBanners, getNewss, getMedias, getSettings} = this.props
     getScenes()
     getTypes()
     getServices()
@@ -50,6 +51,7 @@ class HomeScreen extends React.Component {
     getBanners()
     getNewss()
     getMedias()
+    getSettings()
    }
 
   handleMessage(message) {
@@ -131,6 +133,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   getTypes,
+  getSettings,
   getScenes,
   getServices,
   getSubcategorys,

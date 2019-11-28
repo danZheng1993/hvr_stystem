@@ -60,6 +60,18 @@ export const typesListSelector = (state) =>
 export const typeStateSelector = (state) =>
   get(state, 'type', {})
 
+export const settingDetailSelector = (state) =>
+  get(state, 'setting.setting', {})
+
+export const settingsListSelector = (state) =>
+  get(state, 'setting.settings', [])
+
+  export const settingsloadingSelector = (state) =>
+  get(state, 'setting.loading', false)
+
+export const settingStateSelector = (state) =>
+  get(state, 'setting', {})
+
 export const sceneDetailSelector = (state) =>
   get(state, 'scene.scene', {})
 
