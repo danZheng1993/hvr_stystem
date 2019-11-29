@@ -51,8 +51,8 @@ function hire(req, res, next) {
   .catch(next);
 }
 
-function updateStatus(req, res, next) {
-  console.log("update Status?")
+function giveFeedback(req, res, next) {
+  console.log("giveFeedback?")
 
   Object.assign(req.job, {...req.body, status: STATUS.FINISHED});
   console.log(req.body)
@@ -160,7 +160,7 @@ module.exports = {
   remove,
   search,
   hire,
-  updateStatus,
+  giveFeedback,
   weeklyReport,
   getJobByID,
 };

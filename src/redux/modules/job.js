@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { requestSuccess, requestFail, requestPending } from '../api/request'
-import { omit, reject } from 'lodash'
+import { omit, reject, findIndex } from 'lodash'
 
 // ------------------------------------
 // Constants
@@ -12,7 +12,8 @@ export const UPDATE_JOB = 'UPDATE_JOB'
 export const DELETE_JOB = 'DELETE_JOB'
 export const APPLY_JOB = 'APPLY_JOB'
 export const HIRE_JOB = 'HIRE_JOB'
-export const UPDATE_JOB_STATUS = 'UPDATE_JOB_STATUS'
+export const UPDATE_RESULT = 'UPDATE_RESULT'
+export const GIVE_FEEDBACK = 'GIVE_FEEDBACK'
 export const SEARCH_JOB = 'SEARCH_JOB'
 export const SET_JOBS_PAGINATION = 'SET_JOBS_PAGINATION'
 
@@ -27,7 +28,8 @@ export const updateJob = createAction(UPDATE_JOB)
 export const deleteJob = createAction(DELETE_JOB)
 export const applyJob = createAction(APPLY_JOB)
 export const hireJob = createAction(HIRE_JOB)
-export const updateJobStatus = createAction(UPDATE_JOB_STATUS)
+export const giveFeedback = createAction(GIVE_FEEDBACK)
+export const updateResult = createAction(UPDATE_RESULT)
 export const searchJob = createAction(SEARCH_JOB)
 
 const initialState = {
@@ -38,6 +40,12 @@ const initialState = {
   searchResult: []
 }
 
+const refreshResult = (list, update) => {
+  console.warn("refresh", update)
+  let index = findIndex(list, {_id: update._id})
+  list.splice(index, 1, update);
+  return list
+}
 // ------------------------------------
 // Reducer
 // ------------------------------------
@@ -86,6 +94,7 @@ export default handleActions({
     loading: false
   }),
 
+  
   [requestPending(SEARCH_JOB)]: (state, { payload }) => ({
     ...state,
     status: requestPending(SEARCH_JOB),
@@ -105,6 +114,14 @@ export default handleActions({
     ...state,
     status: requestFail(SEARCH_JOB),
     error: payload,
+    loading: false
+  }),
+
+  [UPDATE_RESULT]: (state, {payload }) => ({
+    ...state,
+    status: UPDATE_RESULT,
+    searchResult: refreshResult(state.searchResult, payload),
+    error: null,
     loading: false
   }),
 
@@ -196,24 +213,24 @@ export default handleActions({
     loading: false
   }),
 
-  [requestPending(UPDATE_JOB_STATUS)]: (state, { payload }) => ({
+  [requestPending(GIVE_FEEDBACK)]: (state, { payload }) => ({
     ...state,
-    status: requestPending(UPDATE_JOB_STATUS),
+    status: requestPending(GIVE_FEEDBACK),
     error: null,
     loading: true,
   }),
 
-  [requestSuccess(UPDATE_JOB_STATUS)]: (state, { payload }) => ({
+  [requestSuccess(GIVE_FEEDBACK)]: (state, { payload }) => ({
     ...state,
-    status: requestSuccess(UPDATE_JOB_STATUS),
+    status: requestSuccess(GIVE_FEEDBACK),
     job: payload,
     error: null,
     loading: false
   }),
 
-  [requestFail(UPDATE_JOB_STATUS)]: (state, { payload }) => ({
+  [requestFail(GIVE_FEEDBACK)]: (state, { payload }) => ({
     ...state,
-    status: requestFail(UPDATE_JOB_STATUS),
+    status: requestFail(GIVE_FEEDBACK),
     error: payload,
     loading: false
   }),

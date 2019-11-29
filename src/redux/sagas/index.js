@@ -9,6 +9,7 @@ import feedback from './feedback'
 import service from './service'
 import job from './job'
 import chat from './chat'
+import payment from './payment'
 import banner from './banner'
 import news from './news'
 import media from './media'
@@ -27,6 +28,7 @@ export default function* rootSaga () {
     job(),
     feedback(),
     chat(),
+    payment(),
     banner(),
     news(),
     media()

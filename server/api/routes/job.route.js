@@ -19,8 +19,8 @@ router.route('/apply/:jobId')
 router.route('/hire/:jobId')
   .put(jobCtrl.hire);
 
-  router.route('/updateStatus/:jobId')
-  .put(jobCtrl.updateStatus);
+router.route('/giveFeedback/:jobId')
+  .put(jobCtrl.giveFeedback);
 
 router.route('/:jobId')
   .get(jobCtrl.read)

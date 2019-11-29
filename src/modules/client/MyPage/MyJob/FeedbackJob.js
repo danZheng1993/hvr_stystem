@@ -11,7 +11,7 @@ import { compose } from 'recompose';
 import { fonts, colors } from '../../../../styles';
 import { Loader, toast, JobDetail} from '../../../../components';
 
-import { getJob, updateJobStatus } from '../../../../redux/modules/job'
+import { getJob } from '../../../../redux/modules/job'
 import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
 import { FeedbackAction } from '../../../../components/JobActions';
 
@@ -119,7 +119,6 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   getJob,
-  updateJobStatus
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

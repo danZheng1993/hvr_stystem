@@ -5,30 +5,7 @@ import {
 } from 'react-native';
 import Button from '../Button'
 import Confirm from '../Confirm'
-const NotPaidAction = props => {
-  return (
-    <View style={styles.buttonsContainer}>
-        <Button
-        small
-        style={styles.button}
-        caption="联系服务商"
-        onPress={this.handleClick}
-        />
-        <Button
-        small
-        style={styles.button}
-        caption="取消订单"
-        onPress={this.handleClick}
-        />
-        <Button
-        small
-        style={styles.button}
-        caption="去支付"
-        onPress={() => alert("Payment")}
-        />
-    </View>
-  )
-}
+import NotPaidAction from './NotPaidAction'
 
 const WaitingAction = props => {
   return (
