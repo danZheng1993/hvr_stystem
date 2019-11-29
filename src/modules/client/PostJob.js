@@ -24,6 +24,7 @@ import {  typesListSelector,
           servicesListSelector, 
           subcategorysListSelector, 
           profileSelector,
+          settingsListSelector,
           jobsloadingSelector } from '../../redux/selectors'
 
 class PostJob extends React.Component {
@@ -58,7 +59,8 @@ class PostJob extends React.Component {
       isConfirm: false,
       start: new Date(),
       end: new Date(),
-      location: ''
+      location: '',
+      systembudget: 0
     }
   }
 
@@ -71,9 +73,9 @@ class PostJob extends React.Component {
   }
 
   handleClick = () => {
-    const {subcategory, scene, type, description, budget, isPublic, service, count, start, end, location} = this.state
+    const {subcategory, scene, type, description, budget, isPublic, service, count, start, end, location, systembudget} = this.state
     const { profile} = this.props
-    var body = {subcategory, scene, type, description, budget, isPublic, creator: profile._id, location, services: service}
+    var body = {subcategory, scene, type, description, budget, isPublic, creator: profile._id, location, services: service, systembudget}
     if (type == 'VR全景直播') {
       body = {...body, start, end}
     } else {
@@ -121,9 +123,9 @@ class PostJob extends React.Component {
   }
 
   render() { 
-    const {types, scenes, services, subcategories, jobsloading} = this.props
-    const {isLive, isConfirm, location, type, count, scene, subcategory, service, description, isPublic, budget} = this.state
-
+    const {types, scenes, services, subcategories, jobsloading, settings} = this.props
+    const {isLive, isConfirm, location, type, count, scene, subcategory, service, description, isPublic, budget, systembudget} = this.state
+    const panoramaPrice = settings.panoramaPrice || 0
     return (
       <ScrollView style={styles.container}>
         <Loader
@@ -139,7 +141,7 @@ class PostJob extends React.Component {
             <Text>其他需求 : {service}</Text>
             <Text>是否公开 : {isPublic? '公开': 'No'}</Text>
             <Text>需求描述 : {description} </Text>
-            <Text>平台预估价格 : {budget}</Text>
+            <Text>平台预估价格 : {systembudget}</Text>
             <Text>预算金额 : {budget}</Text>
               <Button caption="Post" onPress={() => this.handleClick()} />
           </View>
@@ -169,7 +171,7 @@ class PostJob extends React.Component {
                 placeholder="场景数量"
                 keyboardType='numeric'
                 value={this.state.count}
-                onChangeText={count => this.setState({ count })}
+                onChangeText={count => this.setState({ count, systembudget: panoramaPrice * (+count) })}
             />
             : <>
             <DatePicker
@@ -235,6 +237,7 @@ class PostJob extends React.Component {
               />
               </View>
             ))}
+            <Text>平台预估参考价 : ¥{systembudget}</Text>
           </View>
 
           <View style= {styles.componentsSection}>
@@ -351,6 +354,7 @@ const mapStateToProps = createStructuredSelector({
   subcategories: subcategorysListSelector,
   jobsloading: jobsloadingSelector,
   profile: profileSelector,
+  settings: settingsListSelector,
 });
 
 const mapDispatchToProps = {

@@ -6,16 +6,21 @@ import {
 } from 'react-native';
 
 import moment from 'moment'
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'recompose';
 
+import { settingsListSelector } from '../redux/selectors'
 import { fonts, colors } from '../styles';
 
-export default class JobDetail extends React.Component {
+class JobDetail extends React.Component {
   constructor(props) {
     super(props)
   }
 
   render() {  
-    const {job} = this.props
+    const {job, settings} = this.props
+    const upfrontRate = settings.upfrontRate || 0
     return (
       <>
          {job && <>
@@ -30,7 +35,14 @@ export default class JobDetail extends React.Component {
              <Text size={14}>行业类别 : <Text>{job.subcategory}</Text></Text>
              <Text size={14}>其他要求 : <Text>{job.service}</Text></Text>
              <Text size={14}>需求描述 : <Text>{job.description}</Text></Text>
-            </View>
+             {job.status != '竞标中' && <>
+              <Text size={14}>项目定价 : ¥{job.price}</Text>
+              <Text size={14}>项目首付款({upfrontRate}%) : ¥{job.price * upfrontRate / 100}</Text>
+              <Text size={14}>项目尾款({100-upfrontRate}%) : ¥{job.price *(100 - upfrontRate) / 100}</Text>
+              <Text size={14}>首付款支付时间 : </Text>
+              <Text size={14}>尾款支付时间 : </Text>
+              </> }
+             </View>
             </>
          }
       </>
@@ -46,3 +58,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 });
+
+const mapStateToProps = createStructuredSelector({
+  settings: settingsListSelector
+});
+
+const mapDispatchToProps = {
+};
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(JobDetail);

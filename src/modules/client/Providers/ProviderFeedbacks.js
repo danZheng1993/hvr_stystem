@@ -40,9 +40,8 @@ class ProviderFeedbacks extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.description}>
-         <Loader
-          loading={loading} />
-          {jobs.length ? jobs.map((job, index) => (
+          { loading ?<Loader loading={loading} /> :
+          jobs.length ? jobs.map((job, index) => (
             <View key={index}>
               <Text>{job.feedback}</Text>
             </View>

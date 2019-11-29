@@ -45,10 +45,11 @@ class BiddingJob extends React.Component {
         <View style={styles.description}>
          { <Loader
           loading={jobsloading} /> }
-         {job && <JobDetail job={job} />
-
-         }
-         {<Applicants applicants={job.applicants} navigation={this.props.navigation} jobID={job._id}/> }
+         {job && 
+          <>
+            <JobDetail job={job} />
+            <Applicants applicants={job.applicants} navigation={this.props.navigation} jobID={job._id}/> 
+          </> }
          </View>
       </View>
     );

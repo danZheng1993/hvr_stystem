@@ -36,7 +36,7 @@ export default class JobsList extends React.Component {
   } 
 
   render() {   
-    const {jobs, navigation} = this.props
+    const {jobs, navigation, upfrontRate} = this.props
     console.log(jobs)
     return (
         <ScrollView>          
@@ -67,7 +67,7 @@ export default class JobsList extends React.Component {
                 </Text>
                 <View stye={styles.textContainer}>
                   <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
-                  <Text size={14}>首付款50% : <Text>¥{job.price}</Text></Text>
+                  <Text size={14}>首付款 {upfrontRate}% : <Text>¥{job.price * upfrontRate / 100}</Text></Text>
                 </View>
                 <NotPaidAction />
               </View>}
@@ -101,7 +101,6 @@ export default class JobsList extends React.Component {
               </View>
               <FinishingAction />
             </View>}
-             
             </View>
             </TouchableRipple>
          )) : <NoData />}

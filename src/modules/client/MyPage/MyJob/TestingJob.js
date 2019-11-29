@@ -46,13 +46,8 @@ class TestingJob extends React.Component {
           loading={jobsloading} />
          <JobDetail job={job} />
          <View style={styles.componentsSection}>
-          <Text size={14}>项目定价 : ¥{job.price}</Text>
-          <Text size={14}>项目首付款(20%) : ¥{job.price / 5}</Text>
-          <Text size={14}>项目尾款(80%) : ¥{job.price * 0.8}</Text>
-          <Text size={14}>首付款支付时间 : </Text>
-          <Text size={14}>尾款支付时间 : </Text>
           <Text size={14}>定价 : ¥{job.price}</Text>
-          <Text size={14}>已支付首付款 : ¥{job.price / 5}</Text>
+          <Text size={14}>已支付首付款 : ¥{job.price - job.upfront}</Text>
           <TestingAction />
          </View>
          </View>

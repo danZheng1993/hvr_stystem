@@ -52,9 +52,8 @@ class FeedbackJob extends React.Component {
           loading={jobsloading} /> }
          <JobDetail job={job} />
          <View style={styles.componentsSection}>
-          <Text size={14}>首付款支付时间 : </Text>
-          <Text size={14}>尾款支付时间 : </Text>
-          <Text size={14}>订单总金额 : ¥{job.price}</Text>
+          <Text size={14}>定价 : ¥{job.price}</Text>
+          <Text size={14}>订单总金额 : ¥{job.price - job.upfront}</Text>
           <FeedbackAction navigation={this.props.navigation} id={job._id} />
          </View>
          </View>

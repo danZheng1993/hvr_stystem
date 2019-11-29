@@ -63,7 +63,10 @@ const JobSchema = new Schema({
     type: Number,
     default: 0,
   },
-
+  upfront: {
+    type: Number,
+    default: 0
+  },
   description: {
     type: String,
     default: '',
