@@ -6,6 +6,7 @@ import {
 import Button from '../Button'
 import Confirm from '../Confirm'
 import NotPaidAction from './NotPaidAction'
+import TestingAction from './TestingAction'
 
 const WaitingAction = props => {
   return (
@@ -32,39 +33,14 @@ const WaitingAction = props => {
   )
 }
 
-const TestingAction = props => {
+const FeedbackAction = ({navigation,job}) => {
   return (
     <View style={styles.buttonsContainer}>
       <Button
         small
         style={styles.button}
         caption="联系服务商"
-        onPress={this.handleClick}
-      />
-      <Button
-        small
-        style={styles.button}
-        caption="查看视频"
-        onPress={this.handleClick}
-      />
-      <Button
-        small
-        style={styles.button}
-        caption="确认验收"
-        onPress={() => Confirm('提示', '是否确认验收并支付尾款', () => alert("success"))}
-      />
-    </View>
-  )
-}
-
-const FeedbackAction = ({navigation,id}) => {
-  return (
-    <View style={styles.buttonsContainer}>
-      <Button
-        small
-        style={styles.button}
-        caption="联系服务商"
-        onPress={this.handleClick}
+        onPress={() => navigation.navigate('Chatting', {to: job.hired})}
       />
       <Button
         small
@@ -76,7 +52,7 @@ const FeedbackAction = ({navigation,id}) => {
         small
         style={styles.button}
         caption="评价"
-        onPress={() => navigation.navigate('GiveFeedback', {id: id})}
+        onPress={() => navigation.navigate('GiveFeedback', {id: job._id})}
       />
     </View>
   )

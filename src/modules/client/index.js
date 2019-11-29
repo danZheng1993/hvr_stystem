@@ -8,7 +8,6 @@ import HomeView from './Home/HomeContainer';
 import PostJob from './PostJob'
 import MyPage from './MyPage'
 import Providers from './Providers';
-import Location from '../../components/Location';
 import MediaSearch from './MediaSearch';
 
 
@@ -56,7 +55,7 @@ export default createBottomTabNavigator(
       },
     },
     发现: {
-      screen: Location,
+      screen: MediaSearch,
       navigationOptions: {
         
       },

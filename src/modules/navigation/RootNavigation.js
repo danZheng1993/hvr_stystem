@@ -58,6 +58,7 @@ import ProviderNotPaidJob from '../provider/MyPage/MyJob/NotPaidJob';
 import ProviderWaitingJob from '../provider/MyPage/MyJob/WaitingJob';
 import ProviderTestingJob from '../provider/MyPage/MyJob/TestingJob';
 import ProviderSelectingJob from '../provider/MyPage/MyJob/SelectingJob';
+import UploadMedia from '../provider/MyPage/MyJob/UploadMedia';
 
 import Chatting from '../../components/Chatting';
 import WebViewer from '../../components/WebViewer';
@@ -308,6 +309,13 @@ const stackNavigator = createStackNavigator(
 
     ProviderSelectingJob: {
       screen: ProviderSelectingJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    UploadMedia: {
+      screen: UploadMedia,
       navigationOptions: {
         header: null,
       },

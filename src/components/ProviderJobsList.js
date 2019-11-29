@@ -92,7 +92,7 @@ export default class ProviderJobsList extends React.Component {
                   small
                   style={styles.button}
                   caption="上传视频链接"
-                  onPress={this.handleClick}
+                  onPress={() => this.props.navigation.navigate('UploadMedia', {id: job._id})}
                   />
                 </View>
               </View>
@@ -111,7 +111,7 @@ export default class ProviderJobsList extends React.Component {
                     small
                     style={styles.button}
                     caption="上传视频链接"
-                    onPress={this.handleClick}
+                    onPress={() => this.props.navigation.navigate('UploadMedia', {id: job._id})}
                     />
                   </View>
                </View>

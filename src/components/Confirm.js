@@ -11,7 +11,6 @@ export default Confirm = (title='', message='', onOK) => {
       [
         {
           text: '取消',
-          onPress: () => console.log(""),
           style: 'cancel',
         },
         {text: '确认', onPress: () => onOK()},

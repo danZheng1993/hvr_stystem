@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects'
 import { get, pick } from 'lodash'
-import { GET_PAYMENT, GET_PAYMENTS, PAY_UPFRONT }
+import { GET_PAYMENT, GET_PAYMENTS, PAY_UPFRONT, FINAL_PAY }
   from '../modules/payment'
 import apiCall from '../api/apiCall'
 
@@ -22,8 +22,15 @@ const doPayUpfront = apiCall({
   path: () => `/payments/payUpfront`,
 })
 
+const doFinalPay = apiCall({
+  type: FINAL_PAY,
+  method: 'post',
+  path: () => `/payments/finalPay`,
+})
+
 export default function* rootSaga () {
   yield takeLatest(GET_PAYMENT, doGetPayment)
   yield takeLatest(GET_PAYMENTS, doGetPayments)
   yield takeLatest(PAY_UPFRONT, doPayUpfront)
+  yield takeLatest(FINAL_PAY, doFinalPay)
 }

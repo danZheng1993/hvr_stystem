@@ -13,6 +13,9 @@ router.route('/')
 router.route('/search/')
   .post(mediaCtrl.search);
 
+router.route('/uploadlink/')
+  .post(mediaCtrl.uploadLink);
+
 router.route('/:mediaId')
   .get(mediaCtrl.read)
   .put(mediaCtrl.update)

@@ -12,6 +12,9 @@ router.route('/')
 router.route('/payUpfront')
   .post(paymentCtrl.payUpfront)
 
+  router.route('/finalPay')
+  .post(paymentCtrl.finalPay)
+
 router.route('/:paymentId')
   .get(paymentCtrl.read)
 

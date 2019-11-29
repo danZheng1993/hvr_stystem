@@ -12,7 +12,7 @@ import { fonts, colors } from '../../../../styles';
 import { Loader, toast, JobDetail, Button} from '../../../../components';
 
 import { getJob } from '../../../../redux/modules/job'
-import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
+import { jobDetailSelector, jobsloadingSelector } from '../../../../redux/selectors'
 
 class WaitingJob extends React.Component {
   constructor(props) {
@@ -28,10 +28,6 @@ class WaitingJob extends React.Component {
     }
   }
 
-  handleContact =() => {
-
-  } 
-  
   render() {
     
     const {job, jobsloading} = this.props
@@ -57,7 +53,7 @@ class WaitingJob extends React.Component {
               small
               style={styles.button}
               caption="上传视频链接"
-              onPress={this.handleClick}
+              onPress={() => this.props.navigation.navigate('UploadMedia', {id: job._id})}
               />
             </View>
          </View>
@@ -118,8 +114,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = createStructuredSelector({
   job: jobDetailSelector,
-  jobsloading: jobsloadingSelector,
-  profile: profileSelector
+  jobsloading: jobsloadingSelector
 });
 
 const mapDispatchToProps = {

@@ -8,6 +8,7 @@ import { omit, reject } from 'lodash'
 export const GET_PAYMENT = 'GET_PAYMENT'
 export const GET_PAYMENTS = 'GET_PAYMENTS'
 export const PAY_UPFRONT = 'PAY_UPFRONT'
+export const FINAL_PAY = 'FINAL_PAY'
 export const SET_PAYMENTS_PAGINATION = 'SET_PAYMENTS_PAGINATION'
 
 // ------------------------------------
@@ -17,6 +18,7 @@ export const SET_PAYMENTS_PAGINATION = 'SET_PAYMENTS_PAGINATION'
 export const getPayment = createAction(GET_PAYMENT)
 export const getPayments = createAction(GET_PAYMENTS)
 export const payUpfront = createAction(PAY_UPFRONT)
+export const finalPay = createAction(FINAL_PAY)
 
 const initialState = {
   payment: null,
@@ -61,7 +63,27 @@ export default handleActions({
   [requestSuccess(PAY_UPFRONT)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(PAY_UPFRONT),
-    payments: Object.values(payload),
+    error: null,
+    loading: false
+  }),
+  
+  [requestFail(FINAL_PAY)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(FINAL_PAY),
+    error: payload,
+    loading: false
+  }),
+  
+  [requestPending(FINAL_PAY)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(FINAL_PAY),
+    error: null,
+    loading: true,
+  }),
+
+  [requestSuccess(FINAL_PAY)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(FINAL_PAY),
     error: null,
     loading: false
   }),

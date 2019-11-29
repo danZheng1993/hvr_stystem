@@ -9,15 +9,14 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { giveFeedback, updateResult } from '../../../../redux/modules/job'
-import { createFeedback } from '../../../../redux/modules/feedback'
-import { profileSelector } from '../../../../redux/selectors'
+import { uploadLink } from '../../../../redux/modules/media'
+import { updateResult } from '../../../../redux/modules/job'
 
-class GiveFeedback extends React.Component {
+class UploadMedia extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      feedback: '',
+      link: '',
       id: ''
     }
   }
@@ -26,29 +25,24 @@ class GiveFeedback extends React.Component {
     const { navigation} = this.props
     let id = navigation.getParam('id', 'NO-ID')
     if (id != 'NO-ID') {
-      this.setState({id: id})
+      this.setState({id})
     }
   }
+
+  handleClick = () => {
+    const {link, id} = this.state
+    if (id != '') {
+      this.props.uploadLink({
+        body:{link, id},
+        success: (payload) => this.handleSuccess(payload.data)
+      })
+    }
+  };
+
   handleSuccess = (data) => {
     this.props.updateResult(data)
     this.props.navigation.goBack()
   }
-
-  handleClick = () => {
-    const {feedback, id} = this.state
-    const {profile} = this.props
-    if (id != '') {
-      this.props.giveFeedback({
-        id: id,
-        body:{feedback},
-        success: (payload) => this.handleSuccess(payload.data)
-      })
-    } else {
-      this.props.createFeedback({
-        body: {content: feedback, sender: profile._id}
-      })
-    }
-  };
   render() {
     return (
       <View style={styles.container}>
@@ -56,13 +50,10 @@ class GiveFeedback extends React.Component {
         <TextInput
             style={styles.input}
             outlined
-            label='填写服务介绍'
-            placeholder="填写服务介绍"
-            multiline
-            maxLength={100}
-            numberOfLines={6}
-            value={this.state.feedback}
-            onChangeText={feedback => this.setState({ feedback })}
+            label='输入视频链接'
+            placeholder="输入视频链接"
+            value={this.state.link}
+            onChangeText={link => this.setState({ link })}
         />
         </View>
         <View style={styles.buttonsContainer}>
@@ -111,15 +102,13 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = createStructuredSelector({
-  profile: profileSelector
 });
 
 const mapDispatchToProps = {
-  giveFeedback,
-  createFeedback,
+  uploadLink,
   updateResult
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(GiveFeedback);
+export default compose(withConnect)(UploadMedia);

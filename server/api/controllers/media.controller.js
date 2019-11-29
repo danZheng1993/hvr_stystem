@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const Media = require('../models/media.model');
+const Job = require('../models/job.model');
 const ROLES = require('../constants/role');
-
+const STATUS = require('../constants/status')
 function create(req, res, next) {
   const media = new Media(req.body);
 
@@ -10,6 +11,40 @@ function create(req, res, next) {
     res.json(newMedia);
   })
   .catch(next);
+}
+
+function uploadLink(req, res, next) {
+  console.log("uploadLink", req.body)
+  if (!req.body.id || !req.body.link) {
+    res.status(500).json({ message: 'Invalid request' });
+    return;
+  }
+  Job.findById(req.body.id)
+  .then((job) => {
+    if (!job) {
+      res.status(404).json({ message: 'Jobs Not Found' });
+      return;
+    }
+    let updatedJob = new Job(
+      Object.assign(job, {
+        status: STATUS.TESTING,
+      })
+    )
+    updatedJob.save()
+      .then((newJob) => {
+        res.json(newJob);
+      })
+    .catch(next)
+
+    // const media = new Media(req.body);
+
+    // media.save()
+    // .then((newMedia) => {
+    //   res.json(newMedia);
+    // })
+    // .catch(next);  
+  })
+  .catch(next)
 }
 
 function update(req, res, next) {
@@ -90,5 +125,6 @@ module.exports = {
   list,
   remove,
   getMediaByID,
-  search
+  search,
+  uploadLink
 };

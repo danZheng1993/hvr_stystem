@@ -11,6 +11,7 @@ export const CREATE_MEDIA = 'CREATE_MEDIA'
 export const UPDATE_MEDIA = 'UPDATE_MEDIA'
 export const DELETE_MEDIA = 'DELETE_MEDIA'
 export const SEARCH_MEDIA = 'SEARCH_MEDIA'
+export const UPLOAD_LINK = 'UPLOAD_LINK'
 export const REMOVE_COLLECTION = 'REMOVE_COLLECTION'
 export const SET_MEDIAS_PAGINATION = 'SET_MEDIAS_PAGINATION'
 
@@ -24,6 +25,7 @@ export const createMedia = createAction(CREATE_MEDIA)
 export const updateMedia = createAction(UPDATE_MEDIA)
 export const deleteMedia = createAction(DELETE_MEDIA)
 export const searchMedia = createAction(SEARCH_MEDIA)
+export const uploadLink = createAction(UPLOAD_LINK)
 export const removeCollection = createAction(REMOVE_COLLECTION)
 
 const initialState = {
@@ -152,6 +154,28 @@ export default handleActions({
   [requestFail(UPDATE_MEDIA)]: (state, { payload }) => ({
     ...state,
     status: requestFail(UPDATE_MEDIA),
+    error: payload,
+    loading: false
+  }),
+
+  [requestPending(UPLOAD_LINK)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(UPLOAD_LINK),
+    error: null,
+    loading: true,
+  }),
+
+  [requestSuccess(UPLOAD_LINK)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(UPLOAD_LINK),
+    media: payload,
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(UPLOAD_LINK)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(UPLOAD_LINK),
     error: payload,
     loading: false
   }),

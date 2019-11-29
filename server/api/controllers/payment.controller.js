@@ -56,6 +56,58 @@ function payUpfront(req, res, next) {
 
 }
 
+function finalPay(req, res, next) {
+  console.log('finalPay', req.body)
+  if (!req.body.id || !req.user) {
+    res.status(500).json({ message: 'Invalid request' });
+    return
+  }
+  Job.findOne({_id: req.body.id, status: STATUS.TESTING, creator: req.user._id})
+  .then((job) => {
+    if (!job) {
+      res.status(500).json({ message: 'Jobs not found' });
+      return;
+    }
+    if (job.creator != req.user._id) {
+      res.status(500).json({ message: 'Fake request!' });
+      return;
+    }
+    Setting.findOne({key: 'upfrontRate'})
+    .then((upfrontRate) => {
+      
+      // payment API
+      // Notification
+      const amount = job.price * (100 - (+upfrontRate.value)) / 100
+      const payment = new Payment({
+        from: req.user._id,
+        to: job.hired,
+        amount: amount,
+        type: STATUS.FINAL_PAY,
+        content: job._id
+      });
+      let updatedJob = new Job(
+        Object.assign(job, {
+          upfront: amount + job.upfront,
+          status: STATUS.GIVING_FEEDBACK,
+        })
+      )
+      console.log(updatedJob)
+      updatedJob.save()
+      .then((newJob) => {
+        payment.save()
+        .then((newPayment) => {
+          res.json(newJob);
+        })
+        .catch(next);
+      })
+      .catch(next)
+    })
+    .catch(next)
+  })
+  .catch(next)
+
+}
+
 function read(req, res) {
   res.json(req.payment);
 }
@@ -97,4 +149,5 @@ module.exports = {
   list,
   payUpfront,
   getPaymentByID,
+  finalPay
 };

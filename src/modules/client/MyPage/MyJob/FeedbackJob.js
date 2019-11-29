@@ -19,7 +19,6 @@ class FeedbackJob extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isDialogVisible : false
     }
   }
   componentWillMount() {
@@ -32,16 +31,7 @@ class FeedbackJob extends React.Component {
     }
   }
 
-  handleContact =() => {
-
-  } 
-  
-  onClickFeedback = () => {
-    alert("aaa")
-    this.setState({isDialogVisible: true})
-  }
   render() {
-    
     const {job, jobsloading} = this.props
     if (!job) return (<></>)
     return (
@@ -54,7 +44,7 @@ class FeedbackJob extends React.Component {
          <View style={styles.componentsSection}>
           <Text size={14}>定价 : ¥{job.price}</Text>
           <Text size={14}>订单总金额 : ¥{job.price - job.upfront}</Text>
-          <FeedbackAction navigation={this.props.navigation} id={job._id} />
+          <FeedbackAction navigation={this.props.navigation} job={job} />
          </View>
          </View>
       </View>

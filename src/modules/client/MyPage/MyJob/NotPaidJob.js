@@ -12,7 +12,7 @@ import { fonts, colors } from '../../../../styles';
 import { Loader, toast, JobDetail} from '../../../../components';
 
 import { getJob } from '../../../../redux/modules/job'
-import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
+import { jobDetailSelector, jobsloadingSelector } from '../../../../redux/selectors'
 import { NotPaidAction } from '../../../../components/JobActions';
 
 class NotPaidJob extends React.Component {
@@ -47,7 +47,7 @@ class NotPaidJob extends React.Component {
          <View style={styles.componentsSection}>
           <Text size={14}>定价 : ¥{job.price}</Text>
           <Text size={14}>首付款 : ¥{job.price - job.upfront}</Text>
-          <NotPaidAction />
+          <NotPaidAction navigation={this.props.navigation} job={job} />
          </View>
          </View>
       </View>
@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = createStructuredSelector({
   job: jobDetailSelector,
   jobsloading: jobsloadingSelector,
-  profile: profileSelector
 });
 
 const mapDispatchToProps = {

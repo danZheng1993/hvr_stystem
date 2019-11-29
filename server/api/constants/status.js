@@ -7,4 +7,5 @@ module.exports = {
     FINISHED: '已完成',
 
     UPFRONT: 'UPFRONT',
+    FINAL_PAY: 'FINAL_PAY',
   };
