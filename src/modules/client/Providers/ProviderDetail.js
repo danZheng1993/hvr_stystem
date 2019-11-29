@@ -99,7 +99,7 @@ class ProviderDetail extends React.Component {
             bgColor={colors.warning}
             style={styles.button}
             caption="在线沟通"
-            onPress={this.handleClick}
+            onPress={() => this.props.navigation.navigate('Chatting', {to: user._id})}
           />
           <Button
             large

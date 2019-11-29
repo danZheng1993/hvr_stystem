@@ -45,13 +45,16 @@ class TestingJob extends React.Component {
           loading={jobsloading} />
          <JobDetail job={job} />
          <View style={styles.componentsSection}>
-          <Text size={14}>项目定价 : ¥{job.price}</Text>
-          <Text size={14}>项目首付款(20%) : ¥{job.price / 5}</Text>
-          <Text size={14}>项目尾款(80%) : ¥{job.price * 0.8}</Text>
-          <Text size={14}>首付款支付时间 : </Text>
-          <Text size={14}>尾款支付时间 : </Text>
           <Text size={14}>定价 : ¥{job.price}</Text>
           <Text size={14}>已支付首付款 : ¥{job.price / 5}</Text>
+          <View style={styles.buttonsContainer}>
+            <Button
+            small
+            style={styles.button}
+            caption="联系需求方"
+            onPress={() => this.props.navigation.navigate('Chatting', {to: job.creator})}
+            />
+          </View>
          </View>
          </View>
       </View>

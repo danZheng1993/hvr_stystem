@@ -246,9 +246,9 @@ function removeFromAttentions(req, res, next) {
 
 function getContacts(req, res, next) {
   console.log("getContacts")
-  console.log(req.body)
+  console.log(req.userModel.contacts)
 
-  User.find({_id: req.userModel.contacts})
+  User.find({_id: {$in: req.userModel.contacts}})
   .select('_id userName photo overview')
   .exec()
   .then((contacts) => {

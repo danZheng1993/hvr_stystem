@@ -57,7 +57,7 @@ class BiddingJob extends React.Component {
             small
             style={styles.button}
             caption="联系需求方"
-            onPress={this.handleClick}
+            onPress={() => this.props.navigation.navigate('Chatting', {to: job.creator})}
             />
           </View>
         </View>

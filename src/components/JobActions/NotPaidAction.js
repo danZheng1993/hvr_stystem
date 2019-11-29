@@ -19,7 +19,7 @@ const NotPaidAction = props => {
         small
         style={styles.button}
         caption="联系服务商"
-        onPress={this.handleClick}
+        onPress={() => props.navigation.navigate('Chatting', {to: props.job.hired})}
         />
         <Button
         small
@@ -32,7 +32,7 @@ const NotPaidAction = props => {
         style={styles.button}
         caption="去支付"
         onPress={() => props.payUpfront({
-          body: {id: props.id},
+          body: {id: props.job._id},
           success: (payload) => {props.updateResult(payload.data)}
         })}
         />

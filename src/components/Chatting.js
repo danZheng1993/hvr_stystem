@@ -7,7 +7,8 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import {Loader} from '../components'
 import { getChat } from '../redux/modules/chat'
-import { chatsloadingSelector, chatsListSelector } from '../redux/selectors'
+import { addToContacts } from '../redux/modules/auth'
+import { chatsloadingSelector, chatsListSelector, profileSelector } from '../redux/selectors'
 import XMPP from 'react-native-xmpp'
 
 class Chatting extends React.Component {
@@ -27,9 +28,14 @@ class Chatting extends React.Component {
   }
 
   componentWillMount() {
-    const {navigation} = this.props
+    const {navigation, profile} = this.props
     let to = navigation.getParam('to', '')
     if (to != '') {
+      if (profile.contacts.indexOf(to) == -1) {
+        this.props.addToContacts({
+          body: {contact: to}
+        })
+      }
       this.props.getChat({
         params: {to},
         success: () => this.initMessages()
@@ -118,12 +124,12 @@ class Chatting extends React.Component {
     const {loading} = this.props
     return (
       <>
-        <Loader loading={loading} />
+        {loading? <Loader loading={loading} /> :
         <GiftedChat
           messages={this.state.messages}
           onSend={this.onSend}
           user={user}
-        />
+        /> }
       </>
     );
   }
@@ -140,11 +146,13 @@ class Chatting extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   loading: chatsloadingSelector,
-  chatsList: chatsListSelector
+  chatsList: chatsListSelector,
+  profile: profileSelector
 });
 
 const mapDispatchToProps = {
   getChat,
+  addToContacts
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

@@ -15,7 +15,6 @@ import moment from 'moment'
 import { Button, Loader, toast, JobDetail} from '../../../components';
 import { fonts, colors } from '../../../styles';
 import { getJob, applyJob } from '../../../redux/modules/job'
-import { addToContacts } from '../../../redux/modules/auth'
 import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../redux/selectors'
 
 class ApplyJob extends React.Component {
@@ -56,14 +55,9 @@ class ApplyJob extends React.Component {
   };
 
   handleContact = (id) => {
-    const {profile} = this.props
-    if (profile.contacts.indexOf(id) == -1) {
-      this.props.addToContacts({
-        body: {contact: id}
-      })
-    }
     this.props.navigation.navigate('Chatting', {to: id})
   } 
+  
   render() {  
     const {job, jobsloading} = this.props
     if (!job) return (<></>)
@@ -161,8 +155,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   getJob,
-  applyJob,
-  addToContacts
+  applyJob
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

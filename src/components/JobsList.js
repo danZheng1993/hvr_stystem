@@ -69,7 +69,7 @@ export default class JobsList extends React.Component {
                   <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
                   <Text size={14}>首付款 {upfrontRate}% : <Text>¥{job.price * upfrontRate / 100}</Text></Text>
                 </View>
-                <NotPaidAction id={job._id} />
+                <NotPaidAction job={job} navigation={this.props.navigation} />
               </View>}
              {job.status == '待拍摄' && 
               <View>

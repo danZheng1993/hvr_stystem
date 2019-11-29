@@ -11,17 +11,16 @@ import {Button} from '.'
 import { fonts, colors } from '../styles';
 import { TouchableRipple } from 'react-native-paper';
 import NoData from './NoData'
-handleClick = () => {
-
-}
-
-
 
 export default class ProviderJobsList extends React.Component {
   constructor(props) {
     super(props)
     
   }
+
+  handleContact = (id) => {
+    this.props.navigation.navigate('Chatting', {to: id})
+  } 
 
   handleNavigate = (status, id) => {
     const {navigation} = this.props
@@ -51,7 +50,7 @@ export default class ProviderJobsList extends React.Component {
                 small
                 style={styles.button}
                 caption="联系需求方"
-                onPress={this.handleClick}
+                onPress={() => this.handleContact(job.creator)}
                 />
               </View>}
              {job.status == '已选用' && 
@@ -60,7 +59,7 @@ export default class ProviderJobsList extends React.Component {
               small
               style={styles.button}
               caption="联系需求方"
-              onPress={this.handleClick}
+              onPress={() => this.handleContact(job.creator)}
               />
             </View>}
              {job.status == '待付款' && 
@@ -74,7 +73,7 @@ export default class ProviderJobsList extends React.Component {
                   small
                   style={styles.button}
                   caption="联系需求方"
-                  onPress={this.handleClick}
+                  onPress={() => this.handleContact(job.creator)}
                   />
                 </View>
               </View>
@@ -87,7 +86,7 @@ export default class ProviderJobsList extends React.Component {
                   small
                   style={styles.button}
                   caption="联系需求方"
-                  onPress={this.handleClick}
+                  onPress={() => this.handleContact(job.creator)}
                   />
                   <Button
                   small
@@ -106,7 +105,7 @@ export default class ProviderJobsList extends React.Component {
                     small
                     style={styles.button}
                     caption="联系需求方"
-                    onPress={this.handleClick}
+                    onPress={() => this.handleContact(job.creator)}
                     />
                     <Button
                     small
