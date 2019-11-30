@@ -14,6 +14,7 @@ export const APPLY_JOB = 'APPLY_JOB'
 export const HIRE_JOB = 'HIRE_JOB'
 export const UPDATE_RESULT = 'UPDATE_RESULT'
 export const GIVE_FEEDBACK = 'GIVE_FEEDBACK'
+export const GET_JOB_FEEDBACK = 'GET_JOB_FEEDBACK'
 export const SEARCH_JOB = 'SEARCH_JOB'
 export const SET_JOBS_PAGINATION = 'SET_JOBS_PAGINATION'
 
@@ -29,6 +30,7 @@ export const deleteJob = createAction(DELETE_JOB)
 export const applyJob = createAction(APPLY_JOB)
 export const hireJob = createAction(HIRE_JOB)
 export const giveFeedback = createAction(GIVE_FEEDBACK)
+export const getFeedback = createAction(GET_JOB_FEEDBACK)
 export const updateResult = createAction(UPDATE_RESULT)
 export const searchJob = createAction(SEARCH_JOB)
 
@@ -37,11 +39,11 @@ const initialState = {
   status: 'INIT',
   jobs: [],
   loading: false,
-  searchResult: []
+  searchResult: [],
+  feedbacks: []
 }
 
 const refreshResult = (list, update) => {
-  console.warn("refresh", update)
   let index = findIndex(list, {_id: update._id})
   list.splice(index, 1, update);
   return list
@@ -113,6 +115,28 @@ export default handleActions({
   [requestFail(SEARCH_JOB)]: (state, { payload }) => ({
     ...state,
     status: requestFail(SEARCH_JOB),
+    error: payload,
+    loading: false
+  }),
+  
+  [requestPending(GET_JOB_FEEDBACK)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(GET_JOB_FEEDBACK),
+    error: null,
+    loading: true,
+  }),
+
+  [requestSuccess(GET_JOB_FEEDBACK)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(GET_JOB_FEEDBACK),
+    feedbacks: Object.values(payload),
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(GET_JOB_FEEDBACK)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(GET_JOB_FEEDBACK),
     error: payload,
     loading: false
   }),

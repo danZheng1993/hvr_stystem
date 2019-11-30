@@ -4,12 +4,9 @@ const STATUS = require('../constants/status')
 const positiveNumber = (distance) => distance > 0;
 
 const JobSchema = new Schema({
-  ID: {
-    type: String
-  },
   creator: {
-    type: String,
-    default: ''
+    type: Schema.ObjectId,
+    ref: 'User',
   },
   created: {
     type: Date,
@@ -79,8 +76,8 @@ const JobSchema = new Schema({
     type: Array
   },
   hired: {
-    type: String,
-    default: ''
+    type: Schema.ObjectId,
+    ref: 'User',
   },
   feedback: {
     type: String,

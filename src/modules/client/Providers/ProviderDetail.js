@@ -55,69 +55,72 @@ class ProviderDetail extends React.Component {
     const {select} = this.state
     if (!user) return (<></>)
     return (
-      <ScrollView style={styles.container}>
-
-          <Loader
+      <View style={styles.container}>
+        <Loader
           loading={usersloading} /> 
-          <View style={styles.componentsSection}>
-            <View style={{flexDirection: 'row'}}>
-              <Profile user={user} navigation={this.props.navigation}/>
-              <View style={styles.settingsContainer}>
-                <Text onPress={() => this.handleAttentions(user._id)}>关注</Text>
-              </View>
-            </View>
-            <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
-              <View style={{alignItems: 'center'}} onPress={() => this.props.navigation.navigate('MyCollection')}>
-                <Text>33</Text>
-                <Text>服务用户数</Text>
-              </View>
-              <View style={{alignItems: 'center'}}>
-                <Text>2343</Text>
-                <Text>项目作品</Text>
-              </View>
-              <View style={{alignItems: 'center'}}>
-                <Text>4</Text>
-                <Text>播放数量</Text>
-              </View>
+        <View style={styles.componentsSection}>
+          <View style={{flexDirection: 'row'}}>
+            <Profile user={user} navigation={this.props.navigation}/>
+            <View style={styles.settingsContainer}>
+              <Text onPress={() => this.handleAttentions(user._id)}>关注</Text>
             </View>
           </View>
-        <View style={styles.componentsSection}>
-          <RadioGroup
-            underline
-            style={styles.demoItem}
-            items={['项目作品', '雇主评价']}
-            selectedIndex={this.props.radioGroupsState[1]}
-            onChange={index => this.handleSelect(index)}
-          />
+          <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
+            <View style={{alignItems: 'center'}} onPress={() => this.props.navigation.navigate('MyCollection')}>
+              <Text>33</Text>
+              <Text>服务用户数</Text>
+            </View>
+            <View style={{alignItems: 'center'}}>
+              <Text>2343</Text>
+              <Text>项目作品</Text>
+            </View>
+            <View style={{alignItems: 'center'}}>
+              <Text>4</Text>
+              <Text>播放数量</Text>
+            </View>
+          </View>
+        </View>
+        <View style={{...styles.componentsSection, flexBasis: 1, flexGrow: 1}}>
+          <View style={{height: 50}}>
+            <RadioGroup
+              underline
+              style={styles.demoItem}
+              items={['项目作品', '雇主评价']}
+              selectedIndex={this.props.radioGroupsState[1]}
+              onChange={index => this.handleSelect(index)}
+            />
+            </View>
+          <View style={{flexBasis: 1, flexGrow: 1}}>
           {select ?
             <ProviderFeedbacks id={user._id}/> : <ProviderWorks id={user._id}/>
           }
           </View>
-         <View style={styles.buttonsContainer}>
-          <Button
-            large
-            bgColor={colors.warning}
-            style={styles.button}
-            caption="在线沟通"
-            onPress={() => this.props.navigation.navigate('Chatting', {to: user._id})}
-          />
-          <Button
-            large
-            bgColor={colors.warning}
-            style={styles.button}
-            caption="电话"
-            onPress={this.handleClick}
-          />
-          <Button
-            large
-            bgColor={colors.warning}
-            style={styles.button}
-            caption="约拍"
-            onPress={this.handleClick}
-          />
-              
-         </View>
-      </ScrollView>
+        </View>
+        <View style={styles.buttonsContainer}>
+        <Button
+          large
+          bgColor={colors.warning}
+          style={styles.button}
+          caption="在线沟通"
+          onPress={() => this.props.navigation.navigate('Chatting', {to: user._id})}
+        />
+        <Button
+          large
+          bgColor={colors.warning}
+          style={styles.button}
+          caption="电话"
+          onPress={this.handleClick}
+        />
+        <Button
+          large
+          bgColor={colors.warning}
+          style={styles.button}
+          caption="约拍"
+          onPress={this.handleClick}
+        />
+            
+        </View>
+      </View>
     );
   }
 }

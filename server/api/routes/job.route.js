@@ -15,11 +15,14 @@ router.route('/search/')
 
 router.route('/apply/:jobId')
   .put(jobCtrl.apply);
-
+  
 router.route('/hire/:jobId')
   .put(jobCtrl.hire);
 
-router.route('/giveFeedback/:jobId')
+router.route('/feedback/')
+    .post(jobCtrl.getFeedback);
+  
+router.route('/feedback/:jobId')
   .put(jobCtrl.giveFeedback);
 
 router.route('/:jobId')

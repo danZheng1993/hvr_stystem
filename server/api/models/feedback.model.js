@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const FeedbackSchema = new Schema({
   sender: {
-    type: String,
-    default: '',
+    type: Schema.ObjectId,
+    ref: 'User',
   },
   created: {
     type: Date,

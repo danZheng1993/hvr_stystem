@@ -11,9 +11,10 @@ import { compose, withState } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Button, Loader,} from '../../../components';
 import { fonts, colors } from '../../../styles';
-
-import { searchJob } from '../../../redux/modules/job'
-import { jobsloadingSelector, jobsSearchResultSelector } from '../../../redux/selectors'
+import { ListItem } from 'react-native-elements'
+import constants from '../../../constants'
+import { getFeedback } from '../../../redux/modules/job'
+import { jobsloadingSelector, jobsFeedbackSelector } from '../../../redux/selectors'
 
 class ProviderFeedbacks extends React.Component {
   constructor(props) {
@@ -28,25 +29,28 @@ class ProviderFeedbacks extends React.Component {
   }
 
   componentWillMount() {
-    const {searchJob, id} = this.props
-    searchJob({
-      body: {hired: id, status: '已完成'}
+    const {getFeedback, id} = this.props
+    getFeedback({
+      body: {hired: id}
     })
   }
 
 
   render() {
-    const {jobs, loading} = this.props
+    const {feedbacks, loading} = this.props
     return (
       <ScrollView style={styles.container}>
-        <View style={styles.description}>
           { loading ?<Loader loading={loading} /> :
-          jobs.length ? jobs.map((job, index) => (
-            <View key={index}>
-              <Text>{job.feedback}</Text>
-            </View>
+          feedbacks.length ? feedbacks.map((feedback, index) => (
+            <ListItem
+              key={index}
+              leftAvatar={{ source: { uri: constants.BASE_URL + feedback.creator.photo } }}
+              avatarStyle={{ width: 100, height: 100, backgroundColor: 'white'}}
+              title={feedback.creator.userName}
+              subtitle={feedback.feedback}
+              bottomDivider
+            />
           )) : <Text>No Feedback</Text>}
-        </View>
       </ScrollView>
     );
   }
@@ -99,12 +103,12 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  jobs: jobsSearchResultSelector,
+  feedbacks: jobsFeedbackSelector,
   loading: jobsloadingSelector,
 });
 
 const mapDispatchToProps = {
-  searchJob
+  getFeedback
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

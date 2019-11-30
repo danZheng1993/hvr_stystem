@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects'
 import { get, pick } from 'lodash'
-import { GET_JOB, GET_JOBS, CREATE_JOB, UPDATE_JOB, DELETE_JOB, APPLY_JOB, SEARCH_JOB, HIRE_JOB, GIVE_FEEDBACK }
+import { GET_JOB, GET_JOBS, CREATE_JOB, UPDATE_JOB, DELETE_JOB, APPLY_JOB, SEARCH_JOB, HIRE_JOB, GIVE_FEEDBACK, GET_JOB_FEEDBACK, getFeedback }
   from '../modules/job'
 import apiCall from '../api/apiCall'
 
@@ -57,7 +57,13 @@ const doHireJob = apiCall({
 const doGiveFeedback = apiCall({
   type: GIVE_FEEDBACK,
   method: 'put',
-  path: ({ payload }) => `/jobs/giveFeedback/${payload.id}/`
+  path: ({ payload }) => `/jobs/feedback/${payload.id}/`
+})
+
+const doGetFeedback = apiCall({
+  type: GET_JOB_FEEDBACK,
+  method: 'post',
+  path: () => `/jobs/feedback/`,
 })
 
 const doDeleteJob = apiCall({
@@ -75,6 +81,7 @@ export default function* rootSaga () {
   yield takeLatest(DELETE_JOB, doDeleteJob)
   yield takeLatest(APPLY_JOB, doApplyJob)
   yield takeLatest(HIRE_JOB, doHireJob)
+  yield takeLatest(GET_JOB_FEEDBACK, doGetFeedback)
   yield takeLatest(GIVE_FEEDBACK, doGiveFeedback)
   yield takeLatest(SEARCH_JOB, doSearchJob)
 }

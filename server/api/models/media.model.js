@@ -5,12 +5,12 @@ const positiveNumber = (distance) => distance > 0;
 
 const MediaSchema = new Schema({
   creator: {
-    type: String,
-    default: ''
+    type: Schema.ObjectId,
+    ref: 'User',
   },
   poster: {
-    type: String,
-    default: ''
+    type: Schema.ObjectId,
+    ref: 'User',
   },
   created: {
     type: Date,
@@ -29,8 +29,8 @@ const MediaSchema = new Schema({
     default: 0,
   },
   jobID: {
-    type: String,
-    default: ''
+    type: Schema.ObjectId,
+    ref: 'Job',
   },
   title: {
     type: String,

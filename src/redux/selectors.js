@@ -48,6 +48,9 @@ export const jobStateSelector = (state) =>
 export const jobsSearchResultSelector = (state) =>
   get(state, 'job.searchResult', [])
 
+  export const jobsFeedbackSelector = (state) =>
+  get(state, 'job.feedbacks', [])
+
 export const typeDetailSelector = (state) =>
   get(state, 'type.type', {})
 

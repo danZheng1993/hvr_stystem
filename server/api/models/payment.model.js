@@ -10,8 +10,10 @@ const Schema = mongoose.Schema;
 const SALT_ROUNDS = 10;
 
 const paymentSchema = new Schema({
-  from: { type: String, required: true, trim: true},
-  to: { type: String, required: true, trim: true},
+  from: {     type: Schema.ObjectId,
+    ref: 'User', required: true, trim: true},
+  to: {     type: Schema.ObjectId,
+    ref: 'User', required: true, trim: true},
   created: { type: Date, default: new Date() },
   amount: { type: Number, required: true, validate: [positiveNumber, 'should be bigger than 0']},
   type: {type: String},

@@ -139,13 +139,33 @@ function getJobByID(req, res, next, id) {
 }
 
 function search(req, res, next) {
-  console.log("here",req.body)
+  console.log("searchJob",req.body)
 
   Job.find(req.body)
   .sort({ created: -1 })
 //  .limit(limit)
- // .populate('user')
   .then((entries) => {
+    console.log(entries)
+    res.json(entries);
+  })
+  .catch(next);
+}
+
+function getFeedback(req, res, next) {
+  console.log("getFeedback",req.body)
+  let where = {}
+  if (!req.body.hired) {
+    res.status(500).json({message: 'Invalid request'})
+  }
+  where = { hired: new mongoose.Types.ObjectId(req.body.hired), status: STATUS.FINISHED };
+  console.log(where)
+  Job.find(where)
+  .sort({ created: -1 })
+  .select(' creator feedback created')
+//  .limit(limit)
+  .populate('creator', 'userName photo')
+  .then((entries) => {
+    console.log(entries)
     res.json(entries);
   })
   .catch(next);
@@ -159,6 +179,7 @@ module.exports = {
   apply,
   remove,
   search,
+  getFeedback,
   hire,
   giveFeedback,
   weeklyReport,
