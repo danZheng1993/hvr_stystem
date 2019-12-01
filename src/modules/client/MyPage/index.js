@@ -181,6 +181,7 @@ class MyPage extends React.Component {
                   style={styles.demoButton}
                   action
                   bgColor="#EF1F78"
+                  onPress={() => this.props.navigation.navigate('RequestInvoice')}
                 >
                 <Text>
                   <Icon name="tags" size={20} color="white" />

@@ -16,6 +16,7 @@ import chat from './modules/chat'
 import banner from './modules/banner'
 import news from './modules/news'
 import media from './modules/media'
+import invoice from './modules/invoice'
 import gallery from '../modules/gallery/GalleryState';
 import app from '../modules/AppState';
 import calendar from '../modules/calendar/CalendarState';
@@ -39,5 +40,6 @@ export default combineReducers({
   chat,
   banner,
   news,
-  media
+  media,
+  invoice
 })

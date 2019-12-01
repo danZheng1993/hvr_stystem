@@ -14,6 +14,7 @@ import banner from './banner'
 import news from './news'
 import media from './media'
 import subcategory from './subcategory'
+import invoice from './invoice'
 
 export default function* rootSaga () {
   yield all([
@@ -31,6 +32,7 @@ export default function* rootSaga () {
     payment(),
     banner(),
     news(),
-    media()
+    media(),
+    invoice()
   ])
 }

@@ -8,6 +8,7 @@ import SegmentedControl from './SegmentedControl';
 import Loader from './Loader'
 import Select from './Select'
 import Location from './Location'
+import {Text} from './StyledText'
 import toast from './Toast'
 import JobsList from './JobsList'
 import ProviderJobsList from './ProviderJobsList'
@@ -47,5 +48,6 @@ export {
   NoData,
   SearchBar,
   MediaList,
-  Player
+  Player,
+  Text
 };

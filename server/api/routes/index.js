@@ -18,6 +18,7 @@ const newsRoute = require('./news.route');
 const bannerRoute = require('./banner.route');
 const mediaRoute = require('./media.route');
 const settingRoute = require('./setting.route');
+const invoiceRoute = require('./invoice.route');
 
 const router = express.Router();
 const authMiddleware = expressJwt({ secret: config.jwtSecret });
@@ -38,5 +39,6 @@ router.use('/news', newsRoute);
 router.use('/banners', bannerRoute);
 router.use('/medias', mediaRoute);
 router.use('/settings', settingRoute);
+router.use('/invoices', authMiddleware, invoiceRoute);
 
 module.exports = router;

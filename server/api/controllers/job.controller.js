@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Job = require('../models/job.model');
+const Invoice = require('../models/invoice.model');
 const ROLES = require('../constants/role');
 const STATUS = require('../constants/status')
 const xmpp = require('simple-xmpp')
@@ -52,13 +53,26 @@ function hire(req, res, next) {
 }
 
 function giveFeedback(req, res, next) {
-  console.log("giveFeedback?")
-
+  console.log("giveFeedback?", req.body)
+  if (!req.body) {
+    res.status(500).json({ message: 'Invalid Request' });
+    return;
+  }
   Object.assign(req.job, {...req.body, status: STATUS.FINISHED});
   console.log(req.body)
   req.job.save()
   .then((updatedJob) => {
-    res.json(updatedJob);
+    let invoice = new Invoice({
+      sender: req.user._id,
+      receiver: updatedJob.hired,
+      jobID: updatedJob._id,
+      price: updatedJob.price,
+    })
+    invoice.save()
+    .then((newInvoice) => {
+      res.json(updatedJob);
+    })
+    .catch(next)
   })
   .catch(next);
 }

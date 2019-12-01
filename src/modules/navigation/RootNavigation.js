@@ -44,6 +44,8 @@ import MyPage from '../client/MyPage';
 import MyJob from '../client/MyPage/MyJob/JobsList';
 import MyCollection from '../client/MyPage/MyCollection';
 import MyAttention from '../client/MyPage/MyAttention';
+import RequestInvoice from '../client/MyPage/RequestInvoice';
+import InvoiceForm from '../client/MyPage/InvoiceForm';
 import BiddingJob from '../client/MyPage/MyJob/BiddingJob';
 import NotPaidJob from '../client/MyPage/MyJob/NotPaidJob';
 import WaitingJob from '../client/MyPage/MyJob/WaitingJob';
@@ -158,6 +160,20 @@ const stackNavigator = createStackNavigator(
     },
     MyCollection: {
       screen: MyCollection,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    RequestInvoice: {
+      screen: RequestInvoice,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    InvoiceForm: {
+      screen: InvoiceForm,
       navigationOptions: {
         header: null,
       },
