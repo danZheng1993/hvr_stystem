@@ -54,6 +54,7 @@ import FeedbackJob from '../client/MyPage/MyJob/FeedbackJob';
 import FinishingJob from '../client/MyPage/MyJob/FinishingJob';
 import GiveFeedback from '../client/MyPage/MyJob/GiveFeedback';
 
+import BillingInvoice from '../provider/MyPage/BillingInvoice'
 import ProviderJob from '../provider/MyPage/MyJob'
 import ProviderBiddingJob from '../provider/MyPage/MyJob/BiddingJob';
 import ProviderNotPaidJob from '../provider/MyPage/MyJob/NotPaidJob';
@@ -283,6 +284,13 @@ const stackNavigator = createStackNavigator(
 
     FinishingJob: {
       screen: FinishingJob,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    BillingInvoice: {
+      screen: BillingInvoice,
       navigationOptions: {
         header: null,
       },

@@ -53,6 +53,11 @@ function getMyInvoice(req, res, next) {
     where = {
       sender: req.user._id
     }
+  } else if (req.user.role == 'provider') {
+    where = {
+      receiver: req.user._id,
+      status: [STATUS.INVOICE_SENT, STATUS.INVOICE_RECEIVED]
+    }
   }
   Invoice.find(where)
   .then((entries) => {
