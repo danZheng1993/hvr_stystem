@@ -43,7 +43,7 @@ export default handleActions({
   [requestSuccess(GET_CHAT)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(GET_CHAT),
-    chats: Object.values(payload),
+    chats: payload.messages,
     error: null,
     loading: false
   }),

@@ -36,17 +36,16 @@ class Chatting extends React.Component {
           body: {contact: to}
         })
       }
+      this.setState({to})
       this.props.getChat({
         params: {to},
-        success: () => this.initMessages()
+        success: (payload) => this.initMessages(payload.data.messages)
       })
-      this.setState({to})
     }
   }
 
-  initMessages() {
+  initMessages = (chatsList) => {
     const {to} = this.state
-    const {chatsList} = this.props
     var message= [
       {
         _id: new Date().getTime(),
@@ -60,7 +59,7 @@ class Chatting extends React.Component {
       },
     ]
     console.log(">>>>>chats",chatsList)
-    chatsList.length && chatsList[0].map((conversation, index) => (
+    chatsList.length && chatsList.map((conversation, index) => (
       (conversation.messageCount == 1) ?
         this._storeMessages({
           _id: new Date().getTime(),

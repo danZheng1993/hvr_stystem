@@ -1,11 +1,11 @@
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { TextInput } from 'react-native-paper';
 import PhotoUpload from 'react-native-photo-upload'
 
 import ImagePicker from 'react-native-image-picker'
 import { colors } from '../../styles'
-import { Button, Profile } from '../../components';
+import { Button, Profile, Text } from '../../components';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -134,7 +134,7 @@ class BasicProfile extends React.Component {
             onChangeText={userName => this.setState({ userName })}
         />}
         { update == '' && 
-        <Text onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}>所在城市 : {location}</Text> }
+        <Text size={20} onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}>所在城市 : {location}</Text> }
         {(update == '' || update == 'overview') && 
         <TextInput
             style={styles.input}

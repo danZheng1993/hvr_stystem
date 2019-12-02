@@ -13,11 +13,17 @@ function getArchivedMessages(req, res, next) {
     method: 'get',
     headers:{
       'Content-Type': 'application/json',
-      'Authorization': 'EXasUbJWkU82fqG8'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'EXasUbJWkU82fqG8',
+      'accept': 'application/json',
     },
   }).then((messages) => {
-    res.json(messages.data)})
+    let messageList = messages.data.conversation
+    if (!messageList.length) {
+      messageList = [messageList]
+    }
+    console.log(messageList)
+    res.json({messages: messageList})
+  })
   .catch(next)
 }
 
