@@ -12,7 +12,6 @@ const doLogin = apiCall({
   success: (res, action) => {
     syncStorage.set('token', res.data.token)
     saveItem('hvr_auth', JSON.stringify(res.data)).then(() => (console.log("auth saving success!!!")))
-    // AsyncStorage.setItem('hvr_auth', JSON.stringify(res.data)).then(console.log("success"))
     }
 })
 
@@ -21,10 +20,9 @@ const doSignup = apiCall({
   method: 'post',
   path: () => '/auth/signup/',
   success: (res, action) => {
-    console.log(">>>>>>>>>signup", res)
-    AsyncStorage.setItem('hvr_auth', JSON.stringify(res.data), () => {
-    });
-  },
+    syncStorage.set('token', res.data.token)
+    saveItem('hvr_auth', JSON.stringify(res.data)).then(() => (console.log("auth saving success!!!")))
+  }
 })
 
 const doSendcode = apiCall({
@@ -37,6 +35,10 @@ const doCheckcode = apiCall({
   type: CHECK_CODE,
   method: 'post',
   path: () => '/auth/checkcode',
+  success: (res, action) => {
+    syncStorage.set('token', res.data.token)
+    saveItem('hvr_auth', JSON.stringify(res.data)).then(() => (console.log("auth saving success!!!")))
+  }
 })
 
 const doGetProfile = apiCall({

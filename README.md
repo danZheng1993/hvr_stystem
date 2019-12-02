@@ -29,6 +29,10 @@ git clone https://github.com/flatlogic/react-native-starter.git
 
 # Navigate to clonned folder and Install dependencies
 cd react-native-starter && yarn install
+
+npx react-native bundle --dev false --platform android --entry-file index.js --bundle-output ./android/app/src/main/assets/index.android.bundle --assets-dest ./android/app/src/main/res
+cd android
+./gradlew assembleRelease
 ```
 
 #### 2. Open RNS in your iOS simulator

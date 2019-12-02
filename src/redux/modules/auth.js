@@ -157,6 +157,7 @@ export default handleActions({
 
   [requestSuccess(CHECK_CODE)]: (state, { payload }) => ({
     ...state,
+    token: payload.token,
     status: requestSuccess(CHECK_CODE),
     verified: payload.verified,
     error: null,

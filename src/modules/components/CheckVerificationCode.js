@@ -15,33 +15,36 @@ class CheckVerificationCode extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      phoneNumber: ''
+      phoneNumber: '',
+      onSuccess: null
     }
   }
   
   componentWillMount() {
     const {getUser, navigation} = this.props
-    let phoneNumber = navigation.getParam('phoneNumber', 'NO-ID')
-    if (phoneNumber != 'NO-ID') {
-      this.setState({phoneNumber})
+    let phoneNumber = navigation.getParam('phoneNumber', '')
+    let onSuccess = navigation.getParam('onSuccess', null)
+    if (phoneNumber != '') {
+      this.setState({phoneNumber, onSuccess})
     }
   }
 
-  handleCheck = async (code) => {
+  handleCheck = (code, callback) => {
     const { phoneNumber } = this.state
     const {checkcode} = this.props
     let res = false
-    await checkcode({
+    checkcode({
       body:{ phoneNumber, code: code},
-      // success: () => this.props.navigation.navigate({ routeName: 'BasicProfile' })
+      success: () => callback(true),
+      fail: () => callback(false)
     })
   }
-  check (code) {
-    var val
-    this.handleCheck(code).then(res => alert(res))
-    // alert(val)
-    // return val
+  handleSuccess = () => {
+    const {onSuccess} = this.state
+    onSuccess()
+    this.props.navigation.goBack()
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -54,8 +57,8 @@ class CheckVerificationCode extends React.Component {
           </Text>
           <CodePin
             number={4} // You must pass number prop, it will be used to display 4 (here) inputs
-            checkPinCode={(code, callback) => callback(this.check(code))}
-            success={() => alert("success")} // If user fill '2018', success is called
+            checkPinCode={(code, callback) => (this.handleCheck(code, callback))}
+            success={() => this.handleSuccess()} // If user fill '2018', success is called
             text="" // My title
             error="请输入正确的验证码，再试一次" // If user fail (fill '2017' for instance)
             autoFocusFirst={false} // disabling auto-focus

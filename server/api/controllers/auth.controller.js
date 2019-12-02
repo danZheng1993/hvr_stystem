@@ -52,7 +52,7 @@ function signup(req, res, next) {
     role: req.body.role
   });
 
-  return user.save()
+  user.save()
   .then((newUser) => {
     const token = jwt.sign({
       _id: newUser._id, // eslint-disable-line
@@ -77,7 +77,8 @@ function signup(req, res, next) {
       },
       data: JSON.stringify(data),
     })
-    res.json({
+    console.log("token", token)
+    return res.json({
       info: newUser,
       _id: newUser._id, // eslint-disable-line
       userName: newUser.userName,
@@ -136,21 +137,19 @@ function checkcode(req, res, next) {
       return code.authenticate(req.body.code)
       .then(() => {      
         console.log("verify ok", code.verified)
-        if (code.verified == false) {
+        if (code.verified == false) {         
           console.log("new")
-          if (req.body.password) {
-            return signup(req,res,next)
-          }
           Code.updateOne({phoneNumber: req.body.phoneNumber}, { $set: { "verified" : true } }).exec()  
           .then (() => {
-            
+            if (req.body.password) {
+              return signup(req,res,next)
+            }
           })
+          .catch(next)
         } else {
-      
           console.log("old")
           User.findOne({ phoneNumber: +req.body.phoneNumber })    
           .then((user) => {
-            
             console.log(user)
             if (!user) {
               return res.status(500).json({ message: 'error!' });
@@ -161,15 +160,11 @@ function checkcode(req, res, next) {
               phoneNumber: user.phoneNumber,
               role: user.role,
             }, config.jwtSecret, { expiresIn: config.jwtExpires });
-    
+            console.log("token", token)
             res.json({
-              info: user,
-              _id: user._id, // eslint-disable-line
-              userName: user.userName,
-              phoneNumber: user.phoneNumber,
-              role: user.role,
-              token,
+              token
             })
+            return;
           })
           .catch(next)
         }
