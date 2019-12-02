@@ -1,72 +1,111 @@
 import React from 'react';
-
 import {
   StyleSheet,
   View,
   ScrollView,
+  Text,
+  TouchableOpacity
 } from 'react-native';
-
-import { connect } from 'react-redux';
-import { withState,compose } from 'recompose';
-import { createStructuredSelector } from 'reselect';
-
-import { Button, Loader, JobsList, RadioGroup } from '../../../../components'
+import moment from 'moment'
+import {NotPaidAction, WaitingAction, TestingAction, FinishingAction, FeedbackAction} from './JobActions'
 import { fonts, colors } from '../../../../styles';
+import { TouchableRipple } from 'react-native-paper';
+import {NoData} from '../../../../components'
 
-import { searchJob } from '../../../../redux/modules/job'
-import { jobsloadingSelector, profileSelector, jobsSearchResultSelector, settingsListSelector } from '../../../../redux/selectors'
+handleClick = () => {
 
-const status = ['全部', '竞标中', '待付款','待拍摄', '待验收', '评价', '已完成']
+}
 
-class MyJobList extends React.Component {
+
+
+export default class JobsList extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      selected : 0
-    }
+    
   }
 
-  componentWillMount() {
-    const {searchJob, profile, navigation} = this.props
-    const selected = navigation.getParam('selected', 0)
-    this.props.setRadioGroupsState({ ...this.props.radioGroupsState, 0: selected })
-    this.setState({selected})
-    searchJob({
-      body: {creator: profile._id}
-    })
-  }
+  handleNavigate = (status, id) => {
+    const {navigation} = this.props
+    if (status == '竞标中') navigation.navigate('BiddingJob', {id: id})
+    if (status == '待付款') navigation.navigate('NotPaidJob', {id: id})
+    if (status == '待拍摄') navigation.navigate('WaitingJob', {id: id})
+    if (status == '待验收') navigation.navigate('TestingJob', {id: id})
+    if (status == '评价') navigation.navigate('FeedbackJob', {id: id})
+    if (status == '已完成') navigation.navigate('FinishingJob', {id: id})
+  } 
 
-  handleClick = (index) => {
-    this.props.setRadioGroupsState({ ...this.props.radioGroupsState, 0: index })
-    this.setState({selected: index})
-  }
-
-  render() {    
-    const {jobs, jobsloading, settings} = this.props
-    const upfrontRate = settings.upfrontRate || 0 
-    const {selected} = this.state
-    let jobslist = jobs
-    if (selected && jobs.length) {
-      jobslist = jobs.filter(job => job.status == status[selected])
-    }
+  render() {   
+    const {jobs, navigation, upfrontRate} = this.props
+    console.log(jobs)
     return (
-      <ScrollView style={styles.container}>
-        
-        <View style={styles.componentsSection}>
-          <RadioGroup
-            style={styles.demoItem}
-            items={['全部', '竞标中', '待付款','待拍摄', '待验收', '评价', '已完成']}
-            selectedIndex={this.props.radioGroupsState[0]}
-            onChange={index => this.handleClick(index)}
-          />
-        </View>
-        {jobsloading ? 
-          <Loader loading={jobsloading} /> : 
-          <JobsList jobs={jobslist} navigation={this.props.navigation} upfrontRate={upfrontRate} /> 
-        }
-      </ScrollView>
+        <ScrollView>          
+         {jobs.length ? jobs.map((job, index) => (
+          <TouchableRipple key={index} onPress={() => this.handleNavigate(job.status, job._id)}>
+           <View key={index} style={styles.componentsSection}>
+             <Text size={14}>订单信息 : <Text>{job.status}</Text></Text>
+             <Text size={14}>订单编号 : <Text>{job._id}</Text></Text>
+             <Text size={14}>创建时间 : <Text>{moment(job.created).format("YYYY-MM-DD HH:MM:SS")}</Text></Text>
+             <Text size={14}>服务项目 : <Text>{job.type}</Text></Text>
+             <Text size={14}>拍摄城市 : <Text>{job.location}</Text></Text>
+             {job.status == '竞标中' && 
+              <View style={styles.textContainer}>
+                <Text size={14}>预算价格:<Text>¥{job.budget}</Text></Text>
+                <Text size={14} onPress={() => {
+                  navigation.navigate('BiddingJob', {
+                    id: job._id,
+                  });
+                }}
+                >查看更多</Text>
+              </View>}
+             {job.status == '待付款' && 
+              <View>
+                <Text size={14}>签订合同 : <Text onPress={() => {
+                  navigation.navigate('BiddingJob', {
+                    id: job._id,
+                  });}}>电子合同</Text>
+                </Text>
+                <View stye={styles.textContainer}>
+                  <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
+                  <Text size={14}>首付款 {upfrontRate}% : <Text>¥{job.price * upfrontRate / 100}</Text></Text>
+                </View>
+                <NotPaidAction job={job} navigation={this.props.navigation} />
+              </View>}
+             {job.status == '待拍摄' && 
+              <View>
+              <View stye={styles.textContainer}>
+                <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
+                <Text size={14}>首付款已支付 : <Text>¥{job.price}</Text></Text>
+              </View>
+              <WaitingAction />
+            </View>}
+             {job.status == '待验收' && 
+              <View>
+              <View stye={styles.textContainer}>
+                <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
+                <Text size={14}>已支付首付款 : <Text>¥{job.price}</Text></Text>
+              </View>
+              <TestingAction job={job} navigation={this.props.navigation} />
+            </View>}
+             {job.status == '评价' && 
+               <View>
+               <View stye={styles.textContainer}>
+                 <Text size={14}>订单总金额 : <Text>¥{job.price}</Text></Text>
+               </View>
+               <FeedbackAction navigation={navigation} job={job}/>
+             </View>}
+             {job.status == '已完成' && 
+              <View>
+              <View stye={styles.textContainer}>
+                <Text size={14}>订单总金额 : <Text>¥{job.price}</Text></Text>
+              </View>
+              <FinishingAction />
+            </View>}
+            </View>
+            </TouchableRipple>
+         )) : <NoData />}
+         </ScrollView>
     );
-  }
+    }
 }
 
 const styles = StyleSheet.create({
@@ -76,56 +115,35 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 20,
   },
-  
-  picker: {
-    flexDirection: "row",
-    justifyContent: 'space-between'
-  },
-  buttonsContainer: {
-    alignSelf: 'stretch',
-    margin: 20
-  },
-  button: {
-    marginBottom: 20,
-    alignSelf: 'stretch',
-  },
+
   description: {
     padding: 20,
     marginBottom: 20,
     alignSelf: 'stretch'
   },
-  input: {
-    marginBottom: 15,
-  },
-  anchor: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  inputWrap: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
+
   componentsSection: {
     backgroundColor: colors.white,
     padding: 15,
     marginBottom: 20,
     borderRadius: 5,
   },
+
+  textContainer: {
+    alignSelf: 'stretch',
+    marginTop: 20,
+    justifyContent: 'space-around',
+    flexDirection: 'row'
+  },
+
+  buttonsContainer: {
+    alignItems: 'flex-end',
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 20
+  },
+
+  button: {
+  },
 });
-
-
-const mapStateToProps = createStructuredSelector({
-  jobs: jobsSearchResultSelector,
-  jobsloading: jobsloadingSelector,
-  profile: profileSelector,
-  settings: settingsListSelector
-});
-
-const mapDispatchToProps = {
-  searchJob
-};
-
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
-
-export default compose(withConnect,    withState('radioGroupsState', 'setRadioGroupsState', [0, 0]))(MyJobList);

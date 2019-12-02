@@ -41,7 +41,7 @@ import HomeScreen from '../home/HomeView';
 import  Provider from '../provider';
 import  ApplyJob from '../provider/jobs/ApplyJob';
 import MyPage from '../client/MyPage';
-import MyJob from '../client/MyPage/MyJob/JobsList';
+import MyJob from '../client/MyPage/MyJob';
 import MyCollection from '../client/MyPage/MyCollection';
 import MyAttention from '../client/MyPage/MyAttention';
 import RequestInvoice from '../client/MyPage/RequestInvoice';

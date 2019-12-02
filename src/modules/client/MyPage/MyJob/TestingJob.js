@@ -14,7 +14,7 @@ import { Loader, toast, JobDetail} from '../../../../components';
 
 import { getJob } from '../../../../redux/modules/job'
 import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
-import { TestingAction } from '../../../../components/JobActions';
+import { TestingAction } from './JobActions';
 
 class TestingJob extends React.Component {
   constructor(props) {

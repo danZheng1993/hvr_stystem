@@ -45,7 +45,6 @@ class LoginWithPassword extends React.Component {
       if (!profile) return
       const token = syncStorage.get('token') || ''
       toast("login success!")
-      console.log(">>>>>>>>>Profile",profile)
       // XMPP.connect(`${Profile._id}@192.168.31.207/spark`, profile.password,'RNXMPP.PLAIN','192.168.31.207',5222)
       XMPP.connect(`${profile._id}@192.168.31.207/spark`, token.slice(0,8),'RNXMPP.PLAIN','192.168.31.207',5222)
       if (profile.role == 'provider') {

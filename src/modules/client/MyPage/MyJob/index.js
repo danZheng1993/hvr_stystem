@@ -10,13 +10,13 @@ import { connect } from 'react-redux';
 import { withState,compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { Button, Loader, RadioGroup } from '../../../../components'
+import { Button, Loader, RadioGroup, NoData } from '../../../../components'
 import { fonts, colors } from '../../../../styles';
-import ProviderJobsList from './ProviderJobsList'
+import JobsList from './JobsList'
 import { searchJob } from '../../../../redux/modules/job'
-import { jobsloadingSelector, profileSelector, jobsSearchResultSelector } from '../../../../redux/selectors'
+import { jobsloadingSelector, profileSelector, jobsSearchResultSelector, settingsListSelector } from '../../../../redux/selectors'
 
-const status = ['全部', '竞标中', '已选用','待付款','待拍摄', '待验收']
+const status = ['全部', '竞标中', '待付款','待拍摄', '待验收', '评价', '已完成']
 
 class MyJobList extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class MyJobList extends React.Component {
     this.props.setRadioGroupsState({ ...this.props.radioGroupsState, 0: selected })
     this.setState({selected})
     searchJob({
-      body: {hired: profile._id}
+      body: {creator: profile._id}
     })
   }
 
@@ -42,27 +42,28 @@ class MyJobList extends React.Component {
   }
 
   render() {    
-    const {jobs, jobsloading} = this.props
+    const {jobs, jobsloading, settings} = this.props
+    const upfrontRate = settings.upfrontRate || 0 
     const {selected} = this.state
     let jobslist = jobs
     if (selected && jobs.length) {
       jobslist = jobs.filter(job => job.status == status[selected])
     }
     return (
-      <ScrollView style={styles.container}>
-        <Loader loading={jobsloading} />
+      <ScrollView style={styles.container}>  
+        <Loader loading={jobsloading} />     
         <View style={styles.componentsSection}>
           <RadioGroup
             style={styles.demoItem}
-            items={['全部', '竞标中', '已选用','待支付', '待拍摄', '待验收']}
+            items={['全部', '竞标中', '待付款','待拍摄', '待验收', '评价', '已完成']}
             selectedIndex={this.props.radioGroupsState[0]}
             onChange={index => this.handleClick(index)}
           />
         </View>
-        <ProviderJobsList jobs={jobslist} navigation={this.props.navigation}/>
+        <JobsList jobs={jobslist} navigation={this.props.navigation} upfrontRate={upfrontRate} />
       </ScrollView>
     );
-    }
+  }
 }
 
 const styles = StyleSheet.create({
@@ -114,7 +115,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = createStructuredSelector({
   jobs: jobsSearchResultSelector,
   jobsloading: jobsloadingSelector,
-  profile: profileSelector
+  profile: profileSelector,
+  settings: settingsListSelector
 });
 
 const mapDispatchToProps = {

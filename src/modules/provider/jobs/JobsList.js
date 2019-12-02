@@ -60,9 +60,9 @@ class JobsList extends React.Component {
         </View>
       <ScrollView style={styles.container}>
         <View style={styles.description}>
-         <Loader
-          loading={jobsloading} />
-         {jobslist.length ? jobslist.map((job, index) => (
+         { jobsloading ? <Loader
+          loading={jobsloading} /> :
+         jobslist.length ? jobslist.map((job, index) => (
            <View key={index} style={styles.componentsSection}>
              <Text size={14}>订单信息:<Text>{job.status}</Text></Text>
              <Text size={14}>订单编号:<Text>{job._id}</Text></Text>

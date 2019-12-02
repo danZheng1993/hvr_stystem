@@ -10,8 +10,6 @@ import Select from './Select'
 import Location from './Location'
 import {Text} from './StyledText'
 import toast from './Toast'
-import JobsList from './JobsList'
-import ProviderJobsList from './ProviderJobsList'
 import JobDetail from './JobDetail'
 import UsersList from './UsersList'
 import Applicants from './Applicants'
@@ -36,9 +34,7 @@ export {
   toast,
   Profile,
   SegmentedControl,
-  ProviderJobsList,
   Location,
-  JobsList,
   JobDetail,
   Applicants,
   UsersList,

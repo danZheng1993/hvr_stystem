@@ -13,7 +13,7 @@ import { Loader, toast, JobDetail} from '../../../../components';
 
 import { getJob } from '../../../../redux/modules/job'
 import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
-import { FinishingAction } from '../../../../components/JobActions';
+import { FinishingAction } from './JobActions';
 
 class FinishingJob extends React.Component {
   constructor(props) {

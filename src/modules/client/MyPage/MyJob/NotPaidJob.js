@@ -13,7 +13,7 @@ import { Loader, toast, JobDetail} from '../../../../components';
 
 import { getJob } from '../../../../redux/modules/job'
 import { jobDetailSelector, jobsloadingSelector } from '../../../../redux/selectors'
-import { NotPaidAction } from '../../../../components/JobActions';
+import { NotPaidAction } from './JobActions';
 
 class NotPaidJob extends React.Component {
   constructor(props) {

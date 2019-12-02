@@ -13,7 +13,7 @@ import { Loader, toast, JobDetail} from '../../../../components';
 
 import { getJob } from '../../../../redux/modules/job'
 import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
-import { FeedbackAction } from '../../../../components/JobActions';
+import { FeedbackAction } from './JobActions';
 
 class FeedbackJob extends React.Component {
   constructor(props) {

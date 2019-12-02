@@ -7,35 +7,34 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import {payUpfront} from '../../redux/modules/payment'
-import {updateResult} from '../../redux/modules/job'
-import Button from '../Button'
-import Confirm from '../Confirm'
+import {finalPay} from '../../../../../redux/modules/payment'
+import {updateResult} from '../../../../../redux/modules/job'
+import {Button, Confirm} from '../../../../../components'
 
-const NotPaidAction = props => {
+const TestingAction = props => {
   return (
     <View style={styles.buttonsContainer}>
-        <Button
+      <Button
         small
         style={styles.button}
         caption="联系服务商"
         onPress={() => props.navigation.navigate('Chatting', {to: props.job.hired})}
-        />
-        <Button
+      />
+      <Button
         small
         style={styles.button}
-        caption="取消订单"
+        caption="查看视频"
         onPress={this.handleClick}
-        />
-        <Button
+      />
+      <Button
         small
         style={styles.button}
-        caption="去支付"
-        onPress={() => props.payUpfront({
+        caption="确认验收"
+        onPress={() => Confirm('提示', '是否确认验收并支付尾款', () => props.finalPay({
           body: {id: props.job._id},
           success: (payload) => {props.updateResult(payload.data)}
-        })}
-        />
+        }))}
+      />
     </View>
   )
 }
@@ -58,10 +57,10 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  payUpfront,
+  finalPay,
   updateResult
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect) (NotPaidAction)
+export default compose(withConnect) (TestingAction)

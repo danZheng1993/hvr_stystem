@@ -55,7 +55,6 @@ class HomeScreen extends React.Component {
    }
 
   handleMessage(message) {
-
     console.log("message>>>", message)
     if (!message.body) return
     const {profile} = this.props

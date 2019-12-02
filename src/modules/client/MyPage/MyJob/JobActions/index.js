@@ -3,8 +3,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import Button from '../Button'
-import Confirm from '../Confirm'
+import {Button, Confirm} from '../../../../../components'
 import NotPaidAction from './NotPaidAction'
 import TestingAction from './TestingAction'
 

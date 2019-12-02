@@ -39,18 +39,16 @@ class BiddingJob extends React.Component {
     
     const {job, jobsloading} = this.props
     console.log(job)
-    if (!job) return (<></>)
     return (
       <View style={styles.container}>
-        <View style={styles.description}>
-         { <Loader
-          loading={jobsloading} /> }
-         {job && 
-          <>
+        {jobsloading ?
+        <Loader
+          loading={jobsloading} /> :
+        ((typeof(job) == 'object') && 
+          <View style={styles.description}>
             <JobDetail job={job} />
-            <Applicants applicants={job.applicants} navigation={this.props.navigation} jobID={job._id}/> 
-          </> }
-         </View>
+            <Applicants applicants={job.applicants} navigation={this.props.navigation} jobID={job._id}/>
+          </View>) }
       </View>
     );
     }
@@ -62,6 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bluish,
     paddingHorizontal: 15,
     paddingTop: 20,
+    justifyContent: "space-around"
   },
   
   picker: {
@@ -77,8 +76,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   description: {
-    padding: 20,
-    marginBottom: 20,
     alignSelf: 'stretch'
   },
   input: {

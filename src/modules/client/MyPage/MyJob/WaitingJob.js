@@ -13,7 +13,7 @@ import { Loader, toast, JobDetail} from '../../../../components';
 
 import { getJob } from '../../../../redux/modules/job'
 import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../../redux/selectors'
-import { WaitingAction } from '../../../../components/JobActions';
+import { WaitingAction } from './JobActions';
 
 class WaitingJob extends React.Component {
   constructor(props) {

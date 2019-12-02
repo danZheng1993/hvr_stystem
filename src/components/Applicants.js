@@ -36,7 +36,7 @@ class Applicants extends React.Component {
     const {applicants, navigation} = this.props
     return (
       <ScrollView style={styles.componentsSection} horizontal={true}>
-        {applicants && applicants.map((applicant, index) => (
+        {applicants ? applicants.map((applicant, index) => (
           <View key={index} style={{borderWidth: 1, borderColor: colors.gray, borderRadius:10, marginRight: 10}}>
             
               <Image
@@ -63,7 +63,7 @@ class Applicants extends React.Component {
               />
             </View>
           </View>
-        ))}
+        )) : <Text>No applicants</Text>}
       </ScrollView>
     );
     }

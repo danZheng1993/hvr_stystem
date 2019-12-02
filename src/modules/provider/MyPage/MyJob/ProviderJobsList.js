@@ -7,10 +7,9 @@ import {
   TouchableOpacity
 } from 'react-native';
 import moment from 'moment'
-import {Button} from '.'
-import { fonts, colors } from '../styles';
+import { fonts, colors } from '../../../../styles';
 import { TouchableRipple } from 'react-native-paper';
-import NoData from './NoData'
+import {NoData, Button} from '../../../../components'
 
 export default class ProviderJobsList extends React.Component {
   constructor(props) {
