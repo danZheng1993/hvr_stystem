@@ -36,7 +36,7 @@ class RequestInvoice extends React.Component {
       <ScrollView style={styles.container}>
         <Loader loading={loading} />
         <View>
-          {myInvoice && myInvoice.map((invoice, index) => (
+          {!!myInvoice.length && myInvoice.map((invoice, index) => (
             <View style={styles.componentsSection} key={index}>
               <View>
                 <Text>合同金额 : {invoice.price}</Text>

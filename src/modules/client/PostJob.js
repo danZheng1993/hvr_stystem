@@ -159,7 +159,7 @@ class PostJob extends React.Component {
                 onValueChange={(itemValue, itemIndex) =>
                   this.setType(itemValue)
                 }>
-                {  types && types.map((item, index) => (
+                {  !!types.length && types.map((item, index) => (
                     <Picker.Item key={index} label={item.name} value={item.name} />
                 )) }
             </Picker>
@@ -205,7 +205,7 @@ class PostJob extends React.Component {
               onValueChange={(itemValue, itemIndex) =>
                 this.setState({scene: itemValue})
               }>
-              {  scenes && scenes.map((item, index) => (
+              {  !!scenes.length && scenes.map((item, index) => (
                   <Picker.Item key={index} label={item.name} value={item.name} />
               )) }
             </Picker>
@@ -214,14 +214,14 @@ class PostJob extends React.Component {
               onValueChange={(itemValue, itemIndex) =>
                 this.setState({subcategory: itemValue})
               }>
-              {  subcategories && subcategories.map((item, index) => (
+              {  !!subcategories.length && subcategories.map((item, index) => (
                   <Picker.Item key={index} label={item.name} value={item.name} />
               )) }
             </Picker>
           </View>
 
           <View style = {styles.componentsSection}>
-            {services && services.map((service, index) => (
+            {!!services.length && services.map((service, index) => (
               <View key={index}>
               <Text size={14}>
                 {service.name}

@@ -80,7 +80,7 @@ class Notification extends React.Component {
                 </Text>
                 </View>
             </View>
-                {contacts && contacts.map((contact, i) => (
+                {!!contacts.length && contacts.map((contact, i) => (
                     typeof(contact) == "object" &&
                     <ListItem
                     key={i}

@@ -85,9 +85,12 @@ class Chatting extends React.Component {
 
   onReceivedMessage(messages) {
       const {navigation} = this.props
+      const {to} = this.state
+      if (!messages.body) return
+      const from = String(messages.from).split('@')[0]
       // if (navigation.state.routeName != 'Chatting') return
+      if (from != to) return
 
-      console.log(navigation.state.routeName, messages)
       var message= [
         {
           _id: new Date().getTime(),
@@ -100,11 +103,8 @@ class Chatting extends React.Component {
           },
         },
       ]
-
-      if (messages.body) {
-        message[0].text = messages.body
-        this._storeMessages(message);
-      }
+      message[0].text = messages.body
+      this._storeMessages(message);
   }
 
   handleMessage(message) {

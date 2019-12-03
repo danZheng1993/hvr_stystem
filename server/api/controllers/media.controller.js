@@ -32,6 +32,7 @@ function uploadLink(req, res, next) {
     )
     updatedJob.save()
       .then((newJob) => {
+        xmpp.send(`${newJob.creator}@desktop-jgen8l2/spark`, `uploaded the media.`, false);
         res.json(newJob);
       })
     .catch(next)

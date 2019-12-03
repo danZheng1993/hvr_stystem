@@ -44,6 +44,7 @@ function payUpfront(req, res, next) {
       .then((newJob) => {
         payment.save()
         .then((newPayment) => {
+          xmpp.send(`${updatedJob.hired}@desktop-jgen8l2/spark`, `${req.user.userName} paid ${updatedJob.upfront}`, false);
           res.json(newJob);
         })
         .catch(next);
@@ -96,6 +97,7 @@ function finalPay(req, res, next) {
       .then((newJob) => {
         payment.save()
         .then((newPayment) => {
+          xmpp.send(`${updatedJob.hired}@desktop-jgen8l2/spark`, `${req.user.userName} paid ${job.upfront}`, false);
           res.json(newJob);
         })
         .catch(next);

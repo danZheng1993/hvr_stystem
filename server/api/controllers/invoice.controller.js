@@ -17,6 +17,7 @@ function update(req, res, next) {
 
   req.invoice.save()
   .then((updatedInvoice) => {
+    xmpp.send(`${updatedInvoice.to}@desktop-jgen8l2/spark`, `${req.user.userName} sent invoice`, false);
     res.json(updatedInvoice);
   })
   .catch(next);

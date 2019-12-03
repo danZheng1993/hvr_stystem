@@ -71,6 +71,7 @@ function giveFeedback(req, res, next) {
     })
     invoice.save()
     .then((newInvoice) => {
+      xmpp.send(`${updatedJob.hired}@desktop-jgen8l2/spark`, `${req.user.userName} finished the job`, false);
       res.json(updatedJob);
     })
     .catch(next)
