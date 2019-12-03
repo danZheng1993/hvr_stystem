@@ -3,14 +3,14 @@ import { DO_LOGIN, DO_SIGNUP, GET_PROFILE, SAVE_PROFILE, SEND_CODE, CHECK_CODE, 
 import apiCall from '../api/apiCall'
 import { AsyncStorage } from 'react-native';
 import {saveItem, loadItem} from '../api/storage'
-import syncStorage from 'sync-storage';
+import SyncStorage from 'sync-storage';
 
 const doLogin = apiCall({
   type: DO_LOGIN,
   method: 'post',
   path: () => '/auth/login/',
   success: (res, action) => {
-    syncStorage.set('token', res.data.token)
+    SyncStorage.set('token', res.data.token)
     saveItem('hvr_auth', JSON.stringify(res.data)).then(() => (console.log("auth saving success!!!")))
     }
 })
@@ -20,7 +20,7 @@ const doSignup = apiCall({
   method: 'post',
   path: () => '/auth/signup/',
   success: (res, action) => {
-    syncStorage.set('token', res.data.token)
+    SyncStorage.set('token', res.data.token)
     saveItem('hvr_auth', JSON.stringify(res.data)).then(() => (console.log("auth saving success!!!")))
   }
 })
@@ -36,7 +36,7 @@ const doCheckcode = apiCall({
   method: 'post',
   path: () => '/auth/checkcode',
   success: (res, action) => {
-    syncStorage.set('token', res.data.token)
+    SyncStorage.set('token', res.data.token)
     saveItem('hvr_auth', JSON.stringify(res.data)).then(() => (console.log("auth saving success!!!")))
   }
 })

@@ -9,9 +9,8 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { NavigationActions } from 'react-navigation'
 import {getContacts} from '../redux/modules/auth'
-import { contactsSelector} from '../redux/selectors'
+import { contactsSelector, unreadMessagesSelector} from '../redux/selectors'
 import constants from '../constants'
-import SyncStorage from 'sync-storage';
 import { loadItem, deleteItem } from '../redux/api/storage';
 
 class Notification extends React.Component {
@@ -114,6 +113,7 @@ class Notification extends React.Component {
                     subtitle={contact.overview}
                     onPress={() => this.startChat(contact._id)}
                     bottomDivider
+                    badge={{ value: 0, textStyle: { color: 'white' }, badgeStyle: { backgroundColor: 'red' } }}
                     />
                 ))}
             </View>
@@ -145,7 +145,8 @@ const styles= StyleSheet.create({
   },
 })
 const mapStateToProps = createStructuredSelector({
-    contacts: contactsSelector
+    contacts: contactsSelector,
+    unread: unreadMessagesSelector
 });
 
 const mapDispatchToProps = {

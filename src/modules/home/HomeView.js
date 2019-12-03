@@ -18,7 +18,7 @@ import { getServices } from '../../redux/modules/service'
 import { getNewss } from '../../redux/modules/news'
 import { getBanners } from '../../redux/modules/banner'
 import { getMedias } from '../../redux/modules/media'
-import { addToContacts } from '../../redux/modules/auth'
+import { addToContacts, pushNotification } from '../../redux/modules/auth'
 
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
@@ -57,8 +57,9 @@ class HomeScreen extends React.Component {
   handleMessage(message) {
     console.log("message>>>", message)
     if (!message.body) return
-    const {profile} = this.props
+    const {profile, pushNotification} = this.props
     const from = String(message.from).split('@')[0]
+    pushNotification(message)
     console.warn(from)
     if (from == 'system' && message.body) {
       loadItem('notification')
@@ -139,7 +140,8 @@ const mapDispatchToProps = {
   getNewss,
   getBanners,
   getMedias,
-  addToContacts
+  addToContacts,
+  pushNotification
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

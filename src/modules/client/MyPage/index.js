@@ -1,16 +1,15 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
-
+import {Badge} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { colors, fonts } from '../../../styles';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-
 import { Button, Dropdown, Profile } from '../../../components';
 
-import { profileSelector } from '../../../redux/selectors'
+import { profileSelector, unreadMessagesSelector } from '../../../redux/selectors'
 class MyPage extends React.Component {
   constructor(props) {
     super(props)
@@ -20,7 +19,7 @@ class MyPage extends React.Component {
   }
 
   render () {
-    const {profile} = this.props
+    const {profile, unread} = this.props
     return (
       <ScrollView
         style={styles.container}
@@ -31,6 +30,7 @@ class MyPage extends React.Component {
           <View style={{flexDirection: 'row'}}>
             <Profile user = {profile} navigation={this.props.navigation} />
             <View style={styles.settingsContainer}>
+                {!!unread.length && <Badge value={unread.length} status="error" />}
                 <Icon
                   style={styles.demoIcon}
                   name="bell"
@@ -323,6 +323,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = createStructuredSelector({
   profile: profileSelector,
+  unread: unreadMessagesSelector
 });
 
 const mapDispatchToProps = {

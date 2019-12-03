@@ -1,6 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
 import { requestSuccess, requestFail, requestPending } from '../api/request'
 import { AsyncStorage } from 'react-native';
+import SyncStorage from 'sync-storage'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -9,6 +10,7 @@ export const DO_LOGOUT = 'DO_LOGOUT'
 export const DO_SIGNUP = 'DO_SIGNUP'
 export const GET_PROFILE = 'GET_PROFILE'
 export const SAVE_PROFILE = 'SAVE_PROFILE'
+export const PUSH_NOTIFICATION = 'PUSH_NOTIFICATION'
 export const GET_CONTACTS = 'GET_CONTACTS'
 export const ADD_TO_CONTACTS = 'ADD_TO_CONTACTS'
 export const ADD_TO_COLLECTIONS = 'ADD_TO_COLLECTIONS'
@@ -36,10 +38,10 @@ export const addToCollections = createAction(ADD_TO_COLLECTIONS)
 export const removeFromCollections = createAction(REMOVE_FROM_COLLECTIONS)
 export const addToAttentions = createAction(ADD_TO_ATTENTIONS)
 export const removeFromAttentions = createAction(REMOVE_FROM_ATTENTIONS)
+export const pushNotification = createAction(PUSH_NOTIFICATION)
 
 const getInitialState = async () => {
-  let authRestore = await AsyncStorage.getItem('hvr_auth') || null    
-  console.log("authRestore", authRestore)
+  let authRestore = await AsyncStorage.getItem('hvr_auth') || null
   return authRestore ? {
     token: JSON.parse(authRestore).token,
     me: JSON.parse(authRestore).info,
@@ -47,7 +49,8 @@ const getInitialState = async () => {
     error: null,
     verified: false,
     loading: false,
-    contacts: []
+    contacts: [],
+    unread: []
   } : {
     token: null,
     me: null,
@@ -55,7 +58,8 @@ const getInitialState = async () => {
     error: null,
     verified: false,
     loading: false,
-    contacts: []
+    contacts: [],
+    unread: [],
   }
 }
 var initialState = {}
@@ -75,7 +79,8 @@ export default handleActions({
     token: payload.token,
     status: requestSuccess(DO_LOGIN),
     me: payload.info,
-    loading: false
+    loading: false,
+    unread: []
   }),
 
   [requestFail(DO_LOGIN)]: (state, { payload }) => ({
@@ -96,6 +101,14 @@ export default handleActions({
     loading: false
   }),
 
+  [PUSH_NOTIFICATION]: (state, { payload }) => ({
+    ...state,
+    status: PUSH_NOTIFICATION,
+    unread: [...state.unread, payload],
+    error: null,
+    loading: false
+  }),
+
   
   [requestPending(DO_SIGNUP)]: (state, { payload }) => ({
     ...state,
@@ -112,6 +125,7 @@ export default handleActions({
     loading: false,
     token: payload.token,
     me: payload.info,
+    unread: []
   }),
 
   [requestFail(DO_SIGNUP)]: (state, { payload }) => ({
@@ -126,7 +140,7 @@ export default handleActions({
   
   [requestPending(SEND_CODE)]: (state, { payload }) => ({
     ...state,
-    status: requestPending(DO_LOGIN),
+    status: requestPending(SEND_CODE),
     error: null,
     loading: true,
   }),
@@ -150,7 +164,7 @@ export default handleActions({
   
   [requestPending(CHECK_CODE)]: (state, { payload }) => ({
     ...state,
-    status: requestPending(DO_LOGIN),
+    status: requestPending(CHECK_CODE),
     error: null,
     loading: true,
   }),
@@ -161,8 +175,8 @@ export default handleActions({
     status: requestSuccess(CHECK_CODE),
     verified: payload.verified,
     error: null,
-    loading: false
-
+    loading: false,
+    unread: []
   }),
 
   [requestFail(CHECK_CODE)]: (state, { payload }) => ({
@@ -180,7 +194,6 @@ export default handleActions({
     status: requestPending(SAVE_PROFILE),
     error: null,
     loading: true,
-    
   }),
 
   [requestSuccess(SAVE_PROFILE)]: (state, { payload }) => ({
