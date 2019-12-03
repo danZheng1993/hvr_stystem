@@ -3,6 +3,8 @@ const Media = require('../models/media.model');
 const Job = require('../models/job.model');
 const ROLES = require('../constants/role');
 const STATUS = require('../constants/status')
+const xmpp = require('simple-xmpp')
+
 function create(req, res, next) {
   const media = new Media(req.body);
 

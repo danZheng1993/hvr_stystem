@@ -49,9 +49,7 @@ class BiddingJob extends React.Component {
         <View style={styles.description}>
          { <Loader
           loading={jobsloading} /> }
-         {typeof(job) == 'object' && <JobDetail job={job} />
-
-         }
+         {job && <JobDetail job={job} /> }
           <View style={styles.buttonsContainer}>
             <Button
             small

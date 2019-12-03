@@ -22,7 +22,7 @@ export default class Profile extends React.Component {
     const {user, navigation} = this.props
     return (
       <View>
-        {typeof(user) == 'object' &&
+        {user &&
           <View style = {styles.row}>
             <Image
               source={{uri: url + (user.photo ? user.photo: 'default.png')}}

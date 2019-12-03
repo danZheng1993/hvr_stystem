@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Invoice = require('../models/invoice.model');
 const ROLES = require('../constants/role');
 const STATUS = require('../constants/status')
+const xmpp = require('simple-xmpp')
+
 function create(req, res, next) {
   const invoice = new Invoice(req.body);
 
@@ -17,7 +19,7 @@ function update(req, res, next) {
 
   req.invoice.save()
   .then((updatedInvoice) => {
-    xmpp.send(`${updatedInvoice.to}@desktop-jgen8l2/spark`, `${req.user.userName} sent invoice`, false);
+    xmpp.send(`${updatedInvoice.receiver}@desktop-jgen8l2/spark`, `${req.user.userName} sent invoice`, false);
     res.json(updatedInvoice);
   })
   .catch(next);

@@ -45,7 +45,7 @@ class MediaList extends React.Component {
     const collections = profile.collections
     return (
         <ScrollView>      
-         {medias.length ? medias.map((media, index) => (
+         {Array.isArray(medias) ? medias.map((media, index) => (
            typeof(media) == 'object' && <View key={index} style={styles.componentsSection}>
               <TouchableOpacity onPress={() => this.handlePlay(media.path)} style={styles.touch}>
                 <Image

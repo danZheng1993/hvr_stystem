@@ -49,7 +49,7 @@ class InvoiceForm extends React.Component {
   componentWillMount() {
     const { navigation} = this.props
     let invoice = navigation.getParam('invoice', {})
-    if (typeof(invoice) == 'object') {
+    if (invoice) {
       this.setState({invoice})
     }
   }

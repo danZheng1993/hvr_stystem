@@ -93,7 +93,8 @@ export default handleActions({
     status: requestSuccess(DO_LOGIN),
     me: payload.info,
     loading: false,
-    unread: {}
+    unread: {},
+    notification: [],
   }),
 
   [requestFail(DO_LOGIN)]: (state, { payload }) => ({
@@ -146,7 +147,8 @@ export default handleActions({
     loading: false,
     token: payload.token,
     me: payload.info,
-    unread: {}
+    unread: {},
+    notification: [],
   }),
 
   [requestFail(DO_SIGNUP)]: (state, { payload }) => ({
@@ -197,7 +199,8 @@ export default handleActions({
     verified: payload.verified,
     error: null,
     loading: false,
-    unread: {}
+    unread: {},
+    notification: [],
   }),
 
   [requestFail(CHECK_CODE)]: (state, { payload }) => ({

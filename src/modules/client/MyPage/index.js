@@ -26,7 +26,7 @@ class MyPage extends React.Component {
         style={styles.container}
         contentContainerStyle={{ paddingBottom: 20 }}
       >
-        {typeof(profile) == 'object' &&
+        {profile &&
         <View style={styles.componentsSection}>
           <View style={{flexDirection: 'row'}}>
             <Profile user = {profile} navigation={this.props.navigation} />

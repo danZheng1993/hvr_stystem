@@ -4,6 +4,7 @@ const Setting = require('../models/setting.model');
 const Job = require('../models/job.model');
 const ROLES = require('../constants/role');
 const STATUS = require('../constants/status');
+const xmpp = require('simple-xmpp')
 
 function payUpfront(req, res, next) {
   if (!req.body.id || !req.user) {

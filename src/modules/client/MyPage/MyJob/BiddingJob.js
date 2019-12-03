@@ -44,7 +44,7 @@ class BiddingJob extends React.Component {
         {jobsloading ?
         <Loader
           loading={jobsloading} /> :
-        ((typeof(job) == 'object') && 
+        (job && 
           <View style={styles.description}>
             <JobDetail job={job} />
             <Applicants applicants={job.applicants} navigation={this.props.navigation} jobID={job._id}/>

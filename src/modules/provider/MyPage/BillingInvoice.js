@@ -36,7 +36,7 @@ class BillingInvoice extends React.Component {
       <ScrollView style={styles.container}>
         <Loader loading={loading} />
         <View>
-          {!!myInvoice.length && myInvoice.map((invoice, index) => (
+          {Array.isArray(myInvoice) && myInvoice.map((invoice, index) => (
             <View style={styles.componentsSection} key={index}>
               <View>
                 <Text>订单编号 : {invoice.jobID}</Text>
