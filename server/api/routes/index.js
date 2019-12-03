@@ -27,18 +27,19 @@ router.use('/auth', authRoute);
 router.use('/records', authMiddleware, recordRoute);
 router.use('/users', authMiddleware, userRoute);
 router.use('/profile', authMiddleware, profileRoute);
-router.use('/types', typeRoute);
 router.use('/feedbacks', authMiddleware, feedbackRoute);
-router.use('/scenes', sceneRoute);
-router.use('/subcategorys', subcategoryRoute);
-router.use('/services', serviceRoute);
 router.use('/jobs', authMiddleware, jobRoute);
 router.use('/chats', authMiddleware, chatRoute);
 router.use('/payments', authMiddleware, paymentRoute);
+router.use('/invoices', authMiddleware, invoiceRoute);
+
+router.use('/types', typeRoute);
+router.use('/scenes', sceneRoute);
+router.use('/subcategorys', subcategoryRoute);
+router.use('/services', serviceRoute);
 router.use('/news', newsRoute);
 router.use('/banners', bannerRoute);
 router.use('/medias', mediaRoute);
 router.use('/settings', settingRoute);
-router.use('/invoices', authMiddleware, invoiceRoute);
 
 module.exports = router;

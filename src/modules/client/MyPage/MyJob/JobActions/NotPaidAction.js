@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import {payUpfront} from '../../../../../redux/modules/payment'
-import {updateResult} from '../../../../../redux/modules/job'
+import {updateMyJobsList} from '../../../../../redux/modules/job'
 import {Button} from '../../../../../components'
 
 const NotPaidAction = props => {
@@ -32,7 +32,7 @@ const NotPaidAction = props => {
         caption="去支付"
         onPress={() => props.payUpfront({
           body: {id: props.job._id},
-          success: (payload) => {props.updateResult(payload.data)}
+          success: (payload) => {props.updateMyJobsList(payload.data)}
         })}
         />
     </View>
@@ -58,7 +58,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   payUpfront,
-  updateResult
+  updateMyJobsList
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

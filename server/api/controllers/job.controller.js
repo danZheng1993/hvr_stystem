@@ -5,7 +5,7 @@ const ROLES = require('../constants/role');
 const STATUS = require('../constants/status')
 const xmpp = require('simple-xmpp')
 function create(req, res, next) {
-  const job = new Job(req.body);
+  const job = new Job({...req.body, creator: req.user._id});
  // job.user = req.user._id;
 
   job.save()
@@ -29,13 +29,40 @@ function apply(req, res, next) {
   console.log("applied!")
   // Object.assign(req.job, req.body);
   console.log(req.body)
-  if (req.body.applicant && req.body.price) {
-    req.job.applicants.push({applicant: req.body.applicant, price: req.body.price})
+  if (req.body.price) {
+    req.job.applicants.push({applicant: req.user._id, price: req.body.price})
   }
   req.job.save()
   .then((updatedJob) => {
     xmpp.send(`${updatedJob.creator}@desktop-jgen8l2/spark`, `${req.user.userName} applied to your job at price ${req.body.price}`, false);
     res.json(updatedJob);
+  })
+  .catch(next);
+}
+
+
+function getMyJob(req, res, next) {
+  console.log("getMyJob", req.user)
+  let where = {};
+  // if (req.user.role === ROLES.CLIENT) {
+  //   where = { user: req.user._id };
+  // }
+  if (!req.user.role) {      
+    res.status(500).json({ message: 'Invalid request' });
+    return;
+  }
+  if (req.user.role == 'client') {
+    where = {
+      creator: req.user._id
+    }
+  } else if (req.user.role == 'provider') {
+    where = {
+      hired: req.user._id,
+    }
+  }
+  Job.find(where)
+  .then((entries) => {
+    res.json(entries);
   })
   .catch(next);
 }
@@ -161,7 +188,6 @@ function search(req, res, next) {
   .sort({ created: -1 })
 //  .limit(limit)
   .then((entries) => {
-    console.log(entries)
     res.json(entries);
   })
   .catch(next);
@@ -200,4 +226,5 @@ module.exports = {
   giveFeedback,
   weeklyReport,
   getJobByID,
+  getMyJob
 };

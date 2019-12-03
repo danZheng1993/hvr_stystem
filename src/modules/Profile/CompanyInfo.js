@@ -27,7 +27,7 @@ class CompanyInfo extends React.Component {
     const {photo, name,} = this.state
     const {profile} = this.props
     if (photo) {
-      uploadFile('profile/me', 'post',this.createFormData(photo, { type: "companyLicense", id: profile._id }))
+      uploadFile('profile/me', 'post',this.createFormData(photo, { type: "companyLicense"}))
       .then(res => console.log(res))
       .catch(err => alert(err))
     }

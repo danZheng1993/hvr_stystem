@@ -15,7 +15,7 @@ import { createStructuredSelector } from 'reselect';
 import { fonts, colors } from '../styles';
 import Button from './Button'
 import Confirm from './Confirm'
-import { hireJob, updateResult } from '../redux/modules/job'
+import { hireJob, updateMyJobsList } from '../redux/modules/job'
 import { jobsloadingSelector } from '../redux/selectors'
 
 class Applicants extends React.Component {
@@ -34,7 +34,7 @@ class Applicants extends React.Component {
   }
 
   handleSuccess = (data) => {
-    this.props.updateResult(data)
+    this.props.updateMyJobsList(data)
     this.props.navigation.goBack()
   }
 
@@ -119,7 +119,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   hireJob,
-  updateResult
+  updateMyJobsList
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

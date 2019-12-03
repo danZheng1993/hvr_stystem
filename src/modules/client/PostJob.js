@@ -74,8 +74,7 @@ class PostJob extends React.Component {
 
   handleClick = () => {
     const {subcategory, scene, type, description, budget, isPublic, service, count, start, end, location, systembudget} = this.state
-    const { profile} = this.props
-    var body = {subcategory, scene, type, description, budget, isPublic, creator: profile._id, location, services: service, systembudget}
+    var body = {subcategory, scene, type, description, budget, isPublic, location, services: service, systembudget}
     if (type == 'VR全景直播') {
       body = {...body, start, end}
     } else {

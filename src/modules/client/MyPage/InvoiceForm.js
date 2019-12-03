@@ -180,7 +180,6 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  // updateResult,
   updateInvoice,
   updateMyInvoiceList
 };

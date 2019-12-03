@@ -12,6 +12,9 @@ router.route('/')
   
 router.route('/search/')
   .post(jobCtrl.search);
+  
+router.route('/me/')
+  .get(jobCtrl.getMyJob);
 
 router.route('/apply/:jobId')
   .put(jobCtrl.apply);

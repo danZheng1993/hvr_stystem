@@ -10,7 +10,7 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
 import { uploadLink } from '../../../../redux/modules/media'
-import { updateResult } from '../../../../redux/modules/job'
+import { updateMyJobsList } from '../../../../redux/modules/job'
 
 class UploadMedia extends React.Component {
   constructor(props) {
@@ -40,7 +40,7 @@ class UploadMedia extends React.Component {
   };
 
   handleSuccess = (data) => {
-    this.props.updateResult(data)
+    this.props.updateMyJobsList(data)
     this.props.navigation.goBack()
   }
   render() {
@@ -106,7 +106,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   uploadLink,
-  updateResult
+  updateMyJobsList
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

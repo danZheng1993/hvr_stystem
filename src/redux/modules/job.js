@@ -12,10 +12,11 @@ export const UPDATE_JOB = 'UPDATE_JOB'
 export const DELETE_JOB = 'DELETE_JOB'
 export const APPLY_JOB = 'APPLY_JOB'
 export const HIRE_JOB = 'HIRE_JOB'
-export const UPDATE_RESULT = 'UPDATE_RESULT'
+export const UPDATE_MY_JOBS_LIST = 'UPDATE_MY_JOBS_LIST'
 export const GIVE_FEEDBACK = 'GIVE_FEEDBACK'
 export const GET_JOB_FEEDBACK = 'GET_JOB_FEEDBACK'
 export const SEARCH_JOB = 'SEARCH_JOB'
+export const GET_MY_JOB = 'GET_MY_JOB'
 export const SET_JOBS_PAGINATION = 'SET_JOBS_PAGINATION'
 
 // ------------------------------------
@@ -31,7 +32,8 @@ export const applyJob = createAction(APPLY_JOB)
 export const hireJob = createAction(HIRE_JOB)
 export const giveFeedback = createAction(GIVE_FEEDBACK)
 export const getFeedback = createAction(GET_JOB_FEEDBACK)
-export const updateResult = createAction(UPDATE_RESULT)
+export const getMyJob = createAction(GET_MY_JOB)
+export const updateMyJobsList = createAction(UPDATE_MY_JOBS_LIST)
 export const searchJob = createAction(SEARCH_JOB)
 
 const initialState = {
@@ -40,7 +42,8 @@ const initialState = {
   jobs: [],
   loading: false,
   searchResult: [],
-  feedbacks: []
+  feedbacks: [],
+  myJobs: []
 }
 
 const refreshResult = (list, update) => {
@@ -95,7 +98,28 @@ export default handleActions({
     error: payload,
     loading: false
   }),
+  
+  [requestPending(GET_MY_JOB)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(GET_MY_JOB),
+    error: null,
+    loading: true,
+  }),
 
+  [requestSuccess(GET_MY_JOB)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(GET_MY_JOB),
+    myJobs: Object.values(payload),
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(GET_MY_JOB)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(GET_MY_JOB),
+    error: payload,
+    loading: false
+  }),
   
   [requestPending(SEARCH_JOB)]: (state, { payload }) => ({
     ...state,
@@ -141,10 +165,10 @@ export default handleActions({
     loading: false
   }),
 
-  [UPDATE_RESULT]: (state, {payload }) => ({
+  [UPDATE_MY_JOBS_LIST]: (state, {payload }) => ({
     ...state,
-    status: UPDATE_RESULT,
-    searchResult: refreshResult(state.searchResult, payload),
+    status: UPDATE_MY_JOBS_LIST,
+    myJobs: refreshResult(state.myJobs, payload),
     error: null,
     loading: false
   }),

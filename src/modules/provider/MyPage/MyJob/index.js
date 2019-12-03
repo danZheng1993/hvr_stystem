@@ -13,8 +13,8 @@ import { createStructuredSelector } from 'reselect';
 import { Button, Loader, RadioGroup } from '../../../../components'
 import { fonts, colors } from '../../../../styles';
 import ProviderJobsList from './ProviderJobsList'
-import { searchJob } from '../../../../redux/modules/job'
-import { jobsloadingSelector, profileSelector, jobsSearchResultSelector } from '../../../../redux/selectors'
+import { getMyJob } from '../../../../redux/modules/job'
+import { jobsloadingSelector, profileSelector, jobsSearchResultSelector, myJobsSelector } from '../../../../redux/selectors'
 
 const status = ['全部', '竞标中', '已选用','待付款','待拍摄', '待验收']
 
@@ -27,13 +27,11 @@ class MyJobList extends React.Component {
   }
 
   componentWillMount() {
-    const {searchJob, profile, navigation} = this.props
+    const {getMyJob, profile, navigation} = this.props
     const selected = navigation.getParam('selected', 0)
     this.props.setRadioGroupsState({ ...this.props.radioGroupsState, 0: selected })
     this.setState({selected})
-    searchJob({
-      body: {hired: profile._id}
-    })
+    getMyJob()
   }
 
   handleClick = (index) => {
@@ -112,13 +110,13 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  jobs: jobsSearchResultSelector,
+  jobs: myJobsSelector,
   jobsloading: jobsloadingSelector,
   profile: profileSelector
 });
 
 const mapDispatchToProps = {
-  searchJob
+  getMyJob
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

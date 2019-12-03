@@ -3,7 +3,7 @@ const Feedback = require('../models/feedback.model');
 const ROLES = require('../constants/role');
 
 function create(req, res, next) {
-  const feedback = new Feedback(req.body);
+  const feedback = new Feedback({...req.body, sender: req.user._id});
 
   feedback.save()
   .then((newFeedback) => {

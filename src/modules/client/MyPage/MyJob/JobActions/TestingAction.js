@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import {finalPay} from '../../../../../redux/modules/payment'
-import {updateResult} from '../../../../../redux/modules/job'
+import {updateMyJobsList} from '../../../../../redux/modules/job'
 import {Button, Confirm} from '../../../../../components'
 
 const TestingAction = props => {
@@ -32,7 +32,7 @@ const TestingAction = props => {
         caption="确认验收"
         onPress={() => Confirm('提示', '是否确认验收并支付尾款', () => props.finalPay({
           body: {id: props.job._id},
-          success: (payload) => {props.updateResult(payload.data)}
+          success: (payload) => {props.updateMyJobsList(payload.data)}
         }))}
       />
     </View>
@@ -58,7 +58,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   finalPay,
-  updateResult
+  updateMyJobsList
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

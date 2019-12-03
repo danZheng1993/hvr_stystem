@@ -213,3 +213,6 @@ export const usersloadingSelector = (state) =>
 export const myInvoiceSelector = (state) =>
   get(state, 'invoice.myInvoice', false)
 
+export const myJobsSelector = (state) =>
+  get(state, 'job.myJobs', false)
+

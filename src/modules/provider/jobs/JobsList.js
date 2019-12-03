@@ -16,8 +16,8 @@ import Icon from 'react-native-vector-icons/Entypo';
 import { Button, Loader, NoData, Profile} from '../../../components';
 import { fonts, colors } from '../../../styles';
 
-import { getJobs } from '../../../redux/modules/job'
-import {  jobsListSelector, jobsloadingSelector, profileSelector } from '../../../redux/selectors'
+import { searchJob } from '../../../redux/modules/job'
+import {  jobsListSelector, jobsloadingSelector, profileSelector, jobsSearchResultSelector } from '../../../redux/selectors'
 
 class JobsList extends React.Component {
   constructor(props) {
@@ -27,21 +27,24 @@ class JobsList extends React.Component {
     }
   }
   componentWillMount() {
-    const {getJobs, profile} = this.props
+    const {searchJob, profile} = this.props
     this.setState({location: profile.location})
-    getJobs()
+    searchJob({
+      body: {location: Profile.location}
+    })
   }
 
   chooseLocation = (location) => {
+    const {searchJob} = this.props
     this.setState({location})
+    searchJob({
+      body: {location}
+    })
   }
 
   render() {
     const {jobs, jobsloading} = this.props
     const {location} = this.state
-    var jobslist = jobs
-    if (jobs.length)
-     jobslist = jobs.filter(job => job.location == location)
     return (
       <>
         <View style={{ height: 50, flexDirection: "row" }}>
@@ -62,7 +65,7 @@ class JobsList extends React.Component {
         <View style={styles.description}>
          { jobsloading ? <Loader
           loading={jobsloading} /> :
-         jobslist.length ? jobslist.map((job, index) => (
+         jobs.length ? jobs.map((job, index) => (
            <View key={index} style={styles.componentsSection}>
              <Text size={14}>订单信息:<Text>{job.status}</Text></Text>
              <Text size={14}>订单编号:<Text>{job._id}</Text></Text>
@@ -134,13 +137,13 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  jobs: jobsListSelector,
+  jobs: jobsSearchResultSelector,
   jobsloading: jobsloadingSelector,
   profile: profileSelector
 });
 
 const mapDispatchToProps = {
-  getJobs
+  searchJob
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

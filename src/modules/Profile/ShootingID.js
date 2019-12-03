@@ -27,12 +27,12 @@ class ShootingID extends React.Component {
     const {frontPhoto, backPhoto,} = this.state
     const {profile} = this.props
     if (frontPhoto) {
-      uploadFile('profile/me', 'post',this.createFormData(frontPhoto, { type: "frontID", id: profile._id }))
+      uploadFile('profile/me', 'post',this.createFormData(frontPhoto, { type: "frontID"}))
       .then(res => console.log(res))
       .catch(err => alert(err))
     }
     if (backPhoto) {
-      uploadFile('profile/me', 'post',this.createFormData(backPhoto, { type: "backID", id: profile._id }))
+      uploadFile('profile/me', 'post',this.createFormData(backPhoto, { type: "backID"}))
       .then(res => console.log(res))
       .catch(err => alert(err))
     }

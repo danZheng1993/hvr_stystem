@@ -50,7 +50,7 @@ class ApplyJob extends React.Component {
     }
     applyJob({
       id: id,
-      body: { applicant: profile._id, price},
+      body: {price},
     })  
   };
 

@@ -26,6 +26,7 @@ function login(req, res, next) {
           userName: user.userName,
           phoneNumber: user.phoneNumber,
           role: user.role,
+          permission: user.permission
         }, config.jwtSecret, { expiresIn: config.jwtExpires });
         
         res.json({
@@ -59,6 +60,7 @@ function signup(req, res, next) {
       userName: newUser.userName,
       phoneNumber: newUser.phoneNumber,
       role: newUser.role,
+      permission: newUser.permission
     }, config.jwtSecret, { expiresIn: config.jwtExpires });
     console.log(newUser)
     let data = {
@@ -159,6 +161,7 @@ function checkcode(req, res, next) {
               userName: user.userName,
               phoneNumber: user.phoneNumber,
               role: user.role,
+              permission: user.permission
             }, config.jwtSecret, { expiresIn: config.jwtExpires });
             console.log("token", token)
             res.json({
