@@ -34,6 +34,7 @@ function apply(req, res, next) {
   }
   req.job.save()
   .then((updatedJob) => {
+    xmpp.send(`${updatedJob.creator}@desktop-jgen8l2/spark`, `${req.user.userName} applied to your job at price ${req.body.price}`, false);
     res.json(updatedJob);
   })
   .catch(next);

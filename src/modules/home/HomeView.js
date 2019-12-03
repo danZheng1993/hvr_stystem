@@ -18,7 +18,7 @@ import { getServices } from '../../redux/modules/service'
 import { getNewss } from '../../redux/modules/news'
 import { getBanners } from '../../redux/modules/banner'
 import { getMedias } from '../../redux/modules/media'
-import { addToContacts, pushNotification } from '../../redux/modules/auth'
+import { addToContacts, pushNotification, pushUnreadMessages } from '../../redux/modules/auth'
 
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
@@ -57,17 +57,12 @@ class HomeScreen extends React.Component {
   handleMessage(message) {
     console.log("message>>>", message)
     if (!message.body) return
-    const {profile, pushNotification} = this.props
+    const {profile, pushNotification, pushUnreadMessages} = this.props
     const from = String(message.from).split('@')[0]
-    pushNotification(from)
+    pushUnreadMessages(from)
     if (from == 'system' && message.body) {
-      loadItem('notification')
-      .then((res) =>  {
-        let notification = res || ''
-        notification += notification ? (',' + message.body) : message.body
-        console.log(notification)
-        saveItem('notification', notification).then(() => console.log("success"))
-      })
+      console.warn(message.body)
+      pushNotification(message)
     } else {
       if (profile.contacts.indexOf(from) == -1) {
         this.props.addToContacts({
@@ -140,7 +135,8 @@ const mapDispatchToProps = {
   getBanners,
   getMedias,
   addToContacts,
-  pushNotification
+  pushNotification,
+  pushUnreadMessages
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

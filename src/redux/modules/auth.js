@@ -11,6 +11,7 @@ export const DO_SIGNUP = 'DO_SIGNUP'
 export const GET_PROFILE = 'GET_PROFILE'
 export const SAVE_PROFILE = 'SAVE_PROFILE'
 export const PUSH_NOTIFICATION = 'PUSH_NOTIFICATION'
+export const PUSH_UNREAD_MESSAGES = 'PUSH_UNREAD_MESSAGES'
 export const GET_CONTACTS = 'GET_CONTACTS'
 export const ADD_TO_CONTACTS = 'ADD_TO_CONTACTS'
 export const ADD_TO_COLLECTIONS = 'ADD_TO_COLLECTIONS'
@@ -39,6 +40,7 @@ export const removeFromCollections = createAction(REMOVE_FROM_COLLECTIONS)
 export const addToAttentions = createAction(ADD_TO_ATTENTIONS)
 export const removeFromAttentions = createAction(REMOVE_FROM_ATTENTIONS)
 export const pushNotification = createAction(PUSH_NOTIFICATION)
+export const pushUnreadMessages = createAction(PUSH_UNREAD_MESSAGES)
 
 const getInitialState = async () => {
   let authRestore = await AsyncStorage.getItem('hvr_auth') || null
@@ -50,7 +52,8 @@ const getInitialState = async () => {
     verified: false,
     loading: false,
     contacts: [],
-    unread: {}
+    unread: {},
+    notification: []
   } : {
     token: null,
     me: null,
@@ -60,6 +63,7 @@ const getInitialState = async () => {
     loading: false,
     contacts: [],
     unread: {},
+    notification: []
   }
 }
 
@@ -70,6 +74,7 @@ var initialState = {    token: null,
     verified: false,
     loading: false,
     contacts: [],
+    notification: [],
     unread: {},}
 getInitialState().then(val => initialState = val)
 // ------------------------------------
@@ -109,10 +114,18 @@ export default handleActions({
     loading: false
   }),
 
+  [PUSH_UNREAD_MESSAGES]: (state, { payload }) => ({
+    ...state,
+    status: PUSH_UNREAD_MESSAGES,
+    unread: updateUnreadMessageList(state.unread, payload),
+    error: null,
+    loading: false
+  }),
+
   [PUSH_NOTIFICATION]: (state, { payload }) => ({
     ...state,
     status: PUSH_NOTIFICATION,
-    unread: updateUnreadMessageList(state.unread, payload),
+    notification: [...state.notification, payload],
     error: null,
     loading: false
   }),

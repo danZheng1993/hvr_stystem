@@ -1,4 +1,4 @@
-import { ListItem } from 'react-native-elements'
+import { ListItem, Badge } from 'react-native-elements'
 import { View, Text, StyleSheet } from 'react-native'
 import React, {Component} from 'react'
 import {Button} from '../components'
@@ -21,31 +21,14 @@ class Notification extends React.Component {
             notification: []
         }
     }
-
     componentWillMount() {
-        loadItem('notification').then(res => {
-            const items = res || ''
-            this.setState({notification: items.split(',')})
-        })
         this.props.getContacts()
     }
-
-    clearItems = () => {
-        deleteItem('notification').then(() => {
-            console.log("delete success")
-            this.setState({
-                notification: []
-            })
-        }
-        )
-    }
-
     startChat = (id) => {
         this.props.navigation.navigate('Chatting', {to: id})
     }
 
     render () {
-        const {notification} = this.state
         const {contacts, unread} = this.props
         return (
             <View style={styles.container}>
@@ -55,6 +38,7 @@ class Notification extends React.Component {
                     style={styles.demoButton}
                     action
                     bgColor="#4F44C1"
+                    onPress = {() => this.props.navigation.navigate('SystemNotification')}
                     >
                     <Text>
                     <Icon name="dollar-sign" size={20} color="white" />
@@ -65,24 +49,27 @@ class Notification extends React.Component {
                 </Text>
                 </View>
                 <View style={styles.buttonContainer} >
-                <Button
-                    style={styles.demoButton}
-                    action
-                    bgColor="#EF1F78"
-                    >
-                    <Text>
-                    <Icon name="bell" size={20} color="white" />
-                    </Text>
-                </Button>
-                <Text>
-                通知消息
-                </Text>
+                <View style={{flexDirection: 'row'}}>
+                    {!!unread['system'] && <Badge value={unread['system']} status="error"/>}
+                    <Button
+                        style={styles.demoButton}
+                        action
+                        bgColor="#EF1F78"
+                        onPress = {() => this.props.navigation.navigate('SystemNotification')}
+                        >
+                        <Text>
+                        <Icon name="bell" size={20} color="white" />
+                        </Text>
+                    </Button>
+                </View>
+                <Text>通知消息</Text>
                 </View>
                 <View style={styles.buttonContainer} >
                 <Button
                     style={styles.demoButton}
                     action
                     bgColor="#3CD4A0"
+                    onPress = {() => this.props.navigation.navigate('SystemNotification')}
                     >
                     <Text>
                     <Icon name="star" size={20} color="white" />
@@ -93,17 +80,6 @@ class Notification extends React.Component {
                 </Text>
                 </View>
             </View>
-            
-                {/* {notification.length ? notification.map((notificationItem, index) => (
-                    <ListItem
-                        key={index}
-                        title= {notificationItem}
-                        hideChevron={false}
-                        // onPress = {() => props.navigation.navigate('PersonalInformation')}
-                        bottomDivider
-                    />
-                )) : <Text>No Items to display</Text> 
-                } */}
                 {contacts && contacts.map((contact, i) => (
                     typeof(contact) == "object" &&
                     <ListItem

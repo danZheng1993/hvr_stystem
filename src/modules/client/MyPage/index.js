@@ -31,7 +31,7 @@ class MyPage extends React.Component {
           <View style={{flexDirection: 'row'}}>
             <Profile user = {profile} navigation={this.props.navigation} />
             <View style={styles.settingsContainer}>
-                {!!unreadCount && <Badge value={unreadCount} status="error" key={unreadCount}/>}
+                {!!unreadCount && <Badge value={unreadCount} status="error"/>}
                 <Icon
                   style={styles.demoIcon}
                   name="bell"

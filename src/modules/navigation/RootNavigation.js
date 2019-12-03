@@ -67,6 +67,7 @@ import Chatting from '../../components/Chatting';
 import WebViewer from '../../components/WebViewer';
 import SearchBar from '../../components/SearchBar';
 import Notification from '../../components/Notification';
+import SystemNotification from '../../components/SystemNotification';
 import Player from '../../components/Player';
 import SearchResult from '../../components/SearchResult';
 import Location from '../../components/Location';
@@ -368,6 +369,13 @@ const stackNavigator = createStackNavigator(
 
     Notification: {
       screen: Notification,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    SystemNotification: {
+      screen: SystemNotification,
       navigationOptions: {
         header: null,
       },
