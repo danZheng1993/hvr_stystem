@@ -13,7 +13,7 @@ export const profileSelector = (state) =>
   get(state, 'auth.me', null)
 
 export const unreadMessagesSelector = (state) =>
-  get(state, 'auth.unread', null)
+  get(state, 'auth.unread', {})
 
 export const contactsSelector = (state) =>
   get(state, 'auth.contacts', null)

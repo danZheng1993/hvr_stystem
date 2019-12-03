@@ -17,17 +17,17 @@ class Chatting extends React.Component {
     this.state = {
       messages: [],
       userId: null,
-      to: ''
+      to: '',
     };
 
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
     this.onSend = this.onSend.bind(this);
     this._storeMessages = this._storeMessages.bind(this);
-    XMPP.on('message', (message) => this.onReceivedMessage(message));
 
   }
 
-  componentWillMount() {
+  componentWillMount() {  
+
     const {navigation, profile} = this.props
     let to = navigation.getParam('to', '')
     if (to != '') {
@@ -41,9 +41,10 @@ class Chatting extends React.Component {
         params: {to},
         success: (payload) => this.initMessages(payload.data.messages)
       })
+      XMPP.on('message', (message) => this.onReceivedMessage(message));
     }
   }
-
+  
   initMessages = (chatsList) => {
     const {to} = this.state
     var message= [
@@ -83,7 +84,10 @@ class Chatting extends React.Component {
   }
 
   onReceivedMessage(messages) {
-      console.log(messages)
+      const {navigation} = this.props
+      // if (navigation.state.routeName != 'Chatting') return
+
+      console.log(navigation.state.routeName, messages)
       var message= [
         {
           _id: new Date().getTime(),

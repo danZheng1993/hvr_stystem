@@ -59,8 +59,7 @@ class HomeScreen extends React.Component {
     if (!message.body) return
     const {profile, pushNotification} = this.props
     const from = String(message.from).split('@')[0]
-    pushNotification(message)
-    console.warn(from)
+    pushNotification(from)
     if (from == 'system' && message.body) {
       loadItem('notification')
       .then((res) =>  {

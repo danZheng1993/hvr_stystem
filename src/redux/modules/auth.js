@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
 import { requestSuccess, requestFail, requestPending } from '../api/request'
 import { AsyncStorage } from 'react-native';
-import SyncStorage from 'sync-storage'
+import {updateUnreadMessageList} from '../api/helpers'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -50,7 +50,7 @@ const getInitialState = async () => {
     verified: false,
     loading: false,
     contacts: [],
-    unread: []
+    unread: {}
   } : {
     token: null,
     me: null,
@@ -59,10 +59,18 @@ const getInitialState = async () => {
     verified: false,
     loading: false,
     contacts: [],
-    unread: [],
+    unread: {},
   }
 }
-var initialState = {}
+
+var initialState = {    token: null,
+    me: null,
+    status: 'INIT',
+    error: null,
+    verified: false,
+    loading: false,
+    contacts: [],
+    unread: {},}
 getInitialState().then(val => initialState = val)
 // ------------------------------------
 // Reducer
@@ -80,7 +88,7 @@ export default handleActions({
     status: requestSuccess(DO_LOGIN),
     me: payload.info,
     loading: false,
-    unread: []
+    unread: {}
   }),
 
   [requestFail(DO_LOGIN)]: (state, { payload }) => ({
@@ -104,7 +112,7 @@ export default handleActions({
   [PUSH_NOTIFICATION]: (state, { payload }) => ({
     ...state,
     status: PUSH_NOTIFICATION,
-    unread: [...state.unread, payload],
+    unread: updateUnreadMessageList(state.unread, payload),
     error: null,
     loading: false
   }),
@@ -125,7 +133,7 @@ export default handleActions({
     loading: false,
     token: payload.token,
     me: payload.info,
-    unread: []
+    unread: {}
   }),
 
   [requestFail(DO_SIGNUP)]: (state, { payload }) => ({
@@ -176,7 +184,7 @@ export default handleActions({
     verified: payload.verified,
     error: null,
     loading: false,
-    unread: []
+    unread: {}
   }),
 
   [requestFail(CHECK_CODE)]: (state, { payload }) => ({

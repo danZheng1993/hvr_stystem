@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { colors, fonts } from '../styles';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import {findIndex} from 'lodash'
 import { createStructuredSelector } from 'reselect';
 import { NavigationActions } from 'react-navigation'
 import {getContacts} from '../redux/modules/auth'
@@ -45,7 +46,7 @@ class Notification extends React.Component {
 
     render () {
         const {notification} = this.state
-        const {contacts} = this.props
+        const {contacts, unread} = this.props
         return (
             <View style={styles.container}>
               <View style={styles.demoIconsContainer}>
@@ -113,7 +114,7 @@ class Notification extends React.Component {
                     subtitle={contact.overview}
                     onPress={() => this.startChat(contact._id)}
                     bottomDivider
-                    badge={{ value: 0, textStyle: { color: 'white' }, badgeStyle: { backgroundColor: 'red' } }}
+                    badge={!!unread[contact._id] ? { value: unread[contact._id] , textStyle: { color: 'white' }, badgeStyle: { backgroundColor: 'red' } }: null}
                     />
                 ))}
             </View>

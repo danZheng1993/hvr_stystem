@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Button, Dropdown, Profile } from '../../../components';
-
+import {sum, values} from 'lodash'
 import { profileSelector, unreadMessagesSelector } from '../../../redux/selectors'
 class MyPage extends React.Component {
   constructor(props) {
@@ -20,6 +20,7 @@ class MyPage extends React.Component {
 
   render () {
     const {profile, unread} = this.props
+    const unreadCount = sum(values(unread)) || 0
     return (
       <ScrollView
         style={styles.container}
@@ -30,7 +31,7 @@ class MyPage extends React.Component {
           <View style={{flexDirection: 'row'}}>
             <Profile user = {profile} navigation={this.props.navigation} />
             <View style={styles.settingsContainer}>
-                {!!unread.length && <Badge value={unread.length} status="error" />}
+                {!!unreadCount && <Badge value={unreadCount} status="error" key={unreadCount}/>}
                 <Icon
                   style={styles.demoIcon}
                   name="bell"
