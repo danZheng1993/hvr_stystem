@@ -15,23 +15,11 @@ class CheckVerificationCode extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      phoneNumber: '',
-      onSuccess: null
-    }
-  }
-  
-  componentWillMount() {
-    const {getUser, navigation} = this.props
-    let phoneNumber = navigation.getParam('phoneNumber', '')
-    let onSuccess = navigation.getParam('onSuccess', null)
-    if (phoneNumber != '') {
-      this.setState({phoneNumber, onSuccess})
     }
   }
 
   handleCheck = (code, callback) => {
-    const { phoneNumber } = this.state
-    const {checkcode} = this.props
+    const {phoneNumber, checkcode} = this.props
     let res = false
     checkcode({
       body:{ phoneNumber, code: code},
@@ -40,15 +28,13 @@ class CheckVerificationCode extends React.Component {
     })
   }
   handleSuccess = () => {
-    const {onSuccess} = this.state
+    const {onSuccess} = this.props
     onSuccess()
-    this.props.navigation.goBack()
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.description}>
+      <View>
           <Text size={28} black>
             输入短信验证码
           </Text>
@@ -66,56 +52,13 @@ class CheckVerificationCode extends React.Component {
           <Text size={14} black>
             59s后可重新发送
           </Text>
-        </View>
       </View>    
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'space-between'
-  },
-  headline: {
-    alignSelf: 'flex-start',
-    justifyContent: 'space-around'
-  },
-  photo: {
-    borderRadius: 100,
-    borderColor: colors.gray,
-    backgroundColor: colors.info,
-    width: 100,
-    height: 100,
-  },
-  touch: {
-    borderColor: colors.gray,
-    borderRadius: 10,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    alignSelf: "stretch",
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 15,
-    height: 200
-  },
-  input: {
-    marginBottom: 15,
-  },
-  description: {
-    padding: 20,
-    marginBottom: 20,
-    alignSelf: 'stretch'
-  },
-  buttonsContainer: {
-    alignSelf: 'stretch',
-    margin: 20
-  },
-  button: {
-    marginBottom: 20,
-    alignSelf: 'stretch',
-  },
+ 
 });
 
 const mapStateToProps = createStructuredSelector({

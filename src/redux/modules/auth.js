@@ -197,6 +197,7 @@ export default handleActions({
     token: payload.token,
     status: requestSuccess(CHECK_CODE),
     verified: payload.verified,
+    me: payload.info,
     error: null,
     loading: false,
     unread: {},

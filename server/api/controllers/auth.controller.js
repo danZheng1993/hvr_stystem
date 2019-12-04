@@ -165,7 +165,8 @@ function checkcode(req, res, next) {
             }, config.jwtSecret, { expiresIn: config.jwtExpires });
             console.log("token", token)
             res.json({
-              token
+              token,
+              info: user,
             })
             return;
           })

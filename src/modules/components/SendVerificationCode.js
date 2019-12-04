@@ -11,6 +11,7 @@ import { colors } from '../../styles'
 import { Button } from '../../components';
 import { Text } from '../../components/StyledText';
 import {sendcode} from '../../redux/modules/auth'
+import CheckVerificationCode from './CheckVerificationCode';
 
 class SendVerificationCode extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class SendVerificationCode extends React.Component {
   }
   state = {
     phoneNumber: '',
+    isCheck: false
   }
   
   handleClick = () => {
@@ -27,14 +29,16 @@ class SendVerificationCode extends React.Component {
     this.props.sendcode({
       body: { phoneNumber: phoneNumber},
       success: () => {    
-        this.props.navigation.navigate('CheckVerificationCode',{phoneNumber: phoneNumber, onSuccess: onSuccess})
+        this.setState({isCheck: true})
       }
     })
   };
   
   render() {
+    const {isCheck, phoneNumber} = this.state
     return (
-      <>
+      <View>
+        {!isCheck ? <View>
           <Text size={28} black>
             绑定手机号
           </Text>
@@ -58,7 +62,10 @@ class SendVerificationCode extends React.Component {
             onPress={() => this.handleClick()}
           />
         </View>
-      </>
+        </View> :
+        <CheckVerificationCode phoneNumber = {phoneNumber} onSuccess = {this.props.onSuccess}/>}
+      </View>
+      
 
     )
   }
