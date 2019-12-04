@@ -33,13 +33,14 @@ class CheckVerificationCode extends React.Component {
   }
 
   render() {
+    const {phoneNumber} = this.props
     return (
       <View>
           <Text size={28} black>
             输入短信验证码
           </Text>
           <Text size={14} black>
-            验证码已发送至  13581644633
+            验证码已发送至  {phoneNumber}
           </Text>
           <CodePin
             number={4} // You must pass number prop, it will be used to display 4 (here) inputs
@@ -49,9 +50,6 @@ class CheckVerificationCode extends React.Component {
             error="请输入正确的验证码，再试一次" // If user fail (fill '2017' for instance)
             autoFocusFirst={false} // disabling auto-focus
           />
-          <Text size={14} black>
-            59s后可重新发送
-          </Text>
       </View>    
     )
   }

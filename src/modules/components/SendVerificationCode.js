@@ -12,14 +12,15 @@ import { Button } from '../../components';
 import { Text } from '../../components/StyledText';
 import {sendcode} from '../../redux/modules/auth'
 import CheckVerificationCode from './CheckVerificationCode';
-
+var timer
 class SendVerificationCode extends React.Component {
   constructor(props) {
     super(props)
   }
   state = {
     phoneNumber: '',
-    isCheck: false
+    isCheck: false,
+    counter: 10,
   }
   
   handleClick = () => {
@@ -29,13 +30,29 @@ class SendVerificationCode extends React.Component {
     this.props.sendcode({
       body: { phoneNumber: phoneNumber},
       success: () => {    
+        timer = setInterval(this.countTime, 1000)
         this.setState({isCheck: true})
       }
     })
   };
   
+  countTime = () => {
+    var {counter} = this.state
+    counter --;
+    if (counter == 0) {       
+      counter = 60
+      clearInterval(timer)
+      this.setState({isCheck: false})
+    }
+    this.setState({counter})
+  }
+
+  componentWillUnmount() {
+    clearInterval(timer)
+  }
+
   render() {
-    const {isCheck, phoneNumber} = this.state
+    const {isCheck, phoneNumber, counter} = this.state
     return (
       <View>
         {!isCheck ? <View>
@@ -63,7 +80,10 @@ class SendVerificationCode extends React.Component {
           />
         </View>
         </View> :
-        <CheckVerificationCode phoneNumber = {phoneNumber} onSuccess = {this.props.onSuccess}/>}
+        <View>
+          <CheckVerificationCode phoneNumber = {phoneNumber} onSuccess = {this.props.onSuccess}/>
+          <Text>{counter}后可重新发送</Text>
+        </View>}
       </View>
       
 
