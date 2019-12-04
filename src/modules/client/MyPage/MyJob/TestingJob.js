@@ -48,7 +48,7 @@ class TestingJob extends React.Component {
          <View style={styles.componentsSection}>
           <Text size={14}>定价 : ¥{job.price}</Text>
           <Text size={14}>已支付首付款 : ¥{job.price - job.upfront}</Text>
-          <TestingAction />
+          <TestingAction job={job} navigation={this.props.navigation}/>
          </View>
          </View>
       </View>

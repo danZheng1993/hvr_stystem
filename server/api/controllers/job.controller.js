@@ -43,7 +43,7 @@ function apply(req, res, next) {
 
 function getMyJob(req, res, next) {
   console.log("getMyJob", req.user)
-  let where = {};
+  let where = {flag: true};
   // if (req.user.role === ROLES.CLIENT) {
   //   where = { user: req.user._id };
   // }
@@ -53,10 +53,12 @@ function getMyJob(req, res, next) {
   }
   if (req.user.role == 'client') {
     where = {
+      ...where,
       creator: req.user._id
     }
   } else if (req.user.role == 'provider') {
     where = {
+      ...where,
       hired: req.user._id,
     }
   }
@@ -80,9 +82,21 @@ function hire(req, res, next) {
   .catch(next);
 }
 
+function cancel(req, res, next) {
+  console.log("cancel job")
+  Object.assign(req.job, {flag: false});
+  console.log(req.body)
+  req.job.save()
+  .then((updatedJob) => {
+    // xmpp.send(`${req.body.hired}@desktop-jgen8l2/spark`, 'congratulations! you were hired ', false);
+    res.json(updatedJob);
+  })
+  .catch(next);
+}
+
 function giveFeedback(req, res, next) {
   console.log("giveFeedback?", req.body)
-  if (!req.body) {
+  if (!req.body) {4
     res.status(500).json({ message: 'Invalid Request' });
     return;
   }
@@ -223,6 +237,7 @@ module.exports = {
   search,
   getFeedback,
   hire,
+  cancel,
   giveFeedback,
   weeklyReport,
   getJobByID,

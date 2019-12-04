@@ -47,7 +47,7 @@ class FinishingJob extends React.Component {
          <View style={styles.componentsSection}>
           <Text size={14}>定价 : ¥{job.price}</Text>
           <Text size={14}>订单总金额 : ¥{job.price - job.upfront}</Text>
-          <FinishingAction />
+          <FinishingAction job={job} navigation={this.props.navigation}/>
          </View>
          </View>
       </View>

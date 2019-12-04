@@ -84,7 +84,7 @@ const JobSchema = new Schema({
     default: ''
   },
   status: { type: String, enum: Object.values(STATUS), default: STATUS.BIDDING },
-
+  flag: {type: Boolean, default: true}
 }, {
   timestamp: true,
 });

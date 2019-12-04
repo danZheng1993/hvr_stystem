@@ -7,11 +7,10 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import {payUpfront} from '../../../../../redux/modules/payment'
-import {updateMyJobsList, cancelJob, removeFromMyJobsList} from '../../../../../redux/modules/job'
+import { cancelJob, removeFromMyJobsList} from '../../../../../redux/modules/job'
 import {Button} from '../../../../../components'
 
-const NotPaidAction = props => {
+const WaitingAction = props => {
   return (
     <View style={styles.buttonsContainer}>
         <Button
@@ -29,15 +28,12 @@ const NotPaidAction = props => {
           success: () => {props.removeFromMyJobsList({id: props.job._id})}
         })}
         />
-        <Button
+       <Button
         small
         style={styles.button}
-        caption="去支付"
-        onPress={() => props.payUpfront({
-          body: {id: props.job._id},
-          success: (payload) => {props.updateMyJobsList(payload.data)}
-        })}
-        />
+        caption="催一催"
+        onPress={() => alert("PLEASE!!!")}
+      />
     </View>
   )
 }
@@ -60,12 +56,10 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  payUpfront,
   cancelJob,
-  removeFromMyJobsList,
-  updateMyJobsList
+  removeFromMyJobsList
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect) (NotPaidAction)
+export default compose(withConnect) (WaitingAction)

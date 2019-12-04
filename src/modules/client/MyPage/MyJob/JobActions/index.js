@@ -6,31 +6,7 @@ import {
 import {Button, Confirm} from '../../../../../components'
 import NotPaidAction from './NotPaidAction'
 import TestingAction from './TestingAction'
-
-const WaitingAction = props => {
-  return (
-    <View style={styles.buttonsContainer}>
-      <Button
-        small
-        style={styles.button}
-        caption="联系服务商"
-        onPress={this.handleClick}
-      />
-      <Button
-        small
-        style={styles.button}
-        caption="取消订单"
-        onPress={this.handleClick}
-      />
-      <Button
-        small
-        style={styles.button}
-        caption="催一催"
-        onPress={() => alert("PLEASE!!!")}
-      />
-    </View>
-  )
-}
+import WaitingAction from './WaitingAction'
 
 const FeedbackAction = ({navigation,job}) => {
   return (

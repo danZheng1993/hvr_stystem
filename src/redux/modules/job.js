@@ -12,7 +12,9 @@ export const UPDATE_JOB = 'UPDATE_JOB'
 export const DELETE_JOB = 'DELETE_JOB'
 export const APPLY_JOB = 'APPLY_JOB'
 export const HIRE_JOB = 'HIRE_JOB'
+export const CANCEL_JOB = 'CANCEL_JOB'
 export const UPDATE_MY_JOBS_LIST = 'UPDATE_MY_JOBS_LIST'
+export const REMOVE_FROM_MY_JOBS_LIST = 'REMOVE_FROM_MY_JOBS_LIST'
 export const GIVE_FEEDBACK = 'GIVE_FEEDBACK'
 export const GET_JOB_FEEDBACK = 'GET_JOB_FEEDBACK'
 export const SEARCH_JOB = 'SEARCH_JOB'
@@ -30,10 +32,12 @@ export const updateJob = createAction(UPDATE_JOB)
 export const deleteJob = createAction(DELETE_JOB)
 export const applyJob = createAction(APPLY_JOB)
 export const hireJob = createAction(HIRE_JOB)
+export const cancelJob = createAction(CANCEL_JOB)
 export const giveFeedback = createAction(GIVE_FEEDBACK)
 export const getFeedback = createAction(GET_JOB_FEEDBACK)
 export const getMyJob = createAction(GET_MY_JOB)
 export const updateMyJobsList = createAction(UPDATE_MY_JOBS_LIST)
+export const removeFromMyJobsList = createAction(REMOVE_FROM_MY_JOBS_LIST)
 export const searchJob = createAction(SEARCH_JOB)
 
 const initialState = {
@@ -173,6 +177,14 @@ export default handleActions({
     loading: false
   }),
 
+  [REMOVE_FROM_MY_JOBS_LIST]: (state, {payload }) => ({
+    ...state,
+    status: REMOVE_FROM_MY_JOBS_LIST,
+    myJobs: reject(state.myJobs, { _id: payload.id }),
+    error: null,
+    loading: false
+  }),
+
   [requestPending(CREATE_JOB)]: (state, { payload }) => ({
     ...state,
     status: requestPending(CREATE_JOB),
@@ -257,6 +269,28 @@ export default handleActions({
   [requestFail(HIRE_JOB)]: (state, { payload }) => ({
     ...state,
     status: requestFail(HIRE_JOB),
+    error: payload,
+    loading: false
+  }),
+
+  [requestPending(CANCEL_JOB)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(CANCEL_JOB),
+    error: null,
+    loading: true,
+  }),
+
+  [requestSuccess(CANCEL_JOB)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(CANCEL_JOB),
+    job: payload,
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(CANCEL_JOB)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(CANCEL_JOB),
     error: payload,
     loading: false
   }),

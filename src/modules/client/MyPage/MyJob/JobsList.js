@@ -76,7 +76,7 @@ export default class JobsList extends React.Component {
                 <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
                 <Text size={14}>首付款已支付 : <Text>¥{job.price}</Text></Text>
               </View>
-              <WaitingAction />
+              <WaitingAction job={job} navigation={this.props.navigation}/>
             </View>}
              {job.status == '待验收' && 
               <View>
@@ -98,7 +98,7 @@ export default class JobsList extends React.Component {
               <View stye={styles.textContainer}>
                 <Text size={14}>订单总金额 : <Text>¥{job.price}</Text></Text>
               </View>
-              <FinishingAction />
+              <FinishingAction job={job} navigation={this.props.navigation}/>
             </View>}
             </View>
             </TouchableRipple>

@@ -21,6 +21,9 @@ router.route('/apply/:jobId')
   
 router.route('/hire/:jobId')
   .put(jobCtrl.hire);
+  
+router.route('/cancel/:jobId')
+  .put(jobCtrl.cancel);
 
 router.route('/feedback/')
     .post(jobCtrl.getFeedback);
