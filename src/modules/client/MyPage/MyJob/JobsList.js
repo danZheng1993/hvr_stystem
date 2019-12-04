@@ -26,11 +26,10 @@ export default class JobsList extends React.Component {
 
   render() {   
     const {jobs, navigation, upfrontRate} = this.props
-    console.log(jobs)
     return (
         <ScrollView>          
          {jobs.length ? jobs.map((job, index) => (
-          <TouchableRipple key={index} onPress={() => navigation.navigate('ClientJobDetail', {job: job})}>
+          <TouchableRipple key={index} onPress={() => navigation.navigate('ClientJobDetail', {id: job._id})}>
            <View key={index} style={styles.componentsSection}>
              <Text size={14}>订单信息 : <Text>{job.status}</Text></Text>
              <Text size={14}>订单编号 : <Text>{job._id}</Text></Text>
