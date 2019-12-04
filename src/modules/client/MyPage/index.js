@@ -71,7 +71,7 @@ class MyPage extends React.Component {
                   style={styles.demoButton}
                   action
                   bgColor="#958FDA"
-                  onPress={() => this.props.navigation.navigate('MyJob', {selected: 1})}
+                  onPress={() => this.props.navigation.navigate('ClientJob', {selected: 1})}
                   >
                 <Text>
                   <Icon name="tags" size={20} color="white" />
@@ -86,7 +86,7 @@ class MyPage extends React.Component {
                   style={styles.demoButton}
                   action
                   bgColor="#52B1F4"
-                  onPress={() => this.props.navigation.navigate('MyJob', {selected: 2})}
+                  onPress={() => this.props.navigation.navigate('ClientJob', {selected: 2})}
                 >
                 <Text>
                   <Icon name="tags" size={20} color="white" />
@@ -101,7 +101,7 @@ class MyPage extends React.Component {
                   style={styles.demoButton}
                   action
                   bgColor="#19D4E6"
-                  onPress={() => this.props.navigation.navigate('MyJob', {selected: 3})}
+                  onPress={() => this.props.navigation.navigate('ClientJob', {selected: 3})}
                 >
                 <Text>
                   <Icon name="tags" size={20} color="white" />
@@ -116,7 +116,7 @@ class MyPage extends React.Component {
                   style={styles.demoButton}
                   action
                   bgColor="#4F44C1"
-                  onPress={() => this.props.navigation.navigate('MyJob', {selected: 4})}
+                  onPress={() => this.props.navigation.navigate('ClientJob', {selected: 4})}
                 >
                 <Text>
                   <Icon name="tags" size={20} color="white" />
@@ -131,7 +131,7 @@ class MyPage extends React.Component {
                   style={styles.demoButton}
                   action
                   bgColor="#3CD4A0"
-                  onPress={() => this.props.navigation.navigate('MyJob', {selected: 5})}
+                  onPress={() => this.props.navigation.navigate('ClientJob', {selected: 5})}
                 >
                 <Text>
                   <Icon name="tags" size={20} color="white" />
@@ -146,7 +146,7 @@ class MyPage extends React.Component {
                   style={styles.demoButton}
                   action
                   bgColor="#3CD4A0"
-                  onPress={() => this.props.navigation.navigate('MyJob', {selected: 6})}
+                  onPress={() => this.props.navigation.navigate('ClientJob', {selected: 6})}
                 >
                 <Text>
                   <Icon name="tags" size={20} color="white" />

@@ -1,18 +1,13 @@
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { createAppContainer, createStackNavigator } from 'react-navigation';
+import { colors, fonts } from '../../styles';
 
+import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVersionViewContainer';
 import MainTabNavigator from './MainTabNavigator';
-
 import GalleryScreen from '../gallery/GalleryViewContainer';
 
-// To use this screens please see the full version at https://reactnativestarter.com
-
-// import ProfileScreen from '../containers/ProfileScreen';
-// import ArticleScreen from '../containers/ArticleScreen';
-// import ChatScreen from '../containers/chat/ChatScreen';
-// import MessagesScreen from '../containers/chat/MessagesScreen';
-// import ChartsScreen from '../containers/ChartsScreen';
+import HomeScreen from '../home/HomeView';
 import AuthScreen from '../auth/AuthViewContainer'
 
 import LoginWithPassword from '../login/LoginWithPassword'
@@ -22,34 +17,24 @@ import PasswordRecovery from '../login/PasswordRecovery'
 import SignupScreen from '../signup/SignupView'
 import SignupAsProvider from '../signup/SignupAsProvider'
 import SignupAsClient from '../signup/SignupAsClient'
-import SendVerificationCode from '../components/SendVerificationCode'
-import CheckVerificationCode from '../components/CheckVerificationCode'
 
-import CreateProfile from '../Profile/CreateProfile'
 import BasicProfile from '../Profile/BasicProfile'
 import ShootingID from '../Profile/ShootingID'
 import CompanyInfo from '../Profile/CompanyInfo'
 
 import Client from '../client'
 import PostJob from '../client/PostJob'
-import ProviderDetail from '../client/Providers/ProviderDetail'
-
-import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVersionViewContainer';
-
-import { colors, fonts } from '../../styles';
-import HomeScreen from '../home/HomeView';
-import  Provider from '../provider';
-import  ApplyJob from '../provider/jobs/ApplyJob';
-
-import MyPage from '../client/MyPage';
-import MyJob from '../client/MyPage/MyJob';
+import ClientJob from '../client/MyPage/MyJob';
 import MyCollection from '../client/MyPage/MyCollection';
 import MyAttention from '../client/MyPage/MyAttention';
 import RequestInvoice from '../client/MyPage/RequestInvoice';
 import InvoiceForm from '../client/MyPage/InvoiceForm';
 import ClientJobDetail from '../client/MyPage/MyJob/JobDetail';
 import GiveFeedback from '../client/MyPage/MyJob/GiveFeedback';
+import ProviderDetail from '../client/Providers/ProviderDetail'
 
+import Provider from '../provider';
+import ApplyJob from '../provider/jobs/ApplyJob';
 import BillingInvoice from '../provider/MyPage/BillingInvoice'
 import ProviderJob from '../provider/MyPage/MyJob'
 import ProviderJobDetail from '../provider/MyPage/MyJob/JobDetail';
@@ -66,8 +51,6 @@ import Location from '../../components/Location';
 
 import Settings from '../settings';
 import PersonalInformation from '../settings/PersonalInformation';
-import MediaSearch from '../client/MediaSearch';
-// import  JobDetails from '../provider/jobs/JobDetails';
 
 const headerBackground = require('../../../assets/images/topBarBg.png');
 
@@ -91,12 +74,7 @@ const stackNavigator = createStackNavigator(
         header: null,
       },
     },
-    CreateProfile: {
-      screen: CreateProfile,
-      navigationOptions: {
-        header: null,
-      },
-    },
+
     BasicProfile: {
       screen: BasicProfile,
       navigationOptions: {
@@ -128,26 +106,15 @@ const stackNavigator = createStackNavigator(
         title: '注册',
       },
     },
-    SendVerificationCode: {
-      screen: SendVerificationCode,
-      navigationOptions: {
-        title: '',
-      },
-    },
-    CheckVerificationCode: {
-      screen: CheckVerificationCode,
-      navigationOptions: {
-        title: '',
-      },
-    },
+
     LoginWithPassword: {
       screen: LoginWithPassword,
       navigationOptions: {
         title: '',
       },
     },
-    MyJob: {
-      screen: MyJob,
+    ClientJob: {
+      screen: ClientJob,
       navigationOptions: {
         title: '',
       },
@@ -223,12 +190,6 @@ const stackNavigator = createStackNavigator(
     },
     PostJob: {
       screen: PostJob,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    MediaSearch: {
-      screen: MediaSearch,
       navigationOptions: {
         header: null,
       },

@@ -83,7 +83,7 @@ class PostJob extends React.Component {
     this.setState({isConfirm: false})
     this.props.createJob({
       body,
-      success: () => this.props.navigation.navigate('MyJob')
+      success: () => this.props.navigation.navigate('ClientJob')
     })
   };
 
