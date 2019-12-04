@@ -21,14 +21,6 @@ export default class ProviderJobsList extends React.Component {
     this.props.navigation.navigate('Chatting', {to: id})
   } 
 
-  handleNavigate = (status, id) => {
-    const {navigation} = this.props
-    if (status == '竞标中') navigation.navigate('ProviderBiddingJob', {id: id})
-    if (status == '已选用') navigation.navigate('ProviderSelectingJog', {id: id})
-    if (status == '待付款') navigation.navigate('ProviderNotPaidJob', {id: id})
-    if (status == '待拍摄') navigation.navigate('ProviderWaitingJob', {id: id})
-    if (status == '待验收') navigation.navigate('ProviderTestingJob', {id: id})
-  } 
 
   render() {   
     const {jobs, navigation} = this.props
@@ -36,7 +28,7 @@ export default class ProviderJobsList extends React.Component {
     return (
         <ScrollView>          
          {jobs.length ? jobs.map((job, index) => (
-          <TouchableRipple key={index} onPress={() => this.handleNavigate(job.status, job._id)}>
+          <TouchableRipple key={index} onPress={() => navigation.navigate('ProviderJobDetail', {job: job})}>
            <View key={index} style={styles.componentsSection}>
              <Text size={14}>订单信息 : <Text>{job.status}</Text></Text>
              <Text size={14}>订单编号 : <Text>{job._id}</Text></Text>

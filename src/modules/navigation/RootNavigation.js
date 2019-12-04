@@ -40,27 +40,19 @@ import { colors, fonts } from '../../styles';
 import HomeScreen from '../home/HomeView';
 import  Provider from '../provider';
 import  ApplyJob from '../provider/jobs/ApplyJob';
+
 import MyPage from '../client/MyPage';
 import MyJob from '../client/MyPage/MyJob';
 import MyCollection from '../client/MyPage/MyCollection';
 import MyAttention from '../client/MyPage/MyAttention';
 import RequestInvoice from '../client/MyPage/RequestInvoice';
 import InvoiceForm from '../client/MyPage/InvoiceForm';
-import BiddingJob from '../client/MyPage/MyJob/BiddingJob';
-import NotPaidJob from '../client/MyPage/MyJob/NotPaidJob';
-import WaitingJob from '../client/MyPage/MyJob/WaitingJob';
-import TestingJob from '../client/MyPage/MyJob/TestingJob';
-import FeedbackJob from '../client/MyPage/MyJob/FeedbackJob';
-import FinishingJob from '../client/MyPage/MyJob/FinishingJob';
+import ClientJobDetail from '../client/MyPage/MyJob/JobDetail';
 import GiveFeedback from '../client/MyPage/MyJob/GiveFeedback';
 
 import BillingInvoice from '../provider/MyPage/BillingInvoice'
 import ProviderJob from '../provider/MyPage/MyJob'
-import ProviderBiddingJob from '../provider/MyPage/MyJob/BiddingJob';
-import ProviderNotPaidJob from '../provider/MyPage/MyJob/NotPaidJob';
-import ProviderWaitingJob from '../provider/MyPage/MyJob/WaitingJob';
-import ProviderTestingJob from '../provider/MyPage/MyJob/TestingJob';
-import ProviderSelectingJob from '../provider/MyPage/MyJob/SelectingJob';
+import ProviderJobDetail from '../provider/MyPage/MyJob/JobDetail';
 import UploadMedia from '../provider/MyPage/MyJob/UploadMedia';
 
 import Chatting from '../../components/Chatting';
@@ -241,36 +233,9 @@ const stackNavigator = createStackNavigator(
         header: null,
       },
     },
-    BiddingJob: {
-      screen: BiddingJob,
-      navigationOptions: {
-        header: null,
-      },
-    },
 
-    NotPaidJob: {
-      screen: NotPaidJob,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    
-    WaitingJob: {
-      screen: WaitingJob,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    
-    TestingJob: {
-      screen: TestingJob,
-      navigationOptions: {
-        header: null,
-      },
-    },
-
-    FeedbackJob: {
-      screen: FeedbackJob,
+    ClientJobDetail: {
+      screen: ClientJobDetail,
       navigationOptions: {
         header: null,
       },
@@ -278,13 +243,6 @@ const stackNavigator = createStackNavigator(
 
     GiveFeedback: {
       screen: GiveFeedback,
-      navigationOptions: {
-        header: null,
-      },
-    },
-
-    FinishingJob: {
-      screen: FinishingJob,
       navigationOptions: {
         header: null,
       },
@@ -304,36 +262,8 @@ const stackNavigator = createStackNavigator(
       },
     },
 
-    ProviderBiddingJob: {
-      screen: ProviderBiddingJob,
-      navigationOptions: {
-        header: null,
-      },
-    },
-
-    ProviderNotPaidJob: {
-      screen: ProviderNotPaidJob,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    
-    ProviderWaitingJob: {
-      screen: ProviderWaitingJob,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    
-    ProviderTestingJob: {
-      screen: ProviderTestingJob,
-      navigationOptions: {
-        header: null,
-      },
-    },
-
-    ProviderSelectingJob: {
-      screen: ProviderSelectingJob,
+    ProviderJobDetail: {
+      screen: ProviderJobDetail,
       navigationOptions: {
         header: null,
       },

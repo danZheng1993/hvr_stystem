@@ -18,13 +18,12 @@ import { getServices } from '../../redux/modules/service'
 import { getNewss } from '../../redux/modules/news'
 import { getBanners } from '../../redux/modules/banner'
 import { getMedias } from '../../redux/modules/media'
+import { getMyJob } from '../../redux/modules/job'
 import { addToContacts, pushNotification, pushUnreadMessages } from '../../redux/modules/auth'
 
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
-import { saveItem, loadItem} from '../../redux/api/storage'
 import SyncStorage from 'sync-storage';
-
 import XMPP from 'react-native-xmpp'
 
 class HomeScreen extends React.Component {
@@ -57,12 +56,13 @@ class HomeScreen extends React.Component {
   handleMessage(message) {
     console.log("message>>>", message)
     if (!message.body) return
-    const {profile, pushNotification, pushUnreadMessages} = this.props
+    const {profile, pushNotification, pushUnreadMessages, getMyJob} = this.props
     const from = String(message.from).split('@')[0]
     pushUnreadMessages(from)
     if (from == 'system' && message.body) {
       console.warn(message.body)
       pushNotification(message)
+      getMyJob()
     } else {
       if (profile.contacts.indexOf(from) == -1) {
         this.props.addToContacts({
@@ -136,7 +136,8 @@ const mapDispatchToProps = {
   getMedias,
   addToContacts,
   pushNotification,
-  pushUnreadMessages
+  pushUnreadMessages,
+  getMyJob
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
