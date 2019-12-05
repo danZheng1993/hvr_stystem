@@ -42,7 +42,7 @@ export default class JobsList extends React.Component {
                 <Text size={14}>预算价格:<Text>¥{job.budget}</Text></Text>
                 <Text size={14} onPress={() => {
                   navigation.navigate('ClientJobDetail', {
-                    job: job,
+                    id: job._id,
                   });
                 }}
                 >查看更多</Text>

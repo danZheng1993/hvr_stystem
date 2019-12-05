@@ -111,7 +111,7 @@ class HomeScreen extends React.Component {
             secondary
             rounded
             style={commonStyles.button}
-            caption="Skip"
+            caption="跳跃"
             onPress={() => this.handleClick()}
           />
         </View>
