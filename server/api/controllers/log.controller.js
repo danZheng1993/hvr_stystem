@@ -31,12 +31,14 @@ function list(req, res, next) {
   console.log("logList", req.body, req.query)
   let page_size = +req.query.page_size || 10
   let page = +req.query.page || 1
-  if (req.user.role === ROLES.MANAGER) {
-    where = { role: { $ne: ROLES.ADMIN } };
+  if (req.user.role !== ROLES.MANAGER) {
+    res.status(401).json({ message: 'You are not authorized' });
+    return;
   }
   Log.count({})
   .then ((count) => {
     Log.find(where)
+    .sort({logged: -1})
     .limit(page_size)
     .skip(page_size * (page-1))
     .then((logs) => {

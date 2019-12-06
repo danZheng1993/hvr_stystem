@@ -34,6 +34,7 @@ router.use('/chats', authMiddleware, chatRoute);
 router.use('/payments', authMiddleware, paymentRoute);
 router.use('/invoices', authMiddleware, invoiceRoute);
 router.use('/logs', authMiddleware, logRoute);
+router.use('/medias', authMiddleware, mediaRoute);
 
 router.use('/types', typeRoute);
 router.use('/scenes', sceneRoute);
@@ -41,7 +42,6 @@ router.use('/subcategorys', subcategoryRoute);
 router.use('/services', serviceRoute);
 router.use('/news', newsRoute);
 router.use('/banners', bannerRoute);
-router.use('/medias', mediaRoute);
 router.use('/settings', settingRoute);
 
 module.exports = router;

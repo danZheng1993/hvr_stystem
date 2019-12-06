@@ -267,10 +267,12 @@ function list(req, res, next) {
   let page_size = +req.query.page_size || 10
   let page = +req.query.page || 1
   let where = {};
-  if (req.user.role === ROLES.MANAGER) {
-    where = { role: { $ne: ROLES.ADMIN } };
+  if (req.user.role !== ROLES.MANAGER) {
+    res.status(401).json({ message: 'You are not authorized' });
+    return;
   }
-  User.count({})
+  where = { role: { $ne: ROLES.MANAGER } };
+  User.count(where)
   .then ((count) => {
     User.find(where)
     .limit(page_size)

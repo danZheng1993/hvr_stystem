@@ -51,7 +51,10 @@ function uploadLink(req, res, next) {
 }
 
 function update(req, res, next) {
-  Object.assign(req.media, req.body);
+  console.log("update media", req.body)
+  if (typeof(req.body.isAllowed) == 'boolean') {
+    Object.assign(req.media, {...req.body, tested: new Date()});
+  }
 
   req.media.save()
   .then((updatedMedia) => {
@@ -61,20 +64,47 @@ function update(req, res, next) {
 }
 
 function read(req, res) {
-  res.json(req.media);
+  Media.findById(req.media._id)
+  .populate('creator', 'userName phoneNumber location companyName')
+  .populate('poster', 'userName phoneNumber location')
+  .populate('jobID', 'price')
+  .then((media) => {
+    console.log(media)
+    if (!media) {
+      res.status(404).json({ message: 'Media not found' });
+      return;
+    }
+
+    // if (media.user.toString() !== req.user._id && req.user.role !== ROLES.ADMIN) {
+    //   res.status(403).json({ message: 'You are not authorized to access this media' });
+    //   return;
+    // }
+
+    res.json(media);
+  })
+  .catch();
 }
 
 function list(req, res, next) {
+  console.log("media",req.query)
+  let page_size = +req.query.page_size || 10
+  let page = +req.query.page || 1
   let where = {};
-  // if (req.user.role === ROLES.CLIENT) {
-  //   where = { user: req.user._id };
-  // }
-
-  Media.find(where)
-  .then((entries) => {
-    res.json(entries);
+  if (req.user.role !== ROLES.MANAGER) {
+    res.status(401).json({ message: 'You are not authorized' });
+    return;
+  }
+  Media.count({})
+  .then ((count) => {
+    Media.find(where)
+    .limit(page_size)
+    .skip(page_size * (page-1))
+    .then((medias) => {
+      res.json({medias, count});
+    })
+    .catch(next);
   })
-  .catch(next);
+  .catch(next)
 }
 
 function search(req, res, next) {
@@ -110,7 +140,7 @@ function getMediaByID(req, res, next, id) {
       return;
     }
 
-    // if (media.user.toString() !== req.user._id && req.user.role !== ROLES.ADMIN) {
+    // if (media.creator.toString() !== req.user._id && req.user.role !== ROLES.MANAGER) {
     //   res.status(403).json({ message: 'You are not authorized to access this media' });
     //   return;
     // }

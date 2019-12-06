@@ -16,6 +16,10 @@ const MediaSchema = new Schema({
     type: Date,
     default: Date.now()
   },
+  tested: {
+    type: Date,
+    default: Date.now()
+  },
   location: {
     type: String,
     default: ''
@@ -25,6 +29,14 @@ const MediaSchema = new Schema({
     default: ''
   },
   visits: {
+    type: Number,
+    default: 0,
+  },
+  shares: {
+    type: Number,
+    default: 0,
+  },
+  favourites: {
     type: Number,
     default: 0,
   },
@@ -43,6 +55,10 @@ const MediaSchema = new Schema({
   isPublic: {
     type: Boolean,
     default: true
+  },
+  isAllowed: {
+    type: Boolean,
+    default: false
   },
   snapshot: {
     type: String,
