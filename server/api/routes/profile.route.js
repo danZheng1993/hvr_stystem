@@ -7,7 +7,7 @@ router.use(userCtrl.getProfile);
 
 router.route('/me')
   .get(userCtrl.read)
-  .patch(userCtrl.updateOne)
+  .patch(userCtrl.saveProfile)
   .post(userCtrl.uploadFile);
 router.route('/contacts')
   .get(userCtrl.getContacts)

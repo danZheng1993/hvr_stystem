@@ -99,7 +99,7 @@ function uploadFile(req, res, next) {
  });
 }
 
-function updateOne(req, res, next) {
+function saveProfile(req, res, next) {
   console.log("profileUpdate")
   console.log(req.body)
 
@@ -263,16 +263,24 @@ function read(req, res) {
 }
 
 function list(req, res, next) {
+  console.log(req.body, req.query)
+  let page_size = +req.query.page_size || 10
+  let page = +req.query.page || 1
   let where = {};
   if (req.user.role === ROLES.MANAGER) {
     where = { role: { $ne: ROLES.ADMIN } };
   }
-
-  User.find(where)
-  .then((users) => {
-    res.json(users);
+  User.count({})
+  .then ((count) => {
+    User.find(where)
+    .limit(page_size)
+    .skip(page_size * (page-1))
+    .then((users) => {
+      res.json({users, count});
+    })
+    .catch(next);
   })
-  .catch(next);
+  .catch(next)
 }
 
 function remove(req, res, next) {
@@ -333,7 +341,7 @@ function search(req, res, next) {
 module.exports = {
   create,
   update,
-  updateOne,
+  saveProfile,
   read,
   list,
   search,

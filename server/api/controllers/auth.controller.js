@@ -2,11 +2,30 @@ const jwt = require('jsonwebtoken');
 const config = require('../../config');
 const User = require('../models/user.model');
 const Code = require('../models/code.model');
+const Log = require('../models/log.model');
 const axios = require('axios')
 const md5 = require('md5')
 const moment = require('moment')
 const PERMISSION = require('../constants/permission')
 const ip = require('ip')
+
+function getClientIp(req) {
+  var ipAddress;
+  // The request may be forwarded from local web server.
+  var forwardedIpsStr = req.header('x-forwarded-for'); 
+  if (forwardedIpsStr) {
+    // 'x-forwarded-for' header may return multiple IP addresses in
+    // the format: "client IP, proxy 1 IP, proxy 2 IP" so take the
+    // the first one
+    var forwardedIps = forwardedIpsStr.split(',');
+    ipAddress = forwardedIps[0];
+  }
+  if (!ipAddress) {
+    // If request was not forwarded
+    ipAddress = req.connection.remoteAddress;
+  }
+  return ipAddress;
+};
 
 function login(req, res, next) {
   User.findOne({ phoneNumber: req.body.phoneNumber })
@@ -21,22 +40,31 @@ function login(req, res, next) {
       }
       return user.authenticate(req.body.password)
       .then(() => {
-        const token = jwt.sign({
-          _id: user._id, // eslint-disable-line
+        const log = new Log({
           userName: user.userName,
           phoneNumber: user.phoneNumber,
-          role: user.role,
-          permission: user.permission
-        }, config.jwtSecret, { expiresIn: config.jwtExpires });
-        
-        res.json({
-          info: user,
-          _id: user._id, // eslint-disable-line
-          userName: user.userName,
-          phoneNumber: user.phoneNumber,
-          role: user.role,
-          token,
-        });
+          ipAddress: getClientIp(req)
+        })
+        log.save()
+        .then(() => {
+          const token = jwt.sign({
+            _id: user._id, // eslint-disable-line
+            userName: user.userName,
+            phoneNumber: user.phoneNumber,
+            role: user.role,
+            permission: user.permission
+          }, config.jwtSecret, { expiresIn: config.jwtExpires });
+          
+          res.json({
+            info: user,
+            _id: user._id, // eslint-disable-line
+            userName: user.userName,
+            phoneNumber: user.phoneNumber,
+            role: user.role,
+            token,
+          });
+        })
+        .catch(next)
       })
       .catch(() => {
         res.status(500).json({ message: 'phoneNumber or password does not match' });
