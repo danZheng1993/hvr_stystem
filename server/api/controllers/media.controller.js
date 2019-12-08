@@ -4,7 +4,6 @@ const Job = require('../models/job.model');
 const ROLES = require('../constants/role');
 const STATUS = require('../constants/status')
 const xmpp = require('simple-xmpp')
-
 function create(req, res, next) {
   const media = new Media(req.body);
 
@@ -52,6 +51,10 @@ function uploadLink(req, res, next) {
 
 function update(req, res, next) {
   console.log("update media", req.body)
+  if (req.user.role !== ROLES.MANAGER) {
+    res.status(401).json({ message: 'You are not authorized' });
+    return;
+  }
   if (typeof(req.body.isAllowed) == 'boolean') {
     Object.assign(req.media, {...req.body, tested: new Date()});
   }
@@ -87,20 +90,33 @@ function read(req, res) {
 
 function list(req, res, next) {
   console.log("media",req.query)
-  let page_size = +req.query.page_size || 10
-  let page = +req.query.page || 1
-  let where = {};
   if (req.user.role !== ROLES.MANAGER) {
     res.status(401).json({ message: 'You are not authorized' });
     return;
   }
-  Media.count({})
-  .then ((count) => {
+  let page_size = +req.query.page_size || 10
+  let page = +req.query.page || 1
+  let where = {};
+  if (req.query.filter) {
+    let filter = JSON.parse(req.query.filter)
+    if (filter) {
+      filter.checkOption &&(where['checkOption'] = filter.checkOption)
+      filter.title && (where['title'] = {$regex: filter.title, $options:"$i"})
+      filter.publicOption && (where['publicOption'] = (filter.publicOption == 'true' ? true: false))
+      let created = {}
+      filter.startDate && (created['$gte'] = filter.startDate)
+      filter.endDate && (created['$lte'] = filter.endDate)
+      created && (where['created'] = created)
+    }
+    console.log(where)
+  }
+  Media.count(where)
+   .then ((count) => {
     Media.find(where)
     .limit(page_size)
     .skip(page_size * (page-1))
     .then((medias) => {
-      res.json({medias, count});
+         res.json({medias, count});
     })
     .catch(next);
   })
