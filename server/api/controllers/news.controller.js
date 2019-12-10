@@ -27,16 +27,38 @@ function read(req, res) {
 }
 
 function list(req, res, next) {
+  console.log("news",req.query)
+  if (req.user.role !== ROLES.MANAGER) {
+    res.status(401).json({ message: 'You are not authorized' });
+    return;
+  }
+  let page_size = +req.query.page_size || 10
+  let page = +req.query.page || 1
   let where = {};
-  // if (req.user.role === ROLES.CLIENT) {
-  //   where = { user: req.user._id };
-  // }
-
-  News.find(where)
-  .then((entries) => {
-    res.json(entries);
+  if (req.query.filter) {
+    let filter = JSON.parse(req.query.filter)
+    if (filter) {
+      filter.title && (where['title'] = {$regex: filter.title, $options:"$i"})
+      if (filter.startDate || filter.endDate) {
+        let created = {}
+        filter.startDate && (created['$gte'] = filter.startDate)
+        filter.endDate && (created['$lte'] = filter.endDate)
+        where['created'] = created
+      }
+    }
+    console.log(where)
+  }
+  News.count(where)
+   .then ((count) => {
+    News.find(where)
+    .limit(page_size)
+    .skip(page_size * (page-1))
+    .then((newss) => {
+         res.json({newss, count});
+    })
+    .catch(next);
   })
-  .catch(next);
+  .catch(next)
 }
 
 function search(req, res, next) {
@@ -57,8 +79,9 @@ function search(req, res, next) {
 
 
 function remove(req, res, next) {
-  req.news.remove(() => {
-    res.json(req.news);
+  req.news.remove()
+  .then((updatedNews) => {
+    res.json(updatedNews);
   })
   .catch(next);
 }
@@ -71,7 +94,7 @@ function getNewsByID(req, res, next, id) {
       return;
     }
 
-    if (news.user.toString() !== req.user._id && req.user.role !== ROLES.ADMIN) {
+    if (req.user.role !== ROLES.MANAGER) {
       res.status(403).json({ message: 'You are not authorized to access this news' });
       return;
     }

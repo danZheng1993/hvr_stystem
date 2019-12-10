@@ -20,6 +20,10 @@ const InvoiceSchema = new Schema({
     type: String,
     default: '纸质发票'
   },
+  created: {
+    type: Date,
+    default: new Date(),
+  },
   price: {
     type: Number,
     default: 0,

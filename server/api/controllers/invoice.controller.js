@@ -30,16 +30,34 @@ function read(req, res) {
 }
 
 function list(req, res, next) {
+  console.log("news",req.query)
+  if (req.user.role !== ROLES.MANAGER) {
+    res.status(401).json({ message: 'You are not authorized' });
+    return;
+  }
+  let page_size = +req.query.page_size || 10
+  let page = +req.query.page || 1
   let where = {};
-  // if (req.user.role === ROLES.CLIENT) {
-  //   where = { user: req.user._id };
-  // }
-
-  Invoice.find(where)
-  .then((entries) => {
-    res.json(entries);
+  if (req.query.filter) {
+    let filter = JSON.parse(req.query.filter)
+    if (filter) {
+      filter.phoneNumber && (where['phoneNumber'] = filter.phoneNumber)
+      filter.status && (where['status'] = filter.status)
+    }
+    console.log(where)
+  }
+  Invoice.count(where)
+   .then ((count) => {
+    Invoice.find(where)
+    .limit(page_size)
+    .skip(page_size * (page-1))
+    .populate('sender', 'userName')
+    .then((invoices) => {
+         res.json({invoices, count});
+    })
+    .catch(next);
   })
-  .catch(next);
+  .catch(next)
 }
 
 function getMyInvoice(req, res, next) {

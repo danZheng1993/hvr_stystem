@@ -10,6 +10,17 @@ const NewsSchema = new Schema({
     type: String,
     default: ''
   },
+  visits: {
+    type: Number,
+    default: 0,
+  },
+  setBanner: {
+    type: Boolean,
+    default: false,
+  },
+  path: {
+    type: String,
+  },
   content: {
     type: String,
     default: ''
