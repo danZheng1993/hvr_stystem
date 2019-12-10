@@ -125,23 +125,41 @@ function read(req, res) {
 }
 
 function list(req, res, next) {
-  console.log("list",req.user)
-  const limit = req.query.limit * 1;
-  let where = {};
-
-  Job.find(where)
-  .sort({ date: -1 })
-  .limit(limit)
-  .populate('user')
-  .then((entries) => {
-    res.json(entries);
+  console.log("JobsList", req.query)
+  let where = {flag: true};
+  if (req.user.role !== ROLES.MANAGER) {
+    res.status(401).json({ message: 'You are not authorized' });
+    return;
+  }
+  let page_size = +req.query.page_size || 10
+  let page = +req.query.page || 1
+  if (req.query.filter) {
+    let filter = JSON.parse(req.query.filter)
+    filter.status &&(where['status'] = filter.status)
+    filter.query && (where['_id'] = filter.query)
+  }
+  console.log(where)
+  Job.count(where)
+  .then ((count) => {
+    Job.find(where)
+    .limit(page_size)
+    .skip(page_size * (page-1))
+    .populate('creator', 'phoneNumber')
+    .populate('hired', 'phoneNumber')
+    .then((jobs) => {
+      res.json({jobs, count});
+    })
+    .catch(next);
   })
-  .catch(next);
+  .catch(next)
 }
 
 function remove(req, res, next) {
-  req.job.remove(() => {
-    res.json(req.job);
+  Object.assign(req.job, {flag: false});
+
+  req.job.save()
+  .then((updatedJob) => {
+    res.json(updatedJob);
   })
   .catch(next);
 }

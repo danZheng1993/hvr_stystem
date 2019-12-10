@@ -17,10 +17,10 @@ const userSchema = new Schema({
   photo: { type: String, trim: true, default: 'default.png' },
   contacts: {type: Array},
   
-  frontID: { type: String, select: false, trim: true,},
-  backID: { type: String, select: false, trim: true,},
+  frontID: { type: String, trim: true},
+  backID: { type: String, trim: true},
   companyName: { type: String,},
-  companyLicense: { type: String, select: false,},
+  companyLicense: { type: String},
   balance: { type: Number, trim: true, default: 0 }, 
 
   collections: {type: Array},

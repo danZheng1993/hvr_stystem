@@ -103,10 +103,12 @@ function list(req, res, next) {
       filter.checkOption &&(where['checkOption'] = filter.checkOption)
       filter.title && (where['title'] = {$regex: filter.title, $options:"$i"})
       filter.publicOption && (where['publicOption'] = (filter.publicOption == 'true' ? true: false))
-      let created = {}
-      filter.startDate && (created['$gte'] = filter.startDate)
-      filter.endDate && (created['$lte'] = filter.endDate)
-      created && (where['created'] = created)
+      if (filter.startDate || filter.endDate) {
+        let created = {}
+        filter.startDate && (created['$gte'] = filter.startDate)
+        filter.endDate && (created['$lte'] = filter.endDate)
+        where['created'] = created
+      }
     }
     console.log(where)
   }

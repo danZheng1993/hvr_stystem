@@ -22,17 +22,13 @@ function create(req, res, next) {
 }
 
 function update(req, res, next) {
-  Object.assign(req.userModel, {
-    userName: req.body.userName,
-    phoneNumber: req.body.phoneNumber,
-  });
-
-  if (req.body.password) {
-    req.userModel.password = req.body.password;
+  console.log("update user", req.body)
+  if (req.user.role !== ROLES.MANAGER) {
+    res.status(401).json({ message: 'You are not authorized' });
+    return;
   }
-
-  if (req.user.role === ROLES.ADMIN && req.body.role) {
-    req.userModel.role = req.body.role;
+  if (req.body.permission) {
+    Object.assign(req.userModel, req.body);
   }
 
   req.userModel.save()
@@ -41,6 +37,7 @@ function update(req, res, next) {
   })
   .catch(next);
 }
+
 function uploadFile(req, res, next) {
   console.log("uploadFile")
   var form = new formidable.IncomingForm();
@@ -263,15 +260,21 @@ function read(req, res) {
 }
 
 function list(req, res, next) {
-  console.log(req.body, req.query)
-  let page_size = +req.query.page_size || 10
-  let page = +req.query.page || 1
+  console.log("UsersList", req.query)
   let where = {};
   if (req.user.role !== ROLES.MANAGER) {
     res.status(401).json({ message: 'You are not authorized' });
     return;
   }
-  where = { role: { $ne: ROLES.MANAGER } };
+  let page_size = +req.query.page_size || 10
+  let page = +req.query.page || 1
+  if (req.query.filter) {
+    let filter = JSON.parse(req.query.filter)
+    filter.role &&(where['role'] = filter.role)
+    filter.permission &&(where['permission'] = filter.permission)
+    filter.phoneNumber && (where['phoneNumber'] = filter.phoneNumber)
+  }
+  console.log(where)
   User.count(where)
   .then ((count) => {
     User.find(where)
