@@ -10,6 +10,9 @@ router.route('/')
   .get(bannerCtrl.list)
   .post(bannerCtrl.create);
 
+router.route('/upload')
+  .post(bannerCtrl.upload);
+
 router.route('/:bannerId')
   .get(bannerCtrl.read)
   .put(bannerCtrl.update)

@@ -36,12 +36,12 @@ router.use('/invoices', authMiddleware, invoiceRoute);
 router.use('/logs', authMiddleware, logRoute);
 router.use('/medias', authMiddleware, mediaRoute);
 router.use('/news', authMiddleware, newsRoute);
+router.use('/banners', authMiddleware, bannerRoute);
 
 router.use('/types', typeRoute);
 router.use('/scenes', sceneRoute);
 router.use('/subcategorys', subcategoryRoute);
 router.use('/services', serviceRoute);
-router.use('/banners', bannerRoute);
 router.use('/settings', settingRoute);
 
 module.exports = router;

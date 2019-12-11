@@ -6,6 +6,22 @@ const BannerSchema = new Schema({
     type: String,
     default: ''
   },
+  description: {
+    type: String,
+    default: ''
+  },
+  from: {
+    type: Date,
+    default: new Date()
+  },
+  to: {
+    type: Date,
+    default: new Date()
+  },
+  status: {
+    type: Boolean,
+    default: true
+  },
   url: {
     type: String,
     default: ''

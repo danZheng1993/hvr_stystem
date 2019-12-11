@@ -87,7 +87,7 @@ function uploadFile(req, res, next) {
       .catch(next);
     } else if (fields.type == 'companyLicense') {
       console.log("update companyLicense...")
-      User.updateOne({_id: fields.id}, { $set: {companyLicense: fileName }}).exec()
+      User.updateOne({_id: req.user._id}, { $set: {companyLicense: fileName }}).exec()
       .then((newuser) => {
         res.json(newuser);
       })
