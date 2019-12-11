@@ -2,19 +2,43 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const SettingSchema = new Schema({
-  title: {
+  splash: {
     type: String,
-    required: true
+    default: 'background.png'
   },
-  description: {
+  popularSearch: {
     type: String,
+    default: ''
   },
-  key: {
+  type: {
     type: String,
+    default: ''
   },
-  value: {
+  scene: {
     type: String,
+    default: ''
   },
+  subcategory: {
+    type: String,
+    default: ''
+  },
+  upfrontRate: {
+    type: Number,
+    default: 20
+  },
+  feeRate: {
+    type: Number,
+    default: 5
+  },
+  panoramaPrice: {
+    type: Number,
+    default: 99
+  },
+  liveVRHourlyPrice: {
+    type: Number,
+    default: 123
+  },
+
 }, {
   timestamp: true,
 });

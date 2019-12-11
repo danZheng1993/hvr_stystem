@@ -37,11 +37,11 @@ router.use('/logs', authMiddleware, logRoute);
 router.use('/medias', authMiddleware, mediaRoute);
 router.use('/news', authMiddleware, newsRoute);
 router.use('/banners', authMiddleware, bannerRoute);
+router.use('/settings', authMiddleware, settingRoute);
 
 router.use('/types', typeRoute);
 router.use('/scenes', sceneRoute);
 router.use('/subcategorys', subcategoryRoute);
 router.use('/services', serviceRoute);
-router.use('/settings', settingRoute);
 
 module.exports = router;

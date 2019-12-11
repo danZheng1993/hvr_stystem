@@ -1,75 +1,61 @@
 const mongoose = require('mongoose');
 const Setting = require('../models/setting.model');
 const ROLES = require('../constants/role');
-
-function create(req, res, next) {
-  const setting = new Setting(req.body);
-
-  setting.save()
-  .then((newSetting) => {
-    res.json(newSetting);
-  })
-  .catch(next);
-}
-
+var formidable = require('formidable');
+var fs = require('fs');
+var path = require('path')
+var _ = require('lodash')
 function update(req, res, next) {
-  Object.assign(req.setting, req.body);
-
-  req.setting.save()
+  if (req.user.role !== ROLES.MANAGER) {
+    res.status(401).json({ message: 'You are not authorized' });
+    return;
+  }
+  Setting.findOneAndUpdate({}, {$set: {..._.omit(req.body, '_id')}}, { returnOriginal: false },).exec()
   .then((updatedSetting) => {
+    console.log(updatedSetting)
     res.json(updatedSetting);
   })
   .catch(next);
 }
 
-function read(req, res) {
-  res.json(req.setting);
-}
-
-function list(req, res, next) {
-  let where = {};
-  // if (req.user.role === ROLES.CLIENT) {
-  //   where = { user: req.user._id };
-  // }
-
-  Setting.find(where)
+function read(req, res, next) {
+  Setting.findOne({})
   .then((entries) => {
     res.json(entries);
   })
   .catch(next);
 }
 
-function remove(req, res, next) {
-  req.setting.remove(() => {
-    res.json(req.setting);
-  })
-  .catch(next);
-}
-
-function getSettingByID(req, res, next, id) {
-  Setting.findById(id)
-  .then((setting) => {
-    if (!setting) {
-      res.status(404).json({ message: 'Setting not found' });
+function upload(req, res, next) {
+  console.log("uploadFile")
+  var form = new formidable.IncomingForm();
+  form.parse(req, function (err, fields, files) {
+    if (!files) {
+      res.status(500).json({ message: 'invalid request' });
       return;
     }
-
-    // if (setting.user.toString() !== req.user._id && req.user.role !== ROLES.ADMIN) {
-    //   res.status(403).json({ message: 'You are not authorized to access this setting' });
-    //   return;
-    // }
-
-    req.setting = setting;
-    next();
-  })
-  .catch(next);
+    var oldpath = files.image.path;
+    var directory = process.cwd() + '\\public\\'
+    fs.readFile(oldpath, function (err, data) {
+      if (err) throw err;
+      
+      // Write the file
+      fs.writeFile(directory + 'background.png', data, function (err) {
+          if (err) throw err;
+          res.end();
+          console.log('File written!');
+      });
+      
+      // Delete the file
+      fs.unlink(oldpath, function (err) {
+          if (err) throw err;
+      });
+    });
+ });
 }
 
 module.exports = {
-  create,
   update,
   read,
-  list,
-  remove,
-  getSettingByID,
+  upload
 };

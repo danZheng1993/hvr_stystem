@@ -118,7 +118,7 @@ function upload(req, res, next) {
     console.log(fields)
     var oldpath = files.image.path;
     var directory = process.cwd() + '\\public\\bannersImage\\'
-    var fileName = req.user._id + path.extname(files.image.name);
+    var fileName = fields.id + path.extname(files.image.name);
     fs.readFile(oldpath, function (err, data) {
       if (err) throw err;
       
