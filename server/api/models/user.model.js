@@ -28,6 +28,8 @@ const userSchema = new Schema({
 
   role: { type: String, enum: Object.values(ROLES), default: ROLES.PROVIDER },
   permission: { type: String, enum: Object.values(PERMISSION), default: PERMISSION.NOT_ALLOWED },
+  flag: {type: Boolean, default: true},
+  created: {type: Date, default: new Date()}
 });
 
 userSchema.methods.hashPassword = function hashPassword(password) {

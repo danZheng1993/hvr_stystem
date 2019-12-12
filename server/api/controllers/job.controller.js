@@ -136,6 +136,8 @@ function list(req, res, next) {
   if (req.query.filter) {
     let filter = JSON.parse(req.query.filter)
     filter.status &&(where['status'] = filter.status)
+    filter.hired &&(where['hired'] = filter.hired)
+    filter.creator &&(where['creator'] = filter.creator)
     filter.query && (where['_id'] = filter.query)
   }
   console.log(where)
