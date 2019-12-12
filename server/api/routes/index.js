@@ -20,6 +20,7 @@ const mediaRoute = require('./media.route');
 const settingRoute = require('./setting.route');
 const invoiceRoute = require('./invoice.route');
 const logRoute = require('./log.route');
+const statisticRoute = require('./statistic.route');
 
 const router = express.Router();
 const authMiddleware = expressJwt({ secret: config.jwtSecret });
@@ -38,6 +39,7 @@ router.use('/medias', authMiddleware, mediaRoute);
 router.use('/news', authMiddleware, newsRoute);
 router.use('/banners', authMiddleware, bannerRoute);
 router.use('/settings', authMiddleware, settingRoute);
+router.use('/statistics', authMiddleware, statisticRoute);
 
 router.use('/types', typeRoute);
 router.use('/scenes', sceneRoute);
