@@ -58,6 +58,9 @@ function update(req, res, next) {
   if (typeof(req.body.isAllowed) == 'boolean') {
     Object.assign(req.media, {...req.body, tested: new Date()});
   }
+  if (typeof(req.body.recommend) == 'boolean') {
+    Object.assign(req.media, req.body);
+  }
 
   req.media.save()
   .then((updatedMedia) => {

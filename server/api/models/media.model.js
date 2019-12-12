@@ -60,6 +60,10 @@ const MediaSchema = new Schema({
     type: Boolean,
     default: false
   },
+  recommend: {
+    type: Boolean,
+    default: false
+  },
   snapshot: {
     type: String,
     default: ''
