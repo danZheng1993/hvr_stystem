@@ -5,6 +5,9 @@ const router = express.Router();
 router.route('/login')
   .post(authCtrl.login);
 
+router.route('/admin/login')
+  .post(authCtrl.adminLogin);
+
 router.route('/signup')
   .post(authCtrl.signup);
 

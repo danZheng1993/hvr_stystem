@@ -96,6 +96,37 @@ function uploadFile(req, res, next) {
  });
 }
 
+function uploadAdminAvatar(req, res, next) {
+  if (req.userModel.role !== ROLES.MANAGER) {
+    return res.status(401).json({ message: 'You are not authorized' });
+  }
+  var form = new formidable.IncomingForm();
+  form.parse(req, function (err, fields, files) {
+    if (!files) {
+      res.status(500).json({ message: 'invalid request' });
+      return;
+    }
+    var oldpath = files.image.path;
+    var fileName = req.userModel.photo
+    var directory = process.cwd() + '\\public\\'
+    fs.readFile(oldpath, function (err, data) {
+      if (err) throw err;
+      
+      // Write the file
+      fs.writeFile(directory + fileName, data, function (err) {
+          if (err) throw err;
+          res.end();
+          console.log('File written!');
+      });
+      
+      // Delete the file
+      fs.unlink(oldpath, function (err) {
+          if (err) throw err;
+      });
+    });
+  });
+}
+
 function saveProfile(req, res, next) {
   console.log("profileUpdate")
   console.log(req.body)
@@ -120,6 +151,37 @@ function saveProfile(req, res, next) {
   .then((updatedUser) => {
     console.log(updatedUser)
     res.json(updatedUser);
+  })
+  .catch(next);
+}
+
+function saveAdminProfile(req, res, next) {
+  User.findOne({ phoneNumber: req.userModel.phoneNumber })
+  .select('_id password userName role permission')
+  .exec()
+  .then((user) => {
+    if (!user) {
+      return res.status(500).json({ message: 'phoneNumber or password does not match' });
+    }
+    if (user.role !== ROLES.MANAGER) {
+      return res.status(401).json({ message: 'You are not authorized' });
+    }
+    return user.authenticate(req.body.old_password)
+    .then(() => {
+      req.userModel.password = req.body.new_password;
+      if (req.body.userName) {
+        req.userModel.userName = req.body.userName;
+      }
+      req.userModel.save()
+      .then((updatedUser) => {
+        console.log(updatedUser)
+        res.json(updatedUser);
+      })
+      .catch(next);
+    })
+    .catch(() => {
+      res.status(500).json({ message: 'phoneNumber or password does not match' });
+    });
   })
   .catch(next);
 }
@@ -313,7 +375,6 @@ function getUserByID(req, res, next, id) {
 }
 
 function getProfile(req, res, next) {
-  console.log('get profile')
   User.findById(req.user._id)
   .then((user) => {
     if (!user) {
@@ -362,5 +423,7 @@ module.exports = {
   addToAttentions,
   removeFromCollections,
   removeFromAttentions,
-  getContacts
+  getContacts,
+  saveAdminProfile,
+  uploadAdminAvatar
 };

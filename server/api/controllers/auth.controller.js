@@ -7,6 +7,7 @@ const axios = require('axios')
 const md5 = require('md5')
 const moment = require('moment')
 const PERMISSION = require('../constants/permission')
+const ROLE = require('../constants/role')
 const ip = require('ip')
 
 function getClientIp(req) {
@@ -35,8 +36,48 @@ function login(req, res, next) {
       if (!user) {
         return res.status(500).json({ message: 'phoneNumber or password does not match' });
       }
+      if (user.role !== ROLE.CLIENT && user.role !== ROLE.PROVIDER) {
+        return res.status(401).json({ message: 'You are not authorized' });
+      }
       if (user.permission === PERMISSION.BLOCKED) {
-        return res.status(500).json({ message: 'You are blocked' });
+        return res.status(401).json({ message: 'You are blocked' });
+      }
+      return user.authenticate(req.body.password)
+      .then(() => {
+        const token = jwt.sign({
+          _id: user._id, // eslint-disable-line
+          userName: user.userName,
+          phoneNumber: user.phoneNumber,
+          role: user.role,
+          permission: user.permission
+        }, config.jwtSecret, { expiresIn: config.jwtExpires });
+        
+        res.json({
+          info: user,
+          _id: user._id, // eslint-disable-line
+          userName: user.userName,
+          phoneNumber: user.phoneNumber,
+          role: user.role,
+          token,
+        });
+      })
+      .catch(() => {
+        res.status(500).json({ message: 'phoneNumber or password does not match' });
+      });
+    })
+    .catch(next);
+}
+
+function adminLogin(req, res, next) {
+  User.findOne({ phoneNumber: req.body.phoneNumber })
+    .select('_id password phoneNumber userName role permission photo')
+    .exec()
+    .then((user) => {
+      if (!user) {
+        return res.status(500).json({ message: 'phoneNumber or password does not match' });
+      }
+      if (user.role !== ROLE.MANAGER) {
+        return res.status(401).json({ message: 'You are not authorized' });
       }
       return user.authenticate(req.body.password)
       .then(() => {
@@ -212,5 +253,6 @@ module.exports = {
   login,
   signup,
   sendcode,
-  checkcode
+  checkcode,
+  adminLogin
 };
