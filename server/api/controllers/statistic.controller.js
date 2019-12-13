@@ -212,9 +212,10 @@ function getTransactionStatistics(req, res, next) {
             _id:  { $dateToString: { format: "%Y-%m-%d", date: "$created"} },
             date: {$first: {$dayOfYear: "$created"}},
             amount: { $sum: "$amount"},
+            count: { $sum: 1},
           }
       },
-      { $project: { amount: 1, _id: 1, date: 1}}
+      { $project: { amount: 1, _id: 1, date: 1, count: 1}}
     ]
   )
   .sort({date: 1})

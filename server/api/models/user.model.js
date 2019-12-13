@@ -3,6 +3,7 @@ const uniqueValidator = require('mongoose-unique-validator')
 
 const bcrypt = require('bcryptjs');
 const ROLES = require('../constants/role');
+const TYPES = require('../constants/type');
 const PERMISSION = require('../constants/permission')
 
 const Schema = mongoose.Schema;
@@ -17,6 +18,7 @@ const userSchema = new Schema({
   photo: { type: String, trim: true, default: 'default.png' },
   contacts: {type: Array},
   
+  type: { type: String, enum: Object.values(TYPES), default: TYPES.INDIVIDUAL },
   frontID: { type: String, trim: true},
   backID: { type: String, trim: true},
   companyName: { type: String,},
