@@ -96,6 +96,110 @@ function getJobStatistics(req, res, next) {
   .catch(next)
 }
 
+function compareJobs(req, res, next) {
+  const thisweek = [moment().startOf('week').toDate(), moment().endOf('day').toDate()]
+  const lastweek = [moment().subtract(7, 'days').startOf('week').toDate(), moment().subtract(7, 'days').endOf('day').toDate()]
+  const thismonth = [moment().startOf('month').toDate(), moment().toDate()]
+  const lastmonth = [moment().subtract(1, 'months').startOf('month').toDate(), moment().subtract(1, 'months').endOf('day').toDate()]
+  Job.aggregate(
+    [
+      { $match: { created: { $gte: thisweek[0], $lt: thisweek[1]} }},
+      { $group: {  _id:  null, amount: { $sum: 1} } },
+    ]
+  )
+  .then((thisweekAmount) => {
+    Job.aggregate(
+      [
+        { $match: { created: { $gte: lastweek[0], $lt: lastweek[1]} }},
+        { $group: {  _id:  null, amount: { $sum: 1} } },
+      ]
+    )
+    .then((lastweekAmount) => {
+      Job.aggregate(
+        [
+          { $match: { created: { $gte: thismonth[0], $lt: thismonth[1]} }},
+          { $group: {  _id:  null, amount: { $sum: 1} } },
+        ]
+      )
+      .then((thismonthAmount) => {
+        Job.aggregate(
+          [
+            { $match: { created: { $gte: lastmonth[0], $lt: lastmonth[1]} }},
+            { $group: {  _id:  null, amount: { $sum: 1} } },
+          ]
+        )
+        .then((lastmonthAmount) => {
+          console.log(thisweekAmount, lastweekAmount, thismonthAmount, lastmonthAmount)
+          const compare = {
+            thisweekAmount: thisweekAmount[0] ? thisweekAmount[0].amount : 0,
+            lastweekAmount: lastweekAmount[0] ? lastweekAmount[0].amount : 0,
+            thismonthAmount: thismonthAmount[0] ? thismonthAmount[0].amount : 0,
+            lastmonthAmount: lastmonthAmount[0] ? lastmonthAmount[0].amount : 0
+          }
+          console.log(compare)
+          res.json(compare)
+        })
+        .catch(next)
+      })
+      .catch(next)
+    })
+    .catch(next)
+  })
+  .catch(next)
+}
+
+function compareTransactions(req, res, next) {
+  const thisweek = [moment().startOf('week').toDate(), moment().endOf('day').toDate()]
+  const lastweek = [moment().subtract(7, 'days').startOf('week').toDate(), moment().subtract(7, 'days').endOf('day').toDate()]
+  const thismonth = [moment().startOf('month').toDate(), moment().toDate()]
+  const lastmonth = [moment().subtract(1, 'months').startOf('month').toDate(), moment().subtract(1, 'months').endOf('day').toDate()]
+  Payment.aggregate(
+    [
+      { $match: { created: { $gte: thisweek[0], $lt: thisweek[1]} }},
+      { $group: {  _id:  null, amount: { $sum: "$amount"} } },
+    ]
+  )
+  .then((thisweekAmount) => {
+    Payment.aggregate(
+      [
+        { $match: { created: { $gte: lastweek[0], $lt: lastweek[1]} }},
+        { $group: {  _id:  null, amount: { $sum: "$amount"} } },
+      ]
+    )
+    .then((lastweekAmount) => {
+      Payment.aggregate(
+        [
+          { $match: { created: { $gte: thismonth[0], $lt: thismonth[1]} }},
+          { $group: {  _id:  null, amount: { $sum: "$amount"} } },
+        ]
+      )
+      .then((thismonthAmount) => {
+        Payment.aggregate(
+          [
+            { $match: { created: { $gte: lastmonth[0], $lt: lastmonth[1]} }},
+            { $group: {  _id:  null, amount: { $sum: "$amount"} } },
+          ]
+        )
+        .then((lastmonthAmount) => {
+          console.log(thisweekAmount, lastweekAmount, thismonthAmount, lastmonthAmount)
+          const compare = {
+            thisweekAmount: thisweekAmount[0] ? thisweekAmount[0].amount : 0,
+            lastweekAmount: lastweekAmount[0] ? lastweekAmount[0].amount : 0,
+            thismonthAmount: thismonthAmount[0] ? thismonthAmount[0].amount : 0,
+            lastmonthAmount: lastmonthAmount[0] ? lastmonthAmount[0].amount : 0
+          }
+          console.log(compare)
+          res.json(compare)
+        })
+        .catch(next)
+      })
+      .catch(next)
+    })
+    .catch(next)
+  })
+  .catch(next)
+}
+
 function getTransactionStatistics(req, res, next) {
   const startDate = moment(req.query.startDate).startOf('day').toDate()
   const endDate = moment(req.query.endDate).endOf('day').toDate()
@@ -183,5 +287,7 @@ module.exports = {
   getDashboardData,
   getCreatedUsers,
   getJobStatistics,
+  compareJobs,
+  compareTransactions,
   getTransactionStatistics
 };
