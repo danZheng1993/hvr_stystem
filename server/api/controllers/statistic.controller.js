@@ -71,12 +71,61 @@ function getDashboardData(req, res, next) {
   .catch(next)
 }
 
+function getJobStatistics(req, res, next) {
+  const startDate = moment(req.query.startDate).startOf('day').toDate()
+  const endDate = moment(req.query.endDate).endOf('day').toDate()
+  Job.aggregate(
+    [
+      { $match: { created: { $gte: startDate, $lt: endDate} }},
+      {
+        $group:
+          {
+            _id:  { $dateToString: { format: "%Y-%m-%d", date: "$created"} },
+            date: {$first: {$dayOfYear: "$created"}},
+            amount: { $sum: 1},
+          }
+      },
+      { $project: { amount: 1, _id: 1, date: 1}}
+    ]
+  )
+  .sort({date: 1})
+  .then((jobsStatistics) => {
+    console.log(jobsStatistics)
+    res.json(jobsStatistics)
+  })
+  .catch(next)
+}
+
+function getTransactionStatistics(req, res, next) {
+  const startDate = moment(req.query.startDate).startOf('day').toDate()
+  const endDate = moment(req.query.endDate).endOf('day').toDate()
+  Payment.aggregate(
+    [
+      { $match: { created: { $gte: startDate, $lt: endDate} }},
+      {
+        $group:
+          {
+            _id:  { $dateToString: { format: "%Y-%m-%d", date: "$created"} },
+            date: {$first: {$dayOfYear: "$created"}},
+            amount: { $sum: "$amount"},
+          }
+      },
+      { $project: { amount: 1, _id: 1, date: 1}}
+    ]
+  )
+  .sort({date: 1})
+  .then((jobsStatistics) => {
+    console.log(jobsStatistics)
+    res.json(jobsStatistics)
+  })
+  .catch(next)
+}
+
 function getCreatedUsers(req, res, next) {
   const today = moment().startOf('day').toDate();    
-  const tomorrow = moment().add(1,'days').startOf('day').toDate(); ; 
-  const yesterday = moment().subtract(1,'days').startOf('day').toDate(); ; 
+  const tomorrow = moment().add(1,'days').startOf('day').toDate();
+  const yesterday = moment().subtract(1,'days').startOf('day').toDate();
   const thismonth = moment().startOf('month').toDate();
-  const past = moment(yesterday).isAfter(thismonth) ? thismonth : yesterday
   // User.aggregate(
   //   [
   //     { $match: { created: { $gte:  past, $lt :  tomorrow,} }},
@@ -132,5 +181,7 @@ function getCreatedUsers(req, res, next) {
 
 module.exports = {
   getDashboardData,
-  getCreatedUsers
+  getCreatedUsers,
+  getJobStatistics,
+  getTransactionStatistics
 };
