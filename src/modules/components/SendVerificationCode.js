@@ -97,8 +97,6 @@ class SendVerificationCode extends React.Component {
           </View>
         </View>}
       </View>
-      
-
     )
   }
 }

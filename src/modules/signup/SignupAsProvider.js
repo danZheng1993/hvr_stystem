@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  ScrollView
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -84,14 +85,15 @@ class SignupAsProvider extends React.Component {
 
   render(){
     const { counter } = this.state
+
     return (
+      <ScrollView>
       <View style={styles.container}>
-        <Text size={14}>
-          {counter}
-        </Text>
+        <Text size={28} bold black style={{marginBottom: 50}}>服务方注册</Text>
         <Form
             ref="form"
             onSubmit={this.submit}
+            style={{alignSelf: 'stretch'}}
         >
           <TextValidator
             name="phoneNumber"
@@ -105,7 +107,7 @@ class SignupAsProvider extends React.Component {
             onChangeText={phoneNumber => this.setState({ phoneNumber })}
           />
           <View style={styles.verificationCode}>
-            <View style={{ marginBottom: 15, flex: 3}}>
+            <View style={{ marginBottom: 15, flex: 4}}>
               <TextValidator
                 name="verificationCode"
                 validators={['required', 'matchRegexp:^[0-9]{4}$']}                 
@@ -118,12 +120,13 @@ class SignupAsProvider extends React.Component {
                 onChangeText={verificationCode => this.setState({ verificationCode })}
               />
             </View>
-            <Button
-              bgColor={colors.info}
-              style={{ marginBottom: 20, flex: 2,}}
-              caption="获取验证码"
-              onPress={() => this.sendCode()}
-            />
+            <View style={{alignSelf: 'center'}}>
+              {counter == 60 ? 
+                <Text style={{color: colors.primary}} onPress={() => this.sendCode()}>获得验证码 </Text> :
+                <Text style={{color: colors.description}}>{counter}s 重新获取 </Text>
+              }
+            </View>
+            
           </View>
           <TextValidator
             style={styles.input}
@@ -148,17 +151,16 @@ class SignupAsProvider extends React.Component {
             value={this.state.passwordConfirm}
             onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
             />
-            <View style={styles.buttonsContainer}>
-              <Button
-                large
-                bgColor={colors.warning}
-                style={styles.button}
-                caption="确定"
-                onPress={this.handleSubmit}
-            />
-          </View>
+            <Button
+              large
+              style={styles.button}
+              bgColor={colors.primary}
+              caption="确定"
+              onPress={this.handleSubmit}
+          />
         </Form>   
       </View>
+      </ScrollView>
     );
   }
 }
@@ -166,25 +168,21 @@ class SignupAsProvider extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20
-  },
-  description: {
-    marginBottom: 20,
-    padding: 20,
-    alignSelf: 'stretch'
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 50
   },
   buttonsContainer: {
-    flex: 2,
+    flex: 1,
     alignItems: 'center',
     alignSelf: 'stretch',
-    margin: 20
-  },
-  button: {
-    marginBottom: 20,
   },
   description: {
-    flex: 1,
-    justifyContent: 'flex-start'
+    alignItems: "center",
+    marginBottom: 50
+  },
+  button: {
+    alignSelf: 'stretch',
   },
   input: {
     marginBottom: 15,

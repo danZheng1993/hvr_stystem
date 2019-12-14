@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -12,12 +13,12 @@ import { createStructuredSelector } from 'reselect';
 
 import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
-
+import { Text } from '../../components/StyledText';
 import SendVerificationCode from '../components/SendVerificationCode';
-
 import { Form, TextValidator } from 'react-native-validator-form';
 import { signup, sendcode, checkcode } from '../../redux/modules/auth'
 
+var timer
 class SignupAsClient extends React.Component {
   constructor (props) {
     super(props)
@@ -26,6 +27,7 @@ class SignupAsClient extends React.Component {
       verificationCode: '',
       password: '',
       passwordConfirm: '',
+      counter: 60,
     };
   }
 
@@ -49,13 +51,31 @@ class SignupAsClient extends React.Component {
 
     this.props.sendcode({
       body: { phoneNumber: phoneNumber},
-      // success: () 
+      success: () => {
+        timer = setInterval(this.countTime, 1000)
+      }
     })
   }
 
-  handleSubmit = () => {
-    const { phoneNumber, verificationCode, password, passwordConfirm} = this.state
+  countTime = () => {
+    var {counter} = this.state
+    counter --;
+    if (counter == 0) {       
+      counter = 60
+      clearInterval(timer)
+    }
+    this.setState({counter})
+  }
+
+  submit = () => {
+    const { phoneNumber, verificationCode, password, passwordConfirm, counter} = this.state
+
     if (!phoneNumber || !verificationCode || !password || !passwordConfirm || password!=passwordConfirm) return;
+    if (counter == 60) {
+      alert("try again")
+      return;
+    }
+    clearInterval(timer)
     this.props.checkcode({
       body:{ phoneNumber, code: verificationCode, password, role: 'client'},
       success: () => this.props.navigation.navigate({ routeName: 'Client' }),
@@ -63,44 +83,54 @@ class SignupAsClient extends React.Component {
     })
   }
 
+  handleSubmit = () => {
+      this.refs.form.submit();
+  }
+
   render(){
+    const { counter } = this.state
+
     return (
-      <View style={styles.description}>
+      <ScrollView>
+      <View style={styles.container}>
+        <Text size={28} bold black style={{marginBottom: 50}}>需求方注册</Text>
         <Form
             ref="form"
-            onSubmit={this.handleSubmit}
+            onSubmit={this.submit}
+            style={{alignSelf: 'stretch'}}
         >
           <TextValidator
-              name="phoneNumber"
-              label='手机号'
-              validators={['required', 'matchRegexp:^[0-9]{11}$']}
-              errorMessages={['This field is required', 'invalid phone number']}
-              placeholder="输入手机号"
-              type="text"
-              keyboardType="email-address"
-              value={this.state.phoneNumber}
-              onChangeText={phoneNumber => this.setState({ phoneNumber })}
+            name="phoneNumber"
+            label='手机号'
+            validators={['required', 'matchRegexp:^[0-9]{11}$']}
+            errorMessages={['This field is required', 'invalid phone number']}
+            placeholder="输入手机号"
+            type="text"
+            keyboardType="numeric"
+            value={this.state.phoneNumber}
+            onChangeText={phoneNumber => this.setState({ phoneNumber })}
           />
           <View style={styles.verificationCode}>
-            <TextValidator
-              name="verificationCode"
-              style={{ marginBottom: 15}}
-              validators={['required', 'matchRegexp:^[0-9]{4}$']}                 
-              errorMessages={['This field is required', 'invalid code']}
-              outlined
-              label='输入验证码'
-              type="text"
-              placeholder="输入验证码"
-              value={this.state.verificationCode}
-              onChangeText={verificationCode => this.setState({ verificationCode })}
-            />
-            <Button
-              large
-              bgColor={colors.info}
-              style={styles.button}
-              caption="获取验证码"
-              onPress={() => this.sendCode()}
-            />
+            <View style={{ marginBottom: 15, flex: 4}}>
+              <TextValidator
+                name="verificationCode"
+                validators={['required', 'matchRegexp:^[0-9]{4}$']}                 
+                errorMessages={['This field is required', 'invalid code']}
+                outlined
+                label='输入验证码'
+                type="text"
+                placeholder="输入验证码"
+                value={this.state.verificationCode}
+                onChangeText={verificationCode => this.setState({ verificationCode })}
+              />
+            </View>
+            <View style={{alignSelf: 'center'}}>
+              {counter == 60 ? 
+                <Text style={{color: colors.primary}} onPress={() => this.sendCode()}>获得验证码 </Text> :
+                <Text style={{color: colors.description}}>{counter}s 重新获取 </Text>
+              }
+            </View>
+            
           </View>
           <TextValidator
             style={styles.input}
@@ -124,38 +154,40 @@ class SignupAsClient extends React.Component {
             secureTextEntry
             value={this.state.passwordConfirm}
             onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
-          />
-          <View style={styles.buttonsContainer}>
+            />
             <Button
               large
-              bgColor={colors.warning}
               style={styles.button}
+              bgColor={colors.primary}
               caption="确定"
               onPress={this.handleSubmit}
-            />
-          </View>
+          />
         </Form>   
-        <View style={styles.touch}>
-          <TouchableOpacity onPress={this.handleWeChat}>
-            <Image
-              source={require('../../../assets/images/wechat.png')}
-              style={styles.photo}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.handleQQ}>
-            <Image
-              source={require('../../../assets/images/qq.png')}
-              style={styles.photo}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.handleWeibo}>
-            <Image
-              source={require('../../../assets/images/weibo.png')}
-              style={styles.photo}
-            />
-          </TouchableOpacity>
+        <View style={{alignItems: 'center', marginTop: 100}}>
+          <Text color={colors.description}>使用第三方登录</Text>
+          <View style={styles.touch}>
+            <TouchableOpacity onPress={this.handleWeChat}>
+              <Image
+                source={require('../../../assets/images/wechat.png')}
+                style={styles.photo}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.handleQQ}>
+              <Image
+                source={require('../../../assets/images/qq.png')}
+                style={styles.photo}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.handleWeibo}>
+              <Image
+                source={require('../../../assets/images/weibo.png')}
+                style={styles.photo}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
+      </ScrollView>
     );
   }
 }
@@ -163,9 +195,9 @@ class SignupAsClient extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    padding: 50
   },
   photo: {
     borderRadius: 25,
@@ -177,17 +209,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   buttonsContainer: {
-    alignSelf: 'stretch',
-    margin: 20
-  },
-  button: {
-    marginBottom: 20,
+    flex: 1,
+    alignItems: 'center',
     alignSelf: 'stretch',
   },
   description: {
-    padding: 20,
-    marginBottom: 20,
-    alignSelf: 'stretch'
+    alignItems: "center",
+    marginBottom: 50
+  },
+  button: {
+    alignSelf: 'stretch',
   },
   input: {
     marginBottom: 15,
@@ -197,7 +228,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   }
 });
-
 
 
 const mapStateToProps = createStructuredSelector({

@@ -19,7 +19,7 @@ const blueVersion = {
   green: '#6DD0A3',
   yellow: '#ffc247',
   warning: '#FF9F42',
-  info: '#6999DD',
+  info: '#369eff',
   placeholder: '#D7D7D7',
   description: '#b5b5b6'
 };
