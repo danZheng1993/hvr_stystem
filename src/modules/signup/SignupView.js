@@ -22,27 +22,25 @@ export default function SignupView(props) {
   return (
     <View style={styles.container}>
       <View style={styles.description}>
-        <Text size={28} black>
+        <Text size={28} black bold>
         注册，欢迎使用HVR
         </Text>
-      </View>
-      <View style={styles.description}>
-        <Text size={14} black>
+        <Text size={14} color={colors.description}>
         选择您要登录的账号角色
         </Text>
       </View>
       <View style={styles.buttonsContainer}>
         <Button
           large
-          bgColor={colors.info}
-          style={styles.button}
+          bgColor={colors.secondary}
+          style={styles.stretchButton}
           caption="我是需求方"
           onPress={() => handleClient()}
         />
         <Button
           large
-          bgColor={colors.warning}
-          style={styles.button}
+          bgColor={colors.primary}
+          style={styles.stretchButton}
           caption="我是服务方"
           onPress={() => handleProvider()}
         />
@@ -56,20 +54,19 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-around',
+    margin: 70
   },
   buttonsContainer: {
     flex: 2,
     alignItems: 'center',
     alignSelf: 'stretch',
-    margin: 20
   },
-  button: {
-    marginBottom: 20,
-    alignSelf: 'stretch',
-  },
-  description: {
-    padding: 20,
+  stretchButton: {
     marginBottom: 20,
     alignSelf: 'stretch'
   },
+  description: {
+    alignItems: "center",
+    marginBottom: 100
+  }
 });

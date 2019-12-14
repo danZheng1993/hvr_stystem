@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
 //     this.onSend = this.onSend.bind(this);
 //     this._storeMessages = this._storeMessages.bind(this);
 
-//     this.socket = SocketIOClient('http://192.168.31.207:3000');
+//     this.socket = SocketIOClient('http://192.168.0.207:3000');
 //     this.socket.on('message', this.onReceivedMessage);
 //     this.determineUser();
 //   }

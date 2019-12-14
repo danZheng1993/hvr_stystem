@@ -83,7 +83,7 @@ class HomeScreen extends React.Component {
     const token = SyncStorage.get('token') || '';
     var route = 'Auth'
     if (profile) {
-      XMPP.connect(`${profile._id}@192.168.31.207/spark`, token.slice(0,8),'RNXMPP.PLAIN','192.168.31.207',5222)
+      XMPP.connect(`${profile._id}@192.168.0.207/spark`, token.slice(0,8),'RNXMPP.PLAIN','192.168.0.207',5222)
     }
     if (profile && profile.role == 'provider') route = 'Provider'
     else if (profile && profile.role == 'client') route = 'Client'

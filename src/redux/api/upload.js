@@ -1,5 +1,5 @@
 import SyncStorage from 'sync-storage';
-let baseURL = "http://192.168.31.207:4000/"
+let baseURL = "http://192.168.0.207:4000/"
 defaultHeaders = () => {
   const token = SyncStorage.get('token') || null;
   //axios.defaults.baseURL = process.env.API_ROOT + '/'

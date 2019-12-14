@@ -7,7 +7,7 @@ import SyncStorage from 'sync-storage';
 const defaultHeaders = () => {
   const token = SyncStorage.get('token') || null;
   //axios.defaults.baseURL = process.env.API_ROOT + '/'
-  axios.defaults.baseURL = 'http://192.168.31.207:4000/'
+  axios.defaults.baseURL = 'http://192.168.0.207:4000/'
   var headers = {
     'Accept': '*/*',
     'Content-Type': 'application/json'

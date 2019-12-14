@@ -1,5 +1,5 @@
 const blueVersion = {
-  primary: '#555CC4',
+  primary: '#369eff',
   primaryLight: '#829BF8',
   primaryGradientStart: '#4f44b6',
   primaryGradientEnd: '#4f44b6',
@@ -7,7 +7,7 @@ const blueVersion = {
   secondaryGradientEnd: '#FF1358',
   profileGradientStart: '#54CBF6',
   profileGradientEnd: '#49D2D0',
-  secondary: '#FF1358',
+  secondary: '#023e96',
   grey: '#acacac',
   gray: '#5f5f5f',
   darkGray: '#4d4d4d',
@@ -20,7 +20,8 @@ const blueVersion = {
   yellow: '#ffc247',
   warning: '#FF9F42',
   info: '#6999DD',
-  placeholder: '#D7D7D7'
+  placeholder: '#D7D7D7',
+  description: '#b5b5b6'
 };
 
 export default blueVersion;

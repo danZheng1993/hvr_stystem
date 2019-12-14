@@ -2,6 +2,8 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  TouchableOpacity,
+  Image
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -62,62 +64,83 @@ class LoginWithPassword extends React.Component {
         {/* { <Loader
           loading={loading} /> } */}
         <View style={styles.description}>
-          <Text size={18} black>
+          <Text size={28} black bold>
             登录HVR
           </Text>
-          <Text size={14} black>
+          <Text size={14} color={colors.description}>
             登录使用更多服务
           </Text>
+        </View>
+        <View style={{alignSelf: 'stretch'}}>
           <Form
-                ref="form"
-                onSubmit={this.handleClick}
-            >
-                <TextValidator
-                    name="phoneNumber"
-                    label='手机号'
-                    validators={['required', 'matchRegexp:^[0-9]{11}$']}
-                    errorMessages={['This field is required', 'invalid phone number']}
-                    placeholder="输入手机号"
-                    type="text"
-                    value={this.state.phoneNumber}
-                    onChangeText={phoneNumber => this.setState({ phoneNumber })}
-                />
-              <TextValidator
-                  style={styles.input}
-                  outlined
-                  validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
-                  errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
-                  label='设置密码'
-                  placeholder="设置密码（6-20位字母数字组合)"
-                  value={this.state.password}
-                  secureTextEntry
-                  maxLength={20}
-                  onChangeText={password => this.setState({ password })}
-              />
-                <View style={styles.buttonsContainer}>
-                  <Button
-                    large
-                    bgColor={colors.warning}
-                    style={styles.button}
-                    caption="确定"
-                    onPress={() => this.refs.form.submit()}
-                  />
-                </View>
-            </Form>   
-           
-        
+              ref="form"
+              onSubmit={this.handleClick}
+          >
+            <TextValidator
+              name="phoneNumber"
+              label='手机号'
+              validators={['required', 'matchRegexp:^[0-9]{11}$']}
+              errorMessages={['This field is required', 'invalid phone number']}
+              placeholder="输入手机号"
+              type="text"
+              value={this.state.phoneNumber}
+              onChangeText={phoneNumber => this.setState({ phoneNumber })}
+            />
+            <TextValidator
+              style={styles.input}
+              outlined
+              validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
+              errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
+              label='设置密码'
+              placeholder="设置密码（6-20位字母数字组合)"
+              value={this.state.password}
+              secureTextEntry
+              maxLength={20}
+              onChangeText={password => this.setState({ password })}
+            />
+            <Button
+              large
+              bgColor={colors.primary}
+              style={styles.button}
+              caption="确定"
+              onPress={() => this.refs.form.submit()}
+            />
+          </Form>   
         </View>
         <View style={styles.anchor}>
           <View style={styles.inputWrap}>
-              <Text size={14} black onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithSMS' })}>
-              手机验证码登录
-              </Text>
-            </View>           
-            <View style={styles.inputWrap}>
-              <Text size={14} black onPress={() => this.props.navigation.navigate({ routeName: 'PasswordRecovery' })}>
-              忘记密码？
-              </Text>
-            </View>
+            <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithSMS' })}>
+            手机验证码登录
+            </Text>
+          </View>           
+          <View style={styles.inputWrap}>
+            <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'PasswordRecovery' })}>
+            忘记密码？
+            </Text>
+          </View>
+        </View>
+        <View style={{alignItems: 'center', marginTop: 100}}>
+          <Text color={colors.description}>使用第三方登录</Text>
+          <View style={styles.touch}>
+            <TouchableOpacity onPress={this.handleWeChat}>
+              <Image
+                source={require('../../../assets/images/wechat.png')}
+                style={styles.photo}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.handleQQ}>
+              <Image
+                source={require('../../../assets/images/qq.png')}
+                style={styles.photo}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.handleWeibo}>
+              <Image
+                source={require('../../../assets/images/weibo.png')}
+                style={styles.photo}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -127,29 +150,39 @@ class LoginWithPassword extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    margin: 70
   },
   buttonsContainer: {
-    alignSelf: 'stretch',
-    margin: 20
-  },
-  button: {
-    marginBottom: 20,
+    flex: 1,
+    alignItems: 'center',
     alignSelf: 'stretch',
   },
   description: {
-    padding: 20,
-    marginBottom: 20,
-    alignSelf: 'stretch'
+    alignItems: "center",
+    marginBottom: 50
+  },
+  button: {
+    alignSelf: 'stretch',
+  },
+  photo: {
+    borderRadius: 25,
+    width: 50,
+    height: 50
   },
   input: {
     marginBottom: 15,
   },
+  touch: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
   anchor: {
-    flex: 1,
+    marginTop: 20,
     flexDirection: "row",
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   inputWrap: {
     flex: 1,

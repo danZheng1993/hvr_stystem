@@ -12,6 +12,8 @@ import { Button } from '../../components';
 import { Text } from '../../components/StyledText';
 import {sendcode} from '../../redux/modules/auth'
 import CheckVerificationCode from './CheckVerificationCode';
+import { Form, TextValidator } from 'react-native-validator-form';
+
 var timer
 class SendVerificationCode extends React.Component {
   constructor(props) {
@@ -54,35 +56,45 @@ class SendVerificationCode extends React.Component {
   render() {
     const {isCheck, phoneNumber, counter} = this.state
     return (
-      <View>
+      <View style={{alignItems: 'center'}}>
         {!isCheck ? <View>
-          <Text size={28} black>
-            绑定手机号
-          </Text>
-          <Text size={14} black>
-            为了您的帐号更安全，首次登录还需要绑定您的手机号
-          </Text>
-          <TextInput
-            style={styles.input}
-            outlined
-            label='输入手机号'
-            placeholder="输入手机号"
-            value={this.state.phoneNumber}
-            onChangeText={phoneNumber => this.setState({ phoneNumber })}
-        />
-        <View style={styles.buttonsContainer}>
-          <Button
-            large
-            bgColor={colors.warning}
-            style={styles.button}
-            caption="发送验证码"
-            onPress={() => this.handleClick()}
-          />
-        </View>
+          <View style={styles.description}>
+            <Text size={28} black bold>
+              需求方登录
+            </Text>
+            <Text size={14} color={colors.description}>
+              登录使用更多服务
+            </Text>
+          </View>
+          <Form
+              ref="form"
+              onSubmit={this.handleClick}
+          >
+            <TextValidator
+              name="phoneNumber"
+              label='手机号'
+              validators={['required', 'matchRegexp:^[0-9]{11}$']}
+              errorMessages={['This field is required', 'invalid phone number']}
+              placeholder="输入手机号"
+              type="text"
+              style={{width: 300}}
+              value={this.state.phoneNumber}
+              onChangeText={phoneNumber => this.setState({ phoneNumber })}
+            />
+            <Button
+              large
+              bgColor={colors.primary}
+              style={styles.button}
+              caption="确定"
+              onPress={() => this.refs.form.submit()}
+            />
+          </Form> 
         </View> :
         <View>
           <CheckVerificationCode phoneNumber = {phoneNumber} onSuccess = {this.props.onSuccess}/>
-          <Text>{counter}后可重新发送</Text>
+          <View style={styles.description}>
+            <Text>{counter}后可重新发送</Text>
+          </View>
         </View>}
       </View>
       
@@ -98,7 +110,8 @@ const styles = StyleSheet.create({
   description: {
     padding: 20,
     marginBottom: 20,
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
+    alignItems: 'center'
   },
   buttonsContainer: {
     alignSelf: 'stretch',
@@ -108,6 +121,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignSelf: 'stretch',
   },
+  
 });
 
 const mapStateToProps = createStructuredSelector({

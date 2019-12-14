@@ -35,8 +35,8 @@ class CheckVerificationCode extends React.Component {
   render() {
     const {phoneNumber} = this.props
     return (
-      <View>
-          <Text size={28} black>
+      <View style={{alignItems: 'center'}}>
+          <Text size={28} black bold>
             输入短信验证码
           </Text>
           <Text size={14} black>

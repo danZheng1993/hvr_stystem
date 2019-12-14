@@ -2,6 +2,9 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  ScrollView,
+  TouchableOpacity,
+  Image
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -11,6 +14,8 @@ import {loadItem} from '../../redux/api/storage'
 import { profileSelector } from '../../redux/selectors'
 import SendVerificationcode from '../components/SendVerificationCode'
 import SyncStorage from 'sync-storage'
+import colors from '../../styles/colors'
+import {Text} from '../../components'
 import XMPP from 'react-native-xmpp'
 
 class LoginWithSMS extends React.Component {
@@ -26,7 +31,7 @@ class LoginWithSMS extends React.Component {
         if (!profile) return
         const token = SyncStorage.get('token') || ''
         toast("login success!")
-        XMPP.connect(`${profile._id}@192.168.31.207/spark`, token.slice(0,8),'RNXMPP.PLAIN','192.168.31.207',5222)
+        XMPP.connect(`${profile._id}@192.168.0.207/spark`, token.slice(0,8),'RNXMPP.PLAIN','192.168.0.207',5222)
         if (profile.role == 'provider') {
           this.props.navigation.navigate({ routeName: 'Provider' })
         } else if (profile.role =='client'){
@@ -37,9 +42,46 @@ class LoginWithSMS extends React.Component {
 
     render(){
       return (
+        <ScrollView>
         <View style={styles.container}>
           <SendVerificationcode navigation={this.props.navigation} onSuccess={this.onSuccess}/>
-        </View> 
+          <View style={styles.anchor}>
+            <View style={styles.inputWrap}>
+              <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithPassword' })}>
+              密码登录
+              </Text>
+            </View>           
+            <View style={styles.inputWrap}>
+              <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'PasswordRecovery' })}>
+              忘记密码？
+              </Text>
+            </View>
+          </View>
+          <View style={{alignItems: 'center', marginTop: 100}}>
+            <Text color={colors.description}>使用第三方登录</Text>
+            <View style={styles.touch}>
+              <TouchableOpacity onPress={this.handleWeChat}>
+                <Image
+                  source={require('../../../assets/images/wechat.png')}
+                  style={styles.photo}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.handleQQ}>
+                <Image
+                  source={require('../../../assets/images/qq.png')}
+                  style={styles.photo}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.handleWeibo}>
+                <Image
+                  source={require('../../../assets/images/weibo.png')}
+                  style={styles.photo}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+        </ScrollView> 
       );
     }
 }
@@ -47,24 +89,44 @@ class LoginWithSMS extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 70
   },
   buttonsContainer: {
-    flex: 2,
+    flex: 1,
     alignItems: 'center',
     alignSelf: 'stretch',
-    margin: 20
+  },
+  description: {
+    alignItems: "center",
+    marginBottom: 50
   },
   button: {
-    marginBottom: 20,
-    alignSelf: 'flex-end',
+    alignSelf: 'stretch',
+  },
+  photo: {
+    borderRadius: 25,
+    width: 50,
+    height: 50
   },
   input: {
     marginBottom: 15,
   },
-  verificationCode: {
+  touch: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around'
+  },
+  anchor: {
+    marginTop: 20,
+    flexDirection: "row",
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  inputWrap: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   }
 });
 
