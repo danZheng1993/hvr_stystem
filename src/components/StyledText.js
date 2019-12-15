@@ -12,10 +12,12 @@ function applyGeneralStyles({
   hCenter,
   lineThrough,
   color,
+  black,
   size,
 }) {
   return [
     style && style,
+    black && styles.black,
     bold && styles.bold,
     light && styles.light,
     white && styles.white,
@@ -59,6 +61,9 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontFamily: fonts.primaryBold,
+  },
+  black: {
+    color: '#3e3a39'
   },
   light: {
     fontFamily: fonts.primaryLight,

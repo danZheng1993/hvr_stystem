@@ -46,7 +46,7 @@ class Applicants extends React.Component {
           <View key={index} style={{borderWidth: 1, borderColor: colors.gray, borderRadius:10, marginRight: 10}}>
             
               <Image
-                source={require('../../assets/images/takePhoto.png')}
+                source={require('../../assets/images/takephoto.png')}
                 style={styles.photo}
               />
             {/* <Text size={14}><Text>{applicant.applicant}</Text></Text> */}

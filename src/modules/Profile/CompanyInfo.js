@@ -69,13 +69,17 @@ class CompanyInfo extends React.Component {
     const { photo } = this.state
     return (
       <View style={styles.container}>
-        <View style={styles.description}>
-          <Text size={18} black>
-            营业执照
-          </Text>
-          <Text size={14} black>
-          上传营业执照通过审核后，可以接1万以上的需求项目
-          </Text>
+          <View style={{marginBottom: 30}}>
+            <Text size={28} bold black>
+              上传营业执照
+            </Text>
+            <Text size={14}>
+              上传营业执照通过审核后
+            </Text>
+            <Text>
+              可以接1万以上的需求项目
+            </Text>
+          </View>
           <TouchableOpacity onPress={this.handleChoosePhoto} style={styles.touch}>
             {photo ? 
             <Image
@@ -84,83 +88,70 @@ class CompanyInfo extends React.Component {
               onPress={this.handleChoosePhoto}
             /> :
             <Image
-              source={require('../../../assets/images/takePhoto.png')}
+              source={require('../../../assets/images/companyLicense.png')}
               style={styles.photo}
               onPress={this.handleChoosePhoto}
             />
             }    
           </TouchableOpacity>
-          <Text size={14} black>
-          法人/经营者姓名必须同本帐户姓名一致
+          <Text size={14} color={colors.redAlert}>
+            温馨提示: 法人/经营者姓名必须同本帐户姓名一致
           </Text>
           <Text size={18} black>
-          公司名称
+            公司名称
           </Text>
           <TextInput
             style={styles.input}
-            outlined
-            label='公司名称'
-            placeholder="公司名称"
+            placeholder="请输入公司名称"
             value={this.state.name}
             onChangeText={name => this.setState({ name })}
         />
-        </View>
-        <View style={styles.buttonsContainer}>
-          <Button
-            large
-            bgColor={colors.warning}
-            style={styles.button}
-            caption="下一步"
-            onPress={() => this.handleClick()}
+        <Text size={14} color={colors.redAlert}>
+          温馨提示: 公司名称必须与营业执照一致
+        </Text>
+        <Button
+          rounded
+          bgColor={colors.secondary}
+          style={styles.button}
+          caption="下一步"
+          onPress={() => this.handleClick()}
           />
-        </View>
-      </View>    
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'space-between'
-  },
-  headline: {
-    alignSelf: 'flex-start',
-    justifyContent: 'space-around'
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 50
   },
   photo: {
-    borderRadius: 100,
-    borderColor: colors.gray,
-    backgroundColor: colors.info,
-    width: 100,
-    height: 100,
+    width: 60,
+    height: 70,
   },
   touch: {
-    borderColor: colors.gray,
+    backgroundColor: colors.greybackground,
     borderRadius: 10,
-    borderStyle: 'solid',
-    borderWidth: 1,
     alignSelf: "stretch",
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 15,
-    height: 200
+    height: 150
   },
   input: {
     marginBottom: 15,
-  },
-  description: {
-    padding: 20,
-    marginBottom: 20,
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
+    width: 300
   },
   buttonsContainer: {
     alignSelf: 'stretch',
     margin: 20
   },
   button: {
-    marginBottom: 20,
+    margin: 20,
     alignSelf: 'stretch',
   },
 });

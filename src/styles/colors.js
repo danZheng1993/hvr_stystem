@@ -21,7 +21,9 @@ const blueVersion = {
   warning: '#FF9F42',
   info: '#369eff',
   placeholder: '#D7D7D7',
-  description: '#b5b5b6'
+  description: '#b5b5b6',
+  greybackground: '#e5ebf4',
+  redAlert: '#b60005'
 };
 
 export default blueVersion;

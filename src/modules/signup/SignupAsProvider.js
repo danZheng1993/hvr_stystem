@@ -126,7 +126,6 @@ class SignupAsProvider extends React.Component {
                 <Text style={{color: colors.description}}>{counter}s 重新获取 </Text>
               }
             </View>
-            
           </View>
           <TextValidator
             style={styles.input}
@@ -150,13 +149,13 @@ class SignupAsProvider extends React.Component {
             secureTextEntry
             value={this.state.passwordConfirm}
             onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
-            />
-            <Button
-              large
-              style={styles.button}
-              bgColor={colors.primary}
-              caption="确定"
-              onPress={this.handleSubmit}
+          />
+          <Button
+            large
+            style={styles.button}
+            bgColor={colors.primary}
+            caption="确定"
+            onPress={this.handleSubmit}
           />
         </Form>   
       </View>

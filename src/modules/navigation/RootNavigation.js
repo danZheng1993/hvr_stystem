@@ -354,13 +354,13 @@ const stackNavigator = createStackNavigator(
         backgroundColor: colors.primary,
         borderBottomWidth: 0,
       },
-      headerBackground: (
-        <Image
-          style={{ flex: 1 }}
-          source={headerBackground}
-          resizeMode="cover"
-        />
-      ),
+      // headerBackground: (
+      //   <Image
+      //     style={{ flex: 1 }}
+      //     source={headerBackground}
+      //     resizeMode="cover"
+      //   />
+      // ),
       headerTitleStyle: {
         color: colors.white,
         fontFamily: fonts.primaryRegular,

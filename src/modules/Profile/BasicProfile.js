@@ -1,6 +1,7 @@
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react-native'
 import { TextInput } from 'react-native-paper';
+
 import PhotoUpload from 'react-native-photo-upload'
 
 import ImagePicker from 'react-native-image-picker'
@@ -57,9 +58,6 @@ class BasicProfile extends React.Component {
   handleChoosePhoto = () => {
     var options = {
       title: 'Select Image',
-      customButtons: [
-        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-      ],
       storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -86,7 +84,6 @@ class BasicProfile extends React.Component {
 
   createFormData = (photo, body) => {
     const data = new FormData();
-  
     data.append("photo", {
       name: photo.fileName,
       type: photo.type,
@@ -108,7 +105,9 @@ class BasicProfile extends React.Component {
   render() {
     const { photo , update, location} = this.state
     return (
+      <ScrollView>
       <View style={styles.container}>
+      <Text size={28} bold black style={{marginBottom: 30}}>信息填写</Text>
         {(update == '' || update == 'photo') && 
          <TouchableOpacity onPress={this.handleChoosePhoto}>
           {photo ? 
@@ -118,78 +117,83 @@ class BasicProfile extends React.Component {
             onPress={this.handleChoosePhoto}
           /> :
           <Image
-            source={require('../../../assets/images/takePhoto.png')}
+            source={require('../../../assets/images/takephoto.png')}
             style={styles.photo}
             onPress={this.handleChoosePhoto}
           />
           }    
         </TouchableOpacity> }
         <View style={styles.description}>
-        {(update == '' || update == 'userName') && <TextInput
-            style={styles.input}
-            outlined
-            label='昵称'
-            placeholder="昵称"
-            value={this.state.userName}
-            onChangeText={userName => this.setState({ userName })}
-        />}
-        { update == '' && 
-        <Text size={20} onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}>所在城市 : {location}</Text> }
-        {(update == '' || update == 'overview') && 
-        <TextInput
-            style={styles.input}
-            outlined
-            label='填写服务介绍'
-            placeholder="填写服务介绍"
-            multiline
-            maxLength={140}
-            numberOfLines={6}
-            value={this.state.overview}
-            onChangeText={overview => this.setState({ overview })}
-        />}
-        </View>
-        <View style={styles.buttonsContainer}>
-          <Button
-            large
-            bgColor={colors.warning}
-            style={styles.button}
-            caption="下一步"
-            onPress={() => this.handleClick()}
+        {(update == '' || update == 'userName') && 
+        <View>
+          <Text size={20}>用户昵称</Text>
+          <TextInput
+              style={styles.input}
+              placeholder="昵称"
+              value={this.state.userName}
+              onChangeText={userName => this.setState({ userName })}
           />
+          </View>
+        }
+        { update == '' && 
+        <Text size={20} style={{marginBottom: 10}}>所在城市
+          <Text size={20} color={colors.secondary} onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}> {location}></Text>
+        </Text> }
+        {(update == '' || update == 'overview') && 
+        <View>
+          <Text size={20}>用户昵称</Text>
+          <TextInput
+              style={styles.input}
+              placeholder="填写服务介绍"
+              multiline
+              maxLength={140}
+              numberOfLines={4}
+              value={this.state.overview}
+              onChangeText={overview => this.setState({ overview })}
+          />
+          </View>
+        }
         </View>
-      </View>    
+        <Button
+          rounded
+          bgColor={colors.secondary}
+          style={styles.button}
+          caption="下一步"
+          onPress={() => this.handleClick()}
+        />
+      </View>
+      </ScrollView> 
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center'
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 50
   },
   photo: {
-    borderRadius: 100,
-    borderColor: colors.gray,
-    backgroundColor: colors.info,
     width: 100,
-    height: 100
+    height: 100,
+    borderRadius: 50
   },
   input: {
     marginBottom: 15,
+    alignSelf: 'stretch',
+    width: 300
   },
   description: {
-    padding: 20,
     marginBottom: 20,
-    alignSelf: 'stretch'
   },
   buttonsContainer: {
     alignSelf: 'stretch',
     margin: 20
   },
   button: {
-    marginBottom: 20,
     alignSelf: 'stretch',
+    margin: 20
   },
 });
 

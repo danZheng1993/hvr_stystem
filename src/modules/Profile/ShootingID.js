@@ -59,9 +59,6 @@ class ShootingID extends React.Component {
   handleChooseFrontPhoto = () => {
     var options = {
       title: 'Select Image',
-      customButtons: [
-        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-      ],
       storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -88,9 +85,6 @@ class ShootingID extends React.Component {
   handleChooseBackPhoto = () => {
     var options = {
       title: 'Select Image',
-      customButtons: [
-        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-      ],
       storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -119,10 +113,7 @@ class ShootingID extends React.Component {
     const { frontPhoto, backPhoto } = this.state
     return (
       <View style={styles.container}>
-        <View style={styles.description}>
-          <Text size={18} black>
-              上传身份证
-          </Text>
+        <Text size={28} bold black style={{marginBottom: 30}}>上传身份证</Text>
           <TouchableOpacity onPress={this.handleChooseFrontPhoto} style={styles.touch}>
             {frontPhoto ? 
             <Image
@@ -131,7 +122,7 @@ class ShootingID extends React.Component {
               onPress={this.handleChoosePhoto}
             /> :
             <Image
-              source={require('../../../assets/images/takePhoto.png')}
+              source={require('../../../assets/images/front.png')}
               style={styles.photo}
             />
             }    
@@ -147,7 +138,7 @@ class ShootingID extends React.Component {
               onPress={this.handleChoosePhoto}
             /> :
             <Image
-              source={require('../../../assets/images/takePhoto.png')}
+              source={require('../../../assets/images/back.png')}
               style={styles.photo}
             />
             }    
@@ -155,16 +146,13 @@ class ShootingID extends React.Component {
           <Text size={14} black>
             身份证反面照片
           </Text>
-        </View>
-        <View style={styles.buttonsContainer}>
-          <Button
-            large
-            bgColor={colors.warning}
-            style={styles.button}
-            caption="下一步"
-            onPress={() => this.handleClick()}
-          />
-        </View>
+        <Button
+          rounded
+          bgColor={colors.secondary}
+          style={styles.button}
+          caption="下一步"
+          onPress={() => this.handleClick()}
+        />
       </View>    
     )
   }
@@ -172,43 +160,33 @@ class ShootingID extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'space-around'
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 50
   },
   photo: {
-    borderRadius: 100,
-    borderColor: colors.gray,
-    backgroundColor: colors.info,
-    width: 100,
-    height: 100,
+    width: 60,
+    height: 40,
   },
   touch: {
-    borderColor: colors.gray,
+    backgroundColor: colors.greybackground,
     borderRadius: 10,
-    borderStyle: 'solid',
-    borderWidth: 1,
     alignSelf: "stretch",
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 15,
-    height: 200
+    height: 150
   },
   input: {
     marginBottom: 15,
-  },
-  description: {
-    padding: 20,
-    marginTop: 20,
-    alignSelf: 'stretch',
-    alignItems: 'center'
   },
   buttonsContainer: {
     alignSelf: 'stretch',
     margin: 20
   },
   button: {
-    marginBottom: 20,
+    margin: 20,
     alignSelf: 'stretch',
   },
 });
