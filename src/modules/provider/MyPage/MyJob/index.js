@@ -48,14 +48,15 @@ class MyJobList extends React.Component {
     }
     return (
       <ScrollView style={styles.container}>
-        <Loader loading={jobsloading} />
         <View style={styles.componentsSection}>
           <RadioGroup
             items={['全部', '竞标中', '已选用','待支付', '待拍摄', '待验收']}
             selectedIndex={this.props.radioGroupsState[0]}
             onChange={index => this.handleClick(index)}
+            underline
           />
         </View>
+        <Loader loading={jobsloading} />
         <ProviderJobsList jobs={jobslist} navigation={this.props.navigation}/>
       </ScrollView>
     );
@@ -71,10 +72,8 @@ const styles = StyleSheet.create({
   },
   
   componentsSection: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.secondary,
     padding: 15,
-    marginBottom: 20,
-    borderRadius: 5,
   },
 });
 

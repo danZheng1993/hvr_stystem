@@ -351,7 +351,7 @@ const stackNavigator = createStackNavigator(
         fontFamily: fonts.primaryLight,
       },
       headerStyle: {
-        backgroundColor: colors.primary,
+        backgroundColor: colors.secondary,
         borderBottomWidth: 0,
       },
       // headerBackground: (

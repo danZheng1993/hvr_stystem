@@ -3,12 +3,11 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Text,
   Image,
   TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-
+import {Text} from './StyledText'
 import moment from 'moment'
 import { fonts, colors } from '../styles';
 
@@ -21,7 +20,7 @@ export default class Profile extends React.Component {
     const url="http://192.168.0.207:4000/"
     const {user, navigation} = this.props
     return (
-      <View>
+      <View >
         {user &&
           <View style = {styles.row}>
             <Image
@@ -29,8 +28,8 @@ export default class Profile extends React.Component {
               style={styles.photo}
             />
             <View style={{justifyContent: 'center',}}>
-              <Text size={14}><Text>{user.userName}</Text></Text>
-              <Text size={14}><Text>{user.overview}</Text></Text>
+              <Text white bold size={18}>{user.userName}></Text>
+              <Text white size={14}>{user.overview}</Text>
             </View>
           </View>
         }

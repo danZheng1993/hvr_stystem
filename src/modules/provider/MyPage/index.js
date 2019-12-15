@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView, ImageBackground } from 'react-native';
 import {Badge} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { colors, fonts } from '../../../styles';
@@ -8,59 +8,62 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import {sum, values} from 'lodash'
-import { Button, Dropdown, Profile } from '../../../components';
+import { Button, Dropdown, Profile, Text } from '../../../components';
 import { profileSelector, unreadMessagesSelector } from '../../../redux/selectors'
 
 class MyPage extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      
-    }
-  }
-
   render () {
     const {profile, unread} = this.props
     const unreadCount = sum(values(unread)) || 0
     return (
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={{ paddingBottom: 20 }}
-      >
-        <View style={styles.componentsSection}>
+      <>
+        <ImageBackground
+          source={require('../../../../assets/images/profileBackground.png')}
+          style={{
+            width: '100%'}}
+          resizeMode="cover"
+        >
+        <View style={{padding: 15}}>
           <View style={{flexDirection: 'row'}}>
             <Profile user = {profile} navigation={this.props.navigation} />
             <View style={styles.settingsContainer}>
-                {!!unreadCount && <Badge value={unreadCount} status="error"/>}
-                <Icon
-                  style={styles.demoIcon}
-                  name="bell"
-                  size={30}
-                  color="#5759CB"
-                  onPress={() => this.props.navigation.navigate('Notification')}
-                />
-                <Icon
-                  style={styles.demoIcon}
-                  name="gear"
-                  size={30}
-                  color="#5759CB"
-                  onPress={() => this.props.navigation.navigate('Settings')}
-                />
+              {!!unreadCount && <Badge value={unreadCount} status="error"/>}
+              <Icon
+                style={styles.demoIcon}
+                name="bell"
+                size={30}
+                color={colors.white}
+                onPress={() => this.props.navigation.navigate('Notification')}
+              />
+              <Icon
+                style={styles.demoIcon}
+                name="gear"
+                size={30}
+                color={colors.white}
+                onPress={() => this.props.navigation.navigate('Settings')}
+              />
             </View>
           </View>
           <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
             <View style={{alignItems: 'center'}}>
-              <Text>39</Text>
-              <Text>我发布的</Text>
+              <Text white bold size={28}>39</Text>
+              <Text white>我发布的</Text>
             </View>
             <View style={{alignItems: 'center'}}>
-              <Text>45</Text>
-              <Text>我的余额</Text>
+              <Text white bold size={28}>45</Text>
+              <Text white>我的余额</Text>
             </View>
           </View> 
-        </View>
-        <View style={styles.componentsSection}>
-          <Text style={styles.componentSectionHeader}>我的订单</Text>
+          </View>
+        </ImageBackground>
+      <ScrollView
+        style={styles.container}
+      >
+          <View style={styles.componentsSection}>
+          <View style={styles.componentSectionHeader}>
+            <Text color={colors.primary}>我的订单</Text>
+            <Text>查看全部订单</Text>
+          </View>
           <View style={styles.demoButtonsContainer}>
           <View style={styles.buttonContainer} >
               <Button
@@ -79,10 +82,10 @@ class MyPage extends React.Component {
             </View>
             <View style={styles.buttonContainer} >
               <Button
-                  style={styles.demoButton}
-                  action
-                  bgColor="#52B1F4"
-                  onPress={() => this.props.navigation.navigate('ProviderJob', {selected: 2})}
+                style={styles.demoButton}
+                action
+                bgColor="#52B1F4"
+                onPress={() => this.props.navigation.navigate('ProviderJob', {selected: 2})}
                 >
                 <Text>
                   <Icon name="tags" size={20} color="white" />
@@ -265,6 +268,7 @@ class MyPage extends React.Component {
           </View>
         </View>
       </ScrollView>
+      </>
     );
     }
 }
@@ -283,10 +287,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   componentSectionHeader: {
-    fontFamily: fonts.primaryRegular,
-    color: '#686868',
-    fontSize: 20,
-    marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   demoButtonsContainer: {
     flex: 1,
@@ -301,14 +303,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginBottom: 20,
   },
   demoButton: {
     marginTop: 8,
     marginBottom: 8,
   },
   demoItem: {
-    marginVertical: 15,
+    marginVertical: 8,
   },
   buttonContainer: {
     flexDirection: 'column'

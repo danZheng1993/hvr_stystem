@@ -3,14 +3,11 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Picker,
-  Text
+  TextInput,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { TextInput } from 'react-native-paper'
 import { createStructuredSelector } from 'reselect';
-import moment from 'moment'
 
 import { Button, Loader, toast, JobDetail} from '../../../components';
 import { fonts, colors } from '../../../styles';
@@ -63,30 +60,27 @@ class ApplyJob extends React.Component {
     if (!job) return (<></>)
     return (
       <ScrollView style={styles.container}>
-        <View style={styles.description}>
          <Loader
           loading={jobsloading} />
          {job && <>
             <JobDetail job={job} />
-            <View>
+            <View style={{...styles.componentsSection, flexDirection: 'row', justifyContent: 'space-around'}}>
               <Button
-                large
-                bgColor={colors.warning}
+                small
+                bgColor={colors.secondary}
                 style={styles.button}
                 caption="联系需求方"
                 onPress={() => this.handleContact(job.creator)}
               />             
               <TextInput
                 style={styles.input}
-                outlined
                 keyboardType = 'numeric'             
-                label='预算价格'
                 placeholder="输入预算金额"
                 value={this.state.price}
                 onChangeText={price => this.setState({ price })}
               />
               <Button
-                large
+                small
                 bgColor={colors.warning}
                 style={styles.button}
                 caption="投标"
@@ -95,7 +89,6 @@ class ApplyJob extends React.Component {
             </View>
             </>
          }
-         </View>
       </ScrollView>
     );
     }
@@ -108,35 +101,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 20,
   },
-  
-  picker: {
-    flexDirection: "row",
-    justifyContent: 'space-between'
-  },
-  buttonsContainer: {
-    alignSelf: 'stretch',
-    margin: 20
-  },
   button: {
-    marginBottom: 20,
     alignSelf: 'stretch',
-  },
-  description: {
-    padding: 20,
-    marginBottom: 20,
-    alignSelf: 'stretch'
   },
   input: {
-    marginBottom: 15,
-  },
-  anchor: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  inputWrap: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    height: 30,
+    borderColor: colors.grey,
+    borderWidth: 1,
+    borderRadius: 2,
+    padding: 2
   },
   componentsSection: {
     backgroundColor: colors.white,

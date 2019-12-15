@@ -67,7 +67,7 @@ const styles = {
   container: {
     flex: 1,
     flexDirection: 'row',
-    borderColor: colors.primary,
+    borderColor: colors.white,
     borderWidth: 1,
     borderRadius: 5,
   },
@@ -85,14 +85,14 @@ const styles = {
     borderBottomColor: '#e3e3e3',
   },
   itemActive: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.white,
   },
   itemActiveUnderline: {
     borderBottomWidth: 2,
-    borderBottomColor: colors.primary,
+    borderBottomColor: colors.white,
   },
   text: {
-    color: colors.primary,
+    color: colors.white,
   },
   textUnderline: {
     color: '#a6a6a6',
@@ -101,6 +101,6 @@ const styles = {
     color: colors.white,
   },
   textActiveUnderline: {
-    color: colors.primary,
+    color: colors.white,
   },
 };

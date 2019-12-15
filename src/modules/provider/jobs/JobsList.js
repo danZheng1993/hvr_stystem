@@ -4,7 +4,6 @@ import {
   View,
   ScrollView,
   Picker,
-  Text,
   TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -13,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import moment from 'moment'
 import Icon from 'react-native-vector-icons/Entypo';
 
-import { Button, Loader, NoData, Profile} from '../../../components';
+import { Button, Loader, NoData, Profile, Text} from '../../../components';
 import { fonts, colors } from '../../../styles';
 
 import { searchJob } from '../../../redux/modules/job'
@@ -47,43 +46,45 @@ class JobsList extends React.Component {
     const {location} = this.state
     return (
       <>
-        <View style={{ height: 50, flexDirection: "row" }}>
+        <View style={{ height: 50, flexDirection: "row", backgroundColor: colors.secondary, justifyContent: 'space-between'}}>
           <TouchableOpacity 
             style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
             onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation})}
             >
-            <Icon name="location" size={30} color="black" />
-            <Text>{location}</Text>
+            <Icon name="location" size={30} color="white" />
+            <Text  style={{color: colors.white}}>{location}</Text>
           </TouchableOpacity>   
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Text size={28}>
+          <View>
+            <Text size={20} style={{color: colors.white}}>
               接单列表
             </Text> 
           </View>
+          <Icon name="bell" size={30} color="white" onPress={() => this.props.navigation.navigate('Notification')}/>
         </View>
       <ScrollView style={styles.container}>
-        <View style={styles.description}>
          { jobsloading ? <Loader
           loading={jobsloading} /> :
          jobs.length ? jobs.map((job, index) => (
            <View key={index} style={styles.componentsSection}>
-             <Text size={14}>订单信息:<Text>{job.status}</Text></Text>
-             <Text size={14}>订单编号:<Text>{job._id}</Text></Text>
-             <Text size={14}>创建时间:<Text>{moment(job.created).format("YYYY-MM-DD HH:MM:SS")}</Text></Text>
-             <Text size={14}>服务项目：:<Text>{job.type}</Text></Text>
-             <Text size={14}>拍摄城市:<Text>{job.location}</Text></Text>
-             <Text size={14}>平台预估参考价:<Text>¥{job.budget}</Text></Text>
-             <Text size={14}>需求方预算价格:<Text>¥{job.budget}</Text></Text>
-             <Text size={14} onPress={() => {
-              this.props.navigation.navigate('ApplyJob', {
-                id: job._id,
-              });
-            }}
-            >查看更多</Text>
+              <View style={{flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: colors.grey, marginBottom: 5}}>
+                <Text size={18} black>订单信息</Text>
+                <Text size={18} color={colors.secondary}>{job.status}</Text>
+              </View>
+              <Text size={14}>订单编号: {job._id}</Text>
+              <Text size={14}>创建时间: {moment(job.created).format("YYYY-MM-DD HH:MM:SS")}</Text>
+              <Text size={14}>服务项目: {job.type}</Text>
+              <Text size={14}>拍摄城市: {job.location}</Text>
+              <Text size={14}>平台预估参考价: ¥{job.budget}</Text>
+              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text size={14}>需求方预算价格: ¥{job.budget}</Text>
+                <Text size={14} color={colors.primary} onPress={() => {
+                  this.props.navigation.navigate('ApplyJob', {
+                    id: job._id,
+                });}}>查看更多</Text>
+              </View>
             </View>
 
          )) : <NoData />}
-         </View>
       </ScrollView>
       </> 
     );
@@ -109,11 +110,6 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: 20,
     alignSelf: 'stretch',
-  },
-  description: {
-    padding: 20,
-    marginBottom: 20,
-    alignSelf: 'stretch'
   },
   input: {
     marginBottom: 15,

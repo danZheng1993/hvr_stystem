@@ -3,13 +3,12 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Text,
   TouchableOpacity
 } from 'react-native';
 import moment from 'moment'
 import { fonts, colors } from '../../../../styles';
 import { TouchableRipple } from 'react-native-paper';
-import {NoData, Button} from '../../../../components'
+import {NoData, Button, Text} from '../../../../components'
 
 export default class ProviderJobsList extends React.Component {
   constructor(props) {
@@ -30,16 +29,18 @@ export default class ProviderJobsList extends React.Component {
          {jobs.length ? jobs.map((job, index) => (
           <TouchableRipple key={index} onPress={() => navigation.navigate('ProviderJobDetail', {id: job._id})}>
            <View key={index} style={styles.componentsSection}>
-             <Text size={14}>订单信息 : <Text>{job.status}</Text></Text>
-             <Text size={14}>订单编号 : <Text>{job._id}</Text></Text>
-             <Text size={14}>创建时间 : <Text>{moment(job.created).format("YYYY-MM-DD HH:MM:SS")}</Text></Text>
-             <Text size={14}>服务项目 : <Text>{job.type}</Text></Text>
-             <Text size={14}>拍摄城市 : <Text>{job.location}</Text></Text>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: colors.greybackground, marginBottom: 5}}>
+              <Text size={16} color={colors.secondary}>订单信息</Text>
+              <Text size={16} color={colors.primary}>{job.status}</Text>
+            </View>
+             <Text size={14}>订单编号: {job._id}</Text>
+             <Text size={14}>创建时间: {moment(job.created).format("YYYY-MM-DD HH:MM:SS")}</Text>
+             <Text size={14}>服务项目: {job.type}</Text>
+             <Text size={14}>拍摄城市: {job.location}</Text>
              {job.status == '竞标中' && 
               <View style={styles.buttonsContainer}>
                 <Button
                 small
-                style={styles.button}
                 caption="联系需求方"
                 onPress={() => this.handleContact(job.creator)}
                 />
@@ -48,7 +49,6 @@ export default class ProviderJobsList extends React.Component {
               <View style={styles.buttonsContainer}>
               <Button
               small
-              style={styles.button}
               caption="联系需求方"
               onPress={() => this.handleContact(job.creator)}
               />
@@ -62,7 +62,6 @@ export default class ProviderJobsList extends React.Component {
                 <View style={styles.buttonsContainer}>
                   <Button
                   small
-                  style={styles.button}
                   caption="联系需求方"
                   onPress={() => this.handleContact(job.creator)}
                   />
@@ -75,13 +74,11 @@ export default class ProviderJobsList extends React.Component {
                 <View style={styles.buttonsContainer}>
                   <Button
                   small
-                  style={styles.button}
                   caption="联系需求方"
                   onPress={() => this.handleContact(job.creator)}
                   />
                   <Button
                   small
-                  style={styles.button}
                   caption="上传视频链接"
                   onPress={() => this.props.navigation.navigate('UploadMedia', {id: job._id})}
                   />
@@ -92,19 +89,17 @@ export default class ProviderJobsList extends React.Component {
                <View>
                <View stye={styles.textContainer}>
                 <View style={styles.buttonsContainer}>
-                    <Button
-                    small
-                    style={styles.button}
-                    caption="联系需求方"
-                    onPress={() => this.handleContact(job.creator)}
-                    />
-                    <Button
-                    small
-                    style={styles.button}
-                    caption="上传视频链接"
-                    onPress={() => this.props.navigation.navigate('UploadMedia', {id: job._id})}
-                    />
-                  </View>
+                  <Button
+                  small
+                  caption="联系需求方"
+                  onPress={() => this.handleContact(job.creator)}
+                  />
+                  <Button
+                  small
+                  caption="上传视频链接"
+                  onPress={() => this.props.navigation.navigate('UploadMedia', {id: job._id})}
+                  />
+                </View>
                </View>
              </View>}
             </View>
@@ -144,13 +139,12 @@ const styles = StyleSheet.create({
   },
 
   buttonsContainer: {
+    borderTopWidth: 1, 
+    borderTopColor: colors.greybackground,
     alignItems: 'flex-end',
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 20
-  },
-
-  button: {
+    paddingTop: 10
   },
 });

@@ -71,13 +71,14 @@ export default createBottomTabNavigator(
     animationEnabled: true,
     swipeEnabled: false,
     tabBarOptions: {
-			// activeTintColor: colors.black,
-			activeTintColor: colors.black,
+      activeTintColor: colors.white,
+      inactiveTintColor: colors.primary,
 			labelStyle: {
-				fontSize: 28,
+        fontSize: 28,
 			},
 			style: {
-				backgroundColor: colors.white,
+        backgroundColor: colors.secondary,
+        justifyContent: 'center'
 			},
     },
   },
