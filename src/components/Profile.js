@@ -28,7 +28,7 @@ export default class Profile extends React.Component {
               style={styles.photo}
             />
             <View style={{justifyContent: 'center',}}>
-              <Text white bold size={18}>{user.userName}></Text>
+              <Text white bold size={18}>{user.userName}</Text>
               <Text white size={14}>{user.overview}</Text>
             </View>
           </View>

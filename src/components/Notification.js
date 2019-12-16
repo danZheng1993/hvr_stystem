@@ -37,7 +37,6 @@ class Notification extends React.Component {
                 <Button
                     style={styles.demoButton}
                     action
-                    bgColor="#4F44C1"
                     onPress = {() => this.props.navigation.navigate('SystemNotification')}
                     >
                     <Text>
@@ -54,7 +53,6 @@ class Notification extends React.Component {
                     <Button
                         style={styles.demoButton}
                         action
-                        bgColor="#EF1F78"
                         onPress = {() => this.props.navigation.navigate('SystemNotification')}
                         >
                         <Text>
@@ -68,7 +66,6 @@ class Notification extends React.Component {
                 <Button
                     style={styles.demoButton}
                     action
-                    bgColor="#3CD4A0"
                     onPress = {() => this.props.navigation.navigate('SystemNotification')}
                     >
                     <Text>
