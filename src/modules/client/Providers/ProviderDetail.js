@@ -2,14 +2,13 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  ScrollView,
-  Text,
+  ImageBackground,
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { compose, withState } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { Button, Loader, UsersList, Profile, RadioGroup} from '../../../components';
+import { Button, Loader, UsersList, Profile, RadioGroup, Text} from '../../../components';
 import { fonts, colors } from '../../../styles';
 
 import { getUser } from '../../../redux/modules/user'
@@ -55,36 +54,43 @@ class ProviderDetail extends React.Component {
     const {select} = this.state
     if (!user) return (<></>)
     return (
-      <View style={styles.container}>
-        <Loader
-          loading={usersloading} /> 
-        <View style={styles.componentsSection}>
-          <View style={{flexDirection: 'row'}}>
-            <Profile user={user} navigation={this.props.navigation}/>
-            <View style={styles.settingsContainer}>
-              <Text onPress={() => this.handleAttentions(user._id)}>关注</Text>
+      <>
+      <ImageBackground
+          source={require('../../../../assets/images/profileBackground.png')}
+          style={{
+            width: '100%'}}
+          resizeMode="cover"
+        >
+        <View style={{padding: 15}}>
+          <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
+            <Profile user = {user} navigation={this.props.navigation} />
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Text onPress={() => this.handleAttentions(user._id)} white>+关注</Text>
             </View>
           </View>
           <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
-            <View style={{alignItems: 'center'}} onPress={() => this.props.navigation.navigate('MyCollection')}>
-              <Text>33</Text>
-              <Text>服务用户数</Text>
+            <View style={{alignItems: 'center'}}>
+              <Text white bold size={28}>39</Text>
+              <Text white>服务用户数</Text>
             </View>
             <View style={{alignItems: 'center'}}>
-              <Text>2343</Text>
-              <Text>项目作品</Text>
+              <Text white bold size={28}>45</Text>
+              <Text white>项目作品</Text>
             </View>
             <View style={{alignItems: 'center'}}>
-              <Text>4</Text>
-              <Text>播放数量</Text>
+              <Text white bold size={28}>45</Text>
+              <Text white>播放数量</Text>
             </View>
+          </View> 
           </View>
-        </View>
-        <View style={{...styles.componentsSection, flexBasis: 1, flexGrow: 1}}>
-          <View style={{height: 50}}>
+        </ImageBackground>
+      <View style={styles.container}>
+        <Loader
+          loading={usersloading} /> 
+        <View style={{flexBasis: 1, flexGrow: 1}}>
+          <View style={{height: 50, backgroundColor: colors.secondary}}>
             <RadioGroup
               underline
-              style={styles.demoItem}
               items={['项目作品', '雇主评价']}
               selectedIndex={this.props.radioGroupsState[1]}
               onChange={index => this.handleSelect(index)}
@@ -98,22 +104,22 @@ class ProviderDetail extends React.Component {
         </View>
         <View style={styles.buttonsContainer}>
         <Button
-          large
-          bgColor={colors.warning}
+          small
+          bgColor={colors.primary}
           style={styles.button}
           caption="在线沟通"
           onPress={() => this.props.navigation.navigate('Chatting', {to: user._id})}
         />
         <Button
-          large
-          bgColor={colors.warning}
+          small
+          bgColor={colors.primary}
           style={styles.button}
           caption="电话"
           onPress={this.handleClick}
         />
         <Button
-          large
-          bgColor={colors.warning}
+          small
+          bgColor={colors.primary}
           style={styles.button}
           caption="约拍"
           onPress={this.handleClick}
@@ -121,6 +127,7 @@ class ProviderDetail extends React.Component {
             
         </View>
       </View>
+      </>
     );
   }
 }
@@ -128,55 +135,16 @@ class ProviderDetail extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bluish,
-    paddingHorizontal: 15,
-    paddingTop: 20,
+    backgroundColor: colors.white,
   },
   
-  picker: {
-    flexDirection: "row",
-    justifyContent: 'space-between'
-  },
   buttonsContainer: {
     alignItems: 'flex-end',
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    margin: 20
-  },
-  button: {
-    marginBottom: 20,
-  },
-  description: {
-    padding: 20,
-    marginBottom: 20,
-    alignSelf: 'stretch'
-  },
-  input: {
-    marginBottom: 15,
-  },
-  anchor: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  inputWrap: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  componentsSection: {
-    backgroundColor: colors.white,
-    padding: 15,
-    marginBottom: 20,
-    borderRadius: 5,
-  },
-  settingsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-end',
-    marginBottom: 20,
+    padding: 10,
+    backgroundColor: colors.secondary
   },
 });
 

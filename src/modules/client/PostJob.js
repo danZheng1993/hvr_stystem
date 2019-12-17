@@ -132,16 +132,16 @@ class PostJob extends React.Component {
         {isConfirm ?
         <Modal isVisible={true} onBackdropPress={() => this.setState({isConfirm: false})}>
           <View style={{...styles.componentsSection, alignItems: 'stretch', alignSelf: 'stretch', alignContent: 'stretch', justifyContent: 'center'}}>
-            <Text>拍摄城市 : {location}</Text>
-            <Text>服务类别 : {type}</Text>
-            <Text>场景数量 : {count}</Text>
-            <Text>拍摄场景 : {scene}</Text>
-            <Text>行业类别 : {subcategory}</Text>
-            <Text>其他需求 : {service}</Text>
-            <Text>是否公开 : {isPublic? '公开': 'No'}</Text>
-            <Text>需求描述 : {description} </Text>
-            <Text>平台预估价格 : {systembudget}</Text>
-            <Text>预算金额 : {budget}</Text>
+            <Text>拍摄城市: {location}</Text>
+            <Text>服务类别: {type}</Text>
+            <Text>场景数量: {count}</Text>
+            <Text>拍摄场景: {scene}</Text>
+            <Text>行业类别: {subcategory}</Text>
+            <Text>其他需求: {service}</Text>
+            <Text>是否公开: {isPublic? '公开': 'No'}</Text>
+            <Text>需求描述: {description} </Text>
+            <Text>平台预估价格: {systembudget}</Text>
+            <Text>预算金额: {budget}</Text>
               <Button caption="Post" onPress={() => this.handleClick()} />
           </View>
         </Modal> :
@@ -149,29 +149,42 @@ class PostJob extends React.Component {
           ref="form"
           onSubmit={this.handleConfirm}
         >
-          <View style={styles.componentsSection} >
-            <Text onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}>拍摄城市 : {location}</Text>
+          <View style={[styles.componentsSection, {flexDirection: 'row', justifyContent: 'space-between'}]} >
+            <Text>拍摄城市: </Text> 
+            <Text color={colors.primary} onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}>{location} ></Text>
           </View>
           <View style={styles.componentsSection} >
-            <Picker
-                selectedValue={this.state.type}
-                onValueChange={(itemValue, itemIndex) =>
-                  this.setType(itemValue)
-                }>
-                {  Array.isArray(types) && types.map((item, index) => (
-                    <Picker.Item key={index} label={item.name} value={item.name} />
-                )) }
-            </Picker>
+            <View style={styles.row}>
+              <Text style={{flex: 1}}>服务类别:</Text>
+              <View style={styles.border}>
+                <Picker
+                    selectedValue={this.state.type}
+                    style={{height: 30}}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setType(itemValue)
+                    }>
+                    {  Array.isArray(types) && types.map((item, index) => (
+                        <Picker.Item key={index} label={item.name} value={item.name} />
+                    )) }
+                </Picker>
+              </View>
+            </View>
             { !isLive ?
-            <TextValidator
-                validators={['required', 'isNumber']}                 
-                errorMessages={['This field is required', 'Input Number']}
-                label='场景数量'
-                placeholder="场景数量"
-                keyboardType='numeric'
-                value={this.state.count}
-                onChangeText={count => this.setState({ count, systembudget: panoramaPrice * (+count) })}
-            />
+            <View style={styles.row}>
+              <Text style={{flex: 1}}>场景数量:</Text>
+              <View style={{flex: 1}}>
+                <TextValidator
+                  style={{flex: 1}}
+                  validators={['required', 'isNumber']}                 
+                  errorMessages={['This field is required', 'Input Number']}
+                  label='场景数量'
+                  placeholder="场景数量"
+                  keyboardType='numeric'
+                  value={this.state.count}
+                  onChangeText={count => this.setState({ count, systembudget: panoramaPrice * (+count) })}
+                />
+              </View>
+            </View>
             : <>
             <DatePicker
               style={{width: 200}}
@@ -199,51 +212,66 @@ class PostJob extends React.Component {
             />
             </>
             }
-            <Picker              
-              selectedValue={this.state.scene}
-              onValueChange={(itemValue, itemIndex) =>
-                this.setState({scene: itemValue})
-              }>
-              {  Array.isArray(scenes) && scenes.map((item, index) => (
-                  <Picker.Item key={index} label={item.name} value={item.name} />
-              )) }
-            </Picker>
-            <Picker
-              selectedValue={this.state.subcategory}
-              onValueChange={(itemValue, itemIndex) =>
-                this.setState({subcategory: itemValue})
-              }>
-              {  Array.isArray(subcategories) && subcategories.map((item, index) => (
-                  <Picker.Item key={index} label={item.name} value={item.name} />
-              )) }
-            </Picker>
+            <View style={styles.row}>
+              <Text style={{flex: 1}}>拍摄场景:</Text>
+              <View style={styles.border}>
+                <Picker              
+                  selectedValue={this.state.scene}
+                  style={{height: 30}}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({scene: itemValue})
+                  }>
+                  {  Array.isArray(scenes) && scenes.map((item, index) => (
+                      <Picker.Item key={index} label={item.name} value={item.name} />
+                  )) }
+                </Picker>
+              </View>
+            </View>
+            <View style={styles.row}>
+              <Text style={{flex: 1}}>行业类别:</Text>
+              <View style={styles.border}>
+                <Picker
+                  selectedValue={this.state.subcategory}
+                  style={{height: 30}}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({subcategory: itemValue})
+                  }>
+                  {  Array.isArray(subcategories) && subcategories.map((item, index) => (
+                      <Picker.Item key={index} label={item.name} value={item.name} />
+                  )) }
+                </Picker>
+              </View>
+            </View>
           </View>
 
-          <View style = {styles.componentsSection}>
-            {Array.isArray(services) && services.map((service, index) => (
-              <View key={index}>
-              <Text size={14}>
-                {service.name}
-              </Text>
-              <RadioForm
-                radio_props={this.state.radioGroup}
-                initial={1}
-                formHorizontal={true}
-                labelHorizontal={true}
-                buttonColor={'#000000'}
-                animation={true}
-                onPress={(value) => {this.onhandleService(value, index)}}
-              />
-              </View>
-            ))}
-            <Text>平台预估参考价 : ¥{systembudget}</Text>
+          <View style = {[styles.componentsSection, {flexDirection: 'row'}]}>
+            <View style={{flex: 2}}>
+              {Array.isArray(services) && services.map((service, index) => (
+                <View key={index}>
+                <Text size={14}>
+                  {service.name}
+                </Text>
+                <RadioForm
+                  radio_props={this.state.radioGroup}
+                  initial={1}
+                  formHorizontal={true}
+                  labelHorizontal={true}
+                  buttonColor={'#000000'}
+                  animation={true}
+                  onPress={(value) => {this.onhandleService(value, index)}}
+                />
+                </View>
+              ))}
+            </View>
+            <View style={{flex:1, justifyContent: 'center', alignItems: 'center', marginVertical: 50, borderRadius: 20, backgroundColor: colors.secondary}}>
+              <Text white bold>平台预估参考价</Text>
+              <Text white bold>¥{systembudget}</Text>
+            </View>
           </View>
 
           <View style= {styles.componentsSection}>
             <TextValidator
-              style={styles.input}
-              outlined
-              label='需求描述'
+              style={styles.border}
               placeholder="需求描述"
               multiline
               maxLength={200}
@@ -256,11 +284,8 @@ class PostJob extends React.Component {
             <View style={{flex: 1}}><Text>预算价格</Text></View>
             <View style={{flex: 2}}>
               <TextValidator
-                style={styles.input}
-                outlined
                 validators={['required', 'isNumber']}                 
                 errorMessages={['This field is required', 'Input Number']}
-                label='预算价格'
                 placeholder="输入预算金额"
                 keyboardType='numeric'
                 value={this.state.budget}
@@ -269,8 +294,8 @@ class PostJob extends React.Component {
             </View>
           </View>
 
-          <View style = {styles.componentsSection}>
-            <Text size={14}>
+          <View style = {[styles.componentsSection, {flexDirection: 'row'}]}>
+            <Text size={14} bold>
               是否公开
             </Text>
             <RadioForm
@@ -283,16 +308,13 @@ class PostJob extends React.Component {
               onPress = {(value) => {this.setState({isPublic: value})}}
             />
           </View>
-
-          <View style={styles.buttonsContainer}>
-            <Button
-              large
-              bgColor={colors.warning}
-              style={styles.button}
-              caption="提交"
-              onPress={() => this.refs.form.submit()}
-            />
-          </View>          
+          <Button
+            large
+            bgColor={colors.secondary}
+            style={styles.button}
+            caption="提交"
+            onPress={() => this.refs.form.submit()}
+          />
         </Form>   
       }
       </ScrollView>
@@ -307,35 +329,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 20,
   },
-  
-  picker: {
-    flexDirection: "row",
-    justifyContent: 'space-between'
+  border: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: colors.primary,
+    borderRadius: 5, 
+    borderStyle: 'solid',
   },
-  buttonsContainer: {
-    alignSelf: 'stretch',
-    margin: 20
+  row: {
+    flexDirection: 'row',
+    margin: 5
   },
   button: {
-    marginBottom: 20,
     alignSelf: 'stretch',
-  },
-  description: {
-    padding: 20,
-    marginBottom: 20,
-    alignSelf: 'stretch'
-  },
-  input: {
-    marginBottom: 15,
-  },
-  anchor: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  inputWrap: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    marginBottom:50
   },
   componentsSection: {
     backgroundColor: colors.white,
