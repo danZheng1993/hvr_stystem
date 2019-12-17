@@ -9,6 +9,7 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { cancelJob, removeFromMyJobsList} from '../../../../../redux/modules/job'
 import {Button} from '../../../../../components'
+import {colors} from '../../../../../styles'
 
 const WaitingAction = props => {
   return (
@@ -30,6 +31,7 @@ const WaitingAction = props => {
         />
        <Button
         small
+        bgColor={colors.warning}
         style={styles.button}
         caption="催一催"
         onPress={() => alert("PLEASE!!!")}
@@ -44,7 +46,9 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 20
+    borderTopColor: colors.greybackground,
+    borderTopWidth: 1,
+    paddingTop: 10
   },
 
   button: {

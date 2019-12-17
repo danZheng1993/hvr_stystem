@@ -3,14 +3,13 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Text,
   TouchableOpacity
 } from 'react-native';
 import moment from 'moment'
 import {NotPaidAction, WaitingAction, TestingAction, FinishingAction, FeedbackAction} from './JobActions'
 import { fonts, colors } from '../../../../styles';
 import { TouchableRipple } from 'react-native-paper';
-import {NoData} from '../../../../components'
+import {NoData, Text} from '../../../../components'
 
 handleClick = () => {
 
@@ -31,16 +30,19 @@ export default class JobsList extends React.Component {
          {jobs.length ? jobs.map((job, index) => (
           <TouchableRipple key={index} onPress={() => navigation.navigate('ClientJobDetail', {id: job._id})}>
            <View key={index} style={styles.componentsSection}>
-             <Text size={14}>订单信息 : <Text>{job.status}</Text></Text>
-             <Text size={14}>订单编号 : <Text>{job._id}</Text></Text>
-             <Text size={14}>创建时间 : <Text>{moment(job.created).format("YYYY-MM-DD HH:MM:SS")}</Text></Text>
-             <Text size={14}>服务项目 : <Text>{job.type}</Text></Text>
-             <Text size={14}>拍摄城市 : <Text>{job.location}</Text></Text>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: colors.greybackground, marginBottom: 5}}>
+              <Text color={colors.secondary}>订单信息</Text>
+              <Text color={colors.primary}>{job.status}</Text>
+            </View>
+             <Text size={14}>订单编号: {job._id}</Text>
+             <Text size={14}>创建时间: {moment(job.created).format("YYYY-MM-DD HH:MM:SS")}</Text>
+             <Text size={14}>服务项目: {job.type}</Text>
+             <Text size={14}>拍摄城市: {job.location}</Text>
 
              {job.status == '竞标中' && 
               <View style={styles.textContainer}>
-                <Text size={14}>预算价格:<Text>¥{job.budget}</Text></Text>
-                <Text size={14} onPress={() => {
+                <Text size={14}>预算价格: <Text color={colors.redAlert}>¥{job.budget}</Text></Text>
+                <Text size={14} color={colors.secondary} onPress={() => {
                   navigation.navigate('ClientJobDetail', {
                     id: job._id,
                   });

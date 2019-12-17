@@ -10,7 +10,7 @@ import { createStructuredSelector } from 'reselect';
 import {payUpfront} from '../../../../../redux/modules/payment'
 import {updateMyJobsList, cancelJob, removeFromMyJobsList} from '../../../../../redux/modules/job'
 import {Button} from '../../../../../components'
-
+import {colors} from '../../../../../styles'
 const NotPaidAction = props => {
   return (
     <View style={styles.buttonsContainer}>
@@ -32,6 +32,7 @@ const NotPaidAction = props => {
         <Button
         small
         style={styles.button}
+        bgColor={colors.warning}
         caption="去支付"
         onPress={() => props.payUpfront({
           body: {id: props.job._id},
@@ -48,7 +49,9 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 20
+    borderTopColor: colors.greybackground,
+    borderTopWidth: 1,
+    paddingTop: 10
   },
 
   button: {

@@ -7,6 +7,7 @@ import {Button, Confirm} from '../../../../../components'
 import NotPaidAction from './NotPaidAction'
 import TestingAction from './TestingAction'
 import WaitingAction from './WaitingAction'
+import {colors} from '../../../../../styles'
 
 const FeedbackAction = ({navigation,job}) => {
   return (
@@ -25,6 +26,7 @@ const FeedbackAction = ({navigation,job}) => {
       />
       <Button
         small
+        bgColor={colors.warning}
         style={styles.button}
         caption="评价"
         onPress={() => navigation.navigate('GiveFeedback', {id: job._id})}
@@ -44,6 +46,7 @@ const FinishingAction = props => {
       />
       <Button
         small
+        bgColor={colors.warning}
         style={styles.button}
         caption="查看视频"
         onPress={this.handleClick}
@@ -58,7 +61,9 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 20
+    borderTopColor: colors.greybackground,
+    borderTopWidth: 1,
+    paddingTop: 10
   },
 
   button: {

@@ -2,11 +2,8 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Platform,
-  FlatList,
   TouchableOpacity,
   Image,
-  Dimensions,
 } from 'react-native';
 import { colors, fonts } from '../../../styles';
 import Icon from 'react-native-vector-icons/Entypo';

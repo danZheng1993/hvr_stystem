@@ -10,6 +10,7 @@ import { createStructuredSelector } from 'reselect';
 import {finalPay} from '../../../../../redux/modules/payment'
 import {updateMyJobsList} from '../../../../../redux/modules/job'
 import {Button, Confirm} from '../../../../../components'
+import {colors} from '../../../../../styles'
 
 const TestingAction = props => {
   return (
@@ -28,6 +29,7 @@ const TestingAction = props => {
       />
       <Button
         small
+        bgColor={colors.warning}
         style={styles.button}
         caption="确认验收"
         onPress={() => Confirm('提示', '是否确认验收并支付尾款', () => props.finalPay({
@@ -45,7 +47,9 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 20
+    borderTopColor: colors.greybackground,
+    borderTopWidth: 1,
+    paddingTop: 10
   },
 
   button: {

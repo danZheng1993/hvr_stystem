@@ -3,15 +3,15 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Text,
   Image,
-  Alert
+  Alert,
+  TouchableOpacity
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-
+import {Text} from './StyledText'
 import { fonts, colors } from '../styles';
 import Button from './Button'
 import Confirm from './Confirm'
@@ -41,33 +41,23 @@ class Applicants extends React.Component {
   render() {   
     const {applicants, navigation} = this.props
     return (
-      <ScrollView style={styles.componentsSection} horizontal={true}>
+      <ScrollView  horizontal={true}>
         {applicants ? applicants.map((applicant, index) => (
-          <View key={index} style={{borderWidth: 1, borderColor: colors.gray, borderRadius:10, marginRight: 10}}>
-            
+          <View key={index} style={styles.componentsSection}>
+            <View style={{justifyContent: 'center',alignItems: 'center', padding: 15}}>
               <Image
                 source={require('../../assets/images/takephoto.png')}
                 style={styles.photo}
               />
-            {/* <Text size={14}><Text>{applicant.applicant}</Text></Text> */}
-            <Text size={14}>报价 : ¥{applicant.price}</Text>
-            <View style={styles.buttonsContainer}>
-              <Button
-                small
-                style={styles.button}
-                caption="查看主页"
-                onPress={() => {
-                  navigation.navigate('ProviderDetail', {
-                    id: applicant.applicant,
-                })}}
-              />
-              <Button
-                small
-                style={styles.button}
-                caption="选用"
-                onPress={() => this.handleClick(applicant)}
-              />
+              <Text size={14} bold color={colors.secondary}>报价报价报价</Text>
+              <Text size={14} bold color={colors.secondary}>报价: ¥{applicant.price}</Text>
             </View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => this.handleClick(applicant)}
+            >
+              <Text white bold>选用</Text>
+              </TouchableOpacity>
           </View>
         )) : <Text>No applicants</Text>}
       </ScrollView>
@@ -91,8 +81,7 @@ const styles = StyleSheet.create({
 
   componentsSection: {
     backgroundColor: colors.white,
-    padding: 15,
-    marginBottom: 20,
+    marginHorizontal: 5,
     borderRadius: 5,
   },
   photo: {
@@ -103,12 +92,12 @@ const styles = StyleSheet.create({
     height: 50
   },
 
-  buttonsContainer: {
-    alignItems: 'flex-end',
+  button: {
+    alignItems: 'center',
     alignSelf: 'stretch',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 20
+    backgroundColor: colors.secondary,
+    borderBottomEndRadius: 5,
+    borderBottomStartRadius: 5
   },
 });
 
