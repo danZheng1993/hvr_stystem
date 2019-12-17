@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   componentsSection: {
     backgroundColor: colors.secondary,
-    height: 50,
+    height: 30,
   },
 });
 

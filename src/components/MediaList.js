@@ -42,7 +42,7 @@ class MediaList extends React.Component {
   render() {   
     const {medias, navigation, profile} = this.props
     console.log(medias)
-    const collections = profile.collections
+    const collections = profile? profile.collections : []
     return (
         <ScrollView>      
          {Array.isArray(medias) ? medias.map((media, index) => (

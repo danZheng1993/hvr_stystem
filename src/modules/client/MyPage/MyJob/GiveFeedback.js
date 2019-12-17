@@ -54,7 +54,6 @@ class GiveFeedback extends React.Component {
         <TextInput
             style={styles.input}
             outlined
-            label='填写服务介绍'
             placeholder="填写服务介绍"
             multiline
             maxLength={100}
@@ -66,7 +65,7 @@ class GiveFeedback extends React.Component {
         <View style={styles.buttonsContainer}>
           <Button
             large
-            bgColor={colors.warning}
+            bgColor={colors.secondary}
             style={styles.button}
             caption="提交"
             onPress={() => this.handleClick()}
@@ -81,7 +80,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1, 
     alignItems: 'center', 
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: colors.bluish
   },
   photo: {
     borderRadius: 100,
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 15,
+    backgroundColor: colors.white
   },
   description: {
     padding: 20,

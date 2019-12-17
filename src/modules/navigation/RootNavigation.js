@@ -219,7 +219,7 @@ const stackNavigator = createStackNavigator(
     ProviderJob: {
       screen: ProviderJob,
       navigationOptions: {
-        header: null,
+        title: '接单列表',
       },
     },
 

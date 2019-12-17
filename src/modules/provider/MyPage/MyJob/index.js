@@ -47,18 +47,20 @@ class MyJobList extends React.Component {
       jobslist = jobs.filter(job => job.status == status[selected])
     }
     return (
+      <>
+      <View style={styles.componentsSection}>
+        <RadioGroup
+          items={['全部', '竞标中', '已选用','待支付', '待拍摄', '待验收']}
+          selectedIndex={this.props.radioGroupsState[0]}
+          onChange={index => this.handleClick(index)}
+          underline
+        />
+      </View>
       <ScrollView style={styles.container}>
-        <View style={styles.componentsSection}>
-          <RadioGroup
-            items={['全部', '竞标中', '已选用','待支付', '待拍摄', '待验收']}
-            selectedIndex={this.props.radioGroupsState[0]}
-            onChange={index => this.handleClick(index)}
-            underline
-          />
-        </View>
         <Loader loading={jobsloading} />
         <ProviderJobsList jobs={jobslist} navigation={this.props.navigation}/>
       </ScrollView>
+      </>
     );
     }
 }
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
   
   componentsSection: {
     backgroundColor: colors.secondary,
-    padding: 15,
+    height: 30
   },
 });
 

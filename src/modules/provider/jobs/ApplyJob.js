@@ -27,9 +27,7 @@ class ApplyJob extends React.Component {
     let id = navigation.getParam('id', 'NO-ID')
     if (id != 'NO-ID') {
       getJob({
-        id: id,
-        success: () => toast("success!"),
-        failed: () => toast("Error!")
+        id: id
       })
     }
   }
