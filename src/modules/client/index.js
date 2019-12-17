@@ -1,4 +1,6 @@
 /* eslint-disable import/no-unresolved */
+import React from 'react';
+
 import { Image, View, StyleSheet, Text } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 
@@ -9,21 +11,18 @@ import PostJob from './PostJob'
 import MyPage from './MyPage'
 import Providers from './Providers';
 import MediaSearch from './MediaSearch';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+const iconImage = require('../../../assets/images/vr.png');
 
 const styles = StyleSheet.create({
   tabBarItemContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomWidth: 2,
-    borderBottomColor: colors.white,
     paddingHorizontal: 10,
   },
   tabBarIconFocused: {
-    tintColor: colors.primary,
-    backgroundColor: colors.gray,
-    color: colors.black
+    color: colors.white
   },
   headerContainer: {
     height: 70,
@@ -82,20 +81,60 @@ export default createBottomTabNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => ({
       // eslint-disable-next-line react/prop-types
-
+      tabBarIcon: ({ focused }) => {
+        const { routeName } = navigation.state;
+        let iconSource;
+        switch (routeName) {
+          case '首页':
+            iconSource = "home";
+            break;
+          case '发现':
+            iconSource = "eye";
+            break;
+          case '约拍':
+            iconSource = "";
+            break;
+          case '服务':
+            iconSource = "heart-o";
+            break;
+          case '我的':
+            iconSource = "user-o";
+            break;
+          default:
+            iconSource = "";
+        }
+        return (
+          <View style={styles.tabBarItemContainer}>
+            {iconSource ?
+            <Icon
+              style={styles.demoIcon}
+              name={iconSource}
+              size={30}
+              color={colors.primary}
+              style={[styles.tabBarIcon, focused && styles.tabBarIconFocused]}
+            /> :
+            <View style={{borderRadius:100, backgroundColor: colors.primary, borderWidth:3, borderColor: colors.white, width: 60, height: 60, marginBottom: 30}}>
+              <Image
+                resizeMode="cover"
+                source={iconImage}
+                style={{width:60, height: 60, borderRadius: 25}}
+              />
+            </View>
+            }
+          </View>
+        );
+      },
     }),
     tabBarPosition: 'bottom',
-    animationEnabled: true,
+    animationEnabled: false,
     swipeEnabled: false,
     tabBarOptions: {
-			// activeTintColor: colors.black,
-			activeTintColor: colors.black,
-			labelStyle: {
-				fontSize: 28,
-			},
-			style: {
-				backgroundColor: colors.white,
-			},
+      activeTintColor: colors.white,
+      inactiveTintColor: colors.primary,
+      showLabel: true,
+      style: {
+        backgroundColor: colors.secondary,
+      },
     },
   },
 );

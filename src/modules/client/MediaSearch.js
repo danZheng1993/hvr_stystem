@@ -45,18 +45,20 @@ class MediaSearch extends React.Component {
     const {medias, loading} = this.props
     const {selected} = this.state
     return (
-      <ScrollView style={styles.container}>
-        <Loader loading={loading} />
+      <>
         <View style={styles.componentsSection}>
           <RadioGroup
-            style={styles.demoItem}
             items={['关注', '热门', '最新']}
             selectedIndex={this.props.radioGroupsState[0]}
             onChange={index => this.handleClick(index)}
+            underline
           />
         </View>
-        <MediaList medias={medias} navigation={this.props.navigation}/>
-      </ScrollView>
+        <ScrollView style={styles.container}>
+          <Loader loading={loading} />
+          <MediaList medias={medias} navigation={this.props.navigation}/>
+        </ScrollView>
+      </>
     );
   }
 }
@@ -64,16 +66,13 @@ class MediaSearch extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bluish,
-    paddingHorizontal: 15,
-    paddingTop: 20,
+    backgroundColor: colors.white,
   },
 
   componentsSection: {
-    backgroundColor: colors.white,
-    padding: 15,
-    marginBottom: 20,
-    borderRadius: 5,
+    backgroundColor: colors.secondary,
+    padding: 5,
+    height: 50
   },
 });
 

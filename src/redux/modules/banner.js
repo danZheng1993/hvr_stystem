@@ -65,7 +65,7 @@ export default handleActions({
   [requestSuccess(GET_BANNERS)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(GET_BANNERS),
-    banners: Object.values(payload),
+    banners: payload.banners,
     error: null,
     loading: false
   }),

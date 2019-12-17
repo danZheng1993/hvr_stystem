@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { TouchableOpacity, View, Text } from 'react-native';
-
+import { TouchableOpacity, View } from 'react-native';
+import {Text} from './StyledText'
 import { colors } from '../styles';
 
 export default function RNSRadioGroup({
@@ -26,7 +26,7 @@ export default function RNSRadioGroup({
 
           let activeTextStyle = styles.textActive;
           if (underline) activeTextStyle = styles.textActiveUnderline;
-
+           
           return (
             <TouchableOpacity
               onPress={() => onChange(index)}
@@ -39,9 +39,8 @@ export default function RNSRadioGroup({
             >
               <Text
                 style={[
-                  styles.text,
                   underline && styles.textUnderline,
-                  isActive && activeTextStyle,
+                  isActive ? activeTextStyle : styles.textInActive,
                 ]}
               >
                 {item.value || item}
@@ -91,8 +90,8 @@ const styles = {
     borderBottomWidth: 2,
     borderBottomColor: colors.white,
   },
-  text: {
-    color: colors.white,
+  textInActive: {
+    color: colors.primary,
   },
   textUnderline: {
     color: '#a6a6a6',

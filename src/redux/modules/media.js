@@ -72,7 +72,7 @@ export default handleActions({
   [requestSuccess(GET_MEDIAS)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(GET_MEDIAS),
-    medias: Object.values(payload),
+    medias: payload.medias,
     error: null,
     loading: false
   }),

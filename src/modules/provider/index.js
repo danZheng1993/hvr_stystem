@@ -22,9 +22,7 @@ const styles = StyleSheet.create({
     height: 0,
   },
   tabBarIconFocused: {
-    tintColor: colors.primary,
-    backgroundColor: colors.gray,
-    color: colors.black
+    color: colors.white
   },
   headerContainer: {
     height: 70,

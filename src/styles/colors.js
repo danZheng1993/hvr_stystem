@@ -23,7 +23,8 @@ const blueVersion = {
   placeholder: '#D7D7D7',
   description: '#b5b5b6',
   greybackground: '#e5ebf4',
-  redAlert: '#b60005'
+  redAlert: '#b60005',
+  heart: '#e3545e'
 };
 
 export default blueVersion;

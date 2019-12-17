@@ -68,7 +68,7 @@ export default handleActions({
   [requestSuccess(GET_NEWSS)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(GET_NEWSS),
-    newss: Object.values(payload),
+    newss: payload.newss,
     error: null,
     loading: false
   }),

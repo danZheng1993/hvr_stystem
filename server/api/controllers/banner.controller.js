@@ -29,7 +29,7 @@ function read(req, res) {
 
 function list(req, res, next) {
   console.log("banner",req.query)
-  if (req.user.role !== ROLES.MANAGER) {
+  if (req.user.role !== ROLES.MANAGER && req.user.role !== ROLES.CLIENT) {
     res.status(401).json({ message: 'You are not authorized' });
     return;
   }

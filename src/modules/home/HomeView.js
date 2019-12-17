@@ -15,9 +15,7 @@ import { getSettings } from '../../redux/modules/setting'
 import { getTypes } from '../../redux/modules/type'
 import { getScenes } from '../../redux/modules/scene'
 import { getServices } from '../../redux/modules/service'
-import { getNewss } from '../../redux/modules/news'
-import { getBanners } from '../../redux/modules/banner'
-import { getMedias } from '../../redux/modules/media'
+
 import { getMyJob } from '../../redux/modules/job'
 import { addToContacts, pushNotification, pushUnreadMessages } from '../../redux/modules/auth'
 
@@ -42,14 +40,11 @@ class HomeScreen extends React.Component {
   async componentWillMount(): void {
     const data = await SyncStorage.init();
     console.log('AsyncStorage is ready!');
-    const {getTypes, getScenes, getServices, getSubcategorys, getBanners, getNewss, getMedias, getSettings} = this.props
+    const {getTypes, getScenes, getServices, getSubcategorys, getSettings} = this.props
     getScenes()
     getTypes()
     getServices()
     getSubcategorys()
-    getBanners()
-    getNewss()
-    getMedias()
     getSettings()
    }
 
@@ -131,9 +126,6 @@ const mapDispatchToProps = {
   getScenes,
   getServices,
   getSubcategorys,
-  getNewss,
-  getBanners,
-  getMedias,
   addToContacts,
   pushNotification,
   pushUnreadMessages,
