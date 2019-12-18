@@ -433,7 +433,7 @@ export default class Location extends Component {
           searchInputPlaceholderColor={'#FFF'}
           searchInputTextColor={'#FFF'}
           searchInputTextColorActive={'#000'}
-          searchInputPlaceholder='Search'
+          searchInputPlaceholder='搜索'
           sectionIndexTextColor={'#6ec6ff'}
           searchBarBackgroundColor={'#2196f3'}
         />

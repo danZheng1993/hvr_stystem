@@ -2,7 +2,8 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Text
+  Text,
+  ScrollView
 } from 'react-native';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -44,6 +45,7 @@ class ClientJobDetail extends React.Component {
       )
     }
     return (
+      <ScrollView>
       <View style={styles.container}>
           <View style={styles.description}>
             <JobDetail job={job} />
@@ -85,6 +87,7 @@ class ClientJobDetail extends React.Component {
             }
           </View>
       </View>
+      </ScrollView>
     );
     }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  ScrollView
 } from 'react-native';
 
 import { fonts, colors } from '../../../../styles';
@@ -11,7 +12,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { myJobsSelector } from '../../../../redux/selectors'
-import {findIndex} from 'lodash'
+import { findIndex } from 'lodash'
 
 class ProviderJobDetail extends React.Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class ProviderJobDetail extends React.Component {
       )
     }    
     return (
+      <ScrollView>
       <View style={styles.container}>
           <View style={styles.description}>
             <JobDetail job={job} />
@@ -126,6 +128,7 @@ class ProviderJobDetail extends React.Component {
             }
           </View>
       </View>
+      </ScrollView>
     );
     }
 }

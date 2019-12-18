@@ -13,7 +13,7 @@ const LogSchema = new Schema({
   },
   logged: {
     type: Date,
-    default: new Date()
+    default: Date.now
   }
 }, {
   timestamp: true,

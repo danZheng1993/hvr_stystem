@@ -27,7 +27,7 @@ const NewsSchema = new Schema({
   },
   created: {
     type: Date,
-    default: new Date()
+    default: Date.now
   },
   source: {
     type: String,

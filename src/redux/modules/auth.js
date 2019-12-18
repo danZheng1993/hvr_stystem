@@ -208,7 +208,7 @@ export default handleActions({
     ...state,
     token: null,
     status: requestFail(CHECK_CODE),
-    me: null,
+    // me: null,
     error: payload,
     loading: false
   }),

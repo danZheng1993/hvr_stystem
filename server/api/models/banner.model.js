@@ -12,11 +12,11 @@ const BannerSchema = new Schema({
   },
   from: {
     type: Date,
-    default: new Date()
+    default: Date.now
   },
   to: {
     type: Date,
-    default: new Date()
+    default: Date.now
   },
   status: {
     type: Boolean,
@@ -32,7 +32,7 @@ const BannerSchema = new Schema({
   },
   created: {
     type: Date,
-    default: new Date()
+    default: Date.now
   }
 }, {
   timestamp: true,

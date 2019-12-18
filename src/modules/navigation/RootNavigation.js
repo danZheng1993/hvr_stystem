@@ -51,6 +51,7 @@ import Location from '../../components/Location';
 
 import Settings from '../settings';
 import PersonalInformation from '../settings/PersonalInformation';
+import Security from '../settings/Security';
 
 const headerBackground = require('../../../assets/images/topBarBg.png');
 
@@ -276,6 +277,13 @@ const stackNavigator = createStackNavigator(
       screen: PersonalInformation,
       navigationOptions: {
         header: null,
+      },
+    },
+    
+    Security: {
+      screen: Security,
+      navigationOptions: {
+        title: '安全验证',
       },
     },
 

@@ -40,7 +40,7 @@ const settings = props => {
                     chevron={{ color: colors.secondary }}
                     titleStyle = {{color: colors.secondary, fontWeight: 'bold', fontSize: 18}}
                     hideChevron={false}
-                    onPress = {() => props.navigation.navigate('PasswordRecovery')}
+                    onPress = {() => props.navigation.navigate('Security')}
                     bottomDivider
                 />
                 <ListItem

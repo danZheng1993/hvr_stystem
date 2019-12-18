@@ -22,6 +22,8 @@ class MyPage extends React.Component {
       {title: '评价', icon: 'camera'},
       {title: '已完成', icon: 'camera'},
     ]
+    const collectionlength = profile ? profile.collections.length: 0
+    const attentionlength = profile ? profile.attentions.length: 0
     return (
       <>
       <ImageBackground
@@ -50,11 +52,11 @@ class MyPage extends React.Component {
           </View>
           <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
             <TouchableOpacity style={{alignItems: 'center'}} onPress={() => this.props.navigation.navigate('MyCollection')}>
-              <Text white bold size={28}>{profile.collections.length}</Text>
+              <Text white bold size={28}>{collectionlength}</Text>
               <Text white>我的收藏</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{alignItems: 'center'}}  onPress={() => this.props.navigation.navigate('MyAttention')}>
-              <Text white bold size={28}>{profile.attentions.length}</Text>
+              <Text white bold size={28}>{attentionlength}</Text>
               <Text white>我的关注</Text>
             </TouchableOpacity>
             <View style={{alignItems: 'center'}}>

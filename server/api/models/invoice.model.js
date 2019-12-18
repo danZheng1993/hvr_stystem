@@ -22,7 +22,7 @@ const InvoiceSchema = new Schema({
   },
   created: {
     type: Date,
-    default: new Date(),
+    default: Date.now,
   },
   price: {
     type: Number,

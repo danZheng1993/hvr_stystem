@@ -99,7 +99,7 @@ class SignupAsProvider extends React.Component {
             name="phoneNumber"
             label='手机号'
             validators={['required', 'matchRegexp:^[0-9]{11}$']}
-            errorMessages={['This field is required', 'invalid phone number']}
+            errorMessages={['必填此项', '电话号码有误']}
             placeholder="输入手机号"
             type="text"
             keyboardType="numeric"
@@ -111,7 +111,7 @@ class SignupAsProvider extends React.Component {
               <TextValidator
                 name="verificationCode"
                 validators={['required', 'matchRegexp:^[0-9]{4}$']}                 
-                errorMessages={['This field is required', 'invalid code']}
+                errorMessages={['必填此项', 'invalid code']}
                 outlined
                 label='输入验证码'
                 type="text"
@@ -131,7 +131,7 @@ class SignupAsProvider extends React.Component {
             style={styles.input}
             outlined
             validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
-            errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
+            errorMessages={['必填此项', '密码需要输入6字以上', '密码输入限制20字以下']}
             label='设置密码'
             placeholder="设置密码（6-20位字母数字组合)"
             value={this.state.password}
@@ -143,7 +143,7 @@ class SignupAsProvider extends React.Component {
             style={styles.input}
             outlined
             validators={['required', 'isPasswordMatch']}                 
-            errorMessages={['This field is required', 'password mismatch']}
+            errorMessages={['必填此项', '密码出错']}
             label='确认密码'
             placeholder="确认密码"
             secureTextEntry

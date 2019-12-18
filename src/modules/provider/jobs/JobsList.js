@@ -46,7 +46,7 @@ class JobsList extends React.Component {
     const {location} = this.state
     return (
       <>
-        <View style={{ height: 50, flexDirection: "row", backgroundColor: colors.secondary, justifyContent: 'space-between'}}>
+        <View style={{ height: 50, flexDirection: "row", backgroundColor: colors.secondary, justifyContent: 'space-between', paddingVertical: 5}}>
           <TouchableOpacity 
             style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
             onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation})}
@@ -71,7 +71,7 @@ class JobsList extends React.Component {
                 <Text size={18} color={colors.secondary}>{job.status}</Text>
               </View>
               <Text size={14}>订单编号: {job._id}</Text>
-              <Text size={14}>创建时间: {moment(job.created).format("YYYY-MM-DD HH:MM:SS")}</Text>
+              <Text size={14}>创建时间: {moment(job.created).format("YYYY-MM-DD hh:mm:ss")}</Text>
               <Text size={14}>服务项目: {job.type}</Text>
               <Text size={14}>拍摄城市: {job.location}</Text>
               <Text size={14}>平台预估参考价: ¥{job.budget}</Text>

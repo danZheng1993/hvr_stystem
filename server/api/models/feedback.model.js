@@ -8,7 +8,7 @@ const FeedbackSchema = new Schema({
   },
   created: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   },
   content: {
     type: String,

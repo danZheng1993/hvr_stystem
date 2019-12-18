@@ -12,7 +12,7 @@ const DatabaseSchema = new Schema({
   },
   created: {
     type: Date,
-    default: new Date()
+    default: Date.now
   },
 }, {
   timestamp: true,

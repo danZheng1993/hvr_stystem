@@ -28,7 +28,7 @@ class JobDetail extends React.Component {
             <Text size={18} color={colors.secondary}>{job.status}</Text>
           </View>
           <Text size={14}>订单编号: {job._id}</Text>
-          <Text size={14}>创建时间: {moment(job.created).format("YYYY-MM-DD HH:MM:SS")}</Text>
+          <Text size={14}>创建时间: {moment(job.created).format("YYYY-MM-DD hh:mm:ss")}</Text>
           <Text size={14}>拍摄城市: {job.location}</Text>
           <Text size={14}>服务项目: {job.count}个以内场景</Text>
           <Text size={14}>场景数量: {job.type}</Text>

@@ -14,7 +14,7 @@ const paymentSchema = new Schema({
     ref: 'User', required: true, trim: true},
   to: {     type: Schema.ObjectId,
     ref: 'User', required: true, trim: true},
-  created: { type: Date, default: new Date() },
+  created: { type: Date, default: Date.now },
   amount: { type: Number, required: true, validate: [positiveNumber, 'should be bigger than 0']},
   type: {type: String},
   content: {type: String}

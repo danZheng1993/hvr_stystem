@@ -63,6 +63,7 @@ function getMyJob(req, res, next) {
     }
   }
   Job.find(where)
+  .sort({created: -1})
   .then((entries) => {
     res.json(entries);
   })
@@ -146,6 +147,7 @@ function list(req, res, next) {
     Job.find(where)
     .limit(page_size)
     .skip(page_size * (page-1))
+    .sort({created: -1})
     .populate('creator', 'phoneNumber')
     .populate('hired', 'phoneNumber')
     .then((jobs) => {

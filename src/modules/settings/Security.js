@@ -13,7 +13,8 @@ import { fonts, colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
 import { Text } from '../../components/StyledText';
 import { saveProfile } from '../../redux/modules/auth'
-import SendVerificationcode from '../components/SendVerificationCode'
+import {profileSelector} from '../../redux/selectors'
+import SendCode from './SendCode'
 
 class PasswordRecovery extends React.Component {
     constructor (props) {
@@ -54,10 +55,13 @@ class PasswordRecovery extends React.Component {
 
     render(){
       const { verified } = this.state
+      const {profile} = this.props
+      const phoneNumber =profile ? profile.phoneNumber : 0
       return (
         <View style={styles.container}>
           { !verified ?
-          <SendVerificationcode navigation={this.props.navigation} onSuccess={this.onSuccess}/> :
+            
+          <SendCode navigation={this.props.navigation} onSuccess={this.onSuccess} phoneNumber={phoneNumber} /> :
           <Form
               ref="form"
               onSubmit={this.handleSubmit}
@@ -88,9 +92,9 @@ class PasswordRecovery extends React.Component {
               <View style={styles.buttonsContainer}>
                 <Button
                   large
-                  bgColor={colors.warning}
+                  bgColor={colors.secondary}
                   style={styles.button}
-                  caption="确定"
+                  caption="发送验证码"
                   onPress={() => this.refs.form.submit()}
                 />
               </View>
@@ -103,7 +107,10 @@ class PasswordRecovery extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: colors.white
   },
   buttonsContainer: {
     flex: 2,
@@ -117,6 +124,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 15,
+    width: 300
   },
   verificationCode: {
     flexDirection: 'row',
@@ -126,6 +134,7 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
+  profile: profileSelector
 });
 
 const mapDispatchToProps = {

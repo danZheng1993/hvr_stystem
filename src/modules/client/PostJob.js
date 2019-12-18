@@ -142,7 +142,7 @@ class PostJob extends React.Component {
             <Text>需求描述: {description} </Text>
             <Text>平台预估价格: {systembudget}</Text>
             <Text>预算金额: {budget}</Text>
-              <Button caption="Post" onPress={() => this.handleClick()} />
+              <Button caption="提交" onPress={() => this.handleClick()} />
           </View>
         </Modal> :
         <Form
@@ -176,7 +176,7 @@ class PostJob extends React.Component {
                 <TextValidator
                   style={{flex: 1}}
                   validators={['required', 'isNumber']}                 
-                  errorMessages={['This field is required', 'Input Number']}
+                  errorMessages={['必填此项', 'Input Number']}
                   label='场景数量'
                   placeholder="场景数量"
                   keyboardType='numeric'
@@ -191,7 +191,7 @@ class PostJob extends React.Component {
               date={this.state.start}
               mode="datetime"
               placeholder="select date"
-              format="YYYY-MM-DD HH:MM:SS"
+              format="YYYY-MM-DD hh:mm:ss"
               minDate="2019-12-01"
               maxDate="2049-12-31"
               confirmBtnText="Confirm"
@@ -203,7 +203,7 @@ class PostJob extends React.Component {
               date={this.state.end}
               mode="datetime"
               placeholder="select date"
-              format="YYYY-MM-DD HH:MM:SS"
+              format="YYYY-MM-DD hh:mm:ss"
               minDate="2019-12-01"
               maxDate="2049-12-31"
               confirmBtnText="Confirm"
@@ -285,7 +285,7 @@ class PostJob extends React.Component {
             <View style={{flex: 2}}>
               <TextValidator
                 validators={['required', 'isNumber']}                 
-                errorMessages={['This field is required', 'Input Number']}
+                errorMessages={['必填此项', 'Input Number']}
                 placeholder="输入预算金额"
                 keyboardType='numeric'
                 value={this.state.budget}

@@ -66,15 +66,15 @@ import { RadioGroup, GridRow, Button, MediaList, Loader, Text } from '../../../c
             }
             {news && news.map((l, i) => (
               typeof(l) == "object" &&
-              <View style={{flexDirection: 'row', margin: 15, borderRadius: 5}} key={i}>
+              <View style={{flexDirection: 'row', margin: 15, borderRadius: 5, height: 100}} key={i}>
                 <View style={{flex: 1}}>
                   <Text black bold>{l.title}</Text>
                 </View>
                 <View style={{flex: 1, alignItems: 'stretch'}}>
                   <Image
-                    resizeMode="contain"
+                    resizeMode="cover"
                     source={{uri: constants.NEWS_BASE_URL + l.image}}
-                    style={{width: '100%', height: 100, borderRadius: 20}}
+                    style={{flex: 1, borderRadius: 20}}
                   />
                 </View>
               </View>

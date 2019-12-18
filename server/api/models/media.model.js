@@ -14,11 +14,11 @@ const MediaSchema = new Schema({
   },
   created: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   },
   tested: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   },
   location: {
     type: String,

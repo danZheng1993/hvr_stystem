@@ -80,7 +80,7 @@ class LoginWithPassword extends React.Component {
               name="phoneNumber"
               label='手机号'
               validators={['required', 'matchRegexp:^[0-9]{11}$']}
-              errorMessages={['This field is required', 'invalid phone number']}
+              errorMessages={['必填此项', '电话号码有误']}
               placeholder="输入手机号"
               type="text"
               value={this.state.phoneNumber}
@@ -90,7 +90,7 @@ class LoginWithPassword extends React.Component {
               style={styles.input}
               outlined
               validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
-              errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
+              errorMessages={['必填此项', '密码需要输入6字以上', '密码输入限制20字以下']}
               label='设置密码'
               placeholder="设置密码（6-20位字母数字组合)"
               value={this.state.password}

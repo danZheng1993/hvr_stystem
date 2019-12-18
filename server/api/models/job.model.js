@@ -10,7 +10,7 @@ const JobSchema = new Schema({
   },
   created: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   },
   location: {
     type: String,
@@ -27,11 +27,11 @@ const JobSchema = new Schema({
   },
   start: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   },
   end: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   },
   scene: {
     type: String,

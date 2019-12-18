@@ -28,15 +28,7 @@ const initialState = {
   settings: {},
   loading: false,
 }
-const convert = (setting) => {
-  var json = {}
-  if (setting.length) {
-    setting.map((item, index) => (
-      json[item.key] = item.value  
-    ))
-  }
-  return json
-}
+
 // ------------------------------------
 // Reducer
 // ------------------------------------
@@ -73,7 +65,7 @@ export default handleActions({
   [requestSuccess(GET_SETTINGS)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(GET_SETTINGS),
-    settings: convert(Object.values(payload)),
+    settings: payload,
     error: null,
     loading: false
   }),

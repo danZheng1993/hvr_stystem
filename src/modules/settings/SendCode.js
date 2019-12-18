@@ -11,7 +11,7 @@ import { colors } from '../../styles'
 import { Button } from '../../components';
 import { Text } from '../../components/StyledText';
 import {sendcode} from '../../redux/modules/auth'
-import CheckVerificationCode from './CheckVerificationCode';
+import CheckVerificationCode from '../components/CheckVerificationCode';
 import { Form, TextValidator } from 'react-native-validator-form';
 
 var timer
@@ -20,17 +20,16 @@ class SendVerificationCode extends React.Component {
     super(props)
   }
   state = {
-    phoneNumber: '',
     isCheck: false,
     counter: 10,
   }
   
   handleClick = () => {
-    const { phoneNumber } = this.state
+    const { phoneNumber } = this.props
     const { onSuccess } = this.props
-    if(phoneNumber.length != 11 || !Number.isInteger(+phoneNumber)) return;
+    // if(phoneNumber.length != 11 || !Number.isInteger(+phoneNumber)) return;
     this.props.sendcode({
-      body: { phoneNumber: phoneNumber},
+      body: { phoneNumber: "" + phoneNumber},
       success: () => {    
         timer = setInterval(this.countTime, 1000)
         this.setState({isCheck: true})
@@ -54,41 +53,27 @@ class SendVerificationCode extends React.Component {
   }
 
   render() {
-    const {isCheck, phoneNumber, counter} = this.state
+    const {isCheck, counter} = this.state
+    const {phoneNumber} = this.props
     return (
       <View style={{alignItems: 'center'}}>
         {!isCheck ? <View>
           <View style={styles.description}>
-            <Text size={28} black bold>
-              需求方登录
-            </Text>
-            <Text size={14} color={colors.description}>
-              登录使用更多服务
+            <Text color={colors.black}>
+              为了保证你的账号安全，请验证身份。验证成功
+              后进行下一步操作。
             </Text>
           </View>
-          <Form
-              ref="form"
-              onSubmit={this.handleClick}
-          >
-            <TextValidator
-              name="phoneNumber"
-              label='手机号'
-              validators={['required', 'matchRegexp:^[0-9]{11}$']}
-              errorMessages={['必填此项', '电话号码有误']}
-              placeholder="输入手机号"
-              type="text"
-              style={{width: 300}}
-              value={this.state.phoneNumber}
-              onChangeText={phoneNumber => this.setState({ phoneNumber })}
-            />
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Text color={colors.black}>*********{phoneNumber % 100}</Text>
             <Button
               large
-              bgColor={colors.primary}
+              bgColor={colors.secondary}
               style={styles.button}
               caption="确定"
-              onPress={() => this.refs.form.submit()}
+              onPress={() => this.handleClick()}
             />
-          </Form> 
+          </View> 
         </View> :
         <View>
           <CheckVerificationCode phoneNumber = {phoneNumber} onSuccess = {this.props.onSuccess}/>
