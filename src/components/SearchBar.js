@@ -28,27 +28,31 @@ class Search extends React.Component {
     updateSearch = search => {
         this.setState({ search });
     }
+    redirect = (type,search) => {
+        const {addToSearch} = this.props
+        this.props.navigation.navigate('SearchResult', {type})
+        addToSearch(search)
+    }
     searchContent = (content= '') => {
         const {type} = this.state
-        const {searchUser, searchMedia, searchNews, addToSearch} = this.props
+        const {searchUser, searchMedia, searchNews} = this.props
         const search = content || this.state.search
-        addToSearch(search)
         switch(type) {
             case 'media':
                 searchMedia({
                     body: {title: search},
-                    success: () => this.props.navigation.navigate('SearchResult', {type})
+                    success: () => this.redirect(type, search)
                 })
                 break;
             case 'user':
                 searchUser({
                     body :{ userName: search},
-                    success: () => this.props.navigation.navigate('SearchResult', {type})
+                    success: () => this.redirect(type, search)
                 })
             case 'news':
                 searchNews({
                     body: {title: search},
-                    success: () => this.props.navigation.navigate('SearchResult', {type})
+                    success: () => this.redirect(type, search)
                 })
                 break;
             default:

@@ -17,6 +17,7 @@ import { fonts, colors } from '../../../styles';
 
 import { searchJob } from '../../../redux/modules/job'
 import {  jobsListSelector, jobsloadingSelector, profileSelector, jobsSearchResultSelector } from '../../../redux/selectors'
+import { getSettings } from '../../../redux/modules/setting';
 
 class JobsList extends React.Component {
   constructor(props) {
@@ -34,8 +35,9 @@ class JobsList extends React.Component {
   }
 
   chooseLocation = (location) => {
-    const {searchJob} = this.props
+    const {searchJob, getSettings} = this.props
     this.setState({location})
+    getSettings()
     searchJob({
       body: {location}
     })
@@ -139,7 +141,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  searchJob
+  searchJob,
+  getSettings
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

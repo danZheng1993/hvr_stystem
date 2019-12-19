@@ -120,6 +120,7 @@ function list(req, res, next) {
     Media.find(where)
     .limit(page_size)
     .skip(page_size * (page-1))
+    .populate('poster', 'userName photo')
     .then((medias) => {
          res.json({medias, count});
     })
@@ -140,6 +141,7 @@ function search(req, res, next) {
   }
   console.log("search", where)
   Media.find(where)
+  .populate('poster', 'userName photo')
   .then((entries) => {
     res.json(entries);
   })

@@ -14,8 +14,8 @@ import Icon from 'react-native-vector-icons/Entypo';
 import { createStructuredSelector } from 'reselect';
 import { fonts, colors } from '../styles';
 import constants from '../constants'
-import {Loader, Text} from '../components'
-import { addToCollections, removeFromCollections } from '../redux/modules/auth'
+import {Loader, Text, toast} from '../components'
+import { addToCollections, removeFromCollections, addToAttentions } from '../redux/modules/auth'
 import { authloadingSelector, profileSelector } from '../redux/selectors'
 import NoData from './NoData';
 class MediaList extends React.Component {
@@ -39,10 +39,19 @@ class MediaList extends React.Component {
     })
   }
 
+  handleAttentions = (id) => {
+    this.props.addToAttentions({
+      body: {attention: id},
+      success: () => toast('成功!'),
+      fail: ()=> toast('失败')
+    })
+  }
+
   render() {   
     const {medias, navigation, profile} = this.props
     console.log(medias)
     const collections = profile? profile.collections : []
+    const attentions = profile? profile.attentions : []
     return (
         <ScrollView>      
          {Array.isArray(medias) ? medias.map((media, index) => (
@@ -59,8 +68,16 @@ class MediaList extends React.Component {
                 </ImageBackground>
               </TouchableOpacity>
               <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 10}} >
-                <View style={{flexDirection: 'row'}}>
-                  <Text black>{media.title}</Text>
+                <View style={{flexDirection: 'row', justifyContent: 'center',alignItems: 'center'}}>
+                  <Image
+                    source={{uri: constants.BASE_URL + (media.poster.photo ? media.poster.photo: 'default.png')}}
+                    style={{width: 20, height: 20, borderRadius: 10}}
+                  />
+                  <Text black>{media.poster.userName}</Text>
+                  {
+                    attentions.indexOf(media.poster._id) == -1 &&
+                    <Text onPress={() => this.handleAttentions(media.poster._id)} color={colors.primary}>+关注</Text>
+                  }
                 </View>
                 <View style={{flexDirection: 'row'}}>
                   {
@@ -114,6 +131,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   addToCollections,
+  addToAttentions,
   removeFromCollections
 };
 

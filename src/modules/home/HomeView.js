@@ -41,12 +41,11 @@ class HomeScreen extends React.Component {
   async componentWillMount(): void {
     const data = await SyncStorage.init();
     console.log('AsyncStorage is ready!');
-    const {getTypes, getScenes, getServices, getSubcategorys, getSettings} = this.props
+    const {getTypes, getScenes, getServices, getSubcategorys} = this.props
     getScenes()
     getTypes()
     getServices()
     getSubcategorys()
-    getSettings()
    }
 
   handleMessage(message) {
@@ -122,7 +121,6 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   getTypes,
-  getSettings,
   getScenes,
   getServices,
   getSubcategorys,

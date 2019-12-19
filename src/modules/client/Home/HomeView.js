@@ -4,6 +4,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  ScrollView
 } from 'react-native';
 import { colors, fonts } from '../../../styles';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -17,14 +18,17 @@ import { getMedias } from '../../../redux/modules/media'
 import { createStructuredSelector } from 'reselect';
 import { bannersListSelector, newssListSelector, mediasListSelector, newssloadingSelector, bannersloadingSelector, mediasloadingSelector} from '../../../redux/selectors'
 import { RadioGroup, GridRow, Button, MediaList, Loader, Text } from '../../../components';
+import { getSettings } from '../../../redux/modules/setting';
+import { getDateStr } from '../../../utils/helper';
 
  class HomeView extends React.Component {
 
    componentWillMount() {
-      const {getBanners, getNewss, getMedias} = this.props
+      const {getBanners, getNewss, getMedias, getSettings} = this.props
       getBanners()
       getNewss()
       getMedias()
+      getSettings()
    }
 
   render() {
@@ -58,27 +62,36 @@ import { RadioGroup, GridRow, Button, MediaList, Loader, Text } from '../../../c
           <>
             {banners && <SliderBox
               images={bannerImages}
-              currentImageEmitter={index => console.warn(`current pos is: ${index}`)}
               onCurrentImagePressed={index =>
-                  console.warn(`image ${index} pressed`)
+                this.props.navigation.navigate('WebViewer', {url: banners[index].url})
               }
             />
             }
-            {news && news.map((l, i) => (
-              typeof(l) == "object" &&
-              <View style={{flexDirection: 'row', margin: 15, borderRadius: 5, height: 80}} key={i}>
-                <View style={{flex: 2, paddingRight: 20}}>
-                  <Text black bold>{l.title}</Text>
-                </View>
-                <View style={{flex: 1, alignItems: 'stretch'}}>
-                  <Image
-                    resizeMode="cover"
-                    source={{uri: constants.NEWS_BASE_URL + l.image}}
-                    style={{flex: 1, borderRadius: 5}}
-                  />
-                </View>
-              </View>
-          ))}
+            <View style={{paddingTop: 15, paddingLeft: 15}}>
+              <Text bold black size={18} style={{borderLeftColor: colors.secondary, borderLeftWidth: 3, paddingLeft: 10}}>热门资讯</Text>
+              <Text>OVERSEAS ZONE</Text>
+            </View>
+            <View style={{flexBasis: 1, flexGrow: 1}}>
+              <ScrollView style={{flex: 1}}>
+                {news && news.map((l, i) => (
+                  typeof(l) == "object" &&
+                  <TouchableOpacity style={{flexDirection: 'row', margin: 15, borderRadius: 5, height: 80}} key={i} onPress={() => this.props.navigation.navigate('WebViewer', {url: l.source})
+                }>
+                    <View style={{flex: 2, paddingRight: 20}}>
+                      <Text black bold>{l.title}</Text>
+                      <Text>{getDateStr(l.created)}</Text>
+                    </View>
+                    <View style={{flex: 1, alignItems: 'stretch'}}>
+                      <Image
+                        resizeMode="cover"
+                        source={{uri: constants.NEWS_BASE_URL + l.image}}
+                        style={{flex: 1, borderRadius: 5}}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
           </>
         }
         {tabIndex == 1 &&
@@ -107,6 +120,7 @@ const mapDispatchToProps = {
   getNewss,
   getBanners,
   getMedias,
+  getSettings
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

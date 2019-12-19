@@ -7,9 +7,10 @@ export const refreshResult = (list, update) => {
 }
 export const addToArray = (list, item) => {
     let index = list.indexOf(item)
-    if (index == -1) {
-        list.push(item)
+    if (index !== -1 || !item) {
+        return list
     }
+    list.push(item)
     return list.slice()
 }
 export const updateUnreadMessageList = (list, from) => {

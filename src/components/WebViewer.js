@@ -10,14 +10,14 @@ export default class WebViewer extends Component {
 	}
   componentWillMount() {
 		const {navigation} = this.props
-		let url = navigation.getParam('url', 'error.html')
+		let url = navigation.getParam('url', 'http://192.168.0.207/error.html')
 		this.setState({url})
 	}
   render() {
 		const {url} = this.state
     return (
       <WebView
-        source={{uri: (constants.BASE_URL + url)}}
+        source={{uri: url}}
         // source={{uri: `https://720yun.com/`}}
         style={{marginTop: 20}}
       />
