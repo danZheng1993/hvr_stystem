@@ -58,7 +58,8 @@ export function Caption(props) {
 const styles = StyleSheet.create({
   default: {
     fontFamily: fonts.primaryRegular,
-    margin: 5
+    margin: 5,
+    fontSize: 12
   },
   bold: {
     fontFamily: fonts.primaryBold,

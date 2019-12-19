@@ -1,8 +1,9 @@
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
+import {Text} from '../../components'
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 import { colors, fonts } from '../../styles';
-
+import Icon from 'react-native-vector-icons/FontAwesome'
 import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVersionViewContainer';
 import MainTabNavigator from './MainTabNavigator';
 import GalleryScreen from '../gallery/GalleryViewContainer';
@@ -71,48 +72,174 @@ const stackNavigator = createStackNavigator(
     },
     Signup: {
       screen: SignupScreen,
-      navigationOptions: {
-        header: null,
-      },
+      navigationOptions: ({ navigation }) => ({
+        title: '',
+        headerStyle: {
+          elevation: 0, // remove shadow on Android
+          shadowOpacity: 0, // remove shadow on iOS
+          backgroundColor: colors.white,
+        },
+        headerLeft: props => (
+          <TouchableOpacity
+            onPress={props.onPress}
+            style={{
+              paddingLeft: 25,
+            }}
+          >
+            <Icon name="angle-left" size={30} color={colors.black}/>
+          </TouchableOpacity>
+        ),
+        headerRight:  (
+          (
+            <Text size={12} style={{color: colors.primary, paddingRight: 25}} onPress={() => navigation.navigate('LoginWithPassword')}>
+              登录
+            </Text> 
+          )
+        ),
+      }),
     },
 
     BasicProfile: {
       screen: BasicProfile,
       navigationOptions: {
-        title: '信息填写',
+        title: '',
+        headerStyle: {
+          elevation: 0, // remove shadow on Android
+          shadowOpacity: 0, // remove shadow on iOS
+          backgroundColor: colors.white,
+        },
+        headerLeft: props => (
+          <TouchableOpacity
+            onPress={props.onPress}
+            style={{
+              paddingLeft: 25,
+            }}
+          >
+            <Icon name="angle-left" size={30} color={colors.black}/>
+          </TouchableOpacity>
+        ),
       },
     },
     ShootingID: {
       screen: ShootingID,
       navigationOptions: {
-        title: '拍摄身份证',
+        title: '',
+        headerStyle: {
+          elevation: 0, // remove shadow on Android
+          shadowOpacity: 0, // remove shadow on iOS
+          backgroundColor: colors.white,
+        },
+        headerLeft: props => (
+          <TouchableOpacity
+            onPress={props.onPress}
+            style={{
+              paddingLeft: 25,
+            }}
+          >
+            <Icon name="angle-left" size={30} color={colors.black}/>
+          </TouchableOpacity>
+        ),
       },
     },
     CompanyInfo: {
       screen: CompanyInfo,
-      navigationOptions: {
-        title: '公司信息',
-      },
+      navigationOptions: ({ navigation }) => ({
+        title: '',
+        headerStyle: {
+          elevation: 0, // remove shadow on Android
+          shadowOpacity: 0, // remove shadow on iOS
+          backgroundColor: colors.white,
+        },
+        headerLeft: props => (
+          <TouchableOpacity
+            onPress={props.onPress}
+            style={{
+              paddingLeft: 25,
+            }}
+          >
+            <Icon name="angle-left" size={30} color={colors.black}/>
+          </TouchableOpacity>
+        ),
+        headerRight:  (
+          (
+            <Text size={12} style={{color: colors.primary, paddingRight: 25}} onPress={() => navigation.navigate('Provider')}>
+              跳跃
+            </Text> 
+          )
+        ),
+      }),
     },
     
     SignupAsProvider: {
       screen: SignupAsProvider,
       navigationOptions: {
-        title: '注册',
+        title: '',
+        headerStyle: {
+          elevation: 0, // remove shadow on Android
+          shadowOpacity: 0, // remove shadow on iOS
+          backgroundColor: colors.white,
+        },
+        headerLeft: props => (
+          <TouchableOpacity
+            onPress={props.onPress}
+            style={{
+              paddingLeft: 25,
+            }}
+          >
+            <Icon name="angle-left" size={30} color={colors.black}/>
+          </TouchableOpacity>
+        ),
       },
     },
     SignupAsClient: {
       screen: SignupAsClient,
       navigationOptions: {
-        title: '注册',
+        title: '',
+        headerStyle: {
+          elevation: 0, // remove shadow on Android
+          shadowOpacity: 0, // remove shadow on iOS
+          backgroundColor: colors.white,
+        },
+        headerLeft: props => (
+          <TouchableOpacity
+            onPress={props.onPress}
+            style={{
+              paddingLeft: 25,
+            }}
+          >
+            <Icon name="angle-left" size={30} color={colors.black}/>
+          </TouchableOpacity>
+        ),
       },
     },
 
     LoginWithPassword: {
       screen: LoginWithPassword,
-      navigationOptions: {
+      navigationOptions: ({ navigation }) => ({
         title: '',
-      },
+        headerStyle: {
+          elevation: 0, // remove shadow on Android
+          shadowOpacity: 0, // remove shadow on iOS
+          backgroundColor: colors.white,
+        },
+        headerLeft: props => (
+          <TouchableOpacity
+            onPress={props.onPress}
+            style={{
+              paddingLeft: 25,
+            }}
+          >
+            <Icon name="angle-left" size={30} color={colors.black}/>
+          </TouchableOpacity>
+        ),
+        headerRight:  (
+          (
+            <Text size={12} style={{color: colors.primary, paddingRight: 25}} onPress={() => navigation.navigate('Signup')}>
+              注册
+            </Text> 
+          )
+        ),
+      }),
     },
     ClientJob: {
       screen: ClientJob,
@@ -140,7 +267,6 @@ const stackNavigator = createStackNavigator(
         header: null,
       },
     },
-
     MyAttention: {
       screen: MyAttention,
       navigationOptions: {
@@ -149,9 +275,31 @@ const stackNavigator = createStackNavigator(
     },
     LoginWithSMS: {
       screen: LoginWithSMS,
-      navigationOptions: {
+      navigationOptions: ({ navigation }) => ({
         title: '',
-      },
+        headerStyle: {
+          elevation: 0, // remove shadow on Android
+          shadowOpacity: 0, // remove shadow on iOS
+          backgroundColor: colors.white,
+        },
+        headerLeft: props => (
+          <TouchableOpacity
+            onPress={props.onPress}
+            style={{
+              paddingLeft: 25,
+            }}
+          >
+            <Icon name="angle-left" size={30} color={colors.black}/>
+          </TouchableOpacity>
+        ),
+        headerRight:  (
+          (
+            <Text size={12} style={{color: colors.primary, paddingRight: 25}} onPress={() => navigation.navigate('Signup')}>
+              注册
+            </Text> 
+          )
+        ),
+      }),
     },
     PasswordRecovery: {
       screen: PasswordRecovery,
@@ -360,6 +508,8 @@ const stackNavigator = createStackNavigator(
       },
       headerStyle: {
         backgroundColor: colors.secondary,
+        elevation: 0, // remove shadow on Android
+        shadowOpacity: 0, // remove shadow on iOS
         borderBottomWidth: 0,
       },
       // headerBackground: (

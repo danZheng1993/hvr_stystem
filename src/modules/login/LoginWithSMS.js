@@ -46,33 +46,33 @@ class LoginWithSMS extends React.Component {
         <View style={styles.container}>
           <SendVerificationcode navigation={this.props.navigation} onSuccess={this.onSuccess}/>
           <View style={styles.anchor}>
-            <View style={styles.inputWrap}>
+            <View style={[styles.inputWrap, {alignItems: 'flex-start'}]}>
               <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithPassword' })}>
               密码登录
               </Text>
             </View>           
-            <View style={styles.inputWrap}>
+            <View style={[styles.inputWrap, {alignItems: 'flex-end'}]}>
               <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'PasswordRecovery' })}>
-              忘记密码？
+              忘记密码?
               </Text>
             </View>
           </View>
-          <View style={{alignItems: 'center', marginTop: 100}}>
+          <View style={{alignItems: 'center', marginTop: 100, borderTopWidth: 1, borderTopColor: colors.greybackground}}>
             <Text color={colors.description}>使用第三方登录</Text>
             <View style={styles.touch}>
-              <TouchableOpacity onPress={this.handleWeChat}>
+              <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeChat}>
                 <Image
                   source={require('../../../assets/images/wechat.png')}
                   style={styles.photo}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={this.handleQQ}>
+              <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleQQ}>
                 <Image
                   source={require('../../../assets/images/qq.png')}
                   style={styles.photo}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={this.handleWeibo}>
+              <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeibo}>
                 <Image
                   source={require('../../../assets/images/weibo.png')}
                   style={styles.photo}
@@ -92,11 +92,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 70
-  },
-  buttonsContainer: {
-    flex: 1,
-    alignItems: 'center',
-    alignSelf: 'stretch',
   },
   description: {
     alignItems: "center",
@@ -126,7 +121,6 @@ const styles = StyleSheet.create({
   inputWrap: {
     flex: 1,
     justifyContent: 'flex-start',
-    alignItems: 'center',
   }
 });
 

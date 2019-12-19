@@ -60,7 +60,7 @@ class MediaList extends React.Component {
               </TouchableOpacity>
               <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 10}} >
                 <View style={{flexDirection: 'row'}}>
-                  <Text size={20} black>{media.title}</Text>
+                  <Text black>{media.title}</Text>
                 </View>
                 <View style={{flexDirection: 'row'}}>
                   {

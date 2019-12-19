@@ -71,12 +71,18 @@ export default createBottomTabNavigator(
     tabBarOptions: {
       activeTintColor: colors.white,
       inactiveTintColor: colors.primary,
-			labelStyle: {
-        fontSize: 28,
+      labelStyle: {
+        fontSize: 20,
+      },
+			tabBarItemContainer: {
+        justifyContent: 'center',
+        alignItems: 'center'
 			},
 			style: {
         backgroundColor: colors.secondary,
-        justifyContent: 'center'
+        padding: 10,
+        justifyContent: 'center',
+        alignItems :'center'
 			},
     },
   },

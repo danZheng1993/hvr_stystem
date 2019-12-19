@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react-native'
-import { TextInput } from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
 
 import PhotoUpload from 'react-native-photo-upload'
 
@@ -36,7 +36,7 @@ class BasicProfile extends React.Component {
   }
 
   handleClick = () => {
-    const {userName, photo, overview,update, location} = this.state
+    const {userName, photo, overview,update,location} = this.state
     const {profile} = this.props
     console.log(profile)
     if (photo) {
@@ -125,7 +125,7 @@ class BasicProfile extends React.Component {
         </TouchableOpacity> }
         <View style={styles.description}>
         {(update == '' || update == 'userName') && 
-        <View>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <Text size={20}>用户昵称</Text>
           <TextInput
               style={styles.input}
@@ -142,7 +142,7 @@ class BasicProfile extends React.Component {
         {(update == '' || update == 'overview') && 
         <View>
           <Text size={20}>用户昵称</Text>
-          <TextInput
+          <MultipleInput
               style={styles.input}
               placeholder="填写服务介绍"
               multiline

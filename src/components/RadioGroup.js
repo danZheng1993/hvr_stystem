@@ -10,6 +10,7 @@ export default function RNSRadioGroup({
   onChange,
   style,
   underline,
+  small
 }) {
   return (
     <View
@@ -39,6 +40,7 @@ export default function RNSRadioGroup({
             >
               <Text
                 style={[
+                  small && styles.small,
                   underline && styles.textUnderline,
                   isActive ? activeTextStyle : styles.textInActive,
                 ]}
@@ -72,6 +74,9 @@ const styles = {
   },
   underline: {
     borderWidth: 0,
+  },
+  small: {
+    fontSize: 10 
   },
   item: {
     flex: 1,

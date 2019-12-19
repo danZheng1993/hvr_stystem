@@ -36,7 +36,7 @@ class ProviderWorks extends React.Component {
          <Loader
           loading={false} />
          </View>
-          <Text>Provider Work</Text>
+          <Text>尽情期待</Text>
       </ScrollView>
     );
   }

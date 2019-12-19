@@ -49,7 +49,7 @@ class ProviderFeedbacks extends React.Component {
               title={feedback.creator.userName}
               subtitle={feedback.feedback}
             />
-          )) : <Text>No Feedback</Text>}
+          )) : <Text>暂时无用户评价</Text>}
       </ScrollView>
     );
   }

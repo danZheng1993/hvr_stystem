@@ -73,7 +73,7 @@ class MyPage extends React.Component {
         <View style={styles.componentsSection}>
           <View style={styles.componentSectionHeader}>
             <Text color={colors.primary}>我的订单</Text>
-            <Text>查看全部订单</Text>
+            <Text onPress={() => this.props.navigation.navigate('ClientJob', {selected: 0})}>查看全部订单</Text>
           </View>
           <View style={styles.demoButtonsContainer}>
             {jobStatus.map((jobItem, index) => (

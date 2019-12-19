@@ -7,7 +7,6 @@ import {
 
 import { Button, Location } from '../../components';
 import { fonts, colors} from '../../styles';
-
 import { Text } from '../../components/StyledText';
 
 export default function AuthScreen(props) {
@@ -43,6 +42,7 @@ export default function AuthScreen(props) {
           onPress={() => handleSignup()}
         />
         <Text size= {10} style={{color: colors.description}}>
+          
           我已阅读并同意 
           <Text size={10} style={{color: colors.primary}}> 服务条款和隐私政策 </Text>
         </Text>

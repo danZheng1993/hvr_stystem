@@ -163,22 +163,22 @@ class SignupAsClient extends React.Component {
               onPress={this.handleSubmit}
           />
         </Form>   
-        <View style={{alignItems: 'center', marginTop: 100}}>
-          <Text color={colors.description}>使用第三方登录</Text>
+        <View style={{alignItems: 'center', marginTop: 40, borderTopWidth: 1, borderTopColor: colors.greybackground}}>
+          <Text size={12} color={colors.description}>使用第三方登录</Text>
           <View style={styles.touch}>
-            <TouchableOpacity onPress={this.handleWeChat}>
+            <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeChat}>
               <Image
                 source={require('../../../assets/images/wechat.png')}
                 style={styles.photo}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleQQ}>
+            <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleQQ}>
               <Image
                 source={require('../../../assets/images/qq.png')}
                 style={styles.photo}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleWeibo}>
+            <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeibo}>
               <Image
                 source={require('../../../assets/images/weibo.png')}
                 style={styles.photo}

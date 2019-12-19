@@ -163,7 +163,8 @@ function signup(req, res, next) {
 
 function sendcode(req, res, next) {
   let min = 1000, max = 9999
-  let key = Math.floor(Math.random() * (max - min + 1) ) + min;
+  // let key = Math.floor(Math.random() * (max - min + 1) ) + min;
+  let key= 1111
   console.log(key)
 //  tKey = date
 

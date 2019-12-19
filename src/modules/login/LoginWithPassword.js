@@ -3,22 +3,19 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  ScrollView,
   Image
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-
-import {TextInput} from 'react-native-paper'
 import { Button, Loader, toast } from '../../components';
 import { fonts, colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
-
+import Icon from 'react-native-vector-icons/FontAwesome'
 import { Text } from '../../components/StyledText';
-import toaster from 'toasted-notes';
-
-import {login, getProfile} from '../../redux/modules/auth'
+import {login} from '../../redux/modules/auth'
 import { profileSelector, authloadingSelector } from '../../redux/selectors'
 import XMPP from 'react-native-xmpp'
 import { loadItem } from '../../redux/api/storage';
@@ -60,89 +57,91 @@ class LoginWithPassword extends React.Component {
     const {loading, profile} = this.props
 
     return (
-      <View style={styles.container}>
-        {/* { <Loader
-          loading={loading} /> } */}
-        <View style={styles.description}>
-          <Text size={28} black bold>
-            登录HVR
-          </Text>
-          <Text size={14} color={colors.description}>
-            登录使用更多服务
-          </Text>
-        </View>
-        <View style={{alignSelf: 'stretch'}}>
-          <Form
-              ref="form"
-              onSubmit={this.handleClick}
-          >
-            <TextValidator
-              name="phoneNumber"
-              label='手机号'
-              validators={['required', 'matchRegexp:^[0-9]{11}$']}
-              errorMessages={['必填此项', '电话号码有误']}
-              placeholder="输入手机号"
-              type="text"
-              value={this.state.phoneNumber}
-              onChangeText={phoneNumber => this.setState({ phoneNumber })}
-            />
-            <TextValidator
-              style={styles.input}
-              outlined
-              validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
-              errorMessages={['必填此项', '密码需要输入6字以上', '密码输入限制20字以下']}
-              label='设置密码'
-              placeholder="设置密码（6-20位字母数字组合)"
-              value={this.state.password}
-              secureTextEntry
-              maxLength={20}
-              onChangeText={password => this.setState({ password })}
-            />
-            <Button
-              large
-              bgColor={colors.primary}
-              style={styles.button}
-              caption="确定"
-              onPress={() => this.refs.form.submit()}
-            />
-          </Form>   
-        </View>
-        <View style={styles.anchor}>
-          <View style={styles.inputWrap}>
-            <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithSMS' })}>
-            手机验证码登录
+      <ScrollView>
+        <View style={styles.container}>
+          {/* { <Loader
+            loading={loading} /> } */}
+          <View style={styles.description}>
+            <Text size={28} black bold>
+              登录HVR
             </Text>
-          </View>           
-          <View style={styles.inputWrap}>
-            <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'PasswordRecovery' })}>
-            忘记密码？
+            <Text size={14} color={colors.description}>
+              登录使用更多服务
             </Text>
           </View>
-        </View>
-        <View style={{alignItems: 'center', marginTop: 100}}>
-          <Text color={colors.description}>使用第三方登录</Text>
-          <View style={styles.touch}>
-            <TouchableOpacity onPress={this.handleWeChat}>
-              <Image
-                source={require('../../../assets/images/wechat.png')}
-                style={styles.photo}
+          <View style={{alignSelf: 'stretch'}}>
+            <Form
+                ref="form"
+                onSubmit={this.handleClick}
+            >
+              <TextValidator
+                name="phoneNumber"
+                label='手机号'
+                validators={['required', 'matchRegexp:^[0-9]{11}$']}
+                errorMessages={['This field is required', 'invalid phone number']}
+                placeholder="输入手机号"
+                type="text"
+                value={this.state.phoneNumber}
+                onChangeText={phoneNumber => this.setState({ phoneNumber })}
               />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleQQ}>
-              <Image
-                source={require('../../../assets/images/qq.png')}
-                style={styles.photo}
+              <TextValidator
+                style={styles.input}
+                outlined
+                validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
+                errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
+                label='设置密码'
+                placeholder="设置密码（6-20位字母数字组合)"
+                value={this.state.password}
+                secureTextEntry
+                maxLength={20}
+                onChangeText={password => this.setState({ password })}
               />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleWeibo}>
-              <Image
-                source={require('../../../assets/images/weibo.png')}
-                style={styles.photo}
+              <Button
+                large
+                bgColor={colors.primary}
+                style={styles.button}
+                caption="确定"
+                onPress={() => this.refs.form.submit()}
               />
-            </TouchableOpacity>
+            </Form>   
+          </View>
+          <View style={styles.anchor}>
+            <View style={[styles.inputWrap, {alignItems: 'flex-start'}]}>
+              <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithSMS' })}>
+              手机验证码登录
+              </Text>
+            </View>           
+            <View style={[styles.inputWrap, {alignItems: 'flex-end'}]}>
+              <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'PasswordRecovery' })}>
+              忘记密码?
+              </Text>
+            </View>
+          </View>
+          <View style={{alignItems: 'center', marginTop: 100, borderTopWidth: 1, borderTopColor: colors.greybackground}}>
+            <Text size={12} color={colors.description}>使用第三方登录</Text>
+            <View style={styles.touch}>
+              <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeChat}>
+                <Image
+                  source={require('../../../assets/images/wechat.png')}
+                  style={styles.photo}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleQQ}>
+                <Image
+                  source={require('../../../assets/images/qq.png')}
+                  style={styles.photo}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeibo}>
+                <Image
+                  source={require('../../../assets/images/weibo.png')}
+                  style={styles.photo}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     );
     }
 }
@@ -152,7 +151,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 70
+    paddingHorizontal: 70,
+    paddingTop: 70
   },
   buttonsContainer: {
     flex: 1,
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   },
   touch: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-between'
   },
   anchor: {
     marginTop: 20,
@@ -187,7 +187,6 @@ const styles = StyleSheet.create({
   inputWrap: {
     flex: 1,
     justifyContent: 'flex-start',
-    alignItems: 'center',
   },
 });
 

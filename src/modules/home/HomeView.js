@@ -93,16 +93,16 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <View style={commonStyles.container}>
+      <View style={{flex: 1}}>
         <ImageBackground
           source={require('../../../assets/images/background.png')}
-          style={commonStyles.bgImage}
+          style={{flex: 1}}
           resizeMode="cover"
         >
           
-        <View style={commonStyles.buttonsContainer}>
+        <View style={{flex: 2,alignItems: 'flex-end',alignSelf: 'stretch',margin: 20}}>
           <Button
-            large
+            small
             secondary
             rounded
             style={commonStyles.button}

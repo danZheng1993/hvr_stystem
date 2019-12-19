@@ -54,6 +54,7 @@ class MyJobList extends React.Component {
           items={['全部', '竞标中', '待付款','待拍摄', '待验收', '评价', '已完成']}
           selectedIndex={this.props.radioGroupsState[0]}
           onChange={index => this.handleClick(index)}
+          small
           underline
         />
       </View>
@@ -74,11 +75,11 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   componentsSection: {
+    padding: 0,
     backgroundColor: colors.secondary,
     height: 30,
   },
 });
-
 
 const mapStateToProps = createStructuredSelector({
   jobs: myJobsSelector,
