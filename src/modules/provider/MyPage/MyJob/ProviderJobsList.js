@@ -9,6 +9,7 @@ import moment from 'moment'
 import { fonts, colors } from '../../../../styles';
 import { TouchableRipple } from 'react-native-paper';
 import {NoData, Button, Text} from '../../../../components'
+import { getDateTimeStr } from '../../../../utils/helper';
 
 export default class ProviderJobsList extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ export default class ProviderJobsList extends React.Component {
               <Text size={16} color={colors.primary}>{job.status}</Text>
             </View>
              <Text size={14}>订单编号: {job._id}</Text>
-             <Text size={14}>创建时间: {moment(job.created).format("YYYY-MM-DD hh:mm:ss")}</Text>
+             <Text size={14}>创建时间: {getDateTimeStr(job.created)}</Text>
              <Text size={14}>服务项目: {job.type}</Text>
              <Text size={14}>拍摄城市: {job.location}</Text>
              {job.status == '竞标中' && 

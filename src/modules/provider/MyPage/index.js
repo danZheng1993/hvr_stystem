@@ -55,10 +55,10 @@ class MyPage extends React.Component {
           <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
             <View style={{alignItems: 'center'}}>
               <Text white bold size={28}>39</Text>
-              <Text white>我发布的</Text>
+              <Text white onPress={() => this.props.navigation.navigate('SearchResult', {type: 'media'})}>我发布的</Text>
             </View>
             <View style={{alignItems: 'center'}}>
-              <Text white bold size={28}>45</Text>
+              <Text white bold size={28}>4500</Text>
               <Text white>我的余额</Text>
             </View>
           </View> 
@@ -90,13 +90,13 @@ class MyPage extends React.Component {
             title='我的合同'
             hideChevron={false}
             chevron={{ color: colors.gray }}
-            onPress = {() => null}
+            onPress = {() => this.props.navigation.navigate('MyContract')}
             bottomDivider
           />
           <ListItem
             key={2}
             titleStyle = {{color: colors.black}}
-            title='申请发票'
+            title='开具发票'
             hideChevron={false}
             chevron={{ color: colors.gray }}
             onPress = {() => this.props.navigation.navigate('BillingInvoice')}
@@ -108,7 +108,7 @@ class MyPage extends React.Component {
             title='VR商城'
             hideChevron={false}
             chevron={{ color: colors.gray }}
-            onPress = {() => null}
+            onPress = {() => this.props.navigation.navigate('VRShop')}
             bottomDivider
           />
           <ListItem

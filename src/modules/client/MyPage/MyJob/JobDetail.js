@@ -45,7 +45,8 @@ class ClientJobDetail extends React.Component {
       )
     }
     return (
-      <View style={styles.container}>
+      <ScrollView style={{backgroundColor: colors.bluish}}>
+        <View style={styles.container}>
           <View style={styles.description}>
             <JobDetail job={job} />
             {job.status == '竞标中' && <Applicants applicants={job.applicants} navigation={this.props.navigation} jobID={job._id}/>}
@@ -85,7 +86,8 @@ class ClientJobDetail extends React.Component {
               </View>
             }
           </View>
-      </View>
+        </View>
+      </ScrollView>
     );
     }
 }

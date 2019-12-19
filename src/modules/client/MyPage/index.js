@@ -59,10 +59,10 @@ class MyPage extends React.Component {
               <Text white bold size={28}>{attentionlength}</Text>
               <Text white>我的关注</Text>
             </TouchableOpacity>
-            <View style={{alignItems: 'center'}}>
+            <TouchableOpacity style={{alignItems: 'center'}} onPress={() => this.props.navigation.navigate('SearchResult', {type: 'media'})}>
               <Text white bold size={28}>4</Text>
               <Text white>我的VR</Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
       </ImageBackground>
@@ -93,7 +93,7 @@ class MyPage extends React.Component {
             title='我的合同'
             hideChevron={false}
             chevron={{ color: colors.gray }}
-            onPress = {() => null}
+            onPress = {() => this.props.navigation.navigate('MyContract')}
             bottomDivider
           />
           <ListItem
@@ -111,7 +111,7 @@ class MyPage extends React.Component {
             title='VR商城'
             hideChevron={false}
             chevron={{ color: colors.gray }}
-            onPress = {() => null}
+            onPress = {() => this.props.navigation.navigate('VRShop')}
             bottomDivider
           />
           <ListItem

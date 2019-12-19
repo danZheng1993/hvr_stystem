@@ -18,6 +18,7 @@ import { fonts, colors } from '../../../styles';
 import { searchJob } from '../../../redux/modules/job'
 import {  jobsListSelector, jobsloadingSelector, profileSelector, jobsSearchResultSelector } from '../../../redux/selectors'
 import { getSettings } from '../../../redux/modules/setting';
+import { getDateTimeStr } from '../../../utils/helper';
 
 class JobsList extends React.Component {
   constructor(props) {
@@ -73,7 +74,7 @@ class JobsList extends React.Component {
                 <Text size={18} color={colors.secondary}>{job.status}</Text>
               </View>
               <Text size={14}>订单编号: {job._id}</Text>
-              <Text size={14}>创建时间: {moment(job.created).format("YYYY-MM-DD hh:mm:ss")}</Text>
+              <Text size={14}>创建时间: {getDateTimeStr(job.created)}</Text>
               <Text size={14}>服务项目: {job.type}</Text>
               <Text size={14}>拍摄城市: {job.location}</Text>
               <Text size={14}>平台预估参考价: ¥{job.budget}</Text>
@@ -81,7 +82,7 @@ class JobsList extends React.Component {
                 <Text size={14}>需求方预算价格: ¥{job.budget}</Text>
                 <Text size={14} color={colors.primary} onPress={() => {
                   this.props.navigation.navigate('ApplyJob', {
-                    id: job._id,
+                    job
                 });}}>查看更多</Text>
               </View>
             </View>

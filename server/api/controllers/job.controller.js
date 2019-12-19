@@ -28,7 +28,11 @@ function update(req, res, next) {
 function apply(req, res, next) {
   console.log("applied!")
   // Object.assign(req.job, req.body);
-  console.log(req.body)
+  if (isNaN(+req.body.price)) {
+    res.status(500).json({ message: 'Invalid request' });
+    return;
+  }
+  // if (req.body.price )
   if (req.body.price) {
     req.job.applicants.push({applicant: req.user._id, price: req.body.price})
   }
@@ -43,7 +47,7 @@ function apply(req, res, next) {
 
 function getMyJob(req, res, next) {
   console.log("getMyJob", req.user)
-  let where = {flag: true};
+  let where = { flag: true}
   // if (req.user.role === ROLES.CLIENT) {
   //   where = { user: req.user._id };
   // }
@@ -59,7 +63,10 @@ function getMyJob(req, res, next) {
   } else if (req.user.role == 'provider') {
     where = {
       ...where,
-      hired: req.user._id,
+      $or: [
+        {applicants: {$elemMatch: { applicant: String(req.user._id)}}},
+        {hired: req.user._id},
+      ]
     }
   }
   Job.find(where)
@@ -219,8 +226,10 @@ function getJobByID(req, res, next, id) {
 
 function search(req, res, next) {
   console.log("searchJob",req.body)
-
-  Job.find(req.body)
+  let where = { flag: true, status: '竞标中' ,  applicants: {$not: {$elemMatch: {applicant: String(req.user._id)  }}}}
+  where = {...where, ...req.body}
+  console.log(where)
+  Job.find(where)
   .sort({ created: -1 })
 //  .limit(limit)
   .then((entries) => {

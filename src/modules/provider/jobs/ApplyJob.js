@@ -18,34 +18,34 @@ class ApplyJob extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      price: ''
+      price: '',
+      job: null
     }
   }
 
   componentWillMount() {
     const {getJob, navigation} = this.props
-    let id = navigation.getParam('id', 'NO-ID')
-    if (id != 'NO-ID') {
-      getJob({
-        id: id
-      })
+    let job = navigation.getParam('job', null)
+    if (job) {
+      this.setState({job})
     }
   }
 
   handleClick = () => {
-    let {price} = this.state
+    let {price, job} = this.state
     let {applyJob, profile, navigation} = this.props
     //  if (+price == 0) {
     //    price = this.props.job.budget
     //  }
-    let id = navigation.getParam('id', 'NO-ID')
-    if (id == 'NO-ID') {
+    if (!job) {
       alert("error")
       return
     }
     applyJob({
-      id: id,
+      id: job._id,
       body: {price},
+      success: () => navigation.goBack(),
+      fail: () => toast('失败')
     })  
   };
 
@@ -54,7 +54,8 @@ class ApplyJob extends React.Component {
   } 
   
   render() {  
-    const {job, jobsloading} = this.props
+    const {jobsloading} = this.props
+    const {job} = this.state
     if (!job) return (<></>)
     return (
       <ScrollView style={styles.container}>

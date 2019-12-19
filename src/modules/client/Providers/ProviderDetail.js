@@ -3,12 +3,14 @@ import {
   StyleSheet,
   View,
   ImageBackground,
+  Linking,
+  Platform
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { compose, withState } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { Button, Loader, UsersList, Profile, RadioGroup, Text} from '../../../components';
+import { Button, Loader, Profile, RadioGroup, Text} from '../../../components';
 import { fonts, colors } from '../../../styles';
 
 import { getUser } from '../../../redux/modules/user'
@@ -38,6 +40,13 @@ class ProviderDetail extends React.Component {
       })
     }
   }
+
+  dialCall = (number) => {
+    let phoneNumber = '';
+    if (Platform.OS === 'android') { phoneNumber = `tel:${number}`; }
+    else {phoneNumber = `telprompt:${number}`; }
+    Linking.openURL(phoneNumber);
+  };
 
   handleSelect = (index) => {
     this.props.setRadioGroupsState({ ...this.props.radioGroupsState, 1: index })
@@ -115,14 +124,14 @@ class ProviderDetail extends React.Component {
           bgColor={colors.primary}
           style={styles.button}
           caption="电话"
-          onPress={this.handleClick}
+          onPress={() => {this.dialCall(user.phoneNumber)}}
         />
         <Button
           small
           bgColor={colors.primary}
           style={styles.button}
           caption="约拍"
-          onPress={this.handleClick}
+          onPress={() => this.props.navigation.navigate('PostJob', {hired: user._id})}
         />
             
         </View>

@@ -49,10 +49,11 @@ import SystemNotification from '../../components/SystemNotification';
 import Player from '../../components/Player';
 import SearchResult from '../../components/SearchResult';
 import Location from '../../components/Location';
-
+import Developing from '../../components/NoData'
 import Settings from '../settings';
 import PersonalInformation from '../settings/PersonalInformation';
 import Security from '../settings/Security';
+
 
 const headerBackground = require('../../../assets/images/topBarBg.png');
 
@@ -68,10 +69,27 @@ const stackNavigator = createStackNavigator(
     Settings: {
       screen: Settings,
       navigationOptions: {
-        header: null,
+        title: '设置',
       },
     },
-    
+    MyCreated: {
+      screen: Developing,
+      navigationOptions: {
+        title: '我发布的',
+      },
+    },
+    VRShop: {
+      screen: Developing,
+      navigationOptions: {
+        title: '我的VR',
+      },
+    },
+    MyContract: {
+      screen: Developing,
+      navigationOptions: {
+        title: '我的合同',
+      },
+    },
     Auth: {
       screen: AuthScreen,
       navigationOptions: {
@@ -252,33 +270,33 @@ const stackNavigator = createStackNavigator(
     ClientJob: {
       screen: ClientJob,
       navigationOptions: {
-        title: '',
+        title: '订单',
       },
     },
     MyCollection: {
       screen: MyCollection,
       navigationOptions: {
-        header: null,
+        title: '我的收藏',
       },
     },
 
     RequestInvoice: {
       screen: RequestInvoice,
       navigationOptions: {
-        header: null,
+        title: '申请发票',
       },
     },
 
     InvoiceForm: {
       screen: InvoiceForm,
       navigationOptions: {
-        header: null,
+        title: '信息填写',
       },
     },
     MyAttention: {
       screen: MyAttention,
       navigationOptions: {
-        header: null,
+        title: '我的关注',
       },
     },
     LoginWithSMS: {
@@ -315,12 +333,6 @@ const stackNavigator = createStackNavigator(
         title: '找回密码',
       },
     },
-    Profile: {
-      screen: AvailableInFullVersion,
-      navigationOptions: {
-        header: null,
-      },
-    },
     Provider: {
       screen: Provider,
       navigationOptions: {
@@ -348,77 +360,77 @@ const stackNavigator = createStackNavigator(
     PostJob: {
       screen: PostJob,
       navigationOptions: {
-        header: null,
+        title: '需求发布',
       },
     },
 
     ClientJobDetail: {
       screen: ClientJobDetail,
       navigationOptions: {
-        header: null,
+        title: '订单详情',
       },
     },
 
     GiveFeedback: {
       screen: GiveFeedback,
       navigationOptions: {
-        header: null,
+        title: '意见反馈',
       },
     },
 
     BillingInvoice: {
       screen: BillingInvoice,
       navigationOptions: {
-        header: null,
+        title: '发票申请列表',
       },
     },
 
     ProviderJob: {
       screen: ProviderJob,
       navigationOptions: {
-        title: '接单列表',
+        title: '订单',
       },
     },
 
     ProviderJobDetail: {
       screen: ProviderJobDetail,
       navigationOptions: {
-        header: null,
+        title: '订单详情',
       },
     },
 
     UploadMedia: {
       screen: UploadMedia,
       navigationOptions: {
-        header: null,
+        title: '上传视频链接',
       },
     },
 
     Chatting: {
       screen: Chatting,
       navigationOptions: {
-        header: null,
+        title: '大众传媒',
       },
     },
 
     Notification: {
       screen: Notification,
       navigationOptions: {
-        header: null,
+        title: '消息',
       },
     },
 
     SystemNotification: {
       screen: SystemNotification,
       navigationOptions: {
-        header: null,
+        title: '通知消息',
       },
     },
     
     PersonalInformation: {
       screen: PersonalInformation,
       navigationOptions: {
-        header: null,
+        title: '',
       },
     },
     
@@ -453,7 +465,7 @@ const stackNavigator = createStackNavigator(
     SearchResult: {
       screen: SearchResult,
       navigationOptions: {
-        header: null,
+        title: '搜索结果',
       },
     },
 
@@ -473,29 +485,30 @@ const stackNavigator = createStackNavigator(
     Article: {
       screen: AvailableInFullVersion,
       navigationOptions: {
-        header: null,
+        title: '',
       },
     },
     Chat: {
       screen: AvailableInFullVersion,
       navigationOptions: {
-        header: null,
+        title: '',
       },
     },
     Messages: {
       screen: AvailableInFullVersion,
       navigationOptions: {
-        header: null,
+        title: '',
       },
     },
     Charts: {
       screen: AvailableInFullVersion,
       navigationOptions: {
-        header: null,
+        title: '',
       },
     },
   },
   {
+    headerLayoutPreset: 'center',
     defaultNavigationOptions: () => ({
       titleStyle: {
         fontFamily: fonts.primaryLight,
@@ -506,13 +519,6 @@ const stackNavigator = createStackNavigator(
         shadowOpacity: 0, // remove shadow on iOS
         borderBottomWidth: 0,
       },
-      // headerBackground: (
-      //   <Image
-      //     style={{ flex: 1 }}
-      //     source={headerBackground}
-      //     resizeMode="cover"
-      //   />
-      // ),
       headerTitleStyle: {
         color: colors.white,
         fontFamily: fonts.primaryRegular,

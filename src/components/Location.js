@@ -420,7 +420,7 @@ export default class Location extends Component {
           rowHeight={rowHeight}
 
           toolbarBackgroundColor={'#2196f3'}
-          title='Search List Demo'
+          title='城市'
           cancelTitle='取消'
           onClickBack={() => {}}
 

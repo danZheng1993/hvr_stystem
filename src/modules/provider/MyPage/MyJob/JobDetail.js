@@ -44,7 +44,7 @@ class ProviderJobDetail extends React.Component {
       )
     }    
     return (
-      <ScrollView>
+      <ScrollView style={{backgroundColor: colors.bluish}}>
       <View style={styles.container}>
           <View style={styles.description}>
             <JobDetail job={job} />

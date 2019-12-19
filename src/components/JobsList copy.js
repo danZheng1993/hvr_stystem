@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import moment from 'moment'
 import { fonts, colors } from '../styles';
+import { getDateTimeStr } from '../utils/helper';
 
 export default class JobsList extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ export default class JobsList extends React.Component {
            <View key={index} style={styles.componentsSection}>
              <Text size={14}>订单信息:<Text>{job.status}</Text></Text>
              <Text size={14}>订单编号:<Text>{job._id}</Text></Text>
-             <Text size={14}>创建时间:<Text>{moment(job.created).format("YYYY-MM-DD hh:mm:ss")}</Text></Text>
+             <Text size={14}>创建时间:<Text>{getDateTimeStr(job.created)}</Text></Text>
              <Text size={14}>服务项目：:<Text>{job.type}</Text></Text>
              <Text size={14}>拍摄城市:<Text>{job.location}</Text></Text>
              <Text size={14}>平台预估参考价:<Text>¥{job.budget}</Text></Text>
