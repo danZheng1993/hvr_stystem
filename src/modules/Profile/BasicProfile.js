@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react-native'
-import {TextInput} from 'react-native-paper';
+import { View, Image, StyleSheet, TouchableOpacity, ScrollView, TextInput} from 'react-native'
+// import {TextInput} from 'react-native-paper';
 
 import PhotoUpload from 'react-native-photo-upload'
 
@@ -15,6 +15,7 @@ import { createStructuredSelector } from 'reselect';
 import { saveProfile } from '../../redux/modules/auth'
 import { profileSelector } from '../../redux/selectors'
 import uploadFile from '../../redux/api/upload'
+import constants from '../../constants'
 class BasicProfile extends React.Component {
   constructor(props) {
     super(props)
@@ -23,15 +24,24 @@ class BasicProfile extends React.Component {
       userName: '',
       overview: '',
       update: '',
-      location: '北京'
+      location: '北京',
+      url: '../../../assets/images/takephoto.png'
     }
   }
 
   componentWillMount() {
-    const {navigation} = this.props
+    const {navigation, profile} = this.props
     let update = navigation.getParam('update', 'none')
     if (update != 'none') {
       this.setState({update})
+    }
+    if (profile) {
+      this.setState({
+        userName: profile.userName,
+        location: profile.location,
+        overview: profile.overview,
+        url: constants.BASE_URL + profile.photo
+      })
     }
   }
 
@@ -103,57 +113,46 @@ class BasicProfile extends React.Component {
   }
 
   render() {
-    const { photo , update, location} = this.state
+    const { photo , update, location, url} = this.state
     return (
-      <ScrollView>
       <View style={styles.container}>
-      <Text size={28} bold black style={{marginBottom: 30}}>信息填写</Text>
+      <Text size={28} bold black style={{marginBottom: 30, alignSelf: 'center'}}>信息填写</Text>
         {(update == '' || update == 'photo') && 
-         <TouchableOpacity onPress={this.handleChoosePhoto}>
-          {photo ? 
+         <TouchableOpacity onPress={this.handleChoosePhoto} style={{alignSelf: 'center'}}>
           <Image
-            source={{ uri: photo.uri }}
+            source={{ uri: photo ? photo.uri : url }}
             style={styles.photo}
-            onPress={this.handleChoosePhoto}
-          /> :
-          <Image
-            source={require('../../../assets/images/takephoto.png')}
-            style={styles.photo}
-            onPress={this.handleChoosePhoto}
-          />
-          }    
+          />  
         </TouchableOpacity> }
-        <View style={styles.description}>
         {(update == '' || update == 'userName') && 
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <Text size={20}>用户昵称</Text>
-          <TextInput
-              style={styles.input}
-              placeholder="昵称"
-              value={this.state.userName}
-              onChangeText={userName => this.setState({ userName })}
-          />
-          </View>
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+          <Text>用户昵称</Text>
+            <TextInput
+                style={styles.singleinput}
+                placeholder="昵称"
+                value={this.state.userName}
+                onChangeText={userName => this.setState({ userName })}
+            />
+        </View>
         }
         { update == '' && 
-        <Text size={20} style={{marginBottom: 10}}>所在城市
-          <Text size={20} color={colors.secondary} onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}> {location}></Text>
+        <Text style={{marginBottom: 10}}>所在城市 
+          <Text color={colors.secondary} onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}> {location}></Text>
         </Text> }
         {(update == '' || update == 'overview') && 
         <View>
-          <Text size={20}>用户昵称</Text>
-          <MultipleInput
-              style={styles.input}
-              placeholder="填写服务介绍"
-              multiline
-              maxLength={140}
-              numberOfLines={4}
-              value={this.state.overview}
-              onChangeText={overview => this.setState({ overview })}
-          />
+          <Text >用户昵称</Text>
+            <TextInput
+                style={styles.multipleinput}
+                placeholder="填写服务介绍"
+                multiline
+                maxLength={140}
+                numberOfLines={4}
+                value={this.state.overview}
+                onChangeText={overview => this.setState({ overview })}
+            />
           </View>
         }
-        </View>
         <Button
           rounded
           bgColor={colors.secondary}
@@ -162,7 +161,6 @@ class BasicProfile extends React.Component {
           onPress={() => this.handleClick()}
         />
       </View>
-      </ScrollView> 
     )
   }
 }
@@ -170,9 +168,18 @@ class BasicProfile extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
     padding: 50
+  },
+  singleinput: {
+    flex: 1,
+    borderBottomColor: colors.grey,
+    padding: 5,
+    borderBottomWidth: 1
+  },
+  multipleinput: {
+    backgroundColor: colors.greybackground,
   },
   photo: {
     width: 100,
@@ -181,8 +188,6 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 15,
-    alignSelf: 'stretch',
-    width: 300
   },
   description: {
     marginBottom: 20,

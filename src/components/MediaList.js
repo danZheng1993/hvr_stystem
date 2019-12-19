@@ -70,13 +70,13 @@ class MediaList extends React.Component {
               <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 10}} >
                 <View style={{flexDirection: 'row', justifyContent: 'center',alignItems: 'center'}}>
                   <Image
-                    source={{uri: constants.BASE_URL + (media.poster.photo ? media.poster.photo: 'default.png')}}
+                    source={{uri: constants.BASE_URL + (media.creator.photo ? media.creator.photo: 'default.png')}}
                     style={{width: 20, height: 20, borderRadius: 10}}
                   />
-                  <Text black>{media.poster.userName}</Text>
+                  <Text black>{media.creator.userName}</Text>
                   {
-                    attentions.indexOf(media.poster._id) == -1 &&
-                    <Text onPress={() => this.handleAttentions(media.poster._id)} color={colors.primary}>+关注</Text>
+                    attentions.indexOf(media.creator._id) == -1 &&
+                    <Text onPress={() => this.handleAttentions(media.creator._id)} color={colors.primary}>+关注</Text>
                   }
                 </View>
                 <View style={{flexDirection: 'row'}}>

@@ -59,7 +59,7 @@ class PostJob extends React.Component {
       isConfirm: false,
       start: new Date(),
       end: new Date(),
-      location: '',
+      location: '北京',
       systembudget: 0
     }
   }
@@ -69,7 +69,7 @@ class PostJob extends React.Component {
     types.length && this.setState({type: types[0].name})
     scenes.length && this.setState({scene: scenes[0].name})
     subcategories.length && this.setState({subcategory: subcategories[0].name})
-    this.setState({location: profile.location})
+    profile.location && this.setState({location: profile.location})
   }
 
   handleClick = () => {

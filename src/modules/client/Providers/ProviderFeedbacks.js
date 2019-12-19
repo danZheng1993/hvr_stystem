@@ -40,8 +40,8 @@ class ProviderFeedbacks extends React.Component {
     const {feedbacks, loading} = this.props
     return (
       <ScrollView style={styles.container}>
-          { loading ?<Loader loading={loading} /> :
-          feedbacks.length ? feedbacks.map((feedback, index) => (
+          <Loader loading={loading} />
+          {feedbacks.length ? feedbacks.map((feedback, index) => (
             <ListItem
               key={index}
               leftAvatar={{ source: { uri: constants.BASE_URL + feedback.creator.photo } }}
