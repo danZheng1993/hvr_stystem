@@ -7,6 +7,7 @@ const STATUS = require('../constants/status');
 const xmpp = require('simple-xmpp')
 
 function payUpfront(req, res, next) {
+  console.log("upfront", req.body.id)
   if (!req.body.id || !req.user) {
     res.status(500).json({ message: 'Invalid request' });
     return
@@ -21,12 +22,11 @@ function payUpfront(req, res, next) {
       res.status(500).json({ message: 'Fake request!' });
       return;
     }
-    Setting.findOne({key: 'upfrontRate'})
-    .then((upfrontRate) => {
-      
+    Setting.findOne()
+    .then((setting) => {
       // payment API
       // Notification
-      const amount = job.price * (+upfrontRate.value) / 100
+      const amount = job.price * (setting.upfrontRate) / 100
       const payment = new Payment({
         from: req.user._id,
         to: job.hired,
@@ -74,12 +74,12 @@ function finalPay(req, res, next) {
       res.status(500).json({ message: 'Fake request!' });
       return;
     }
-    Setting.findOne({key: 'upfrontRate'})
-    .then((upfrontRate) => {
+    Setting.findOne()
+    .then((setting) => {
       
       // payment API
       // Notification
-      const amount = job.price * (100 - (+upfrontRate.value)) / 100
+      const amount = job.price * (100 - (setting.upfrontRate)) / 100
       const payment = new Payment({
         from: req.user._id,
         to: job.hired,

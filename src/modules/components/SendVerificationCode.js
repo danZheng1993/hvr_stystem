@@ -72,6 +72,7 @@ class SendVerificationCode extends React.Component {
           >
             <TextValidator
               name="phoneNumber"
+              maxLength={11}
               label='手机号'
               validators={['required', 'matchRegexp:^[0-9]{11}$']}
               errorMessages={['必填此项', '电话号码有误']}

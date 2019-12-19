@@ -5,7 +5,13 @@ export const refreshResult = (list, update) => {
     list.splice(index, 1, update);
     return list
 }
-
+export const addToArray = (list, item) => {
+    let index = list.indexOf(item)
+    if (index == -1) {
+        list.push(item)
+    }
+    return list.slice()
+}
 export const updateUnreadMessageList = (list, from) => {
     if (list[from]) {
         let count = list[from] + 1

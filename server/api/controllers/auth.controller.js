@@ -223,7 +223,8 @@ function checkcode(req, res, next) {
           User.findOne({ phoneNumber: +req.body.phoneNumber })    
           .then((user) => {
             console.log(user)
-            if (!user) {
+            if (!user || req.body.password) {
+              console.log("error")
               return res.status(500).json({ message: 'error!' });
             }
             const token = jwt.sign({

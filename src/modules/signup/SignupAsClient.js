@@ -78,7 +78,7 @@ class SignupAsClient extends React.Component {
     clearInterval(timer)
     this.props.checkcode({
       body:{ phoneNumber, code: verificationCode, password, role: 'client'},
-      success: () => this.props.navigation.reset([NavigationActions.navigate({ routeName: 'LoginWithPassword' })], 0),
+      success: () => this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Client' })], 0),
       fail:() => alert("验证码出错")
     })
   }
@@ -100,6 +100,7 @@ class SignupAsClient extends React.Component {
         >
           <TextValidator
             name="phoneNumber"
+            maxLength={11}
             label='手机号'
             validators={['required', 'matchRegexp:^[0-9]{11}$']}
             errorMessages={['必填此项', '电话号码有误']}

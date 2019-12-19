@@ -45,7 +45,6 @@ class ClientJobDetail extends React.Component {
       )
     }
     return (
-      <ScrollView>
       <View style={styles.container}>
           <View style={styles.description}>
             <JobDetail job={job} />
@@ -87,7 +86,6 @@ class ClientJobDetail extends React.Component {
             }
           </View>
       </View>
-      </ScrollView>
     );
     }
 }

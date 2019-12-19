@@ -67,7 +67,7 @@ import { RadioGroup, GridRow, Button, MediaList, Loader, Text } from '../../../c
             {news && news.map((l, i) => (
               typeof(l) == "object" &&
               <View style={{flexDirection: 'row', margin: 15, borderRadius: 5, height: 80}} key={i}>
-                <View style={{flex: 2}}>
+                <View style={{flex: 2, paddingRight: 20}}>
                   <Text black bold>{l.title}</Text>
                 </View>
                 <View style={{flex: 1, alignItems: 'stretch'}}>

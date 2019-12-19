@@ -34,7 +34,7 @@ const WaitingAction = props => {
         bgColor={colors.warning}
         style={styles.button}
         caption="催一催"
-        onPress={() => alert("PLEASE!!!")}
+        onPress={() => alert("请求成功")}
       />
     </View>
   )

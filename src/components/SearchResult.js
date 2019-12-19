@@ -38,14 +38,14 @@ class SearchResult extends React.Component {
     return (
       <ScrollView style={styles.container}>
         {type == 'media' &&
-          (medias ? <MediaList medias={medias} navigation={this.props.navigation}/>: <NoData />)}
+          (medias.length ? <MediaList medias={medias} navigation={this.props.navigation}/>: <NoData />)}
         {type == 'user' &&
-          (users ? 
+          (users.length ? 
             users.map((user, index) => (
               <UsersList user={user} navigation={this.props.navigation} key={index} />
             )) : <NoData />)}
         {type == 'news' && 
-          (news ? news.map((l, i) => (
+          (news.length ? news.map((l, i) => (
             typeof(l) == "object" &&
             <ListItem
               key={i}
@@ -65,7 +65,7 @@ class SearchResult extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bluish,
+    backgroundColor: colors.white,
     paddingHorizontal: 15,
     paddingTop: 20,
   },

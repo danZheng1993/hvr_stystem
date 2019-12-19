@@ -75,6 +75,7 @@ class LoginWithPassword extends React.Component {
             >
               <TextValidator
                 name="phoneNumber"
+                maxLength={11}
                 label='手机号'
                 validators={['required', 'matchRegexp:^[0-9]{11}$']}
                 errorMessages={['需要输入此项', '无效电话号码']}

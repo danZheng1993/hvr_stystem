@@ -21,6 +21,9 @@ export const notificationsSelector = (state) =>
 export const contactsSelector = (state) =>
   get(state, 'auth.contacts', null)
 
+export const recentSearchSelector = (state) =>
+  get(state, 'auth.recentSearch', [])
+
 export const userDetailSelector = (state) =>
   get(state, 'user.user', {})
 

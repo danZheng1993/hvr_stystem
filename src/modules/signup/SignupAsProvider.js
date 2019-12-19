@@ -88,7 +88,7 @@ class SignupAsProvider extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text size={28} bold black style={{marginBottom: 30}}>服务方注册</Text>
+        <Text size={28} bold black>服务方注册</Text>
         <Form
             ref="form"
             onSubmit={this.submit}
@@ -96,6 +96,7 @@ class SignupAsProvider extends React.Component {
         >
           <TextValidator
             name="phoneNumber"
+            maxLength={11}
             label='手机号'
             validators={['required', 'matchRegexp:^[0-9]{11}$']}
             errorMessages={['必填此项', '电话号码有误']}
@@ -166,8 +167,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     paddingHorizontal: 70,
+    marginBottom: 70,
   },
   buttonsContainer: {
     flex: 1,

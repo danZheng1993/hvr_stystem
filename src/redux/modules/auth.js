@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
 import { requestSuccess, requestFail, requestPending } from '../api/request'
 import { AsyncStorage } from 'react-native';
-import {updateUnreadMessageList} from '../api/helpers'
+import {updateUnreadMessageList, addToArray} from '../api/helpers'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -14,6 +14,8 @@ export const PUSH_NOTIFICATION = 'PUSH_NOTIFICATION'
 export const PUSH_UNREAD_MESSAGES = 'PUSH_UNREAD_MESSAGES'
 export const GET_CONTACTS = 'GET_CONTACTS'
 export const ADD_TO_CONTACTS = 'ADD_TO_CONTACTS'
+export const ADD_TO_SEARCH = 'ADD_TO_SEARCH'
+export const CLEAR_SEARCH = 'CLEAR_SEARCH'
 export const ADD_TO_COLLECTIONS = 'ADD_TO_COLLECTIONS'
 export const REMOVE_FROM_COLLECTIONS = 'REMOVE_FROM_COLLECTIONS'
 export const ADD_TO_ATTENTIONS = 'ADD_TO_ATTENTIONS'
@@ -41,6 +43,8 @@ export const addToAttentions = createAction(ADD_TO_ATTENTIONS)
 export const removeFromAttentions = createAction(REMOVE_FROM_ATTENTIONS)
 export const pushNotification = createAction(PUSH_NOTIFICATION)
 export const pushUnreadMessages = createAction(PUSH_UNREAD_MESSAGES)
+export const addToSearch = createAction(ADD_TO_SEARCH)
+export const clearSearch = createAction(CLEAR_SEARCH)
 
 const getInitialState = async () => {
   let authRestore = await AsyncStorage.getItem('hvr_auth') || null
@@ -53,6 +57,7 @@ const getInitialState = async () => {
     loading: false,
     contacts: [],
     unread: {},
+    recentSearch: [],
     notification: []
   } : {
     token: null,
@@ -62,6 +67,7 @@ const getInitialState = async () => {
     verified: false,
     loading: false,
     contacts: [],
+    recentSearch: [],
     unread: {},
     notification: []
   }
@@ -75,6 +81,7 @@ var initialState = {    token: null,
     loading: false,
     contacts: [],
     notification: [],
+    recentSearch: [],
     unread: {},}
 getInitialState().then(val => initialState = val)
 // ------------------------------------
@@ -127,6 +134,22 @@ export default handleActions({
     ...state,
     status: PUSH_NOTIFICATION,
     notification: [...state.notification, payload],
+    error: null,
+    loading: false
+  }),
+
+  [ADD_TO_SEARCH]: (state, { payload }) => ({
+    ...state,
+    status: ADD_TO_SEARCH,
+    recentSearch: addToArray(state.recentSearch, payload),
+    error: null,
+    loading: false
+  }),
+
+  [CLEAR_SEARCH]: (state, { payload }) => ({
+    ...state,
+    status: CLEAR_SEARCH,
+    recentSearch: [],
     error: null,
     loading: false
   }),
