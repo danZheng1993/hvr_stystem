@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { SearchBar } from 'react-native-elements';
 import {
   StyleSheet,
   View,
@@ -9,8 +9,8 @@ import {
 import { connect } from 'react-redux';
 import { withState,compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-
-import { Button, Loader, RadioGroup, MediaList } from '../../components'
+import _ from 'lodash'
+import { Button, Loader, RadioGroup, MediaList, Text } from '../../components'
 import { fonts, colors } from '../../styles';
 
 import { searchMedia } from '../../redux/modules/media'
@@ -41,11 +41,42 @@ class MediaSearch extends React.Component {
     this.setState({selected: index})
   }
 
+  
+  searchContent = () => {
+    const { searchMedia} = this.props
+    const { search } = this.state
+    searchMedia({
+        body: {title: search},
+    })
+  }
+
   render() {    
-    const {medias, loading} = this.props
+    const {medias, loading, profile} = this.props
     const {selected} = this.state
+    let sortedMedias = medias
+    if (selected == 0)
+      sortedMedias = medias.filter(media => (profile.collections.indexOf(media._id) !== -1))
+    else if (selected == 1)
+      sortedMedias =  _.orderBy(medias, 'visits', 'desc');
+    else if (selected == 2) 
+      sortedMedias =  _.orderBy(medias, 'created', 'desc');
     return (
       <>
+        <View style={{flexDirection:'row', paddingRight: 100, paddingLeft: 20, backgroundColor: colors.secondary, paddingTop: 10}}>
+          <View style={{flex: 4}}>
+            <SearchBar
+                containerStyle={{height: 30, padding: 0, backgroundColor: colors.secondary, borderColor: colors.bluish,  borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
+                inputContainerStyle={{height: 30, backgroundColor: colors.white, borderWidth: 0, borderTopLeftRadius: 15, borderBottomLeftRadius: 15, padding: 5,  borderRightColor: colors.black, borderRightWidth: 1,}}
+                inputStyle={{padding: 5}}
+                placeholder="关键词"
+                onChangeText={search => this.setState({ search })}
+                value={this.state.search}
+            />
+          </View>
+          <View style={{flex: 1, marginTop: 1, justifyContent:"center", alignItems:"center", backgroundColor: colors.white,  borderTopRightRadius: 15, borderBottomRightRadius: 15}}>
+              <Text color={colors.secondary} onPress = {() => this.searchContent()}>搜索</Text>
+          </View>
+        </View>
         <View style={styles.componentsSection}>
           <RadioGroup
             items={['关注', '热门', '最新']}
@@ -56,7 +87,7 @@ class MediaSearch extends React.Component {
         </View>
         <ScrollView style={styles.container}>
           <Loader loading={loading} />
-          <MediaList medias={medias} navigation={this.props.navigation}/>
+          <MediaList medias={sortedMedias} navigation={this.props.navigation}/>
         </ScrollView>
       </>
     );

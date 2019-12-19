@@ -123,6 +123,9 @@ export const mediasloadingSelector = (state) =>
 export const mediaStateSelector = (state) =>
   get(state, 'media', {})
 
+export const myMediasSelector = (state) =>
+  get(state, 'media.myMedias', {})
+
 export const feedbackDetailSelector = (state) =>
   get(state, 'feedback.feedback', {})
 

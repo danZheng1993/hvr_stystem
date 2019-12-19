@@ -12,6 +12,7 @@ export const UPDATE_MEDIA = 'UPDATE_MEDIA'
 export const DELETE_MEDIA = 'DELETE_MEDIA'
 export const SEARCH_MEDIA = 'SEARCH_MEDIA'
 export const UPLOAD_LINK = 'UPLOAD_LINK'
+export const GET_MY_MEDIAS = 'GET_MY_MEDIAS'
 export const REMOVE_COLLECTION = 'REMOVE_COLLECTION'
 export const SET_MEDIAS_PAGINATION = 'SET_MEDIAS_PAGINATION'
 
@@ -21,6 +22,7 @@ export const SET_MEDIAS_PAGINATION = 'SET_MEDIAS_PAGINATION'
 
 export const getMedia = createAction(GET_MEDIA)
 export const getMedias = createAction(GET_MEDIAS)
+export const getMyMedias = createAction(GET_MY_MEDIAS)
 export const createMedia = createAction(CREATE_MEDIA)
 export const updateMedia = createAction(UPDATE_MEDIA)
 export const deleteMedia = createAction(DELETE_MEDIA)
@@ -32,6 +34,7 @@ const initialState = {
   media: null,
   status: 'INIT',
   medias: [],
+  myMedias: [],
   searchResult: [],
   loading: false,
 }
@@ -80,6 +83,28 @@ export default handleActions({
   [requestFail(GET_MEDIAS)]: (state, { payload }) => ({
     ...state,
     status: requestFail(GET_MEDIAS),
+    error: payload,
+    loading: false
+  }),
+
+  [requestPending(GET_MY_MEDIAS)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(GET_MY_MEDIAS),
+    error: null,
+    loading: true,
+  }),
+
+  [requestSuccess(GET_MY_MEDIAS)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(GET_MY_MEDIAS),
+    myMedias: Object.values(payload),
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(GET_MY_MEDIAS)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(GET_MY_MEDIAS),
     error: payload,
     loading: false
   }),

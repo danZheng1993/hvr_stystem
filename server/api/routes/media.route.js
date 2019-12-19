@@ -10,6 +10,9 @@ router.route('/')
   .get(mediaCtrl.list)
   .post(mediaCtrl.create);
 
+router.route('/me')
+  .get(mediaCtrl.getMyMedias)
+
 router.route('/search/')
   .post(mediaCtrl.search);
 

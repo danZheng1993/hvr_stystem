@@ -28,6 +28,7 @@ import PostJob from '../client/PostJob'
 import ClientJob from '../client/MyPage/MyJob';
 import MyCollection from '../client/MyPage/MyCollection';
 import MyAttention from '../client/MyPage/MyAttention';
+import MyVR from '../client/MyPage/MyVR';
 import RequestInvoice from '../client/MyPage/RequestInvoice';
 import InvoiceForm from '../client/MyPage/InvoiceForm';
 import ClientJobDetail from '../client/MyPage/MyJob/JobDetail';
@@ -37,6 +38,7 @@ import ProviderDetail from '../client/Providers/ProviderDetail'
 import Provider from '../provider';
 import ApplyJob from '../provider/jobs/ApplyJob';
 import BillingInvoice from '../provider/MyPage/BillingInvoice'
+import MyCreatedVR from '../provider/MyPage/MyCreatedVR'
 import ProviderJob from '../provider/MyPage/MyJob'
 import ProviderJobDetail from '../provider/MyPage/MyJob/JobDetail';
 import UploadMedia from '../provider/MyPage/MyJob/UploadMedia';
@@ -293,10 +295,18 @@ const stackNavigator = createStackNavigator(
         title: '信息填写',
       },
     },
+
     MyAttention: {
       screen: MyAttention,
       navigationOptions: {
         title: '我的关注',
+      },
+    },
+    
+    MyVR: {
+      screen: MyVR,
+      navigationOptions: {
+        title: '我的VR',
       },
     },
     LoginWithSMS: {
@@ -382,6 +392,13 @@ const stackNavigator = createStackNavigator(
       screen: BillingInvoice,
       navigationOptions: {
         title: '发票申请列表',
+      },
+    },
+
+    MyCreatedVR: {
+      screen: MyCreatedVR,
+      navigationOptions: {
+        title: '我发布的',
       },
     },
 

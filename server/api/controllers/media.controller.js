@@ -148,6 +148,27 @@ function search(req, res, next) {
   .catch(next);
 }
 
+function getMyMedias(req, res, next) {
+  let where = {};
+  // if (req.user.role === ROLES.CLIENT) {
+  //   where = { user: req.user._id };
+  // }
+  
+  if (req.user.role === 'client') {
+    where = {poster: req.user._id}
+  } else if (req.user.role === 'provider') {
+    where = {creator : req.user._id}
+  }
+  
+  console.log("search", where)
+  Media.find(where)
+  .populate('creator', 'userName photo')
+  .then((entries) => {
+    res.json(entries);
+  })
+  .catch(next);
+}
+
 function remove(req, res, next) {
   req.media.remove(() => {
     res.json(req.media);
@@ -180,6 +201,7 @@ module.exports = {
   read,
   list,
   remove,
+  getMyMedias,
   getMediaByID,
   search,
   uploadLink

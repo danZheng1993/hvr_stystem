@@ -30,7 +30,7 @@ function getClientIp(req) {
 
 function login(req, res, next) {
   User.findOne({ phoneNumber: req.body.phoneNumber })
-    .select('_id password phoneNumber userName location role permission photo overview contacts collections attentions')
+    .select('_id password phoneNumber userName location role permission photo overview contacts collections attentions balance')
     .exec()
     .then((user) => {
       if (!user) {

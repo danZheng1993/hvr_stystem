@@ -9,10 +9,15 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Button, Dropdown, Profile, Text } from '../../../components';
 import {sum, values} from 'lodash'
-import { profileSelector, unreadMessagesSelector } from '../../../redux/selectors'
+import {getMyMedias} from '../../../redux/modules/media'
+import { profileSelector, unreadMessagesSelector, myMediasSelector } from '../../../redux/selectors'
 class MyPage extends React.Component {
+  componentWillMount() {
+    this.props.getMyMedias()
+  }
+
   render () {
-    const {profile, unread} = this.props
+    const {profile, unread, medias} = this.props
     const unreadCount = sum(values(unread)) || 0
     const jobStatus = [
       {title: '竞标中', icon: 'camera'},
@@ -59,8 +64,8 @@ class MyPage extends React.Component {
               <Text white bold size={28}>{attentionlength}</Text>
               <Text white>我的关注</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{alignItems: 'center'}} onPress={() => this.props.navigation.navigate('SearchResult', {type: 'media'})}>
-              <Text white bold size={28}>4</Text>
+            <TouchableOpacity style={{alignItems: 'center'}} onPress={() => this.props.navigation.navigate('MyVR')}>
+              <Text white bold size={28}>{medias.length}</Text>
               <Text white>我的VR</Text>
             </TouchableOpacity>
           </View>
@@ -187,10 +192,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = createStructuredSelector({
   profile: profileSelector,
+  medias: myMediasSelector,
   unread: unreadMessagesSelector
 });
 
 const mapDispatchToProps = {
+  getMyMedias
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

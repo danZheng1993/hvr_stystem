@@ -9,11 +9,16 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import {sum, values} from 'lodash'
 import { Button, Dropdown, Profile, Text } from '../../../components';
-import { profileSelector, unreadMessagesSelector } from '../../../redux/selectors'
+import { profileSelector, unreadMessagesSelector, myMediasSelector, mediasloadingSelector } from '../../../redux/selectors'
+import { getMyMedias} from '../../../redux/modules/media'
 
 class MyPage extends React.Component {
+  componentWillMount() {
+    this.props.getMyMedias()
+  }
+  
   render () {
-    const {profile, unread} = this.props
+    const {profile, unread, medias} = this.props
     const jobStatus = [
       {title: '竞标中', icon: 'camera'},
       {title: '已选用', icon: 'camera'},
@@ -53,12 +58,12 @@ class MyPage extends React.Component {
             </View>
           </View>
           <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
+            <TouchableOpacity style={{alignItems: 'center'}}  onPress={() => this.props.navigation.navigate('MyCreatedVR')}>
+              <Text white bold size={28}>{medias.length}</Text>
+              <Text white>我发布的</Text>
+            </TouchableOpacity>
             <View style={{alignItems: 'center'}}>
-              <Text white bold size={28}>39</Text>
-              <Text white onPress={() => this.props.navigation.navigate('SearchResult', {type: 'media'})}>我发布的</Text>
-            </View>
-            <View style={{alignItems: 'center'}}>
-              <Text white bold size={28}>4500</Text>
+              <Text white bold size={28}>{profile.balance}</Text>
               <Text white>我的余额</Text>
             </View>
           </View> 
@@ -184,10 +189,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = createStructuredSelector({
   profile: profileSelector,
-  unread: unreadMessagesSelector
+  unread: unreadMessagesSelector,
+  medias: myMediasSelector
 });
 
 const mapDispatchToProps = {
+  getMyMedias
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
