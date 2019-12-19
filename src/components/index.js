@@ -21,10 +21,12 @@ import NoData from './NoData'
 import SearchBar from './SearchBar'
 import MediaList from './MediaList'
 import Player from './Player'
+import Bell from './Bell'
 
 export {
   // ## Generator Components Exports
   Button,
+  Bell,
   RadioGroup,
   Dropdown,
   GridRow,

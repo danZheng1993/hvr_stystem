@@ -9,7 +9,7 @@ import { compose } from 'recompose';
 import {findIndex} from 'lodash'
 import { createStructuredSelector } from 'reselect';
 import { NavigationActions } from 'react-navigation'
-import {getContacts} from '../redux/modules/auth'
+import {getContacts, clearUnreadMessages} from '../redux/modules/auth'
 import { contactsSelector, unreadMessagesSelector} from '../redux/selectors'
 import constants from '../constants'
 import { loadItem, deleteItem } from '../redux/api/storage';
@@ -25,9 +25,14 @@ class Notification extends React.Component {
         this.props.getContacts()
     }
     startChat = (id) => {
+        this.props.clearUnreadMessages(id)
         this.props.navigation.navigate('Chatting', {to: id})
     }
 
+    showNotificcation = () => {
+        this.props.clearUnreadMessages('system')
+        this.props.navigation.navigate('SystemNotification')
+    }
     render () {
         const {contacts, unread} = this.props
         return (
@@ -37,7 +42,7 @@ class Notification extends React.Component {
                 <Button
                     style={styles.demoButton}
                     action
-                    onPress = {() => this.props.navigation.navigate('SystemNotification')}
+                    onPress = {() => this.this.showNotificcation()}
                     >
                     <Text>
                     <Icon name="dollar-sign" size={20} color="white" />
@@ -53,7 +58,7 @@ class Notification extends React.Component {
                     <Button
                         style={styles.demoButton}
                         action
-                        onPress = {() => this.props.navigation.navigate('SystemNotification')}
+                        onPress = {() => this.showNotificcation()}
                         >
                         <Text>
                         <Icon name="bell" size={20} color="white" />
@@ -66,7 +71,7 @@ class Notification extends React.Component {
                 <Button
                     style={styles.demoButton}
                     action
-                    onPress = {() => this.props.navigation.navigate('SystemNotification')}
+                    onPress = {() => this.showNotificcation()}
                     >
                     <Text>
                     <Icon name="star" size={20} color="white" />
@@ -124,7 +129,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-    getContacts
+    getContacts,
+    clearUnreadMessages
 };
   
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
 import { requestSuccess, requestFail, requestPending } from '../api/request'
 import { AsyncStorage } from 'react-native';
-import {updateUnreadMessageList, addToArray} from '../api/helpers'
+import {updateUnreadMessageList, addToArray, clearUnreadMessageList} from '../api/helpers'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -12,6 +12,7 @@ export const GET_PROFILE = 'GET_PROFILE'
 export const SAVE_PROFILE = 'SAVE_PROFILE'
 export const PUSH_NOTIFICATION = 'PUSH_NOTIFICATION'
 export const PUSH_UNREAD_MESSAGES = 'PUSH_UNREAD_MESSAGES'
+export const CLEAR_UNREAD_MESSAGES = 'CLEAR_UNREAD_MESSAGES'
 export const GET_CONTACTS = 'GET_CONTACTS'
 export const ADD_TO_CONTACTS = 'ADD_TO_CONTACTS'
 export const ADD_TO_SEARCH = 'ADD_TO_SEARCH'
@@ -43,6 +44,7 @@ export const addToAttentions = createAction(ADD_TO_ATTENTIONS)
 export const removeFromAttentions = createAction(REMOVE_FROM_ATTENTIONS)
 export const pushNotification = createAction(PUSH_NOTIFICATION)
 export const pushUnreadMessages = createAction(PUSH_UNREAD_MESSAGES)
+export const clearUnreadMessages = createAction(CLEAR_UNREAD_MESSAGES)
 export const addToSearch = createAction(ADD_TO_SEARCH)
 export const clearSearch = createAction(CLEAR_SEARCH)
 
@@ -126,6 +128,14 @@ export default handleActions({
     ...state,
     status: PUSH_UNREAD_MESSAGES,
     unread: updateUnreadMessageList(state.unread, payload),
+    error: null,
+    loading: false
+  }),
+
+  [CLEAR_UNREAD_MESSAGES]: (state, { payload }) => ({
+    ...state,
+    status: CLEAR_UNREAD_MESSAGES,
+    unread: clearUnreadMessageList(state.unread, payload),
     error: null,
     loading: false
   }),

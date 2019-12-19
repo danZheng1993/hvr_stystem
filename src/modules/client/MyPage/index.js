@@ -7,7 +7,7 @@ import { ListItem } from 'react-native-elements'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { Button, Dropdown, Profile, Text } from '../../../components';
+import { Button, Dropdown, Profile, Text, Bell } from '../../../components';
 import {sum, values} from 'lodash'
 import {getMyMedias} from '../../../redux/modules/media'
 import { profileSelector, unreadMessagesSelector, myMediasSelector } from '../../../redux/selectors'
@@ -40,13 +40,7 @@ class MyPage extends React.Component {
           <View style={{flexDirection: 'row'}}>
             <Profile user = {profile} navigation={this.props.navigation} />
             <View style={styles.settingsContainer}>
-              {!!unreadCount && <Badge value={unreadCount} status="error"/>}
-              <Icon
-                name="bell"
-                size={30}
-                color={colors.white}
-                onPress={() => this.props.navigation.navigate('Notification')}
-              />
+              <Bell navigation={this.props.navigation}/>
               <Icon
                 name="settings"
                 size={30}

@@ -13,6 +13,7 @@ export const addToArray = (list, item) => {
     list.push(item)
     return list.slice()
 }
+
 export const updateUnreadMessageList = (list, from) => {
     if (list[from]) {
         let count = list[from] + 1
@@ -26,4 +27,14 @@ export const updateUnreadMessageList = (list, from) => {
             [from]: 1       
         }
     }
+}
+
+export const clearUnreadMessageList = (list, from) => {
+    if (list[from]) {
+        delete list[from]
+        return {
+            ...list,
+        }
+    }
+    return list
 }

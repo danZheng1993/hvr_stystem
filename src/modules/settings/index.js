@@ -9,9 +9,11 @@ import { createStructuredSelector } from 'reselect';
 import { NavigationActions } from 'react-navigation'
 import {logout} from '../../redux/modules/auth'
 import { clearItem } from '../../redux/api/storage'
+import XMPP from 'react-native-xmpp'
 const settings = props => {
     clearStorage = ()=> {
         clearItem().then(() => {
+            XMPP.disconnect()
             props.logout(props.navigation.reset([NavigationActions.navigate({ routeName: 'Auth' })], 0))
         })
     }

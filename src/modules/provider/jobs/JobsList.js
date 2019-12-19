@@ -19,6 +19,7 @@ import { searchJob } from '../../../redux/modules/job'
 import {  jobsListSelector, jobsloadingSelector, profileSelector, jobsSearchResultSelector } from '../../../redux/selectors'
 import { getSettings } from '../../../redux/modules/setting';
 import { getDateTimeStr } from '../../../utils/helper';
+import Bell from '../../../components/Bell';
 
 class JobsList extends React.Component {
   constructor(props) {
@@ -62,7 +63,7 @@ class JobsList extends React.Component {
               接单列表
             </Text> 
           </View>
-          <Icon name="bell" size={30} color="white" onPress={() => this.props.navigation.navigate('Notification')}/>
+          <Bell navigation={this.props.navigation}/>
         </View>
       <ScrollView style={styles.container}>
          { jobsloading ? <Loader

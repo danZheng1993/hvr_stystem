@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import {sum, values} from 'lodash'
-import { Button, Dropdown, Profile, Text } from '../../../components';
+import { Button, Dropdown, Profile, Text, Bell } from '../../../components';
 import { profileSelector, unreadMessagesSelector, myMediasSelector, mediasloadingSelector } from '../../../redux/selectors'
 import { getMyMedias} from '../../../redux/modules/media'
 
@@ -40,14 +40,7 @@ class MyPage extends React.Component {
           <View style={{flexDirection: 'row'}}>
             <Profile user = {profile} navigation={this.props.navigation} />
             <View style={styles.settingsContainer}>
-              {!!unreadCount && <Badge value={unreadCount} status="error"/>}
-              <Icon
-                style={styles.demoIcon}
-                name="bell"
-                size={30}
-                color={colors.white}
-                onPress={() => this.props.navigation.navigate('Notification')}
-              />
+              <Bell navigation={this.props.navigation} />
               <Icon
                 style={styles.demoIcon}
                 name="gear"
