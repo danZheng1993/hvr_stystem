@@ -4,6 +4,7 @@ const Invoice = require('../models/invoice.model');
 const ROLES = require('../constants/role');
 const STATUS = require('../constants/status')
 const xmpp = require('simple-xmpp')
+const _ = require('lodash')
 function create(req, res, next) {
   const job = new Job({...req.body, creator: req.user._id});
  // job.user = req.user._id;
@@ -28,7 +29,7 @@ function update(req, res, next) {
 function apply(req, res, next) {
   console.log("applied!")
   // Object.assign(req.job, req.body);
-  if (isNaN(+req.body.price)) {
+  if (isNaN(+req.body.price) || (_.findIndex(req.job.applicants, {applicant: req.user._id}) !== -1)) {
     res.status(500).json({ message: 'Invalid request' });
     return;
   }

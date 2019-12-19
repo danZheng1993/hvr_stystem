@@ -239,6 +239,7 @@ export default handleActions({
   [requestSuccess(APPLY_JOB)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(APPLY_JOB),
+    searchResult: reject(state.searchResult, { _id: payload._id }),
     job: payload,
     error: null,
     loading: false

@@ -76,7 +76,7 @@ const styles = {
     borderWidth: 0,
   },
   small: {
-    fontSize: 10 
+    fontSize: 12
   },
   item: {
     flex: 1,
