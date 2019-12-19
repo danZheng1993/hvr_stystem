@@ -64,6 +64,14 @@ const stackNavigator = createStackNavigator(
         header: null,
       },
     },
+    
+    Settings: {
+      screen: Settings,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    
     Auth: {
       screen: AuthScreen,
       navigationOptions: {
@@ -381,20 +389,6 @@ const stackNavigator = createStackNavigator(
 
     UploadMedia: {
       screen: UploadMedia,
-      navigationOptions: {
-        header: null,
-      },
-    },
-
-    Settings: {
-      screen: Settings,
-      navigationOptions: {
-        header: null,
-      },
-    },
-
-    Settings: {
-      screen: Settings,
       navigationOptions: {
         header: null,
       },

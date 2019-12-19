@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-
+import {NavigationActions} from 'react-navigation'
 import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
 import { Text } from '../../components/StyledText';
@@ -78,8 +78,8 @@ class SignupAsClient extends React.Component {
     clearInterval(timer)
     this.props.checkcode({
       body:{ phoneNumber, code: verificationCode, password, role: 'client'},
-      success: () => this.props.navigation.navigate({ routeName: 'LoginWithPassword' }),
-      fail:() => alert("invalid code")
+      success: () => this.props.navigation.reset([NavigationActions.navigate({ routeName: 'LoginWithPassword' })], 0),
+      fail:() => alert("验证码出错")
     })
   }
 
@@ -91,9 +91,8 @@ class SignupAsClient extends React.Component {
     const { counter } = this.state
 
     return (
-      <ScrollView>
       <View style={styles.container}>
-        <Text size={28} bold black style={{marginBottom: 50}}>需求方注册</Text>
+        <Text size={28} bold black>需求方注册</Text>
         <Form
             ref="form"
             onSubmit={this.submit}
@@ -115,7 +114,7 @@ class SignupAsClient extends React.Component {
               <TextValidator
                 name="verificationCode"
                 validators={['required', 'matchRegexp:^[0-9]{4}$']}                 
-                errorMessages={['必填此项', 'invalid code']}
+                errorMessages={['必填此项', '验证码出错']}
                 outlined
                 label='输入验证码'
                 type="text"
@@ -163,7 +162,7 @@ class SignupAsClient extends React.Component {
               onPress={this.handleSubmit}
           />
         </Form>   
-        <View style={{alignItems: 'center', marginTop: 40, borderTopWidth: 1, borderTopColor: colors.greybackground}}>
+        <View style={{alignItems: 'center', borderTopWidth: 1, borderTopColor: colors.greybackground}}>
           <Text size={12} color={colors.description}>使用第三方登录</Text>
           <View style={styles.touch}>
             <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeChat}>
@@ -187,7 +186,6 @@ class SignupAsClient extends React.Component {
           </View>
         </View>
       </View>
-      </ScrollView>
     );
   }
 }
@@ -196,8 +194,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: 50
+    justifyContent: 'space-between',
+    paddingHorizontal: 50,
+    paddingVertical: 30
   },
   photo: {
     borderRadius: 25,
@@ -215,7 +214,6 @@ const styles = StyleSheet.create({
   },
   description: {
     alignItems: "center",
-    marginBottom: 50
   },
   button: {
     alignSelf: 'stretch',

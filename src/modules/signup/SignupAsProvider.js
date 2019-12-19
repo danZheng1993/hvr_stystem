@@ -8,7 +8,7 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-
+import {NavigationActions} from 'react-navigation'
 import { Button } from '../../components';
 import { fonts, colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
@@ -72,10 +72,10 @@ class SignupAsProvider extends React.Component {
       return;
     }
     clearInterval(timer)
-    this.props.checkcode({
+    this.props.checkcode ({
       body:{ phoneNumber, code: verificationCode, password, role: 'provider'},
-      success: () => this.props.navigation.navigate({ routeName: 'BasicProfile' }),
-      fail:() => alert("invalid code")
+      success: () => this.props.navigation.reset([NavigationActions.navigate({ routeName: 'BasicProfile' })], 0),
+      fail:() => alert("验证码出错")
     })
   }
 
@@ -87,9 +87,8 @@ class SignupAsProvider extends React.Component {
     const { counter } = this.state
 
     return (
-      <ScrollView>
       <View style={styles.container}>
-        <Text size={28} bold black style={{marginBottom: 50}}>服务方注册</Text>
+        <Text size={28} bold black style={{marginBottom: 30}}>服务方注册</Text>
         <Form
             ref="form"
             onSubmit={this.submit}
@@ -111,7 +110,7 @@ class SignupAsProvider extends React.Component {
               <TextValidator
                 name="verificationCode"
                 validators={['required', 'matchRegexp:^[0-9]{4}$']}                 
-                errorMessages={['必填此项', 'invalid code']}
+                errorMessages={['必填此项', '验证码出错']}
                 outlined
                 label='输入验证码'
                 type="text"
@@ -159,7 +158,6 @@ class SignupAsProvider extends React.Component {
           />
         </Form>   
       </View>
-      </ScrollView>
     );
   }
 }
@@ -169,7 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 50
+    paddingHorizontal: 70,
   },
   buttonsContainer: {
     flex: 1,
@@ -178,7 +176,6 @@ const styles = StyleSheet.create({
   },
   description: {
     alignItems: "center",
-    marginBottom: 50
   },
   button: {
     alignSelf: 'stretch',

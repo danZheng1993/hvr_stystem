@@ -23,6 +23,7 @@ import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
 import SyncStorage from 'sync-storage';
 import XMPP from 'react-native-xmpp'
+import {NavigationActions} from 'react-navigation'
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -82,8 +83,7 @@ class HomeScreen extends React.Component {
     }
     if (profile && profile.role == 'provider') route = 'Provider'
     else if (profile && profile.role == 'client') route = 'Client'
-    this.props.navigation.navigate({ routeName: route })
-
+    this.props.navigation.reset([NavigationActions.navigate({ routeName: route })], 0)
   }
 
   handleClick = () => {

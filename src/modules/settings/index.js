@@ -7,19 +7,12 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { NavigationActions } from 'react-navigation'
-
-const resetAction = () => NavigationActions.reset({
-  index: 1,
-  actions: [
-    NavigationActions.navigate({ routeName: 'Auth'}),
-  ]
-})
 import {logout} from '../../redux/modules/auth'
 import { clearItem } from '../../redux/api/storage'
 const settings = props => {
     clearStorage = ()=> {
         clearItem().then(() => {
-            props.logout(props.navigation.navigate('Auth'))
+            props.logout(props.navigation.reset([NavigationActions.navigate({ routeName: 'Auth' })], 0))
         })
     }
     return (

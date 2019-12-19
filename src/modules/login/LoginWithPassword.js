@@ -20,7 +20,7 @@ import { profileSelector, authloadingSelector } from '../../redux/selectors'
 import XMPP from 'react-native-xmpp'
 import { loadItem } from '../../redux/api/storage';
 import SyncStorage from 'sync-storage';
-
+import {NavigationActions} from 'react-navigation'
 class LoginWithPassword extends React.Component {
   constructor(props) {
     super(props)
@@ -34,7 +34,7 @@ class LoginWithPassword extends React.Component {
     this.props.login({
       body: {phoneNumber, password},
       success: () =>     this.redirect(),
-      // fail: () => toast("Phone number or password is wrong!")
+      fail: () => toast("电话号码或密码有误!")
     })
   };
   
@@ -46,9 +46,9 @@ class LoginWithPassword extends React.Component {
       toast("login success!")
       XMPP.connect(`${profile._id}@192.168.31.207/spark`, token.slice(0,8),'RNXMPP.PLAIN','192.168.31.207',5222)
       if (profile.role == 'provider') {
-        this.props.navigation.navigate({ routeName: 'Provider' })
+        this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Provider' })], 0)
       } else if (profile.role =='client'){
-        this.props.navigation.navigate({ routeName: 'Client' })
+        this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Client' })], 0)
       }
     })
   }
@@ -57,7 +57,6 @@ class LoginWithPassword extends React.Component {
     const {loading, profile} = this.props
 
     return (
-      <ScrollView>
         <View style={styles.container}>
           {/* { <Loader
             loading={loading} /> } */}
@@ -78,7 +77,7 @@ class LoginWithPassword extends React.Component {
                 name="phoneNumber"
                 label='手机号'
                 validators={['required', 'matchRegexp:^[0-9]{11}$']}
-                errorMessages={['This field is required', 'invalid phone number']}
+                errorMessages={['需要输入此项', '无效电话号码']}
                 placeholder="输入手机号"
                 type="text"
                 value={this.state.phoneNumber}
@@ -88,7 +87,7 @@ class LoginWithPassword extends React.Component {
                 style={styles.input}
                 outlined
                 validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
-                errorMessages={['This field is required', 'password must be at least 6 characters', 'password is length must be less than 20']}
+                errorMessages={['需要输入此项', '密码至少6字以上', '密码最多20字以下']}
                 label='设置密码'
                 placeholder="设置密码（6-20位字母数字组合)"
                 value={this.state.password}
@@ -104,8 +103,7 @@ class LoginWithPassword extends React.Component {
                 onPress={() => this.refs.form.submit()}
               />
             </Form>   
-          </View>
-          <View style={styles.anchor}>
+            <View style={styles.anchor}>
             <View style={[styles.inputWrap, {alignItems: 'flex-start'}]}>
               <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithSMS' })}>
               手机验证码登录
@@ -117,7 +115,9 @@ class LoginWithPassword extends React.Component {
               </Text>
             </View>
           </View>
-          <View style={{alignItems: 'center', marginTop: 100, borderTopWidth: 1, borderTopColor: colors.greybackground}}>
+          </View>
+          
+          <View style={{alignItems: 'center', borderTopWidth: 1, borderTopColor: colors.greybackground}}>
             <Text size={12} color={colors.description}>使用第三方登录</Text>
             <View style={styles.touch}>
               <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeChat}>
@@ -141,7 +141,6 @@ class LoginWithPassword extends React.Component {
             </View>
           </View>
         </View>
-      </ScrollView>
     );
     }
 }
@@ -150,9 +149,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 70,
-    paddingTop: 70
+    paddingVertical: 30
   },
   buttonsContainer: {
     flex: 1,
@@ -161,7 +160,6 @@ const styles = StyleSheet.create({
   },
   description: {
     alignItems: "center",
-    marginBottom: 50
   },
   button: {
     alignSelf: 'stretch',
@@ -179,7 +177,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   anchor: {
-    marginTop: 20,
     flexDirection: "row",
     alignItems: 'center',
     justifyContent: 'space-between'

@@ -10,7 +10,7 @@ import { Text } from '../../components/StyledText';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-
+import {NavigationActions} from 'react-navigation'
 import { saveProfile } from '../../redux/modules/auth'
 import uploadFile from '../../redux/api/upload'
 import { profileSelector } from '../../redux/selectors'
@@ -34,7 +34,7 @@ class CompanyInfo extends React.Component {
     this.props.saveProfile({
       body: {companyName: name}
     })
-    this.props.navigation.navigate({ routeName: 'Provider' })
+    this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Provider' })], 0)
   };
     
   createFormData = (photo, body) => {

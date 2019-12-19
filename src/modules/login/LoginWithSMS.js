@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-
+import {NavigationActions} from 'react-navigation'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
@@ -26,6 +26,7 @@ class LoginWithSMS extends React.Component {
     }
 
     onSuccess = () => {
+      console.warn('success')
       loadItem('hvr_auth').then((val) => {
         const {profile} = this.props
         if (!profile) return
@@ -33,17 +34,17 @@ class LoginWithSMS extends React.Component {
         toast("login success!")
         XMPP.connect(`${profile._id}@192.168.0.207/spark`, token.slice(0,8),'RNXMPP.PLAIN','192.168.0.207',5222)
         if (profile.role == 'provider') {
-          this.props.navigation.navigate({ routeName: 'Provider' })
+          this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Provider' })], 0)
         } else if (profile.role =='client'){
-          this.props.navigation.navigate({ routeName: 'Client' })
+          this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Client' })], 0)
         }
       })
     }
 
     render(){
       return (
-        <ScrollView>
         <View style={styles.container}>
+          <View>
           <SendVerificationcode navigation={this.props.navigation} onSuccess={this.onSuccess}/>
           <View style={styles.anchor}>
             <View style={[styles.inputWrap, {alignItems: 'flex-start'}]}>
@@ -57,7 +58,8 @@ class LoginWithSMS extends React.Component {
               </Text>
             </View>
           </View>
-          <View style={{alignItems: 'center', marginTop: 100, borderTopWidth: 1, borderTopColor: colors.greybackground}}>
+          </View>
+          <View style={{alignItems: 'center', alignSelf: 'flex-end', borderTopWidth: 1, borderTopColor: colors.greybackground}}>
             <Text color={colors.description}>使用第三方登录</Text>
             <View style={styles.touch}>
               <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeChat}>
@@ -81,7 +83,6 @@ class LoginWithSMS extends React.Component {
             </View>
           </View>
         </View>
-        </ScrollView> 
       );
     }
 }
@@ -90,12 +91,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: 70
+    justifyContent: 'space-between',
+    paddingHorizontal: 70,
+    paddingVertical: 30
   },
   description: {
     alignItems: "center",
-    marginBottom: 50
   },
   button: {
     alignSelf: 'stretch',
@@ -113,7 +114,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   anchor: {
-    marginTop: 20,
     flexDirection: "row",
     alignItems: 'center',
     justifyContent: 'space-between'

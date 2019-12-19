@@ -245,7 +245,7 @@ function checkcode(req, res, next) {
         })
        .catch(next)
       .catch(() => {
-        res.status(500).json({ message: 'Invalid code' });
+        res.status(500).json({ message: '验证码出错' });
       });
     })
     .catch(next);

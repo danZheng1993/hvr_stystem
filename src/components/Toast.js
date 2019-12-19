@@ -4,7 +4,7 @@ import Toast from 'react-native-root-toast';
 // Add a Toast on screen.
 export default toast = (message) => {
         Toast.show(message, {
-        duration: 500,
+        duration: 2000,
         position: Toast.positions.BOTTOM,
         shadow: true,
         animation: true,

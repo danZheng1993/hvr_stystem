@@ -57,7 +57,7 @@ class SignupForm extends React.Component {
           body: {phoneNumber, password},
           success: () => this.props.navigation.navigate({ routeName: 'BasicProfile' })
         }),
-        fail:() => alert("invalid code")
+        fail:() => alert("验证码出错")
       })
     }
     render(){
@@ -83,7 +83,7 @@ class SignupForm extends React.Component {
                         name="verificationCode"
                         style={{ marginBottom: 15}}
                         validators={['required', 'matchRegexp:^[0-9]{4}$']}                 
-                        errorMessages={['必填此项', 'invalid code']}
+                        errorMessages={['必填此项', '验证码出错']}
                         outlined
                         label='输入验证码'
                         type="text"
