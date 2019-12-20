@@ -24,6 +24,7 @@ import { commonStyles } from '../../styles'
 import SyncStorage from 'sync-storage';
 import XMPP from 'react-native-xmpp'
 import {NavigationActions} from 'react-navigation'
+import constants from '../../constants';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -78,7 +79,7 @@ class HomeScreen extends React.Component {
     const token = SyncStorage.get('token') || '';
     var route = 'Auth'
     if (profile) {
-      XMPP.connect(`${profile._id}@192.168.0.207/spark`, token.slice(0,8),'RNXMPP.PLAIN','192.168.0.207',5222)
+      XMPP.connect(profile._id + constants.JID, token.slice(0,8),'RNXMPP.PLAIN',constants.IP,5222)
     }
     if (profile && profile.role == 'provider') route = 'Provider'
     else if (profile && profile.role == 'client') route = 'Client'

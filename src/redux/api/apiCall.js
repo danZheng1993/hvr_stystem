@@ -4,10 +4,11 @@ import { get } from 'lodash'
 import { requestFail, requestPending, requestSuccess } from './request'
 import { AsyncStorage } from 'react-native'
 import SyncStorage from 'sync-storage';
+import constants from '../../constants'
 const defaultHeaders = () => {
   const token = SyncStorage.get('token') || null;
   //axios.defaults.baseURL = process.env.API_ROOT + '/'
-  axios.defaults.baseURL = 'http://192.168.0.207:4000/'
+  axios.defaults.baseURL = constants.BASE_URL
   var headers = {
     'Accept': '*/*',
     'Content-Type': 'application/json'

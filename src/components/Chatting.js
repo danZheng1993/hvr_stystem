@@ -59,7 +59,7 @@ class Chatting extends React.Component {
         user: {
           _id: 2,
           name: 'React Native',
-          avatar: 'https://192.168.0.207/' + to + '_.photo.jpg',
+          avatar: constants.BASE_URL +  user.photo,
         },
       },
     ]

@@ -1,3 +1,6 @@
+const ip = '123.57.81.103'
+const port = 4000
+const baseUrl = `http://${ip}:${port}/`
 const constants = {
     SMS_VERIFICATION: 'SMS_VERIFICATION',
     PASSWORD_VERIFICATION: 'PASSWORD_VERIFICATION',
@@ -5,10 +8,12 @@ const constants = {
     NORMAL_SIGNUP: 'NORMAL_SIGNUP',
     SEND_SMS: 'SEND_SMS',
     CHECK_SMS: 'CHECK_SMS',
-    BASE_URL: 'http://192.168.0.207:4000/',
-    BANNER_BASE_URL: 'http://192.168.0.207:4000/bannersImage/',
-    NEWS_BASE_URL: 'http://192.168.0.207:4000/newsImage/',
-    MEDIA_BASE_URL: 'http://192.168.0.207:4000/mediaSource/',
+    BASE_URL: baseUrl,
+    BANNER_BASE_URL: baseUrl + '/bannersImage/',
+    NEWS_BASE_URL: baseUrl + '/newsImage/',
+    MEDIA_BASE_URL: baseUrl + '/mediaSource/',
+    JID: `@${ip}/spark`,
+    IP: ip
 }
 
 export default constants

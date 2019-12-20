@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import {Text} from './StyledText'
 import moment from 'moment'
 import { fonts, colors } from '../styles';
+import constants from '../constants';
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -17,14 +18,13 @@ export default class Profile extends React.Component {
     
   }
   render() {   
-    const url="http://192.168.0.207:4000/"
     const {user, navigation} = this.props
     return (
       <View >
         {user &&
           <View style = {styles.row}>
             <Image
-              source={{uri: url + (user.photo ? user.photo: 'default.png')}}
+              source={{uri: constants.BASE_URL + (user.photo ? user.photo: 'default.png')}}
               style={styles.photo}
             />
             <View style={{justifyContent: 'center',}}>

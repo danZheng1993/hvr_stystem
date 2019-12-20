@@ -1,5 +1,5 @@
 import SyncStorage from 'sync-storage';
-let baseURL = "http://192.168.0.207:4000/"
+import constants from '../../constants';
 defaultHeaders = () => {
   const token = SyncStorage.get('token') || null;
   //axios.defaults.baseURL = process.env.API_ROOT + '/'
@@ -15,7 +15,7 @@ defaultHeaders = () => {
 }
 let upload = (uri, method, data) => {
   console.log("upload")
-  return fetch(baseURL + uri, {
+  return fetch(constants.BASE_URL + uri, {
       method: method,
       body: data,
       headers:  Object.assign({}, defaultHeaders())

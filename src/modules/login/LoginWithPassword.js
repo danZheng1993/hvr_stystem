@@ -21,6 +21,7 @@ import XMPP from 'react-native-xmpp'
 import { loadItem } from '../../redux/api/storage';
 import SyncStorage from 'sync-storage';
 import {NavigationActions} from 'react-navigation'
+import constants from '../../constants';
 class LoginWithPassword extends React.Component {
   constructor(props) {
     super(props)
@@ -44,7 +45,7 @@ class LoginWithPassword extends React.Component {
       if (!profile) return
       const token = SyncStorage.get('token') || ''
       toast("login success!")
-      XMPP.connect(`${profile._id}@192.168.0.207/spark`, token.slice(0,8),'RNXMPP.PLAIN','192.168.0.207',5222)
+      XMPP.connect(profile._id + constants.JID, token.slice(0,8),'RNXMPP.PLAIN',constants.IP,5222)
       if (profile.role == 'provider') {
         this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Provider' })], 0)
       } else if (profile.role =='client'){
