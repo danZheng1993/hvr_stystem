@@ -6,41 +6,15 @@ import {
   Text,
 } from 'react-native';
 
-import { connect } from 'react-redux';
-import { compose, withState } from 'recompose';
-import { createStructuredSelector } from 'reselect';
-import { Button, Loader,} from '../../../components';
 import { fonts, colors } from '../../../styles';
 import { ListItem } from 'react-native-elements'
 import constants from '../../../constants'
-import { getFeedback } from '../../../redux/modules/job'
-import { jobsloadingSelector, jobsFeedbackSelector } from '../../../redux/selectors'
 
 class ProviderFeedbacks extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      select: 0
-    }
-  }
-
-  handleClick =() => {
-
-  }
-
-  componentWillMount() {
-    const {getFeedback, id} = this.props
-    getFeedback({
-      body: {hired: id}
-    })
-  }
-
-
   render() {
-    const {feedbacks, loading} = this.props
+    const {feedbacks} = this.props
     return (
       <ScrollView style={styles.container}>
-          <Loader loading={loading} />
           {feedbacks.length ? feedbacks.map((feedback, index) => (
             <ListItem
               key={index}
@@ -62,54 +36,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 20,
   },
-  
-  picker: {
-    flexDirection: "row",
-    justifyContent: 'space-between'
-  },
-  buttonsContainer: {
-    alignSelf: 'stretch',
-    margin: 20
-  },
-  button: {
-    marginBottom: 20,
-    alignSelf: 'stretch',
-  },
-  description: {
-    padding: 20,
-    marginBottom: 20,
-    alignSelf: 'stretch'
-  },
-  input: {
-    marginBottom: 15,
-  },
-  anchor: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  inputWrap: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  componentsSection: {
-    backgroundColor: colors.white,
-    padding: 15,
-    marginBottom: 20,
-    borderRadius: 5,
-  },
 });
 
-
-const mapStateToProps = createStructuredSelector({
-  feedbacks: jobsFeedbackSelector,
-  loading: jobsloadingSelector,
-});
-
-const mapDispatchToProps = {
-  getFeedback
-};
-
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
-
-export default compose(withConnect)(ProviderFeedbacks);
+export default ProviderFeedbacks

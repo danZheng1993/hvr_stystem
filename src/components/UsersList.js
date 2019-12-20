@@ -18,7 +18,7 @@ export default class UsersList extends React.Component {
     const {user, navigation} = this.props
     console.log(user)
     return (
-      <TouchableRipple onPress={() => navigation.navigate('ProviderDetail', {id: user._id})} style={{marginBottom: 10}}>
+      <TouchableRipple onPress={() => navigation.navigate('ProviderDetail', {user: user})} style={{marginBottom: 10}}>
       {user &&
           <ImageBackground
               source={require('../../assets/images/userBackground.png')}
@@ -34,10 +34,10 @@ export default class UsersList extends React.Component {
               <Text>{user.overview}</Text>
             </View>
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text color={colors.secondary}>服务雇主: 3000</Text>
-              <Text color={colors.secondary}>家发布作品: 2600个</Text>
-              <Text color={colors.secondary}>播放量:200万</Text>
-              <Text color={colors.secondary}>坐标: 北京</Text>
+              <Text color={colors.secondary}>服务雇主: {user.contacts.length}</Text>
+              <Text color={colors.secondary}>家发布作品: 3个</Text>
+              <Text color={colors.secondary}>播放量:{user.balance}</Text>
+              <Text color={colors.secondary}>坐标: {user.location}</Text>
             </View>
           </ImageBackground>}
       </TouchableRipple>

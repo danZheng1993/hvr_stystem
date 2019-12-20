@@ -34,10 +34,10 @@ const NotPaidAction = props => {
         style={styles.button}
         bgColor={colors.warning}
         caption="去支付"
-        onPress={() => props.payUpfront({
+        onPress={() => Confirm('提示', '是否确认验收并支付尾款', () => props.payUpfront({
           body: {id: props.job._id},
           success: (payload) => {props.updateMyJobsList(payload.data)}
-        })}
+        }))}
         />
     </View>
   )

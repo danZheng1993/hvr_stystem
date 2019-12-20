@@ -25,7 +25,7 @@ const TestingAction = props => {
         small
         style={styles.button}
         caption="查看视频"
-        onPress={this.handleClick}
+        onPress={() => props.navigation.navigate('Player')}
       />
       <Button
         small

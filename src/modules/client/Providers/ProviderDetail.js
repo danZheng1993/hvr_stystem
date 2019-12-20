@@ -10,12 +10,14 @@ import {
 import { connect } from 'react-redux';
 import { compose, withState } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { Button, Loader, Profile, RadioGroup, Text} from '../../../components';
+import { Button, Loader, Profile, RadioGroup, Text, toast} from '../../../components';
 import { fonts, colors } from '../../../styles';
 
 import { getUser } from '../../../redux/modules/user'
 import { addToAttentions } from '../../../redux/modules/auth'
-import { userDetailSelector, usersloadingSelector } from '../../../redux/selectors'
+import { searchMedia } from '../../../redux/modules/media'
+import { getFeedback } from '../../../redux/modules/job'
+import { mediasloadingSelector, mediasSearchResultSelector, jobsloadingSelector, jobsFeedbackSelector} from '../../../redux/selectors'
 import ProviderWorks from './ProviderWorks';
 import ProviderFeedbacks from './ProviderFeedbacks';
 
@@ -23,7 +25,8 @@ class ProviderDetail extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      select: 0
+      select: 0,
+      user: null
     }
   }
 
@@ -32,11 +35,15 @@ class ProviderDetail extends React.Component {
   }
 
   componentWillMount() {
-    const {getUser, navigation} = this.props
-    let id = navigation.getParam('id', 'NO-ID')
-    if (id != 'NO-ID') {
-      getUser({
-        id,
+    const {getFeedback, searchMedia, navigation} = this.props
+    let user = navigation.getParam('user', null)
+    if (user) {
+      this.setState({user})
+      getFeedback({
+        body: {hired: user._id}
+      })
+      searchMedia({
+        body: {creator: user._id}
       })
     }
   }
@@ -55,12 +62,14 @@ class ProviderDetail extends React.Component {
 
   handleAttentions = (id) => {
     this.props.addToAttentions({
-      body: {attention: id}
+      body: {attention: id},
+      success: () => toast('成功!'),
+      fail: ()=> toast('失败')
     })
   }
   render() {
-    const {user, usersloading} = this.props
-    const {select} = this.state
+    const {medias, feedbacks, loading} = this.props
+    const {select, user} = this.state
     if (!user) return (<></>)
     return (
       <>
@@ -79,15 +88,15 @@ class ProviderDetail extends React.Component {
           </View>
           <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
             <View style={{alignItems: 'center'}}>
-              <Text white bold size={28}>39</Text>
+              <Text white bold size={28}>{user.contacts.length}</Text>
               <Text white>服务用户数</Text>
             </View>
             <View style={{alignItems: 'center'}}>
-              <Text white bold size={28}>45</Text>
+              <Text white bold size={28}>{medias.length}</Text>
               <Text white>项目作品</Text>
             </View>
             <View style={{alignItems: 'center'}}>
-              <Text white bold size={28}>45</Text>
+              <Text white bold size={28}>{user.balance}</Text>
               <Text white>播放数量</Text>
             </View>
           </View> 
@@ -95,7 +104,7 @@ class ProviderDetail extends React.Component {
         </ImageBackground>
       <View style={styles.container}>
         <Loader
-          loading={usersloading} /> 
+          loading={loading} /> 
         <View style={{flexBasis: 1, flexGrow: 1}}>
           <View style={{height: 50, backgroundColor: colors.secondary}}>
             <RadioGroup
@@ -106,8 +115,8 @@ class ProviderDetail extends React.Component {
             />
             </View>
           <View style={{flexBasis: 1, flexGrow: 1}}>
-          {select ?
-            <ProviderFeedbacks id={user._id}/> : <ProviderWorks id={user._id}/>
+          {(select) ?
+            <ProviderFeedbacks feedbacks={feedbacks} navigation={this.props.navigation}/> : <ProviderWorks medias={medias} navigation={this.props.navigation}/>
           }
           </View>
         </View>
@@ -159,13 +168,15 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  user: userDetailSelector,
-  usersloading: usersloadingSelector,
+  loading: jobsloadingSelector || mediasloadingSelector,
+  feedbacks: jobsFeedbackSelector,
+  medias: mediasSearchResultSelector,
 });
 
 const mapDispatchToProps = {
-  getUser,
-  addToAttentions
+  addToAttentions,
+  searchMedia,
+  getFeedback
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

@@ -22,29 +22,32 @@ class Providers extends React.Component {
     super(props)
     this.state = {
       bannerImages: [],
-      location: ''
+      location: '北京'
     }
   }
 
   componentWillMount() {
     const {searchUser, banners} = this.props
-
+    const {location} = this.state
     let bannerImages = []
     banners && banners.map((banner, index) => {
       typeof(banner) == 'object' && bannerImages.push(constants.BANNER_BASE_URL + banner.image)
     })
     this.setState({bannerImages})
     searchUser({
-        body: {role: 'provider'}
+        body: {role: 'provider', location}
     })
 
   }
 
   chooseLocation = (location) => {
     this.setState({location})
+    this.props.searchUser({
+      body: {role: 'provider', location}
+  })
   }
   render() {
-    const {users, usersloading} = this.props
+    const {users, usersloading, banners} = this.props
     const {bannerImages, location} = this.state
     return (
       <>
@@ -65,7 +68,7 @@ class Providers extends React.Component {
       <SliderBox
         images={bannerImages}
         onCurrentImagePressed={index =>
-            console.warn(`image ${index} pressed`)
+          this.props.navigation.navigate('WebViewer', {url: banners[index].url})
         }
       />
       <ScrollView style={styles.container}>

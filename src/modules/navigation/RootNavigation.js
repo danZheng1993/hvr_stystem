@@ -51,7 +51,7 @@ import SystemNotification from '../../components/SystemNotification';
 import Player from '../../components/Player';
 import SearchResult from '../../components/SearchResult';
 import Location from '../../components/Location';
-import Developing from '../../components/NoData'
+import Developing from '../../components/Developing'
 import Settings from '../settings';
 import PersonalInformation from '../settings/PersonalInformation';
 import Security from '../settings/Security';

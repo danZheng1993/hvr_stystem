@@ -396,7 +396,10 @@ function search(req, res, next) {
     where = {_id: req.body.attentions, role: 'provider'}
   } else if (req.body.userName) {
     where = {userName: {$regex: req.body.userName, $options:"$i"}, role: 'provider'}
+  } else if (req.body.location) {
+    where = {...where, location: req.body.location}
   }
+  console.log(where)
   User.find(where)
   .sort({ userName: -1 })
 //  .limit(limit)

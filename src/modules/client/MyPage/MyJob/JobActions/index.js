@@ -22,7 +22,7 @@ const FeedbackAction = ({navigation,job}) => {
         small
         style={styles.button}
         caption="查看视频"
-        onPress={this.handleClick}
+        onPress={() => navigation.navigate('Player')}
       />
       <Button
         small
@@ -35,21 +35,21 @@ const FeedbackAction = ({navigation,job}) => {
   )
 }
 
-const FinishingAction = props => {
+const FinishingAction = ({navigation, job}) => {
   return (
     <View style={styles.buttonsContainer}>
       <Button
         small
         style={styles.button}
         caption="联系服务商"
-        onPress={this.handleClick}
+        onPress={() => navigation.navigate('Chatting', {to: job.hired})}
       />
       <Button
         small
         bgColor={colors.warning}
         style={styles.button}
         caption="查看视频"
-        onPress={this.handleClick}
+        onPress={() => navigation.navigate('Player')}
       />
     </View>
   )

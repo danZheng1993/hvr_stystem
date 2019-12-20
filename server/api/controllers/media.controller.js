@@ -138,6 +138,8 @@ function search(req, res, next) {
     where = {_id: req.body.collections}
   } else if (req.body.title) {
     where = {title: {$regex: req.body.title, $options:"$i"}}
+  } else if (req.body.creator) {
+    where = {creator: req.body.creator}
   }
   console.log("search", where)
   Media.find(where)
