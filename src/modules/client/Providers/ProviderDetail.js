@@ -12,8 +12,6 @@ import { compose, withState } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Button, Loader, Profile, RadioGroup, Text, toast} from '../../../components';
 import { fonts, colors } from '../../../styles';
-
-import { getUser } from '../../../redux/modules/user'
 import { addToAttentions } from '../../../redux/modules/auth'
 import { searchMedia } from '../../../redux/modules/media'
 import { getFeedback } from '../../../redux/modules/job'

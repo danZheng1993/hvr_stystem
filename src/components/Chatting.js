@@ -8,8 +8,10 @@ import { createStructuredSelector } from 'reselect';
 import {Loader} from '../components'
 import { getChat } from '../redux/modules/chat'
 import { addToContacts } from '../redux/modules/auth'
-import { chatsloadingSelector, chatsListSelector, profileSelector } from '../redux/selectors'
+import {getUser} from '../redux/modules/user'
+import { chatsloadingSelector, chatsListSelector, profileSelector, userDetailSelector } from '../redux/selectors'
 import XMPP from 'react-native-xmpp'
+import constants from '../constants';
 
 class Chatting extends React.Component {
   constructor(props) {
@@ -28,7 +30,7 @@ class Chatting extends React.Component {
 
   componentWillMount() {  
 
-    const {navigation, profile} = this.props
+    const {navigation, profile, getUser} = this.props
     let to = navigation.getParam('to', '')
     if (to != '') {
       if (profile.contacts.indexOf(to) == -1) {
@@ -36,7 +38,8 @@ class Chatting extends React.Component {
           body: {contact: to}
         })
       }
-      this.setState({to})
+      this.setState({to, photo: to + '_photo.jpg'})
+      getUser({id: to})
       this.props.getChat({
         params: {to},
         success: (payload) => this.initMessages(payload.data.messages)
@@ -46,6 +49,7 @@ class Chatting extends React.Component {
   }
   
   initMessages = (chatsList) => {
+    const {profile, user} = this.props
     const {to} = this.state
     var message= [
       {
@@ -55,7 +59,7 @@ class Chatting extends React.Component {
         user: {
           _id: 2,
           name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
+          avatar: 'https://192.168.0.207/' + to + '_.photo.jpg',
         },
       },
     ]
@@ -67,7 +71,8 @@ class Chatting extends React.Component {
           text: conversation.messages.message.body,
           createdAt: conversation.messages.message.sentDate,
           user: {
-            _id: (conversation.messages.message.to == `${to}@desktop-jgen8l2/spark`) ? -1: 2 
+            _id: (conversation.messages.message.to == `${to}@desktop-jgen8l2/spark`) ? -1: 2,
+            avatar: constants.BASE_URL +  user.photo
           }
         })
       : conversation.messages.message.map((messageItem, messageIndex) => (
@@ -76,7 +81,8 @@ class Chatting extends React.Component {
           text: messageItem.body,
           createdAt: messageItem.sentDate,
           user: {
-            _id: (messageItem.to == `${to}@desktop-jgen8l2/spark`) ? -1: 2 
+            _id: (messageItem.to == `${to}@desktop-jgen8l2/spark`) ? -1: 2,
+            avatar: constants.BASE_URL +  user.photo
           }
         })
       ))
@@ -84,7 +90,7 @@ class Chatting extends React.Component {
   }
 
   onReceivedMessage(messages) {
-      const {navigation} = this.props
+      const {navigation, user} = this.props
       const {to} = this.state
       if (!messages.body) return
       const from = String(messages.from).split('@')[0]
@@ -99,7 +105,7 @@ class Chatting extends React.Component {
           user: {
             _id: 2,
             name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
+            avatar: constants.BASE_URL +  user.photo
           },
         },
       ]
@@ -150,11 +156,13 @@ class Chatting extends React.Component {
 const mapStateToProps = createStructuredSelector({
   loading: chatsloadingSelector,
   chatsList: chatsListSelector,
-  profile: profileSelector
+  profile: profileSelector,
+  user: userDetailSelector
 });
 
 const mapDispatchToProps = {
   getChat,
+  getUser,
   addToContacts
 };
 

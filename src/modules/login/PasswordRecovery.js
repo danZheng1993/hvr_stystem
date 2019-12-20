@@ -88,7 +88,7 @@ class PasswordRecovery extends React.Component {
               <View style={styles.buttonsContainer}>
                 <Button
                   large
-                  bgColor={colors.warning}
+                  bgColor={colors.secondary}
                   style={styles.button}
                   caption="确定"
                   onPress={() => this.refs.form.submit()}

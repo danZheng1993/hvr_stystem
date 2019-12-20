@@ -33,18 +33,22 @@ function uploadLink(req, res, next) {
     )
     updatedJob.save()
       .then((newJob) => {
-        xmpp.send(`${newJob.creator}@desktop-jgen8l2/spark`, `uploaded the media.`, false);
-        res.json(newJob);
+        const media = new Media({
+          creator: req.user._id,
+          poster: job.creator,
+          jobID: job._id,
+          title: '作品1',
+          snapshot : "media3.jpg",
+          path : "media1.mp4",
+        });
+        media.save()
+        .then((newMedia) => {
+          xmpp.send(`${newJob.creator}@desktop-jgen8l2/spark`, `uploaded the media.`, false);
+          res.json(newJob);
+        })
+        .catch(next);  
       })
     .catch(next)
-
-    // const media = new Media(req.body);
-
-    // media.save()
-    // .then((newMedia) => {
-    //   res.json(newMedia);
-    // })
-    // .catch(next);  
   })
   .catch(next)
 }
