@@ -1,7 +1,7 @@
 import { ListItem } from 'react-native-elements'
-import { View } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import React, {Componet} from 'react'
-import {Button} from '../../components'
+import {Text} from '../../components'
 import colors from '../../styles/colors'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -46,11 +46,9 @@ const settings = props => {
                     chevron={{ color: colors.secondary }}
                 />
             </View>
-            <Button
-                large
-                caption="退出登录"
-                onPress={() => clearStorage()}
-            />
+            <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', backgroundColor: colors.secondary, padding: 10}} onPress={() => clearStorage()}>
+                <Text white bold size={18}>退出登录</Text>
+            </TouchableOpacity>
         </View>
     )
 }

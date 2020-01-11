@@ -50,27 +50,22 @@ class GiveFeedback extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.description}>
         <TextInput
             style={styles.input}
             outlined
             placeholder="填写服务介绍"
             multiline
             maxLength={100}
-            numberOfLines={6}
+            numberOfLines={10}
             value={this.state.feedback}
             onChangeText={feedback => this.setState({ feedback })}
         />
-        </View>
-        <View style={styles.buttonsContainer}>
-          <Button
-            large
-            bgColor={colors.secondary}
-            style={styles.button}
-            caption="提交"
-            onPress={() => this.handleClick()}
-          />
-        </View>
+        <Button
+          large
+          bgColor={colors.secondary}
+          caption="提交"
+          onPress={() => this.handleClick()}
+        />
       </View>    
     )
   }
@@ -79,34 +74,17 @@ class GiveFeedback extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center',
-    backgroundColor: colors.bluish
-  },
-  photo: {
-    borderRadius: 100,
-    borderColor: colors.gray,
-    backgroundColor: colors.info,
-    width: 100,
-    height: 100
+    alignItems: 'stretch', 
+    justifyContent: 'flex-start',
+    padding: 10,
+    backgroundColor: colors.bluish,
   },
   input: {
     marginBottom: 15,
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
+    width: '100%'
   },
-  description: {
-    padding: 20,
-    marginBottom: 20,
-    alignSelf: 'stretch'
-  },
-  buttonsContainer: {
-    alignSelf: 'stretch',
-    margin: 20
-  },
-  button: {
-    marginBottom: 20,
-    alignSelf: 'stretch',
-  },
+
 });
 
 const mapStateToProps = createStructuredSelector({

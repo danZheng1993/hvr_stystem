@@ -1,7 +1,8 @@
 import React from 'react';
-
+import {View} from 'react-native'
 // import AuthScreen from '../containers/AuthScreen';
 import AppNavigator from './RootNavigation';
+import { colors } from '../../styles';
 
 export default function NavigatorView() {
   // if (authState.isLoggedIn || authState.hasSkippedLogin) {
@@ -9,5 +10,10 @@ export default function NavigatorView() {
   // }
   // return <AuthScreen />;
 
-  return <AppNavigator />;
+  return  (
+    <View style={{flex: 1}}>
+      {/* <View style={{height: 50, backgroundColor: colors.secondary}}></View> */}
+      <AppNavigator />
+    </View>
+  )
 }

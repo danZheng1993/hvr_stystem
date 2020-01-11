@@ -31,7 +31,7 @@ export default class BannersList extends React.Component {
     const {banners} = this.props
     const {bannerImages} = this.state
     return (
-      <View>
+      <View style={{width: '100%', height: 200}}>
         {banners && <SliderBox
           images={bannerImages}
           onCurrentImagePressed={index =>

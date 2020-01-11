@@ -76,7 +76,7 @@ class Search extends React.Component {
                     <View style={{flex: 3}}>
                         <SearchBar
                             containerStyle={{height: 30, padding: 0, backgroundColor: '#f0eff5', borderColor: '#f0eff5',  borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
-                            inputContainerStyle={{height: 30, backgroundColor: colors.white, borderWidth: 0, borderTopLeftRadius: 15, padding: 5}}
+                            inputContainerStyle={{height: 30, backgroundColor: colors.white, borderWidth: 0, borderTopLeftRadius: 15, borderBottomLeftRadius: 15, padding: 5}}
                             inputStyle={{padding: 5, fontSize: 12}}
                             placeholder="请输入关键字"
                             onChangeText={this.updateSearch}
