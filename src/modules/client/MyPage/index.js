@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, View, ScrollView, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import {Badge} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Feather';
 import { colors, fonts } from '../../../styles';
@@ -10,7 +10,15 @@ import { createStructuredSelector } from 'reselect';
 import { Button, Dropdown, Profile, Text, Bell } from '../../../components';
 import {sum, values} from 'lodash'
 import {getMyMedias} from '../../../redux/modules/media'
-import { profileSelector, unreadMessagesSelector, myMediasSelector } from '../../../redux/selectors'
+import { profileSelector, unreadMessagesSelector, myMediasSelector, jobsListSelector } from '../../../redux/selectors'
+import constants from '../../../constants';
+
+const iconBidding = require('../../../../assets/images/bidding.png');
+const iconSetting = require('../../../../assets/images/setting.png');
+const iconPaying = require('../../../../assets/images/paying.png');
+const iconWaiting = require('../../../../assets/images/waiting.png');
+const iconTesting = require('../../../../assets/images/testing.png');
+const iconFeedback = require('../../../../assets/images/feedback.png');
 class MyPage extends React.Component {
   componentWillMount() {
     this.props.getMyMedias()
@@ -20,12 +28,12 @@ class MyPage extends React.Component {
     const {profile, unread, medias} = this.props
     const unreadCount = sum(values(unread)) || 0
     const jobStatus = [
-      {title: '竞标中', icon: 'camera'},
-      {title: '待支付', icon: 'camera'},
-      {title: '待拍摄', icon: 'camera'},
-      {title: '待验收', icon: 'camera'},
-      {title: '评价', icon: 'camera'},
-      {title: '已完成', icon: 'camera'},
+      {title: '竞标中', icon: iconBidding},
+      {title: '待支付', icon: iconPaying},
+      {title: '待拍摄', icon: iconWaiting},
+      {title: '待验收', icon: iconTesting},
+      {title: '评价', icon: iconFeedback},
+      {title: '已完成', icon: iconFeedback},
     ]
     const collectionlength = profile ? profile.collections.length: 0
     const attentionlength = profile ? profile.attentions.length: 0
@@ -41,12 +49,13 @@ class MyPage extends React.Component {
             <Profile user = {profile} navigation={this.props.navigation} />
             <View style={styles.settingsContainer}>
               <Bell navigation={this.props.navigation}/>
-              <Icon
-                name="settings"
-                size={30}
-                color={colors.white}
-                onPress={() => this.props.navigation.navigate('Settings')}
-              />
+              <TouchableOpacity style={{marginLeft: 10}} onPress={() => this.props.navigation.navigate('Settings')}>
+                <Image
+                  resizeMode="cover"
+                  source={iconSetting}
+                  style={{width:20, height: 20}}
+                />
+              </TouchableOpacity>
             </View>
           </View>
           <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
@@ -77,7 +86,11 @@ class MyPage extends React.Component {
           <View style={styles.demoButtonsContainer}>
             {jobStatus.map((jobItem, index) => (
               <TouchableOpacity key={index} style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('ClientJob', {selected: index+1})}>
-                <Icon name={jobItem.icon} size={20} color={colors.secondary} />
+                <Image
+                  resizeMode="cover"
+                  source={jobItem.icon}
+                  style={{width:20, height: 20, tintColor: colors.primary}}
+                />
                 <Text>
                   {jobItem.title}
                 </Text>
@@ -128,7 +141,7 @@ class MyPage extends React.Component {
             title='帮助中心'
             hideChevron={false}
             chevron={{ color: colors.gray }}
-            onPress = {() => this.props.navigation.navigate('WebViewer', {url: constants.BASE_URL + 'help.html'})}
+            onPress = {() => this.props.navigation.navigate('WebViewer', {url: constants + 'help.html'})}
             bottomDivider
           />
           <ListItem

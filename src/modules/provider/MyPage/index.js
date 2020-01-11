@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, ImageBackground, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, ScrollView, ImageBackground, TouchableOpacity, Image } from 'react-native';
 import {Badge} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { colors, fonts } from '../../../styles';
@@ -11,6 +11,14 @@ import {sum, values} from 'lodash'
 import { Button, Dropdown, Profile, Text, Bell } from '../../../components';
 import { profileSelector, unreadMessagesSelector, myMediasSelector, mediasloadingSelector } from '../../../redux/selectors'
 import { getMyMedias} from '../../../redux/modules/media'
+import constants from '../../../constants'
+
+const iconSetting = require('../../../../assets/images/setting.png');
+const iconBidding = require('../../../../assets/images/bidding.png');
+const iconPaying = require('../../../../assets/images/paying.png');
+const iconWaiting = require('../../../../assets/images/waiting.png');
+const iconTesting = require('../../../../assets/images/testing.png');
+const iconFeedback = require('../../../../assets/images/feedback.png');
 
 class MyPage extends React.Component {
   componentWillMount() {
@@ -20,12 +28,12 @@ class MyPage extends React.Component {
   render () {
     const {profile, unread, medias} = this.props
     const jobStatus = [
-      {title: '竞标中', icon: 'camera'},
-      {title: '已选用', icon: 'camera'},
-      {title: '待支付', icon: 'camera'},
-      {title: '待拍摄', icon: 'camera'},
-      {title: '待验收', icon: 'camera'},
-      {title: '已完成', icon: 'camera'},
+      {title: '竞标中', icon: iconBidding},
+      {title: '已选用', icon: iconBidding},
+      {title: '待支付', icon: iconPaying},
+      {title: '待拍摄', icon: iconWaiting},
+      {title: '待验收', icon: iconTesting},
+      {title: '已完成', icon: iconFeedback},
     ]
     const unreadCount = sum(values(unread)) || 0
     return (
@@ -41,13 +49,13 @@ class MyPage extends React.Component {
             <Profile user = {profile} navigation={this.props.navigation} />
             <View style={styles.settingsContainer}>
               <Bell navigation={this.props.navigation} />
-              <Icon
-                style={styles.demoIcon}
-                name="gear"
-                size={30}
-                color={colors.white}
-                onPress={() => this.props.navigation.navigate('Settings')}
-              />
+              <TouchableOpacity style={{marginLeft: 10}} onPress={() => this.props.navigation.navigate('Settings')}>
+                <Image
+                  resizeMode="cover"
+                  source={iconSetting}
+                  style={{width:20, height: 20}}
+                />
+              </TouchableOpacity>
             </View>
           </View>
           <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
@@ -73,7 +81,11 @@ class MyPage extends React.Component {
           <View style={styles.demoButtonsContainer}>
             {jobStatus.map((jobItem, index) => (
               <TouchableOpacity key={index} style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('ProviderJob', {selected: index+1})}>
-                <Icon name={jobItem.icon} size={18} color={colors.secondary} />
+                <Image
+                  resizeMode="cover"
+                  source={jobItem.icon}
+                  style={{width:20, height: 20, tintColor: colors.primary}}
+                />
                 <Text size={12}>
                   {jobItem.title}
                 </Text>
@@ -85,7 +97,7 @@ class MyPage extends React.Component {
           <ListItem
             key={1}
             titleStyle = {{color: colors.black}}
-            title='我的合同'
+            title='认证中心'
             hideChevron={false}
             chevron={{ color: colors.gray }}
             onPress = {() => this.props.navigation.navigate('MyContract')}
@@ -94,12 +106,13 @@ class MyPage extends React.Component {
           <ListItem
             key={2}
             titleStyle = {{color: colors.black}}
-            title='开具发票'
+            title='我的合同'
             hideChevron={false}
             chevron={{ color: colors.gray }}
-            onPress = {() => this.props.navigation.navigate('BillingInvoice')}
+            onPress = {() => this.props.navigation.navigate('MyContract')}
             bottomDivider
           />
+          
           <ListItem
             key={3}
             titleStyle = {{color: colors.black}}
@@ -112,6 +125,24 @@ class MyPage extends React.Component {
           <ListItem
             key={4}
             titleStyle = {{color: colors.black}}
+            title='直播管理'
+            hideChevron={false}
+            chevron={{ color: colors.gray }}
+            onPress = {() => this.props.navigation.navigate('MyContract')}
+            bottomDivider
+          />
+          <ListItem
+            key={5}
+            titleStyle = {{color: colors.black}}
+            title='开具发票'
+            hideChevron={false}
+            chevron={{ color: colors.gray }}
+            onPress = {() => this.props.navigation.navigate('BillingInvoice')}
+            bottomDivider
+          />
+          <ListItem
+            key={6}
+            titleStyle = {{color: colors.black}}
             title='关于我们'
             hideChevron={false}
             chevron={{ color: colors.gray }}
@@ -119,7 +150,7 @@ class MyPage extends React.Component {
             onPress = {() => this.props.navigation.navigate('WebViewer', {url: constants.BASE_URL + 'About_Us.html'})}
           />
           <ListItem
-            key={5}
+            key={7}
             titleStyle = {{color: colors.black}}
             title='意见反馈'
             hideChevron={false}
@@ -128,7 +159,7 @@ class MyPage extends React.Component {
             bottomDivider
           />
           <ListItem
-            key={6}
+            key={8}
             titleStyle = {{color: colors.black}}
             title='帮助中心'
             hideChevron={false}

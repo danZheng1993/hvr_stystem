@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { withState,compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import _ from 'lodash'
-import { Button, Loader, RadioGroup, MediaList, Text } from '../../components'
+import { Button, Loader, RadioGroup, MediaList, Text, Bell } from '../../components'
 import { fonts, colors } from '../../styles';
 
 import { searchMedia } from '../../redux/modules/media'
@@ -62,28 +62,34 @@ class MediaSearch extends React.Component {
       sortedMedias =  _.orderBy(medias, 'created', 'desc');
     return (
       <>
-        <View style={{flexDirection:'row', paddingRight: 100, paddingLeft: 20, backgroundColor: colors.secondary, paddingTop: 10}}>
+        <View style={{flexDirection:'row', paddingHorizontal: 20, backgroundColor: colors.secondary, paddingTop: 10}}>
           <View style={{flex: 4}}>
             <SearchBar
                 containerStyle={{height: 30, padding: 0, backgroundColor: colors.secondary, borderColor: colors.bluish,  borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
-                inputContainerStyle={{height: 30, backgroundColor: colors.white, borderWidth: 0, borderTopLeftRadius: 15, borderBottomLeftRadius: 15, padding: 5,  borderRightColor: colors.black, borderRightWidth: 1,}}
-                inputStyle={{padding: 5}}
+                inputContainerStyle={{height: 30, backgroundColor: colors.white, borderWidth: 0, borderTopLeftRadius: 15, borderBottomLeftRadius: 15, borderTopRightRadius: 0, borderBottomRightRadius: 0}}
+                inputStyle={{fontSize: 12}}
                 placeholder="关键词"
                 onChangeText={search => this.setState({ search })}
                 value={this.state.search}
             />
           </View>
           <View style={{flex: 1, marginTop: 1, justifyContent:"center", alignItems:"center", backgroundColor: colors.white,  borderTopRightRadius: 15, borderBottomRightRadius: 15}}>
-              <Text color={colors.secondary} onPress = {() => this.searchContent()}>搜索</Text>
+              <Text color={colors.secondary} style={{borderLeftColor: colors.gray, borderLeftWidth: 1, paddingHorizontal: 10}} onPress = {() => this.searchContent()}>搜索</Text>
+          </View>
+          <View style={{flex: 1, alignItems :"flex-end", justifyContent: 'center'}}>
+            <Bell navigation={this.props.navigation}/>
           </View>
         </View>
         <View style={styles.componentsSection}>
-          <RadioGroup
-            items={['关注', '热门', '最新']}
-            selectedIndex={this.props.radioGroupsState[0]}
-            onChange={index => this.handleClick(index)}
-            underline
-          />
+          <View style={{width: '50%', height: 20}}>
+            <RadioGroup
+              items={['关注', '热门', '最新']}
+              selectedIndex={this.props.radioGroupsState[0]}
+              onChange={index => this.handleClick(index)}
+              noline
+              size={14}
+            />
+          </View>
         </View>
         <ScrollView style={styles.container}>
           <Loader loading={loading} />
@@ -102,6 +108,7 @@ const styles = StyleSheet.create({
 
   componentsSection: {
     backgroundColor: colors.secondary,
+    justifyContent: 'center',
     padding: 5,
     height: 50
   },

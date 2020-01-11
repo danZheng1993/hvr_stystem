@@ -154,7 +154,7 @@ dependencies {
     implementation project(':react-native-xmpp')
     implementation project(':react-native-fs')
     implementation project(':react-native-image-resizer')
-    implementation project(':@react-native-community_async-storage')
+    // implementation project(':@react-native-community_async-storage')
     implementation project(':react-native-pinch')
     implementation project(':react-native-image-picker')
     implementation project(':react-native-vector-icons')

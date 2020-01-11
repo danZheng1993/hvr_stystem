@@ -3,37 +3,32 @@ import {
   StyleSheet,
   View,
   ScrollView,
+  Image,
   TouchableOpacity,
 } from 'react-native';
 
+import { SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import Icon from 'react-native-vector-icons/Entypo'
-import constants from '../../../constants'
-import { Button, Loader, UsersList, NoData, Text} from '../../../components';
+import { Button, Loader, UsersList, NoData, Text, BannersList} from '../../../components';
 import { fonts, colors } from '../../../styles';
-import { SliderBox } from 'react-native-image-slider-box';
-import user, { searchUser } from '../../../redux/modules/user'
+import { searchUser } from '../../../redux/modules/user'
 import { usersloadingSelector, usersSearchResultSelector, bannersListSelector } from '../../../redux/selectors'
+const iconLocation = require('../../../../assets/images/location.png');
 
 class Providers extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      bannerImages: [],
-      location: '北京'
+      location: '北京',
+      search: ''
     }
   }
 
   componentWillMount() {
-    const {searchUser, banners} = this.props
+    const {searchUser} = this.props
     const {location} = this.state
-    let bannerImages = []
-    banners && banners.map((banner, index) => {
-      typeof(banner) == 'object' && bannerImages.push(constants.BANNER_BASE_URL + banner.image)
-    })
-    this.setState({bannerImages})
     searchUser({
         body: {role: 'provider', location}
     })
@@ -44,33 +39,39 @@ class Providers extends React.Component {
     this.setState({location})
     this.props.searchUser({
       body: {role: 'provider', location}
-  })
+    })
   }
+
   render() {
     const {users, usersloading, banners} = this.props
-    const {bannerImages, location} = this.state
+    const {location} = this.state
     return (
       <>
-      <View style={{ height: 50, flexDirection: "row", backgroundColor: colors.secondary}}>
+      <View style={{flexDirection:'row', paddingRight: 20, backgroundColor: colors.secondary, paddingVertical: 10}}>
         <TouchableOpacity 
           style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10, flexDirection: 'row'}}
           onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation})}
           >
-          <Icon name="location" size={30} color="white" />
+            <Image
+              resizeMode="contain"
+              source={iconLocation}
+              style={{width:20, height: 20}}
+            />
           <Text white>{location}</Text>
-        </TouchableOpacity>   
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          {/* SearchBar */}
+        </TouchableOpacity> 
+        <View style={{flex: 4}}>
+          <SearchBar
+            containerStyle={{height: 30, borderWidth: 0, padding: 0, backgroundColor: colors.secondary, borderColor: colors.bluish,  borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
+            inputContainerStyle={{height: 30, backgroundColor: colors.white, borderWidth: 0, borderRadius: 15}}
+            inputStyle={{fontSize: 12}}
+            placeholder="请输入关键词"
+            onFocus = {() => this.props.navigation.navigate('SearchBar')}
+          />
         </View>
       </View>
       <Loader
         loading={usersloading} />
-      <SliderBox
-        images={bannerImages}
-        onCurrentImagePressed={index =>
-          this.props.navigation.navigate('WebViewer', {url: banners[index].url})
-        }
-      />
+      <BannersList banners={banners} navigation={this.props.navigation} />
       <ScrollView style={styles.container}>
          {users.length? users.map((user, index) => (
            <View style={styles.componentsSection} key={index}>

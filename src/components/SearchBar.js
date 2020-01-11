@@ -1,7 +1,7 @@
 import { SearchBar } from 'react-native-elements';
 import { View, Picker, StyleSheet } from 'react-native'
 import React, {Componet} from 'react'
-import {Button, Loader, Text} from '../components'
+import {Button, Loader, Text, GoBack} from '../components'
 import {colors} from '../styles'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -20,8 +20,8 @@ class Search extends React.Component {
         super(props)
         this.state = {
             search: '',
-            label: '视频',
-            type: 'media',
+            label: '服务商',
+            type: 'user',
             typeList: [{label:'视频',value:'media'}, {label:'服务商',value:'user'}, {label:'资讯',value:'news'}]
         }
     }
@@ -72,21 +72,20 @@ class Search extends React.Component {
             <View style={styles.container}>
                 <Loader loading={loading} />
                 <View style={{flexDirection:'row'}}>
-                    <View style={{flex: 4}}>
+                    <GoBack navigation={this.props.navigation} />
+                    <View style={{flex: 3}}>
                         <SearchBar
-                            containerStyle={{height: 30, padding: 0, backgroundColor: colors.bluish, borderColor: colors.bluish,  borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
-                            inputContainerStyle={{height: 30, backgroundColor: colors.white, borderWidth: 0, borderRadius: 15, padding: 5}}
-                            inputStyle={{padding: 5}}
+                            containerStyle={{height: 30, padding: 0, backgroundColor: '#f0eff5', borderColor: '#f0eff5',  borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
+                            inputContainerStyle={{height: 30, backgroundColor: colors.white, borderWidth: 0, borderTopLeftRadius: 15, padding: 5}}
+                            inputStyle={{padding: 5, fontSize: 12}}
                             placeholder="请输入关键字"
                             onChangeText={this.updateSearch}
                             value={search}
                         />
                     </View>
-                    <View style={{flex: 1, justifyContent:"center", alignItems:"center"}}>
+                    <View style={{flex: 1, marginTop: 1, flexDirection: 'row', justifyContent:"flex-end", alignItems:"center", backgroundColor: colors.white,  borderTopRightRadius: 15, borderBottomRightRadius: 15}}>
                         <Text color={colors.secondary} onPress = {() => this.updateType()}>{this.state.label}</Text>
-                    </View>
-                    <View style={{flex: 1, justifyContent:"center", alignItems:"center"}}>
-                        <Text color={colors.secondary} onPress = {() => this.searchContent()}>搜索</Text>
+                        <Text color={colors.secondary} style={{borderLeftColor: colors.gray, borderLeftWidth: 1, paddingHorizontal: 10}} onPress = {() => this.searchContent()}>搜索</Text>
                     </View>
                 </View>
                 <View style={{padding: 10}}>
@@ -125,13 +124,14 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 15,
         paddingTop: 20,
-        backgroundColor: colors.bluish
+        backgroundColor: '#f0eff5'
     },
     spin: {
         backgroundColor: colors.white,
-        padding: 5,
+        paddingVertical: 5,
+        paddingHorizontal: 20,
         margin: 5,
-        borderRadius: 10
+        borderRadius: 5
     }
 })
 const mapStateToProps = createStructuredSelector({

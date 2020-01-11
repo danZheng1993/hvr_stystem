@@ -24,7 +24,7 @@ class MediaList extends React.Component {
     
   }
   handlePlay(path) {
-    this.props.navigation.navigate('Player')
+    this.props.navigation.navigate('Player', {url: path})
   }
 
   handleCollect(id) {
@@ -61,16 +61,22 @@ class MediaList extends React.Component {
                   source={{ uri: constants.MEDIA_BASE_URL + media.snapshot }}
                   style={{width: '100%', height: '100%', flexDirection: 'column-reverse'}}
                 >
-                  <LinearGradient colors={['#ffffff00','#989697ff',]} style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                  <LinearGradient colors={['#ffffff00','#989697ff',]} style={{flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'stretch'}}>
                     <Text white>{media.title}</Text>
                     <Text white>观看: {media.visits}</Text>
                   </LinearGradient>
+                  <View style={{flexGrow: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <Image
+                      source={require('../../assets/images/play.png')}
+                      style={{width: 50, height: 50}}
+                    />
+                  </View>
                 </ImageBackground>
               </TouchableOpacity>
-              <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 10}} >
+              <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 10, backgroundColor: colors.white}} >
                 <View style={{flexDirection: 'row', justifyContent: 'center',alignItems: 'center'}}>
                   <Image
-                    source={{uri: constants.BASE_URL + (media.creator.photo ? media.creator.photo: 'default.png')}}
+                    source={{uri: constants.BASE_URL + (media.creator ? media.creator.photo: 'default.png')}}
                     style={{width: 20, height: 20, borderRadius: 10}}
                   />
                   <Text black>{media.creator.userName}</Text>
@@ -79,17 +85,32 @@ class MediaList extends React.Component {
                     <Text onPress={() => this.handleAttentions(media.creator._id)} color={colors.primary}>+关注</Text>
                   }
                 </View>
-                <View style={{flexDirection: 'row'}}>
+                <View style={{flexDirection: 'row', }}>
                   {
-                    collections.indexOf(media._id) == -1?
-                    <Icon name="heart-outlined" size={20} color={colors.grey} onPress={() => {this.handleCollect(media._id)}}/> :
-                    <Icon name="heart" size={20} color={colors.heart} onPress={() => {this.handleCancel(media._id)}}/>
+                    collections.indexOf(media._id) == -1
+                      ? 
+                        <TouchableOpacity onPress={() => {this.handleCollect(media._id)}}>
+                          <Image
+                            source={require('../../assets/images/heart-o.png')}
+                            style={{width: 20, height: 20, tintColor: colors.gray}}
+                          />
+                        </TouchableOpacity>
+                      : <TouchableOpacity onPress={() => {this.handleCancel(media._id)}}>
+                          <Image
+                            source={require('../../assets/images/heart.png')}
+                            style={{width: 20, height: 20}}
+                          />
+                        </TouchableOpacity>
                   }
-                  <Icon name="paper-plane" size={20} color={colors.secondary} onPress={() => null}/>
+                  <TouchableOpacity style={{marginLeft: 10}} onPress={() => null}>
+                    <Image
+                      source={require('../../assets/images/follow.png')}
+                      style={{width: 20, height: 20}}
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
-
          )) : <NoData />}
          </ScrollView>
     );

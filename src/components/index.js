@@ -12,6 +12,8 @@ import {Text} from './StyledText'
 import toast from './Toast'
 import JobDetail from './JobDetail'
 import UsersList from './UsersList'
+import NewsList from './NewsList'
+import BannersList from './BannersList'
 import Applicants from './Applicants'
 import Profile from './Profile'
 import Notification from './Notification'
@@ -22,11 +24,13 @@ import SearchBar from './SearchBar'
 import MediaList from './MediaList'
 import Player from './Player'
 import Bell from './Bell'
+import GoBack from './GoBack'
 
 export {
   // ## Generator Components Exports
   Button,
   Bell,
+  GoBack,
   RadioGroup,
   Dropdown,
   GridRow,
@@ -46,6 +50,8 @@ export {
   NoData,
   SearchBar,
   MediaList,
+  NewsList,
+  BannersList,
   Player,
   Text
 };

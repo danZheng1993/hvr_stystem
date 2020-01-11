@@ -4,21 +4,25 @@ import {
   View,
   ImageBackground,
   Linking,
-  Platform
+  Image,
+  Platform,
+  TouchableOpacity
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { compose, withState } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { Button, Loader, Profile, RadioGroup, Text, toast} from '../../../components';
+import { Button, Loader, Profile, RadioGroup, Text, toast, GoBack} from '../../../components';
 import { fonts, colors } from '../../../styles';
 import { addToAttentions } from '../../../redux/modules/auth'
 import { searchMedia } from '../../../redux/modules/media'
 import { getFeedback } from '../../../redux/modules/job'
-import { mediasloadingSelector, mediasSearchResultSelector, jobsloadingSelector, jobsFeedbackSelector} from '../../../redux/selectors'
+import { mediasloadingSelector, mediasSearchResultSelector, jobsloadingSelector, jobsFeedbackSelector, profileSelector} from '../../../redux/selectors'
 import ProviderWorks from './ProviderWorks';
 import ProviderFeedbacks from './ProviderFeedbacks';
+import constants from '../../../constants'
 
+const iconPhone = require('../../../../assets/images/phone.png')
 class ProviderDetail extends React.Component {
   constructor(props) {
     super(props)
@@ -66,8 +70,9 @@ class ProviderDetail extends React.Component {
     })
   }
   render() {
-    const {medias, feedbacks, loading} = this.props
+    const {medias, feedbacks, loading, profile} = this.props
     const {select, user} = this.state
+    const attentions =  profile.attentions || []
     if (!user) return (<></>)
     return (
       <>
@@ -79,19 +84,34 @@ class ProviderDetail extends React.Component {
         >
         <View style={{padding: 15}}>
           <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
-            <Profile user = {user} navigation={this.props.navigation} />
+            <View style={{flexDirection: 'row'}}>
+              <GoBack navigation={this.props.navigation} color={colors.white} />
+              <View style = {{flexDirection: 'row'}}>
+                <Image
+                  source={{uri: constants.BASE_URL + (user.photo ? user.photo: 'default.png')}}
+                  style={styles.photo}
+                />
+                <View style={{justifyContent: 'center',}}>
+                  <Text white bold size={18}>{user.userName}</Text>
+                  <Text white>{user.location} \ 粉丝数 {user.balance}</Text>
+                </View>
+              </View>
+            </View>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Text onPress={() => this.handleAttentions(user._id)} white>+关注</Text>
+              { attentions.indexOf(user._id) == -1
+                  ? <Text onPress={() => this.handleAttentions(user._id)} white>+关注</Text>
+                  : <Text white>已关注</Text>
+              }
             </View>
           </View>
           <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
             <View style={{alignItems: 'center'}}>
               <Text white bold size={28}>{user.contacts.length}</Text>
-              <Text white>服务用户数</Text>
+              <Text white>服务用户</Text>
             </View>
             <View style={{alignItems: 'center'}}>
               <Text white bold size={28}>{medias.length}</Text>
-              <Text white>项目作品</Text>
+              <Text white>发布视频</Text>
             </View>
             <View style={{alignItems: 'center'}}>
               <Text white bold size={28}>{user.balance}</Text>
@@ -104,10 +124,12 @@ class ProviderDetail extends React.Component {
         <Loader
           loading={loading} /> 
         <View style={{flexBasis: 1, flexGrow: 1}}>
-          <View style={{height: 50, backgroundColor: colors.secondary}}>
+          <View style={{height: 50, backgroundColor: colors.white}}>
             <RadioGroup
               underline
-              items={['项目作品', '雇主评价']}
+              size={18}
+              lightTheme
+              items={['发布视频', '用户评价']}
               selectedIndex={this.props.radioGroupsState[1]}
               onChange={index => this.handleSelect(index)}
             />
@@ -119,28 +141,27 @@ class ProviderDetail extends React.Component {
           </View>
         </View>
         <View style={styles.buttonsContainer}>
-        <Button
-          small
-          bgColor={colors.primary}
-          style={styles.button}
-          caption="在线沟通"
-          onPress={() => this.props.navigation.navigate('Chatting', {to: user._id})}
-        />
-        <Button
-          small
-          bgColor={colors.primary}
-          style={styles.button}
-          caption="电话"
-          onPress={() => {this.dialCall(user.phoneNumber)}}
-        />
-        <Button
-          small
-          bgColor={colors.primary}
-          style={styles.button}
-          caption="约拍"
-          onPress={() => this.props.navigation.navigate('PostJob', {hired: user._id})}
-        />
-            
+          <View style={{flex: 1}}></View>
+          <TouchableOpacity 
+            style={{flex: 1, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', height: 30, borderTopLeftRadius: 5, borderBottomLeftRadius: 5}}   
+            onPress={() => this.props.navigation.navigate('PostJob', {hired: user._id})}
+          >
+            <Text white bold>约拍</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={{flex: 1, backgroundColor: colors.bluish, alignItems: 'center', justifyContent: 'center', height: 30, borderTopRightRadius: 5, borderBottomRightRadius: 5}}   
+            onPress={() => this.props.navigation.navigate('Chatting', {to: user._id})}
+          >
+            <Text color={colors.primary} bold>在线沟通</Text>
+          </TouchableOpacity>
+          <Button
+            style={{flex: 1}}
+            small
+            icon={iconPhone}
+            bgColor={colors.secondary}
+            caption="电话"
+            onPress={() => {this.dialCall(user.phoneNumber)}}
+          />
         </View>
       </View>
       </>
@@ -158,9 +179,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     alignSelf: 'stretch',
     flexDirection: 'row',
-    justifyContent: 'space-around',
     padding: 10,
     backgroundColor: colors.secondary
+  },
+
+  photo: {
+    borderRadius: 50,
+    marginRight: 10,
+    borderColor: colors.gray,
+    backgroundColor: colors.info,
+    width: 70,
+    height: 70
   },
 });
 
@@ -169,6 +198,7 @@ const mapStateToProps = createStructuredSelector({
   loading: jobsloadingSelector || mediasloadingSelector,
   feedbacks: jobsFeedbackSelector,
   medias: mediasSearchResultSelector,
+  profile: profileSelector,
 });
 
 const mapDispatchToProps = {

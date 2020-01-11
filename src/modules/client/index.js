@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react';
 
-import { Image, View, StyleSheet, Text } from 'react-native';
+import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 
 import { colors, fonts } from '../../styles';
@@ -11,8 +11,11 @@ import PostJob from './PostJob'
 import MyPage from './MyPage'
 import Providers from './Providers';
 import MediaSearch from './MediaSearch';
-import Icon from 'react-native-vector-icons/FontAwesome';
-const iconImage = require('../../../assets/images/vr.png');
+const iconPost = require('../../../assets/images/post.png');
+const iconHome = require('../../../assets/images/home.png');
+const iconEye = require('../../../assets/images/eye.png');
+const iconUser = require('../../../assets/images/user.png');
+const iconHeart = require('../../../assets/images/heart-o.png');
 
 const styles = StyleSheet.create({
   tabBarItemContainer: {
@@ -21,8 +24,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 10,
   },
+  tabBarIcon: {
+    width: 23,
+    height: 23,
+    tintColor: colors.primary
+  },
   tabBarIconFocused: {
-    color: colors.white
+    tintColor: colors.white
   },
   headerContainer: {
     height: 70,
@@ -61,9 +69,6 @@ export default createBottomTabNavigator(
     },
     约拍: {
       screen: PostJob,
-      navigationOptions: {
-        
-      },
     },
     服务: {
       screen: Providers,
@@ -81,52 +86,53 @@ export default createBottomTabNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => ({
       // eslint-disable-next-line react/prop-types
+      tabBarItemContainer: ({focused}) => {
+        console.warn('a')
+      },
       tabBarIcon: ({ focused }) => {
         const { routeName } = navigation.state;
         let iconSource;
         switch (routeName) {
           case '首页':
-            iconSource = "home";
+            iconSource = iconHome;
             break;
           case '发现':
-            iconSource = "eye";
+            iconSource = iconEye;
             break;
           case '约拍':
-            iconSource = "";
+            iconSource = iconPost;
             break;
           case '服务':
-            iconSource = "heart-o";
+            iconSource = iconHeart;
             break;
           case '我的':
-            iconSource = "user-o";
+            iconSource = iconUser;
             break;
           default:
-            iconSource = "";
+            iconSource = iconPost;
         }
         return (
           <View style={styles.tabBarItemContainer}>
-            {iconSource ?
-            <Icon
-              style={styles.demoIcon}
-              name={iconSource}
-              size={30}
-              color={colors.primary}
-              style={[styles.tabBarIcon, focused && styles.tabBarIconFocused]}
-            /> :
-            <View style={{borderRadius:100, backgroundColor: colors.primary, borderWidth:3, borderColor: colors.white, width: 60, height: 60, marginBottom: 30}}>
-              <Image
-                resizeMode="cover"
-                source={iconImage}
-                style={{width:60, height: 60, borderRadius: 25}}
-              />
-            </View>
+            {iconSource !== iconPost
+              ? <Image
+                  resizeMode="contain"
+                  source={iconSource}
+                  style={[styles.tabBarIcon, focused && styles.tabBarIconFocused]}
+                />
+              : <TouchableOpacity onPress={() => {navigation.navigate('PostJob')}}>
+                  <Image
+                    resizeMode="cover"
+                    source={iconPost}
+                    style={{width:50, height: 50, marginBottom: 20}}
+                  />
+              </TouchableOpacity>
             }
           </View>
         );
       },
     }),
     tabBarPosition: 'bottom',
-    animationEnabled: false,
+    animationEnabled: true,
     swipeEnabled: false,
     tabBarOptions: {
       activeTintColor: colors.white,

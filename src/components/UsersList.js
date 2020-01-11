@@ -23,6 +23,7 @@ export default class UsersList extends React.Component {
           <ImageBackground
               source={require('../../assets/images/userBackground.png')}
               style={{ flex: 1, flexDirection: 'row', padding: 10}}
+              imageStyle={{borderRadius: 10}}
               resizeMode="cover"
           >
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -31,13 +32,13 @@ export default class UsersList extends React.Component {
                 style={styles.photo}
               />
               <Text bold>{user.userName}</Text>
-              <Text>{user.overview}</Text>
+              <Text size={12} >{user.overview}</Text>
             </View>
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text color={colors.secondary}>服务雇主: {user.contacts.length}</Text>
-              <Text color={colors.secondary}>家发布作品: 3个</Text>
-              <Text color={colors.secondary}>播放量:{user.balance}</Text>
-              <Text color={colors.secondary}>坐标: {user.location}</Text>
+              <Text color={colors.primary}>服务雇主: {user.contacts.length}家</Text>
+              <Text color={colors.primary}>发布作品: 3个</Text>
+              <Text color={colors.primary}>播放量:{user.balance}</Text>
+              <Text color={colors.primary}>坐标: {user.location}</Text>
             </View>
           </ImageBackground>}
       </TouchableRipple>

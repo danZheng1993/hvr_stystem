@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity, ScrollView, TextInput} from 'react-native'
+import { View, Image, StyleSheet, TouchableOpacity, TextInput} from 'react-native'
 // import {TextInput} from 'react-native-paper';
 
 import PhotoUpload from 'react-native-photo-upload'
@@ -131,6 +131,7 @@ class BasicProfile extends React.Component {
                 style={styles.singleinput}
                 placeholder="昵称"
                 value={this.state.userName}
+                maxLength={10}
                 onChangeText={userName => this.setState({ userName })}
             />
         </View>

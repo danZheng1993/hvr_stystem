@@ -9,12 +9,15 @@ export default function RNSRadioGroup({
   selectedIndex,
   onChange,
   style,
+  size,
   underline,
-  small
+  noline,
+  small,
+  lightTheme
 }) {
   return (
     <View
-      style={[styles.container, underline && styles.underline, style && style]}
+      style={[styles.container, underline && styles.underline, style && style, noline && styles.underline]}
     >
       {items &&
         items.map((item, index) => {
@@ -24,17 +27,20 @@ export default function RNSRadioGroup({
 
           let activeStyle = styles.itemActive;
           if (underline) activeStyle = styles.itemActiveUnderline;
+          if (lightTheme) activeStyle = styles.lightitemActiveUnderline;
+          if (noline) activeStyle = styles.itemActiveNoline;
 
           let activeTextStyle = styles.textActive;
-          if (underline) activeTextStyle = styles.textActiveUnderline;
-           
+          if (underline || noline) activeTextStyle = styles.textActiveUnderline;
+          if (lightTheme) activeTextStyle=styles.lighttextActiveUnderline
           return (
             <TouchableOpacity
               onPress={() => onChange(index)}
               key={item.id || item}
               style={[
                 styles.item,
-                underline && styles.itemUnderline,
+                lightTheme && styles.itemUnderline,
+                noline && !!index && styles.itemNoLine,
                 isActive && activeStyle,
               ]}
             >
@@ -42,8 +48,9 @@ export default function RNSRadioGroup({
                 style={[
                   small && styles.small,
                   underline && styles.textUnderline,
-                  isActive ? activeTextStyle : styles.textInActive,
+                  isActive ? activeTextStyle : (lightTheme ? styles.lighttextInActive : styles.textInActive),
                 ]}
+                size={size}
               >
                 {item.value || item}
               </Text>
@@ -82,11 +89,15 @@ const styles = {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 10,
+    paddingVertical: 0,
   },
   itemUnderline: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#e3e3e3',
+    borderBottomWidth: 2,
+    borderBottomColor: colors.gray,
+  },
+  itemNoLine: {
+    borderLeftWidth: 0.5,
+    borderLeftColor: colors.primary,
   },
   itemActive: {
     backgroundColor: colors.white,
@@ -95,8 +106,15 @@ const styles = {
     borderBottomWidth: 2,
     borderBottomColor: colors.white,
   },
+  lightitemActiveUnderline: {
+    borderBottomWidth: 2,
+    borderBottomColor: colors.primary,
+  },
   textInActive: {
     color: colors.primary,
+  },
+  lighttextInActive: {
+    color: colors.gray,
   },
   textUnderline: {
     color: '#a6a6a6',
@@ -106,5 +124,10 @@ const styles = {
   },
   textActiveUnderline: {
     color: colors.white,
+    fontWeight: 'bold'
+  },
+  lighttextActiveUnderline: {
+    color: colors.primary,
+    fontWeight: 'bold'
   },
 };

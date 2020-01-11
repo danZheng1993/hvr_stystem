@@ -29,7 +29,7 @@ export default class Profile extends React.Component {
             />
             <View style={{justifyContent: 'center',}}>
               <Text white bold size={18}>{user.userName}</Text>
-              <Text white size={14}>{user.overview}</Text>
+              <Text white size={12}>{user.overview.slice(0,15)}</Text>
             </View>
           </View>
         }
@@ -39,27 +39,9 @@ export default class Profile extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.bluish,
-    paddingHorizontal: 15,
-    paddingTop: 20,
-  },
+
   row: {
     flexDirection: 'row'
-  },
-
-  description: {
-    padding: 20,
-    marginBottom: 20,
-    alignSelf: 'stretch'
-  },
-
-  componentsSection: {
-    backgroundColor: colors.white,
-    padding: 15,
-    marginBottom: 20,
-    borderRadius: 5,
   },
   photo: {
     borderRadius: 50,

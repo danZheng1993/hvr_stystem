@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import { colors, fonts } from '../../../styles';
 import Icon from 'react-native-vector-icons/Entypo';
-import { SliderBox } from 'react-native-image-slider-box';
 import constants from '../../../constants'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -17,11 +16,12 @@ import { getBanners } from '../../../redux/modules/banner'
 import { getMedias } from '../../../redux/modules/media'
 import { createStructuredSelector } from 'reselect';
 import { bannersListSelector, newssListSelector, mediasListSelector, newssloadingSelector, bannersloadingSelector, mediasloadingSelector} from '../../../redux/selectors'
-import { RadioGroup, GridRow, Button, MediaList, Loader, Text } from '../../../components';
+import { RadioGroup, GridRow, Button, MediaList, Loader, Text, Bell, NewsList, BannersList } from '../../../components';
 import { getSettings } from '../../../redux/modules/setting';
-import { getDateStr } from '../../../utils/helper';
+const iconSearch = require('../../../../assets/images/search.png');
+const iconBar = require('../../../../assets/images/bar.png');
 
- class HomeView extends React.Component {
+class HomeView extends React.Component {
 
    componentWillMount() {
       const {getBanners, getNewss, getMedias, getSettings} = this.props
@@ -34,68 +34,58 @@ import { getDateStr } from '../../../utils/helper';
   render() {
     const {tabIndex, banners, news, medias, loading} = this.props
     console.log(banners, news, medias)
-    let bannerImages = []
-    if (banners.length) {
-      banners.map((banner, index) => {
-        typeof(banner) == 'object' && bannerImages.push(constants.BANNER_BASE_URL + banner.image)
-      })
-    }
     return (
       <View style={styles.container}>
-        <View style={{ height: 50, flexDirection: "row", backgroundColor: colors.secondary }}>
+        <View style={{ height: 50, flexDirection: "row", backgroundColor: colors.secondary, padding: 10 }}>
           <TouchableOpacity 
             style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
             onPress={() => this.props.navigation.navigate('SearchBar')}
-            >
-            <Icon name="magnifying-glass" size={30} color={colors.white} />
+          >
+            <Image
+              resizeMode="contain"
+              source={iconSearch}
+              style={{width:20, height: 20}}
+            />
           </TouchableOpacity>
           <RadioGroup
+            size={16}
             selectedIndex={this.props.tabIndex}
             items={this.props.tabs}
             onChange={this.props.setTabIndex}
             underline
           />
+          <View style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}>
+            <Bell navigation={this.props.navigation}/>
+          </View>
         </View>
         <Loader loading={loading} />
 
         {tabIndex == 0 &&
           <>
-            {banners && <SliderBox
-              images={bannerImages}
-              onCurrentImagePressed={index =>
-                this.props.navigation.navigate('WebViewer', {url: banners[index].url})
-              }
-            />
-            }
+            <BannersList banners={banners} navigation={this.props.navigation}/>
             <View style={{paddingTop: 15, paddingLeft: 15}}>
               <Text bold black size={18} style={{borderLeftColor: colors.secondary, borderLeftWidth: 3, paddingLeft: 10}}>热门资讯</Text>
-              <Text>OVERSEAS ZONE</Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text>OVERSEAS ZONE</Text>
+                <Image
+                  resizeMode="cover"
+                  source={iconBar}
+                  style={{tintColor: colors.lightGray}}
+                />
+              </View>
             </View>
             <View style={{flexBasis: 1, flexGrow: 1}}>
-              <ScrollView style={{flex: 1}}>
-                {news && news.map((l, i) => (
-                  typeof(l) == "object" &&
-                  <TouchableOpacity style={{flexDirection: 'row', margin: 15, borderRadius: 5, height: 80}} key={i} onPress={() => this.props.navigation.navigate('WebViewer', {url: l.source})
-                }>
-                    <View style={{flex: 2, paddingRight: 20}}>
-                      <Text black bold>{l.title}</Text>
-                      <Text>{getDateStr(l.created)}</Text>
-                    </View>
-                    <View style={{flex: 1, alignItems: 'stretch'}}>
-                      <Image
-                        resizeMode="cover"
-                        source={{uri: constants.NEWS_BASE_URL + l.image}}
-                        style={{flex: 1, borderRadius: 5}}
-                      />
-                    </View>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
+              <NewsList news={news} navigation={this.props.navigation} />
             </View>
           </>
         }
         {tabIndex == 1 &&
           medias && <MediaList medias={medias} navigation={this.props.navigation} />
+        }
+        {tabIndex == 2 &&
+          <>
+            <BannersList banners={banners} navigation={this.props.navigation}/>
+          </>
         }
       </View>
     );

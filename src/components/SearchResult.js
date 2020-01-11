@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { withState,compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { Button, Loader, MediaList, RadioGroup, NoData, UsersList } from '../components'
+import { Button, Loader, MediaList, RadioGroup, NoData, UsersList, NewsList } from '../components'
 import {ListItem} from 'react-native-elements'
 import { fonts, colors } from '../styles';
 import constants from '../constants'
@@ -36,27 +36,22 @@ class SearchResult extends React.Component {
     const {type} = this.state
     const {medias, users, news, loading} = this.props
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={[styles.container, type == 'news' && {backgroundColor: colors.white}]}>
         {type == 'media' &&
           (medias.length ? <MediaList medias={medias} navigation={this.props.navigation}/>: <NoData />)}
         {type == 'user' &&
           (users.length ? 
-            users.map((user, index) => (
-              <UsersList user={user} navigation={this.props.navigation} key={index} />
-            )) : <NoData />)}
+            <View style={{padding: 10}}>
+              {users.map((user, index) => (
+                <UsersList user={user} navigation={this.props.navigation} key={index} />
+              ))}
+            </View>
+            : <NoData />)}
         {type == 'news' && 
-          (news.length ? news.map((l, i) => (
-            typeof(l) == "object" &&
-            <ListItem
-              key={i}
-              rightAvatar={{ source: { uri: constants.NEWS_BASE_URL + l.image } }}
-              avatarStyle={{ width: 100, height: 100, backgroundColor: 'white'}}
-              title={l.title}
-              subtitle={l.content}
-              bottomDivider
-            />
-        )) : <NoData />)
-        }
+          (news.length
+            ? <NewsList news={news} navigation={this.props.navigation} />
+            : <NoData />)
+         }
       </ScrollView>
     );
   }
@@ -65,9 +60,7 @@ class SearchResult extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
-    paddingHorizontal: 15,
-    paddingTop: 20,
+    backgroundColor: colors.bluish,
   },
 });
 

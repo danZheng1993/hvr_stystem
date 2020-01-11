@@ -16,14 +16,21 @@ import Nyt360Video from 'react-native-nyt-360-video';
 export default class Player extends React.Component {
   constructor(props) {
     super(props)
-    
+    this.state= {
+      path: 'default.mp4'
+    }
   }
+  componentWillMount() {
+    const path = this.props.navigation.getParam('url', 'default.mp4')
+    this.setState({path})
+  }
+
   render() {   
     return (
       <Nyt360Video
       ref={ref => this.player = ref}
       style={{flex: 1, backgroundColor:'#000000'}}
-      source={{ uri:constants.MEDIA_BASE_URL + 'media3.mp4',
+      source={{ uri:constants.MEDIA_BASE_URL + this.state.path,
         type: 'mono'}}
       displayMode={'embedded'}
       volume={1.0}

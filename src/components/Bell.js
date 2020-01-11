@@ -17,7 +17,7 @@ class Bell extends React.Component {
         {!!unreadCount && <Badge value={unreadCount} status="error"/>}
         <Image
             source={require('../../assets/images/bell.png')}
-            style={{width: 30, height: 30}}
+            style={{width: 20, height: 20}}
         />
       </TouchableOpacity>
     );

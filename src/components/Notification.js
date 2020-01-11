@@ -1,5 +1,5 @@
 import { ListItem, Badge } from 'react-native-elements'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, {Component} from 'react'
 import {Button} from '../components'
 import Icon from 'react-native-vector-icons/Feather';
@@ -13,7 +13,10 @@ import {getContacts, clearUnreadMessages} from '../redux/modules/auth'
 import { contactsSelector, unreadMessagesSelector} from '../redux/selectors'
 import constants from '../constants'
 import { loadItem, deleteItem } from '../redux/api/storage';
-
+import { Position } from 'toasted-notes';
+const iconTransaction = require('../../assets/images/transaction.png')
+const iconNotification = require('../../assets/images/notification.png')
+const iconActivity = require('../../assets/images/activity.png')
 class Notification extends React.Component {
     constructor(props) {
         super(props)
@@ -37,51 +40,44 @@ class Notification extends React.Component {
         const {contacts, unread} = this.props
         return (
             <View style={styles.container}>
-              <View style={styles.demoIconsContainer}>
-                <View style={styles.buttonContainer} >
-                <Button
-                    style={styles.demoButton}
-                    action
-                    onPress = {() => this.this.showNotificcation()}
-                    >
-                    <Text>
-                    <Icon name="dollar-sign" size={20} color="white" />
-                    </Text>
-                </Button>
-                <Text>
-                交易信息
-                </Text>
-                </View>
-                <View style={styles.buttonContainer} >
-                <View style={{flexDirection: 'row'}}>
-                    {!!unread['system'] && <Badge value={unread['system']} status="error"/>}
-                    <Button
-                        style={styles.demoButton}
-                        action
+                <View style={styles.demoIconsContainer}>
+                    <TouchableOpacity 
+                        style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
                         onPress = {() => this.showNotificcation()}
-                        >
-                        <Text>
-                        <Icon name="bell" size={20} color="white" />
-                        </Text>
-                    </Button>
-                </View>
-                <Text>通知消息</Text>
-                </View>
-                <View style={styles.buttonContainer} >
-                <Button
-                    style={styles.demoButton}
-                    action
-                    onPress = {() => this.showNotificcation()}
                     >
-                    <Text>
-                    <Icon name="star" size={20} color="white" />
-                    </Text>
-                </Button>
-                <Text>
-                活动消息
-                </Text>
+                        <Image
+                            resizeMode="contain"
+                            source={iconTransaction}
+                            style={{width:50, height: 50}}
+                        />
+                        <Text color={colors.secondary}>交易信息</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
+                        onPress = {() => this.showNotificcation()}
+                    >
+                        <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+                            {!!unread['system'] && <Badge value={unread['system']} status="error"/>}
+                            <Image
+                                resizeMode="contain"
+                                source={iconNotification}
+                                style={{width:50, height: 50}}
+                            />
+                        </View>
+                        <Text color={colors.secondary}>通知消息</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
+                        onPress = {() => this.showNotificcation()}
+                    >
+                        <Image
+                            resizeMode="contain"
+                            source={iconActivity}
+                            style={{width:50, height: 50}}
+                        />
+                        <Text color={colors.secondary}>活动消息</Text>
+                    </TouchableOpacity>
                 </View>
-            </View>
                 {!!contacts.length && contacts.map((contact, i) => (
                     typeof(contact) == "object" &&
                     <ListItem
@@ -111,14 +107,9 @@ const styles= StyleSheet.create({
     padding: 15,
     borderRadius: 5,
   },
-  demoButton: {
-    marginTop: 8,
-    marginBottom: 8,
-  },  
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    paddingHorizontal: 15,
     paddingTop: 20,
     backgroundColor: colors.bluish,
   },

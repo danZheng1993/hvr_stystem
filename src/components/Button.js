@@ -108,6 +108,7 @@ export default function RNSButton(props) {
               props.small && styles.captionSmall,
               icon && styles.captionWithIcon,
               styles.primaryCaption,
+              props.textColor && {color: props.textColor}
             ]}
           >
             {caption}

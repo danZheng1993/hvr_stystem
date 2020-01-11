@@ -50,20 +50,22 @@ class JobsList extends React.Component {
     const {location} = this.state
     return (
       <>
-        <View style={{ height: 50, flexDirection: "row", backgroundColor: colors.secondary, justifyContent: 'space-between', paddingVertical: 5}}>
+        <View style={{ height: 50, flexDirection: "row", backgroundColor: colors.secondary, justifyContent: 'space-between', paddingVertical: 5, paddingHorizontal: 10}}>
           <TouchableOpacity 
-            style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
+            style={{ justifyContent:"center", alignItems:"center"}}
             onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation})}
             >
-            <Icon name="location" size={30} color="white" />
-            <Text  style={{color: colors.white}}>{location}</Text>
+            <Icon name="location" size={25} color="white" />
+            <Text style={{color: colors.white, margin: 0}}>{location}</Text>
           </TouchableOpacity>   
           <View>
             <Text size={20} style={{color: colors.white}}>
               接单列表
             </Text> 
           </View>
-          <Bell navigation={this.props.navigation}/>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Bell navigation={this.props.navigation}/>
+          </View>
         </View>
       <ScrollView style={styles.container}>
          { jobsloading ? <Loader
