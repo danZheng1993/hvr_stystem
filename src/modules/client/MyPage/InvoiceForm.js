@@ -71,81 +71,86 @@ class InvoiceForm extends React.Component {
     const {invoice} = this.state
     return (
       <View style={styles.container}>
-        <View style={styles.componentsSection}> 
-          <Text size={20}>发票类型 : {invoice.type}</Text>
-          <Text size={20}>发票金额 : {invoice.price}</Text>
-           <View>
-            <Text >
-              发票抬头
-            </Text>
-            <RadioForm
-              radio_props={this.state.radioGroup}
-              initial={0}
-              formHorizontal={true}
-              labelHorizontal={true}
-              buttonColor={'#000000'}
-              animation={true}
-              onPress = {(value) => {this.setState({headerType: value})}}
-            />
+        <View>
+          <View style={styles.componentsSection}>
+            <Text size={18} black>发票类型 : </Text>
+            <View style={{borderRadius: 5, borderColor: colors.primary, borderWidth: 1, paddingHorizontal: 20}}>
+              <Text size={18} color={colors.primary}>{invoice.type}</Text>
+            </View>
           </View>
-          <View style={{alignSelf: 'stretch'}}>
-            <TextInput
-                style={styles.input}
-                outlined
-                label='请填写发票抬头'
-                placeholder="请填写发票抬头"
-                maxLength={100}
-                value={this.state.headerContent}
-                onChangeText={headerContent => this.setState({ headerContent })}
-            />
+          <View style={styles.componentsSection}>
+            <Text size={18} black>发票金额 : <Text size={18} color={colors.primary}>¥{invoice.price}</Text></Text>
           </View>
-          <View style={{alignSelf: 'stretch'}}>
-            <TextInput
-                style={styles.input}
-                outlined
-                label='请填写购买方纳税人识别号'
-                placeholder="请填写购买方纳税人识别号"
-                maxLength={20}
-                value={this.state.taxNumber}
-                keyboardType='numeric'
-                onChangeText={taxNumber => this.setState({ taxNumber })}
-            />
-          </View>
-          <View>
-            <Text size={14}>
-              是否邮寄
-            </Text>
-            <RadioForm
-              radio_props={this.state.booleanGroup}
-              initial={1}
-              formHorizontal={true}
-              labelHorizontal={true}
-              buttonColor={'#000000'}
-              animation={true}
-              onPress = {(value) => {this.setState({isMail: value})}}
-            />
-          </View>
-          <View style={{alignSelf: 'stretch'}}>
-            <TextInput
-                style={styles.input}
-                outlined
-                label='输入邮寄地址'
-                placeholder="输入邮寄地址"
-                value={this.state.mailAddress}
-                onChangeText={mailAddress => this.setState({ mailAddress })}
-            />
+          <View style={{backgroundColor: colors.white, paddingHorizontal: 10}}>
+            <Text size={18} black style={{paddingLeft: 20}}>发票抬头</Text>
+            <View style={styles.underline}>
+              <RadioForm
+                radio_props={this.state.radioGroup}
+                initial={0}
+                formHorizontal={true}
+                labelHorizontal={true}
+                buttonColor={'#000000'}
+                animation={true}
+                onPress = {(value) => {this.setState({headerType: value})}}
+              />
+            </View>
+            <View style={{alignSelf: 'stretch'}}>
+              <TextInput
+                  style={styles.input}
+                  outlined
+                  label='请填写发票抬头'
+                  placeholder="请填写发票抬头"
+                  maxLength={100}
+                  value={this.state.headerContent}
+                  onChangeText={headerContent => this.setState({ headerContent })}
+              />
+            </View>
+            <View style={{alignSelf: 'stretch'}}>
+              <TextInput
+                  style={styles.input}
+                  outlined
+                  label='请填写购买方纳税人识别号'
+                  placeholder="请填写购买方纳税人识别号"
+                  maxLength={20}
+                  value={this.state.taxNumber}
+                  keyboardType='numeric'
+                  onChangeText={taxNumber => this.setState({ taxNumber })}
+              />
+            </View>
+            <View>
+              <Text size={18} black style={{paddingLeft: 20}}>是否邮寄</Text>
+              <View style={styles.underline}>
+                <RadioForm
+                  radio_props={this.state.booleanGroup}
+                  initial={1}
+                  formHorizontal={true} 
+                  labelHorizontal={true}
+                  buttonColor={'#000000'}
+                  animation={true}
+                  onPress = {(value) => {this.setState({isMail: value})}}
+                />
+              </View>
+            </View>
+            {/* <View style={{alignSelf: 'stretch'}}>
+              <TextInput
+                  style={styles.input}
+                  outlined
+                  label='输入邮寄地址'
+                  placeholder="输入邮寄地址"
+                  value={this.state.mailAddress}
+                  onChangeText={mailAddress => this.setState({ mailAddress })}
+              />
+            </View> */}
           </View>
         </View>
-        <View style={styles.buttonsContainer}>
-          <Button
-            large
-            bgColor={colors.secondary}
-            style={styles.button}
-            caption="提交"
-            onPress={() => this.handleClick()}
-          />
-        </View>
-      </View>    
+        <Button
+          large
+          bgColor={colors.secondary}
+          style={{alignSelf: 'stretch'}}
+          caption="提交"
+          onPress={() => this.handleClick()}
+        />
+      </View>
     )
   }
 }
@@ -154,25 +159,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.bluish,
-    paddingHorizontal: 15,
+    alignItems: 'stretch',
+    justifyContent: 'space-between',
     paddingTop: 20,
   },
   input: {
     marginBottom: 15,
   },
+  underline: {
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    paddingVertical: 10,
+    marginVertical: 10
+  },
   componentsSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: colors.white,
-    padding: 15,
-    marginBottom: 20,
-    borderRadius: 5,
-  },
-  buttonsContainer: {
-    alignSelf: 'stretch',
-    margin: 20
-  },
-  button: {
-    marginBottom: 20,
-    alignSelf: 'stretch',
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    marginBottom: 10
   },
 });
 

@@ -292,7 +292,7 @@ const stackNavigator = createStackNavigator(
     InvoiceForm: {
       screen: InvoiceForm,
       navigationOptions: {
-        title: '信息填写',
+        title: '发票信息',
       },
     },
 

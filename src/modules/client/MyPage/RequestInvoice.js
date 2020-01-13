@@ -4,19 +4,18 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Text,
+  TouchableOpacity
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { withState,compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { Button, Loader, NoData } from '../../../components'
+import { Button, Loader, NoData, Text } from '../../../components'
 import { fonts, colors } from '../../../styles';
 
 import { getMyInvoice } from '../../../redux/modules/invoice'
 import { invoicesloadingSelector, myInvoiceSelector } from '../../../redux/selectors'
-
 
 class RequestInvoice extends React.Component {
   constructor(props) {
@@ -29,7 +28,19 @@ class RequestInvoice extends React.Component {
     const {getMyInvoice,navigation} = this.props
     getMyInvoice()
   }
-  
+  handleNavigate = (invoice) => {
+    const {navigation} = this.props
+    switch (invoice.status) {
+      case 'INVOICE_CREATED':
+        navigation.navigate('InvoiceForm', {invoice})
+        break;
+      case 'INVOICE_RECEIVED':
+        navigation.navigate('InvoiceForm', {invoice})
+        break;
+      default:
+        break;
+    }
+  }
   render() {    
     const {loading, myInvoice} = this.props
     return (
@@ -38,15 +49,18 @@ class RequestInvoice extends React.Component {
         <View>
           {Array.isArray(myInvoice) && myInvoice.map((invoice, index) => (
             <View style={styles.componentsSection} key={index}>
-              <View>
-                <Text>合同金额 : {invoice.price}</Text>
-                <Text>合同金额 : {invoice.price}</Text>
+              <View style={{padding: 15}}>
+                <Text>全景制作（无拍摄，含简单后期）</Text>
+                <Text size={18} color={colors.secondary}>合同金额 : ¥{invoice.price}</Text>
               </View>
-              <View style={{alignItems: 'flex-end', justifyContent: 'center'}}>
-                {invoice.status == 'INVOICE_CREATED' && <Text onPress={() => this.props.navigation.navigate('InvoiceForm', {invoice: invoice})}>申请发票</Text> }
-                {invoice.status == 'INVOICE_SENT' && <Text>处理中</Text> }
-                {invoice.status == 'INVOICE_RECEIVED' && <Text onPress={() => this.props.navigation.navigate('InvoiceForm', {invoice: invoice})}>查看发票</Text> }
-              </View>
+              <TouchableOpacity 
+                style={{alignItems: 'flex-end', justifyContent: 'center', backgroundColor: invoice.status == 'INVOICE_SENT' ? colors.primary : colors.secondary, borderTopRightRadius: 5, borderBottomRightRadius: 5, padding: 15}} 
+                onPress={() => this.handleNavigate(invoice)}
+              >
+                {invoice.status == 'INVOICE_CREATED' && <Text size={18} white>申请发票</Text> }
+                {invoice.status == 'INVOICE_SENT' && <Text size={18} white >处理中</Text> }
+                {invoice.status == 'INVOICE_RECEIVED' && <Text size={18} white>查看发票</Text> }
+              </TouchableOpacity>
             </View>
           ))}
         </View>
@@ -66,7 +80,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: colors.white,
-    padding: 15,
     marginBottom: 20,
     borderRadius: 5,
   },

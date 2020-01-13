@@ -1,6 +1,7 @@
 - Media에서 follow
 - chatting contact list 에서 마지막 통보문 얻기
 - media보면  시청수 증가
+- invoice 에서 type 설정
 # HVR System 🚀
 
 *You're viewing the new and updated version of HVR System, previous version can be found under the [v1 branch](https://github.com/flatlogic/react-native-starter/tree/v1)*

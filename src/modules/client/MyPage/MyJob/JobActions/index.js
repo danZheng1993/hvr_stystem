@@ -14,20 +14,17 @@ const FeedbackAction = ({navigation,job}) => {
     <View style={styles.buttonsContainer}>
       <Button
         small
-        style={styles.button}
         caption="联系服务商"
         onPress={() => navigation.navigate('Chatting', {to: job.hired})}
       />
       <Button
         small
-        style={styles.button}
         caption="查看视频"
         onPress={() => navigation.navigate('Player')}
       />
       <Button
         small
         bgColor={colors.warning}
-        style={styles.button}
         caption="评价"
         onPress={() => navigation.navigate('GiveFeedback', {id: job._id})}
       />
@@ -40,14 +37,13 @@ const FinishingAction = ({navigation, job}) => {
     <View style={styles.buttonsContainer}>
       <Button
         small
-        style={styles.button}
         caption="联系服务商"
         onPress={() => navigation.navigate('Chatting', {to: job.hired})}
       />
       <Button
         small
-        bgColor={colors.warning}
-        style={styles.button}
+        bordered
+        primary
         caption="查看视频"
         onPress={() => navigation.navigate('Player')}
       />
@@ -64,9 +60,6 @@ const styles = StyleSheet.create({
     borderTopColor: colors.greybackground,
     borderTopWidth: 1,
     paddingTop: 10
-  },
-
-  button: {
   },
 });
 
