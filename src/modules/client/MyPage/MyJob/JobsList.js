@@ -9,7 +9,7 @@ import moment from 'moment'
 import {NotPaidAction, WaitingAction, TestingAction, FinishingAction, FeedbackAction} from './JobActions'
 import { fonts, colors } from '../../../../styles';
 import { TouchableRipple } from 'react-native-paper';
-import {NoData, Text} from '../../../../components'
+import {NoData, Text, Button} from '../../../../components'
 import { getDateTimeStr } from '../../../../utils/helper';
 
 handleClick = () => {
@@ -27,7 +27,7 @@ export default class JobsList extends React.Component {
   render() {   
     const {jobs, navigation, upfrontRate} = this.props
     return (
-        <ScrollView>          
+        <View style={{paddingBottom: 20}}>          
          {jobs.length ? jobs.map((job, index) => (
           <TouchableRipple key={index} onPress={() => navigation.navigate('ClientJobDetail', {id: job._id})}>
            <View key={index} style={styles.componentsSection}>
@@ -38,68 +38,45 @@ export default class JobsList extends React.Component {
              <Text size={14}>订单编号: {job._id}</Text>
              <Text size={14}>创建时间: {getDateTimeStr(job.created)}</Text>
              <Text size={14}>服务项目: {job.type}</Text>
-             <Text size={14}>拍摄城市: {job.location}</Text>
+             {/* <Text size={14}>拍摄城市: {job.location}</Text> */}
 
              {job.status == '竞标中' && 
-              <View style={styles.textContainer}>
-                <Text size={14}>预算价格: <Text color={colors.redAlert}>¥{job.budget}</Text></Text>
-                <Text size={14} color={colors.secondary} onPress={() => {
-                  navigation.navigate('ClientJobDetail', {
-                    id: job._id,
-                  });
-                }}
-                >查看更多</Text>
-              </View>}
-
-             {job.status == '待付款' && 
               <View>
-                <Text size={14}>签订合同 : <Text onPress={() => null}>电子合同</Text>
-                </Text>
-                <View stye={styles.textContainer}>
-                  <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
-                  <Text size={14}>首付款 {upfrontRate}% : <Text>¥{job.price * upfrontRate / 100}</Text></Text>
+                <Text size={10}>原预算价格: <Text color={colors.redAlert} size={14}>¥{job.budget}</Text></Text>
+                <View style={{alignItems: 'flex-end', borderTopWidth: 1, borderTopColor: colors.greybackground, paddingTop: 5}}>
+                  <Button
+                    small
+                    bgColor={colors.warning}
+                    onPress={() => {navigation.navigate('ClientJobDetail', {id: job._id})}}
+                    caption='查看更多'
+                  />
                 </View>
-                <NotPaidAction job={job} navigation={this.props.navigation} />
               </View>}
 
-             {job.status == '待拍摄' && 
-              <View>
-              <View stye={styles.textContainer}>
-                <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
-                <Text size={14}>首付款已支付 : <Text>¥{job.price}</Text></Text>
-              </View>
+            {job.status == '待付款' && 
+              <NotPaidAction job={job} navigation={this.props.navigation} />
+            }
+
+            {job.status == '待拍摄' && 
               <WaitingAction job={job} navigation={this.props.navigation}/>
-            </View>}
+            }
 
-             {job.status == '待验收' && 
-              <View>
-              <View stye={styles.textContainer}>
-                <Text size={14}>定价 : <Text>¥{job.price}</Text></Text>
-                <Text size={14}>已支付首付款 : <Text>¥{job.price}</Text></Text>
-              </View>
+            {job.status == '待验收' && 
               <TestingAction job={job} navigation={this.props.navigation} />
-            </View>}
+            }
 
-             {job.status == '评价' && 
-               <View>
-               <View stye={styles.textContainer}>
-                 <Text size={14}>订单总金额 : <Text>¥{job.price}</Text></Text>
-               </View>
-               <FeedbackAction navigation={navigation} job={job}/>
-             </View>}
+            {job.status == '评价' && 
+              <FeedbackAction navigation={navigation} job={job}/>
+            }
 
-             {job.status == '已完成' && 
-              <View>
-              <View stye={styles.textContainer}>
-                <Text size={14}>订单总金额 : <Text>¥{job.price}</Text></Text>
-              </View>
+            {job.status == '已完成' && 
               <FinishingAction job={job} navigation={this.props.navigation}/>
-            </View>}
+            }
             
             </View>
             </TouchableRipple>
          )) : <NoData />}
-         </ScrollView>
+         </View>
     );
     }
 }
@@ -130,16 +107,5 @@ const styles = StyleSheet.create({
     marginTop: 20,
     justifyContent: 'space-around',
     flexDirection: 'row'
-  },
-
-  buttonsContainer: {
-    alignItems: 'flex-end',
-    alignSelf: 'stretch',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 20
-  },
-
-  button: {
   },
 });

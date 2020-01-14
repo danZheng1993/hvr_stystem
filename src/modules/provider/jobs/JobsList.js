@@ -80,7 +80,7 @@ class JobsList extends React.Component {
               <Text size={14}>创建时间: {getDateTimeStr(job.created)}</Text>
               <Text size={14}>服务项目: {job.type}</Text>
               <Text size={14}>拍摄城市: {job.location}</Text>
-              <Text size={14}>平台预估参考价: ¥{job.budget}</Text>
+              <Text size={14}>平台预估参考价: ¥{job.systembudget}</Text>
               <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text size={14}>需求方预算价格: ¥{job.budget}</Text>
                 <Text size={14} color={colors.primary} onPress={() => {

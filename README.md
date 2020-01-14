@@ -1,7 +1,12 @@
+ISSUES
 - Media에서 follow
 - chatting contact list 에서 마지막 통보문 얻기
 - media보면  시청수 증가
 - invoice 에서 type 설정
+- jobs에서 지불할때 시간을 자료기지에 보관
+- 수요자가 독촉을 하면 message보내기
+- Provider에 대한 론리 수정(VIP설정)
+- service 항목 설정 잘 안됨
 # HVR System 🚀
 
 *You're viewing the new and updated version of HVR System, previous version can be found under the [v1 branch](https://github.com/flatlogic/react-native-starter/tree/v1)*

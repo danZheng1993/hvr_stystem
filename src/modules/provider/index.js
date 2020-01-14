@@ -50,13 +50,13 @@ export default createBottomTabNavigator(
     接单: {
       screen: JobsList,
       navigationOptions: {
-        header: null,
+        title: '接 单',
       },
     },
     我的: {
       screen: MyPage,
       navigationOptions: {
-        
+        title: '我 的'
       },
     },
   },
