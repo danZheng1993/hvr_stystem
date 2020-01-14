@@ -63,28 +63,28 @@ class ApplyJob extends React.Component {
           loading={jobsloading} />
          {job && <>
             <JobDetail job={job} />
-            <View style={{...styles.componentsSection, flexDirection: 'row', justifyContent: 'space-around'}}>
+            <View style={{...styles.componentsSection, flexDirection: 'row', justifyContent: 'space-between'}}>
               <Button
                 small
                 bgColor={colors.secondary}
-                style={styles.button}
-                caption="联系需求方"
+                caption="联系服务商"
                 onPress={() => this.handleContact(job.creator)}
-              />             
-              <TextInput
-                style={styles.input}
-                keyboardType = 'numeric'             
-                placeholder="输入预算金额"
-                value={this.state.price}
-                onChangeText={price => this.setState({ price })}
               />
-              <Button
-                small
-                bgColor={colors.warning}
-                style={styles.button}
-                caption="投标"
-                onPress={this.handleClick}
-              />
+              <View style={{flexDirection: 'row'}}>
+                <TextInput
+                  style={styles.input}
+                  keyboardType = 'numeric'             
+                  placeholder="输入报价"
+                  value={this.state.price}
+                  onChangeText={price => this.setState({ price })}
+                />
+                <Button
+                  small
+                  bgColor={colors.warning}
+                  caption="投标"
+                  onPress={this.handleClick}
+                />
+              </View>
             </View>
             </>
          }
@@ -100,15 +100,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 20,
   },
-  button: {
-    alignSelf: 'stretch',
-  },
   input: {
     height: 30,
+    marginRight: 10,
     borderColor: colors.grey,
     borderWidth: 1,
     borderRadius: 2,
-    padding: 2
+    paddingVertical: 2,
+    paddingHorizontal: 10
   },
   componentsSection: {
     backgroundColor: colors.white,

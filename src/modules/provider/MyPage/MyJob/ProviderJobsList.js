@@ -28,7 +28,7 @@ export default class ProviderJobsList extends React.Component {
     return (
         <ScrollView>          
          {jobs.length ? jobs.map((job, index) => (
-          <TouchableRipple key={index} onPress={() => navigation.navigate('ProviderJobDetail', {id: job._id})}>
+          <TouchableRipple key={index} onPress={() => navigation.navigate('ProviderJobDetail', {job: job})}>
            <View key={index} style={styles.componentsSection}>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: colors.greybackground, marginBottom: 5}}>
               <Text size={16} color={colors.secondary}>订单信息</Text>
@@ -48,12 +48,12 @@ export default class ProviderJobsList extends React.Component {
               </View>}
              {job.status == '已选用' && 
               <View style={styles.buttonsContainer}>
-              <Button
-              small
-              caption="联系需求方"
-              onPress={() => this.handleContact(job.creator)}
-              />
-            </View>}
+                <Button
+                  small
+                  caption="联系需求方"
+                  onPress={() => this.handleContact(job.creator)}
+                />
+              </View>}
              {job.status == '待付款' && 
               <View>
               <View stye={styles.textContainer}>
@@ -80,6 +80,7 @@ export default class ProviderJobsList extends React.Component {
                   />
                   <Button
                   small
+                  bgColor={colors.warning}
                   caption="上传视频链接"
                   onPress={() => this.props.navigation.navigate('UploadMedia', {id: job._id})}
                   />
@@ -97,6 +98,7 @@ export default class ProviderJobsList extends React.Component {
                   />
                   <Button
                   small
+                  bgColor={colors.warning}
                   caption="上传视频链接"
                   onPress={() => this.props.navigation.navigate('UploadMedia', {id: job._id})}
                   />
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     alignSelf: 'stretch',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     paddingTop: 10
   },
 });

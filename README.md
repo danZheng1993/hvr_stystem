@@ -1,5 +1,6 @@
 ISSUES
-- Media에서 follow
+- Media에서 follow(공유)
+- myVR에서 삭제기능
 - chatting contact list 에서 마지막 통보문 얻기
 - media보면  시청수 증가
 - invoice 에서 type 설정
@@ -7,6 +8,9 @@ ISSUES
 - 수요자가 독촉을 하면 message보내기
 - Provider에 대한 론리 수정(VIP설정)
 - service 항목 설정 잘 안됨
+- 출금에 대한 대면
+- 메쎄지 관리
+- 화표 upload
 # HVR System 🚀
 
 *You're viewing the new and updated version of HVR System, previous version can be found under the [v1 branch](https://github.com/flatlogic/react-native-starter/tree/v1)*

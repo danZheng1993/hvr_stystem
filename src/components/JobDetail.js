@@ -31,11 +31,11 @@ class JobDetail extends React.Component {
           <Text size={14}>订单编号: {job._id}</Text>
           <Text size={14}>创建时间: {getDateTimeStr(job.created)}</Text>
           <Text size={14}>拍摄城市: {job.location}</Text>
-          <Text size={14}>服务项目: {job.count}个以内场景</Text>
-          <Text size={14}>场景数量: {job.type}</Text>
+          <Text size={14}>场景数量: {job.count}个以内场景</Text>
+          <Text size={14}>服务项目: {job.type}</Text>
           <Text size={14}>拍摄场景: {job.scene}</Text>
           <Text size={14}>行业类别: {job.subcategory}</Text>
-          <Text size={14}>其他要求: {job.service}</Text>
+          <Text size={14}>其他要求: {job.services}</Text>
           <Text size={14}>需求描述: {job.description}</Text>
           {job.status != '竞标中' && <>
           <Text size={14}>项目定价 : ¥{job.price}</Text>
