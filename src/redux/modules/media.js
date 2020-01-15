@@ -20,6 +20,7 @@ export const GET_MEDIAS = 'GET_MEDIAS'
 export const CREATE_MEDIA = 'CREATE_MEDIA'
 export const UPDATE_MEDIA = 'UPDATE_MEDIA'
 export const DELETE_MEDIA = 'DELETE_MEDIA'
+export const TRASH_MEDIA = 'TRASH_MEDIA'
 export const SEARCH_MEDIA = 'SEARCH_MEDIA'
 export const UPLOAD_LINK = 'UPLOAD_LINK'
 export const GET_MY_MEDIAS = 'GET_MY_MEDIAS'
@@ -37,6 +38,7 @@ export const getMyMedias = createAction(GET_MY_MEDIAS)
 export const createMedia = createAction(CREATE_MEDIA)
 export const updateMedia = createAction(UPDATE_MEDIA)
 export const deleteMedia = createAction(DELETE_MEDIA)
+export const trashMedia = createAction(TRASH_MEDIA)
 export const searchMedia = createAction(SEARCH_MEDIA)
 export const uploadLink = createAction(UPLOAD_LINK)
 export const increaseVisits = createAction(INCREASE_VISITS)
@@ -264,6 +266,28 @@ export default handleActions({
   [requestFail(DELETE_MEDIA)]: (state, { payload }) => ({
     ...state,
     status: requestFail(DELETE_MEDIA),
+    error: payload,
+    loading: false
+  }),
+
+  [requestPending(TRASH_MEDIA)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(TRASH_MEDIA),
+    error: null,
+    loading: true,
+  }),
+
+  [requestSuccess(TRASH_MEDIA)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(TRASH_MEDIA),
+    myMedias: reject(state.myMedias, { _id: payload.id }),
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(TRASH_MEDIA)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(TRASH_MEDIA),
     error: payload,
     loading: false
   }),

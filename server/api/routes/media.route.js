@@ -25,6 +25,9 @@ router.route('/:mediaId')
   .post(mediaCtrl.increaseVisits)
   .delete(mediaCtrl.remove);
 
+router.route('/trash/:mediaId')
+  .delete(mediaCtrl.trash);
+
 router.param('mediaId', mediaCtrl.getMediaByID);
 
 module.exports = router;

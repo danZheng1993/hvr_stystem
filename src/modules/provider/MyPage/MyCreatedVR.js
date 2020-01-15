@@ -14,10 +14,10 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
 import LinearGradient from 'react-native-linear-gradient';
-import { Loader, NoData, Text } from '../../../components'
+import { Loader, NoData, Text, Confirm } from '../../../components'
 import { colors } from '../../../styles';
 import constants from '../../../constants'
-import { getMyMedias } from '../../../redux/modules/media'
+import { getMyMedias, trashMedia, increaseVisits } from '../../../redux/modules/media'
 import { mediasloadingSelector,  profileSelector, myMediasSelector } from '../../../redux/selectors'
 import { getDateStr } from '../../../utils/helper';
 
@@ -29,10 +29,14 @@ class MyMedia extends React.Component {
     getMyMedias()
   }
 
-  handlePlay(path) {
-    this.props.navigation.navigate('Player', {url: path})
+  handlePlay(media) {
+    this.props.increaseVisits({id: media._id})
+    this.props.navigation.navigate('Player', {url: media.path})
   }
   
+  trash(id) {
+    Confirm('提示' ,'确认删除？', () => this.props.trashMedia({id: id}))
+  }
   render() {    
     const {medias, loading} = this.props
     return (
@@ -40,7 +44,7 @@ class MyMedia extends React.Component {
         <Loader loading={loading} />
          {Array.isArray(medias) ? medias.map((media, index) => (
            typeof(media) == 'object' && <View key={index}>
-              <TouchableOpacity onPress={() => this.handlePlay(media.path)} style={styles.touch}>
+              <TouchableOpacity onPress={() => this.handlePlay(media)} style={styles.touch}>
                 <ImageBackground
                   source={{ uri: constants.MEDIA_BASE_URL + media.snapshot }}
                   style={{width: '100%', height: '100%', flexDirection: 'column-reverse'}}
@@ -68,7 +72,7 @@ class MyMedia extends React.Component {
                       style={{width: 20, height: 20}}
                     />
                   </TouchableOpacity>
-                  <TouchableOpacity style={{marginLeft: 10}} onPress={() => null}>
+                  <TouchableOpacity style={{marginLeft: 10}} onPress={() => this.trash(media._id)}>
                     <Image
                       source={require('../../../../assets/images/trash.png')}
                       style={{width: 20, height: 20}}
@@ -117,7 +121,9 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  getMyMedias
+  getMyMedias,
+  increaseVisits,
+  trashMedia
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

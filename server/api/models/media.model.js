@@ -64,6 +64,10 @@ const MediaSchema = new Schema({
     type: Boolean,
     default: false
   },
+  flag: {
+    type: Boolean,
+    default: true
+  },
   snapshot: {
     type: String,
     default: ''

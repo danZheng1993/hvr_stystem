@@ -1,8 +1,8 @@
 ISSUES
 - Media에서 follow(공유)
-- myVR에서 삭제기능
+- /myVR에서 삭제기능
 - chatting contact list 에서 마지막 통보문 얻기
-- media보면  시청수 증가
+- /media보면  시청수 증가
 - invoice 에서 type 설정
 - jobs에서 지불할때 시간을 자료기지에 보관
 - balance에 돈 쌓이기

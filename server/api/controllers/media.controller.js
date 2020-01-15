@@ -175,7 +175,7 @@ function getMyMedias(req, res, next) {
   if (req.user.role === 'client') {
     where = {poster: req.user._id}
   } else if (req.user.role === 'provider') {
-    where = {creator : req.user._id}
+    where = {creator : req.user._id, flag: true}
   }
   
   console.log("search", where)
@@ -190,6 +190,18 @@ function getMyMedias(req, res, next) {
 function remove(req, res, next) {
   req.media.remove(() => {
     res.json(req.media);
+  })
+  .catch(next);
+}
+
+function trash(req, res, next) {
+  console.log("trash media", req.body)
+  if (req.media) {
+    Object.assign(req.media, {flag: false});
+  }
+  req.media.save()
+  .then((updatedMedia) => {
+    res.json(updatedMedia);
   })
   .catch(next);
 }
@@ -220,6 +232,7 @@ module.exports = {
   read,
   list,
   remove,
+  trash,
   getMyMedias,
   getMediaByID,
   search,
