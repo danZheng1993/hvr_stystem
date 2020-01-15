@@ -10,8 +10,8 @@ import { connect } from 'react-redux';
 import { withState,compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import _ from 'lodash'
-import { Button, Loader, RadioGroup, MediaList, Text, Bell } from '../../components'
-import { fonts, colors } from '../../styles';
+import { Loader, RadioGroup, MediaList, Text, Bell } from '../../components'
+import { colors } from '../../styles';
 
 import { searchMedia } from '../../redux/modules/media'
 import { mediasSearchResultSelector, mediasloadingSelector, profileSelector } from '../../redux/selectors'
@@ -127,4 +127,4 @@ const mapDispatchToProps = {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect,    withState('radioGroupsState', 'setRadioGroupsState', [0, 0]))(MediaSearch);
+export default compose(withConnect, withState('radioGroupsState', 'setRadioGroupsState', [0, 0]))(MediaSearch);

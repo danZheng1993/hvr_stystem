@@ -4,11 +4,8 @@ import {
   View,
   TouchableOpacity,
   Image,
-  ScrollView
 } from 'react-native';
-import { colors, fonts } from '../../../styles';
-import Icon from 'react-native-vector-icons/Entypo';
-import constants from '../../../constants'
+import { colors } from '../../../styles';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { getNewss } from '../../../redux/modules/news'
@@ -16,7 +13,7 @@ import { getBanners } from '../../../redux/modules/banner'
 import { getMedias } from '../../../redux/modules/media'
 import { createStructuredSelector } from 'reselect';
 import { bannersListSelector, newssListSelector, mediasListSelector, newssloadingSelector, bannersloadingSelector, mediasloadingSelector} from '../../../redux/selectors'
-import { RadioGroup, GridRow, Button, MediaList, Loader, Text, Bell, NewsList, BannersList } from '../../../components';
+import { RadioGroup, MediaList, Loader, Text, Bell, NewsList, BannersList } from '../../../components';
 import { getSettings } from '../../../redux/modules/setting';
 const iconSearch = require('../../../../assets/images/search.png');
 const iconBar = require('../../../../assets/images/bar.png');

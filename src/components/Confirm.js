@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
 import {
-  StyleSheet,
   Alert
 } from 'react-native';
 

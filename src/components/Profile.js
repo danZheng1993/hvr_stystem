@@ -2,23 +2,15 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  ScrollView,
   Image,
-  TouchableOpacity
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import {Text} from './StyledText'
-import moment from 'moment'
-import { fonts, colors } from '../styles';
+import { colors } from '../styles';
 import constants from '../constants';
 
 export default class Profile extends React.Component {
-  constructor(props) {
-    super(props)
-    
-  }
   render() {   
-    const {user, navigation} = this.props
+    const {user} = this.props
     return (
       <View >
         {user &&
@@ -39,10 +31,10 @@ export default class Profile extends React.Component {
 }
 
 const styles = StyleSheet.create({
-
   row: {
     flexDirection: 'row'
   },
+  
   photo: {
     borderRadius: 50,
     borderColor: colors.gray,

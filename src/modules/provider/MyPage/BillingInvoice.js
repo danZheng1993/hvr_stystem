@@ -8,22 +8,16 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import { withState,compose } from 'recompose';
+import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { Button, Loader, NoData } from '../../../components'
-import { fonts, colors } from '../../../styles';
+import { Button, Loader } from '../../../components'
+import { colors } from '../../../styles';
 
 import { getMyInvoice } from '../../../redux/modules/invoice'
 import { invoicesloadingSelector, myInvoiceSelector } from '../../../redux/selectors'
 
-
 class BillingInvoice extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
 
   componentWillMount() {
     const {getMyInvoice} = this.props

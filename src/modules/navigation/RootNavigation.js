@@ -9,7 +9,7 @@ import MainTabNavigator from './MainTabNavigator';
 import GalleryScreen from '../gallery/GalleryViewContainer';
 
 import HomeScreen from '../home/HomeView';
-import AuthScreen from '../auth/AuthViewContainer'
+import AuthScreen from '../auth/AuthView'
 
 import LoginWithPassword from '../login/LoginWithPassword'
 import LoginWithSMS from '../login/LoginWithSMS'
@@ -55,9 +55,6 @@ import Developing from '../../components/Developing'
 import Settings from '../settings';
 import PersonalInformation from '../settings/PersonalInformation';
 import Security from '../settings/Security';
-
-
-const headerBackground = require('../../../assets/images/topBarBg.png');
 
 const stackNavigator = createStackNavigator(
   {

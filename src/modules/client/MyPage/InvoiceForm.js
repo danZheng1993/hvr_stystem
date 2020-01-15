@@ -11,7 +11,6 @@ import { createStructuredSelector } from 'reselect';
 
 import { updateInvoice, updateMyInvoiceList } from '../../../redux/modules/invoice'
 import RadioForm from 'react-native-simple-radio-button';
-import { invoicesloadingSelector } from '../../../redux/selectors';
 
 class InvoiceForm extends React.Component {
   constructor(props) {
@@ -96,25 +95,25 @@ class InvoiceForm extends React.Component {
             </View>
             <View style={{alignSelf: 'stretch'}}>
               <TextInput
-                  style={styles.input}
-                  outlined
-                  label='请填写发票抬头'
-                  placeholder="请填写发票抬头"
-                  maxLength={100}
-                  value={this.state.headerContent}
-                  onChangeText={headerContent => this.setState({ headerContent })}
+                style={styles.input}
+                outlined
+                label='请填写发票抬头'
+                placeholder="请填写发票抬头"
+                maxLength={100}
+                value={this.state.headerContent}
+                onChangeText={headerContent => this.setState({ headerContent })}
               />
             </View>
             <View style={{alignSelf: 'stretch'}}>
               <TextInput
-                  style={styles.input}
-                  outlined
-                  label='请填写购买方纳税人识别号'
-                  placeholder="请填写购买方纳税人识别号"
-                  maxLength={20}
-                  value={this.state.taxNumber}
-                  keyboardType='numeric'
-                  onChangeText={taxNumber => this.setState({ taxNumber })}
+                style={styles.input}
+                outlined
+                label='请填写购买方纳税人识别号'
+                placeholder="请填写购买方纳税人识别号"
+                maxLength={20}
+                value={this.state.taxNumber}
+                keyboardType='numeric'
+                onChangeText={taxNumber => this.setState({ taxNumber })}
               />
             </View>
             <View>

@@ -12,8 +12,8 @@ import {
 import { connect } from 'react-redux';
 import { compose, withState } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { Button, Loader, Profile, RadioGroup, Text, toast, GoBack} from '../../../components';
-import { fonts, colors } from '../../../styles';
+import { Button, Loader, RadioGroup, Text, toast, GoBack} from '../../../components';
+import { colors } from '../../../styles';
 import { addToAttentions } from '../../../redux/modules/auth'
 import { searchMedia } from '../../../redux/modules/media'
 import { getFeedback } from '../../../redux/modules/job'
@@ -23,6 +23,7 @@ import ProviderFeedbacks from './ProviderFeedbacks';
 import constants from '../../../constants'
 
 const iconPhone = require('../../../../assets/images/phone.png')
+
 class ProviderDetail extends React.Component {
   constructor(props) {
     super(props)
@@ -30,10 +31,6 @@ class ProviderDetail extends React.Component {
       select: 0,
       user: null
     }
-  }
-
-  handleClick =() => {
-
   }
 
   componentWillMount() {

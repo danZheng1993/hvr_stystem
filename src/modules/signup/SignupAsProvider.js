@@ -2,7 +2,6 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  ScrollView
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -10,7 +9,7 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import {NavigationActions} from 'react-navigation'
 import { Button } from '../../components';
-import { fonts, colors } from '../../styles';
+import { colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
 import { signup, sendcode, checkcode } from '../../redux/modules/auth'
 import { Text } from '../../components/StyledText';

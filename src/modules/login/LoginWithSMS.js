@@ -2,7 +2,6 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  ScrollView,
   TouchableOpacity,
   Image
 } from 'react-native';
@@ -20,11 +19,6 @@ import XMPP from 'react-native-xmpp'
 import constants from '../../constants';
 
 class LoginWithSMS extends React.Component {
-    constructor (props) {
-      super(props)
-      this.state = {
-      };
-    }
 
     onSuccess = () => {
       console.warn('success')
@@ -96,19 +90,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 70,
     paddingVertical: 30
   },
-  description: {
-    alignItems: "center",
-  },
-  button: {
-    alignSelf: 'stretch',
-  },
   photo: {
     borderRadius: 25,
     width: 50,
     height: 50
-  },
-  input: {
-    marginBottom: 15,
   },
   touch: {
     flexDirection: 'row',

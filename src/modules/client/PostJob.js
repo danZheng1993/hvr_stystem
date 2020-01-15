@@ -9,13 +9,13 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { Form, TextValidator } from 'react-native-validator-form';
+import { Form } from 'react-native-validator-form';
 import RadioForm from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker'
 import { Button, Loader, toast } from '../../components';
 import Modal from "react-native-modal";
 
-import { fonts, colors } from '../../styles';
+import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
 import { createJob } from '../../redux/modules/job'
 
@@ -27,7 +27,6 @@ import {  servicesListSelector,
 class PostJob extends React.Component {
   constructor(props) {
     super(props)
-    
     this.state = {
       types: [],
       type: '',

@@ -6,14 +6,11 @@ import {
   ImageBackground,
 } from 'react-native';
 import constants from '../constants'
-import { fonts, colors } from '../styles';
+import { colors } from '../styles';
 import { TouchableRipple } from 'react-native-paper';
 import {Text} from './StyledText';
+
 export default class UsersList extends React.Component {
-  constructor(props) {
-    super(props)
-    
-  }
   render() {   
     const {user, navigation} = this.props
     console.log(user)

@@ -11,10 +11,11 @@ import { SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { Button, Loader, UsersList, NoData, Text, BannersList} from '../../../components';
-import { fonts, colors } from '../../../styles';
+import { Loader, UsersList, NoData, Text, BannersList} from '../../../components';
+import { colors } from '../../../styles';
 import { searchUser } from '../../../redux/modules/user'
 import { usersloadingSelector, usersSearchResultSelector, bannersListSelector } from '../../../redux/selectors'
+
 const iconLocation = require('../../../../assets/images/location.png');
 
 class Providers extends React.Component {

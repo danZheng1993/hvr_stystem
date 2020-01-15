@@ -4,7 +4,6 @@ import {
   View,
 } from 'react-native';
 
-import moment from 'moment'
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'recompose';

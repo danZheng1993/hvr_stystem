@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { fonts, colors } from '../../../../styles';
+import { colors } from '../../../../styles';
 import { JobDetail, Applicants} from '../../../../components';
 import { myJobsSelector } from '../../../../redux/selectors'
 import {NotPaidAction, WaitingAction, TestingAction, FeedbackAction, FinishingAction} from './JobActions'
@@ -18,12 +18,12 @@ import {findIndex} from 'lodash'
 class ClientJobDetail extends React.Component {
   constructor(props) {
     super(props)
-    
     this.state = {
       price: 0,
       id : '',
     }
   }
+  
   componentWillMount() {
     const { navigation } = this.props
     let id = navigation.getParam('id', '')

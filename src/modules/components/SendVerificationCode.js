@@ -5,7 +5,6 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
 import { View, StyleSheet } from 'react-native'
-import { TextInput } from 'react-native-paper';
 
 import { colors } from '../../styles'
 import { Button } from '../../components';

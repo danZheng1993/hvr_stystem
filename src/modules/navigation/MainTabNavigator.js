@@ -10,7 +10,7 @@ import CalendarScreen from '../calendar/CalendarViewContainer';
 import GridsScreen from '../grids/GridsViewContainer';
 import PagesScreen from '../pages/PagesViewContainer';
 import ComponentsScreen from '../components/ComponentsViewContainer';
-import AuthScreen from '../auth/AuthViewContainer';
+import AuthScreen from '../auth/AuthView';
 import GalleryScreen from '../gallery/GalleryViewContainer';
 
 const iconHome = require('../../../assets/images/tabbar/home.png');

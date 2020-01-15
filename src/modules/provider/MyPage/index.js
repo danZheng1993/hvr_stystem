@@ -1,14 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView, ImageBackground, TouchableOpacity, Image } from 'react-native';
-import {Badge} from 'react-native-elements'
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { colors, fonts } from '../../../styles';
+import { colors } from '../../../styles';
 import { ListItem } from 'react-native-elements'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import {sum, values} from 'lodash'
-import { Button, Dropdown, Profile, Text, Bell } from '../../../components';
+import { Profile, Text, Bell } from '../../../components';
 import { profileSelector, unreadMessagesSelector, myMediasSelector, mediasloadingSelector } from '../../../redux/selectors'
 import { getMyMedias} from '../../../redux/modules/media'
 import constants from '../../../constants'
@@ -26,7 +23,7 @@ class MyPage extends React.Component {
   }
   
   render () {
-    const {profile, unread, medias} = this.props
+    const {profile, medias} = this.props
     const jobStatus = [
       {title: '竞标中', icon: iconBidding},
       {title: '已选用', icon: iconBidding},
@@ -35,7 +32,6 @@ class MyPage extends React.Component {
       {title: '待验收', icon: iconTesting},
       {title: '已完成', icon: iconFeedback},
     ]
-    const unreadCount = sum(values(unread)) || 0
     return (
       <>
         <ImageBackground

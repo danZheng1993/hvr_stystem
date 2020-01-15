@@ -10,7 +10,7 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
 import { Button, Loader, toast, JobDetail} from '../../../components';
-import { fonts, colors } from '../../../styles';
+import { colors } from '../../../styles';
 import { getJob, applyJob } from '../../../redux/modules/job'
 import { jobDetailSelector, jobsloadingSelector, profileSelector } from '../../../redux/selectors'
 
@@ -24,7 +24,7 @@ class ApplyJob extends React.Component {
   }
 
   componentWillMount() {
-    const {getJob, navigation} = this.props
+    const {navigation} = this.props
     let job = navigation.getParam('job', null)
     if (job) {
       this.setState({job})
@@ -33,7 +33,7 @@ class ApplyJob extends React.Component {
 
   handleClick = () => {
     let {price, job} = this.state
-    let {applyJob, profile, navigation} = this.props
+    let {applyJob, navigation} = this.props
     //  if (+price == 0) {
     //    price = this.props.job.budget
     //  }

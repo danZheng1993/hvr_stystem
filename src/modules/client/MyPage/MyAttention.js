@@ -8,11 +8,11 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import { withState,compose } from 'recompose';
+import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { Button, Loader, UsersList, RadioGroup, NoData } from '../../../components'
-import { fonts, colors } from '../../../styles';
+import { Loader, UsersList, NoData } from '../../../components'
+import { colors } from '../../../styles';
 
 import { searchUser } from '../../../redux/modules/user'
 import { removeFromAttentions } from '../../../redux/modules/auth'
@@ -21,12 +21,7 @@ import { usersSearchResultSelector , usersloadingSelector,  profileSelector } fr
 
 
 class MyAttention extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
-
+  
   componentWillMount() {
     const {searchUser, profile, navigation} = this.props
     searchUser({

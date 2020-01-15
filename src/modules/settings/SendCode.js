@@ -5,14 +5,12 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
 import { View, StyleSheet } from 'react-native'
-import { TextInput } from 'react-native-paper';
 
 import { colors } from '../../styles'
 import { Button } from '../../components';
 import { Text } from '../../components/StyledText';
 import {sendcode} from '../../redux/modules/auth'
 import CheckVerificationCode from '../components/CheckVerificationCode';
-import { Form, TextValidator } from 'react-native-validator-form';
 
 var timer
 class SendVerificationCode extends React.Component {

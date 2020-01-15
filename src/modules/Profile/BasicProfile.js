@@ -1,12 +1,9 @@
 import React from 'react'
 import { View, Image, StyleSheet, TouchableOpacity, TextInput} from 'react-native'
-// import {TextInput} from 'react-native-paper';
-
-import PhotoUpload from 'react-native-photo-upload'
 
 import ImagePicker from 'react-native-image-picker'
 import { colors } from '../../styles'
-import { Button, Profile, Text } from '../../components';
+import { Button, Text } from '../../components';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -16,6 +13,7 @@ import { saveProfile } from '../../redux/modules/auth'
 import { profileSelector } from '../../redux/selectors'
 import uploadFile from '../../redux/api/upload'
 import constants from '../../constants'
+
 class BasicProfile extends React.Component {
   constructor(props) {
     super(props)
@@ -186,16 +184,6 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50
-  },
-  input: {
-    marginBottom: 15,
-  },
-  description: {
-    marginBottom: 20,
-  },
-  buttonsContainer: {
-    alignSelf: 'stretch',
-    margin: 20
   },
   button: {
     alignSelf: 'stretch',

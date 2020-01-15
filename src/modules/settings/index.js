@@ -1,6 +1,6 @@
 import { ListItem } from 'react-native-elements'
 import { View, TouchableOpacity } from 'react-native'
-import React, {Componet} from 'react'
+import React from 'react'
 import {Text} from '../../components'
 import colors from '../../styles/colors'
 import { connect } from 'react-redux';

@@ -1,6 +1,6 @@
 import { ListItem } from 'react-native-elements'
 import { View } from 'react-native'
-import React, {Componet} from 'react'
+import React from 'react'
 import colors from '../../styles/colors'
 const PersonalInformation = props => {
     return (

@@ -1,8 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
-import {Badge} from 'react-native-elements'
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import { colors, fonts } from '../styles';
+import { Image, TouchableOpacity } from 'react-native';
+import { Badge } from 'react-native-elements'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
@@ -23,10 +21,6 @@ class Bell extends React.Component {
     );
     }
 }
-
-const styles = StyleSheet.create({
-
-});
 
 const mapStateToProps = createStructuredSelector({
   unread: unreadMessagesSelector

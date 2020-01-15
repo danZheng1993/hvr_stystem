@@ -3,20 +3,18 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Picker,
   TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import moment from 'moment'
 import Icon from 'react-native-vector-icons/Entypo';
 
-import { Button, Loader, NoData, Profile, Text} from '../../../components';
-import { fonts, colors } from '../../../styles';
+import { Loader, NoData, Profile, Text} from '../../../components';
+import { colors } from '../../../styles';
 
 import { searchJob } from '../../../redux/modules/job'
-import {  jobsListSelector, jobsloadingSelector, profileSelector, jobsSearchResultSelector } from '../../../redux/selectors'
+import {  jobsloadingSelector, profileSelector, jobsSearchResultSelector } from '../../../redux/selectors'
 import { getSettings } from '../../../redux/modules/setting';
 import { getDateTimeStr } from '../../../utils/helper';
 import Bell from '../../../components/Bell';
@@ -28,6 +26,7 @@ class JobsList extends React.Component {
       location: '北京'
     }
   }
+  
   componentWillMount() {
     const {searchJob, profile} = this.props
     this.setState({location: profile.location})

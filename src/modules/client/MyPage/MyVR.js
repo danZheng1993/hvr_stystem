@@ -7,25 +7,20 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import { withState,compose } from 'recompose';
+import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { Button, Loader, MediaList, RadioGroup, NoData } from '../../../components'
-import { fonts, colors } from '../../../styles';
+import { Loader, MediaList, NoData } from '../../../components'
+import { colors } from '../../../styles';
 
 import { getMyMedias } from '../../../redux/modules/media'
-import { mediasSearchResultSelector , mediasloadingSelector,  profileSelector, myMediasSelector } from '../../../redux/selectors'
+import { mediasloadingSelector,  profileSelector, myMediasSelector } from '../../../redux/selectors'
 
 
 class MyVR extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
 
   componentWillMount() {
-    const {getMyMedias, profile, navigation} = this.props
+    const {getMyMedias} = this.props
     getMyMedias()
   }
 

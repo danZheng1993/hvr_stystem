@@ -7,7 +7,6 @@ import { createStructuredSelector } from 'reselect';
 import { View, StyleSheet } from 'react-native'
 import  CodePin  from 'react-native-pin-code'
 
-import { colors } from '../../styles'
 import { Text } from '../../components/StyledText';
 import {checkcode} from '../../redux/modules/auth'
 
@@ -54,10 +53,6 @@ class CheckVerificationCode extends React.Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
- 
-});
 
 const mapStateToProps = createStructuredSelector({
 });

@@ -7,7 +7,7 @@ import {
 
 import { colors } from '../../../../styles';
 import { JobDetail, Button, Text } from '../../../../components';
-import { getDateStr, getDateTimeStr } from '../../../../utils/helper';
+import { getDateTimeStr } from '../../../../utils/helper';
 import {settingsListSelector} from '../../../../redux/selectors'
 
 import { connect } from 'react-redux';
@@ -16,12 +16,12 @@ import { createStructuredSelector } from 'reselect';
 class ProviderJobDetail extends React.Component {
   constructor(props) {
     super(props)
-    
     this.state = {
       price: 0,
       job : null,
     }
   }
+
   componentWillMount() {
     const { navigation} = this.props
     let job = navigation.getParam('job', '')
@@ -29,6 +29,7 @@ class ProviderJobDetail extends React.Component {
       this.setState({job})
     }
   }
+  
   renderPrice = (job) => {
     if (!job) return
     return (
@@ -40,6 +41,7 @@ class ProviderJobDetail extends React.Component {
       </View>
     )
   }
+
   renderPayment = (job) => {
     if (!job) return
     const {settings} = this.props
@@ -52,6 +54,7 @@ class ProviderJobDetail extends React.Component {
       </View>
     )
   }
+  
   render() {
     const { job } = this.state
     if (!job) {

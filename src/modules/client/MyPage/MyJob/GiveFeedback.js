@@ -51,14 +51,14 @@ class GiveFeedback extends React.Component {
     return (
       <View style={styles.container}>
         <TextInput
-            style={styles.input}
-            outlined
-            placeholder="填写服务介绍"
-            multiline
-            maxLength={100}
-            numberOfLines={10}
-            value={this.state.feedback}
-            onChangeText={feedback => this.setState({ feedback })}
+          style={styles.input}
+          outlined
+          placeholder="填写服务介绍"
+          multiline
+          maxLength={100}
+          numberOfLines={10}
+          value={this.state.feedback}
+          onChangeText={feedback => this.setState({ feedback })}
         />
         <Button
           large

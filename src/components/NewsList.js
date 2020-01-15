@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  StyleSheet,
   View,
   TouchableOpacity,
   Image,
@@ -11,9 +10,6 @@ import {Text} from './StyledText';
 import { getDateStr } from '../utils/helper';
 
 export default class NewsList extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   render() {   
     const {news, navigation} = this.props
     console.log(news)
@@ -21,8 +17,11 @@ export default class NewsList extends React.Component {
       <ScrollView style={{flex: 1}}>
         {news && news.map((l, i) => (
           typeof(l) == "object" &&
-          <TouchableOpacity style={{flexDirection: 'row', margin: 15, borderRadius: 5, height: 80}} key={i} onPress={() => this.props.navigation.navigate('WebViewer', {url: constants.NEWS_BASE_URL + l.source})
-        }>
+            <TouchableOpacity 
+              style={{flexDirection: 'row', margin: 15, borderRadius: 5, height: 80}} 
+              key={i} 
+              onPress={() => this.props.navigation.navigate('WebViewer', {url: constants.NEWS_BASE_URL + l.source})}
+            >
             <View style={{flex: 2, paddingRight: 20}}>
               <Text black bold>{l.title}</Text>
               <Text size={9}>{getDateStr(l.created)}</Text>

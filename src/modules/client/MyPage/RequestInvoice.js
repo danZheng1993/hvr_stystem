@@ -8,26 +8,22 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import { withState,compose } from 'recompose';
+import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { Button, Loader, NoData, Text } from '../../../components'
+import { Loader, Text } from '../../../components'
 import { fonts, colors } from '../../../styles';
 
 import { getMyInvoice } from '../../../redux/modules/invoice'
 import { invoicesloadingSelector, myInvoiceSelector } from '../../../redux/selectors'
 
 class RequestInvoice extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
 
   componentWillMount() {
     const {getMyInvoice,navigation} = this.props
     getMyInvoice()
   }
+
   handleNavigate = (invoice) => {
     const {navigation} = this.props
     switch (invoice.status) {
@@ -41,6 +37,7 @@ class RequestInvoice extends React.Component {
         break;
     }
   }
+  
   render() {    
     const {loading, myInvoice} = this.props
     return (

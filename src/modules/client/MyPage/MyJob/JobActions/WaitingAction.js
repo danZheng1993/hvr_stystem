@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -11,6 +11,11 @@ import { cancelJob, removeFromMyJobsList} from '../../../../../redux/modules/job
 import {Button, Text} from '../../../../../components'
 import {colors} from '../../../../../styles'
 import {settingsListSelector} from '../../../../../redux/selectors'
+
+const prompt = (id) => {
+  alert("请求成功")
+}
+
 const WaitingAction = props => {
   const {settings, job} = props
   return (
@@ -36,7 +41,7 @@ const WaitingAction = props => {
             small
             bgColor={colors.warning}
             caption="催一催"
-            onPress={() => alert("请求成功")}
+            onPress={() => prompt(job._id)}
           />
         </View>
       </View>

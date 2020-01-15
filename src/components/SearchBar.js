@@ -1,12 +1,11 @@
 import { SearchBar } from 'react-native-elements';
-import { View, Picker, StyleSheet } from 'react-native'
-import React, {Componet} from 'react'
-import {Button, Loader, Text, GoBack} from '../components'
+import { View, StyleSheet } from 'react-native'
+import React from 'react'
+import { Loader, Text, GoBack} from '../components'
 import {colors} from '../styles'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { NavigationActions } from 'react-navigation'
 import { searchUser } from '../redux/modules/user'
 import { searchMedia } from '../redux/modules/media'
 import { searchNews } from '../redux/modules/news'
@@ -14,7 +13,6 @@ import { addToSearch, clearSearch } from '../redux/modules/auth'
 import _ from 'lodash'
 import { usersloadingSelector, mediasloadingSelector, newssloadingSelector, settingsListSelector, recentSearchSelector } from '../redux/selectors'
 
-import { clearItem } from '../redux/api/storage'
 class Search extends React.Component {
     constructor(props) {
         super(props)

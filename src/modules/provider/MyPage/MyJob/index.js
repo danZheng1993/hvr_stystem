@@ -10,11 +10,11 @@ import { connect } from 'react-redux';
 import { withState,compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { Button, Loader, RadioGroup } from '../../../../components'
-import { fonts, colors } from '../../../../styles';
+import { Loader, RadioGroup } from '../../../../components'
+import { colors } from '../../../../styles';
 import ProviderJobsList from './ProviderJobsList'
 import { getMyJob } from '../../../../redux/modules/job'
-import { jobsloadingSelector, profileSelector, jobsSearchResultSelector, myJobsSelector } from '../../../../redux/selectors'
+import { jobsloadingSelector, profileSelector, myJobsSelector } from '../../../../redux/selectors'
 
 const status = ['全部', '竞标中', '已选用','待付款','待拍摄', '待验收']
 
@@ -48,18 +48,18 @@ class MyJobList extends React.Component {
     }
     return (
       <>
-      <View style={styles.componentsSection}>
-        <RadioGroup
-          items={['全部', '竞标中', '已选用','待支付', '待拍摄', '待验收']}
-          selectedIndex={this.props.radioGroupsState[0]}
-          onChange={index => this.handleClick(index)}
-          underline
-        />
-      </View>
-      <ScrollView style={styles.container}>
-        <Loader loading={jobsloading} />
-        <ProviderJobsList jobs={jobslist} navigation={this.props.navigation}/>
-      </ScrollView>
+        <View style={styles.componentsSection}>
+          <RadioGroup
+            items={['全部', '竞标中', '已选用','待支付', '待拍摄', '待验收']}
+            selectedIndex={this.props.radioGroupsState[0]}
+            onChange={index => this.handleClick(index)}
+            underline
+          />
+        </View>
+        <ScrollView style={styles.container}>
+          <Loader loading={jobsloading} />
+          <ProviderJobsList jobs={jobslist} navigation={this.props.navigation}/>
+        </ScrollView>
       </>
     );
     }
@@ -92,4 +92,4 @@ const mapDispatchToProps = {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect,    withState('radioGroupsState', 'setRadioGroupsState', [0, 0]))(MyJobList);
+export default compose(withConnect, withState('radioGroupsState', 'setRadioGroupsState', [0, 0]))(MyJobList);

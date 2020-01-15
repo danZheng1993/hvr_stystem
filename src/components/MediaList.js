@@ -10,11 +10,10 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import Icon from 'react-native-vector-icons/Entypo';
 import { createStructuredSelector } from 'reselect';
-import { fonts, colors } from '../styles';
+import { colors } from '../styles';
 import constants from '../constants'
-import {Loader, Text, toast} from '../components'
+import { Text, toast} from '../components'
 import { addToCollections, removeFromCollections, addToAttentions } from '../redux/modules/auth'
 import { authloadingSelector, profileSelector } from '../redux/selectors'
 import NoData from './NoData';
@@ -125,18 +124,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
 
-  description: {
-    padding: 20,
-    marginBottom: 20,
-    alignSelf: 'stretch'
-  },
-
-  componentsSection: {
-    backgroundColor: colors.white,
-    padding: 15,
-    marginBottom: 20,
-    borderRadius: 5,
-  },
   touch: {
     alignSelf: "stretch",
     alignItems: 'flex-end',

@@ -6,8 +6,7 @@ import {
   Image
 } from 'react-native';
 import {Text} from '../../../components'
-import { fonts, colors } from '../../../styles';
-import { ListItem } from 'react-native-elements'
+import { colors } from '../../../styles';
 import constants from '../../../constants'
 import { getDateStr } from '../../../utils/helper';
 
@@ -27,13 +26,6 @@ class ProviderFeedbacks extends React.Component {
                 <Text black size={16}>{feedback.feedback}</Text>
               </View>
             </View>
-            // <ListItem
-            //   key={index}
-            //   leftAvatar={{ source: { uri: constants.BASE_URL + feedback.creator.photo } }}
-            //   avatarStyle={{ width: 100, height: 100, backgroundColor: 'white'}}
-            //   title={feedback.creator.userName + getDateStr(feedback.created)}
-            //   subtitle={feedback.feedback}
-            // />
           )) : <Text>暂时无用户评价</Text>}
       </ScrollView>
     );

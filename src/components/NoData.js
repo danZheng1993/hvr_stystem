@@ -1,12 +1,11 @@
 import React from 'react';
 import {
-  StyleSheet,
   View,
   Image,
   Text
 } from 'react-native';
 
-import { fonts, colors, commonStyles} from '../styles';
+import { commonStyles} from '../styles';
 
 export default function NoData(props) {
 
@@ -27,7 +26,3 @@ export default function NoData(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-
-});

@@ -10,27 +10,22 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import { withState,compose } from 'recompose';
+import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
 import LinearGradient from 'react-native-linear-gradient';
-import { Button, Loader, MediaList, RadioGroup, NoData, Text } from '../../../components'
-import { fonts, colors } from '../../../styles';
+import { Loader, NoData, Text } from '../../../components'
+import { colors } from '../../../styles';
 import constants from '../../../constants'
 import { getMyMedias } from '../../../redux/modules/media'
-import { mediasSearchResultSelector , mediasloadingSelector,  profileSelector, myMediasSelector } from '../../../redux/selectors'
+import { mediasloadingSelector,  profileSelector, myMediasSelector } from '../../../redux/selectors'
 import { getDateStr } from '../../../utils/helper';
 
 
 class MyMedia extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
 
   componentWillMount() {
-    const {getMyMedias, profile, navigation} = this.props
+    const {getMyMedias} = this.props
     getMyMedias()
   }
 

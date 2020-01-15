@@ -4,7 +4,6 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ScrollView
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -12,9 +11,8 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import {NavigationActions} from 'react-navigation'
 import { Button } from '../../components';
-import { fonts, colors } from '../../styles';
+import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
-import SendVerificationCode from '../components/SendVerificationCode';
 import { Form, TextValidator } from 'react-native-validator-form';
 import { signup, sendcode, checkcode } from '../../redux/modules/auth'
 

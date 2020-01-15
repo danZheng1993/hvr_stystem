@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
 } from 'react-native';
-import {Button, Confirm, Text} from '../../../../../components'
+import {Button, Text} from '../../../../../components'
 import NotPaidAction from './NotPaidAction'
 import TestingAction from './TestingAction'
 import WaitingAction from './WaitingAction'
@@ -13,7 +13,6 @@ import { getDateTimeStr } from '../../../../../utils/helper';
 const FeedbackAction = ({navigation,job}) => {
   return (
     <View>
-      
       <Text size={14}>首付款支付时间 : <Text>¥{getDateTimeStr(job.created)}</Text></Text>
       <Text size={14}>尾款支付时间 : <Text>¥{getDateTimeStr(job.created)}</Text></Text>
       <Text bold size={14} color={colors.primary} style={{alignSelf: 'flex-end'}}>订单总金额 : ¥{job.price}</Text>

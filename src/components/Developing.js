@@ -6,7 +6,7 @@ import {
   Text
 } from 'react-native';
 
-import { fonts, colors, commonStyles} from '../styles';
+import { commonStyles} from '../styles';
 
 export default function NoData(props) {
 

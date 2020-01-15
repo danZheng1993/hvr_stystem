@@ -9,9 +9,8 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
 import { Button } from '../../components';
-import { fonts, colors } from '../../styles';
+import { colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
-import { Text } from '../../components/StyledText';
 import { saveProfile } from '../../redux/modules/auth'
 import SendVerificationcode from '../components/SendVerificationCode'
 

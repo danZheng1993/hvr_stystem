@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react';
 
-import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Image, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 
 import { colors, fonts } from '../../styles';
@@ -11,6 +11,7 @@ import PostJob from './PostJob'
 import MyPage from './MyPage'
 import Providers from './Providers';
 import MediaSearch from './MediaSearch';
+
 const iconPost = require('../../../assets/images/post.png');
 const iconHome = require('../../../assets/images/home.png');
 const iconEye = require('../../../assets/images/eye.png');

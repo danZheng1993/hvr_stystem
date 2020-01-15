@@ -1,16 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView, TouchableOpacity, ImageBackground, Image } from 'react-native';
-import {Badge} from 'react-native-elements'
-import Icon from 'react-native-vector-icons/Feather';
 import { colors, fonts } from '../../../styles';
 import { ListItem } from 'react-native-elements'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { Button, Dropdown, Profile, Text, Bell } from '../../../components';
+import { Profile, Text, Bell } from '../../../components';
 import {sum, values} from 'lodash'
 import {getMyMedias} from '../../../redux/modules/media'
-import { profileSelector, unreadMessagesSelector, myMediasSelector, jobsListSelector } from '../../../redux/selectors'
+import { profileSelector, unreadMessagesSelector, myMediasSelector } from '../../../redux/selectors'
 import constants from '../../../constants';
 
 const iconBidding = require('../../../../assets/images/bidding.png');
@@ -19,14 +17,15 @@ const iconPaying = require('../../../../assets/images/paying.png');
 const iconWaiting = require('../../../../assets/images/waiting.png');
 const iconTesting = require('../../../../assets/images/testing.png');
 const iconFeedback = require('../../../../assets/images/feedback.png');
+
 class MyPage extends React.Component {
+
   componentWillMount() {
     this.props.getMyMedias()
   }
 
   render () {
     const {profile, unread, medias} = this.props
-    const unreadCount = sum(values(unread)) || 0
     const jobStatus = [
       {title: '竞标中', icon: iconBidding},
       {title: '待支付', icon: iconPaying},
@@ -153,10 +152,10 @@ class MyPage extends React.Component {
             onPress = {() => this.props.navigation.navigate('WebViewer', {url: constants.BASE_URL + 'AboutUs.html'})}
           />
         </View>
-        </ScrollView>
+      </ScrollView>
       </>
     );
-    }
+  }
 }
 
 const styles = StyleSheet.create({

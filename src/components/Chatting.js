@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -29,7 +28,6 @@ class Chatting extends React.Component {
   }
 
   componentWillMount() {  
-
     const {navigation, profile, getUser} = this.props
     let to = navigation.getParam('to', '')
     if (to != '') {

@@ -4,7 +4,6 @@ import {
   View,
   ScrollView,
   Image,
-  Alert,
   TouchableOpacity
 } from 'react-native';
 
@@ -12,8 +11,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import {Text} from './StyledText'
-import { fonts, colors } from '../styles';
-import Button from './Button'
+import { colors } from '../styles';
 import Confirm from './Confirm'
 import { hireJob, updateMyJobsList } from '../redux/modules/job'
 import { jobsloadingSelector } from '../redux/selectors'
@@ -24,7 +22,7 @@ class Applicants extends React.Component {
     
   }
   handleClick= (applicant) => {
-    const {jobID, hireJob, navigation} = this.props
+    const {jobID, hireJob} = this.props
       Confirm('提示' ,'是否确认选用？', () => hireJob({
           id: jobID,
           body: { hired: applicant.applicant, price: applicant.price},
@@ -39,7 +37,7 @@ class Applicants extends React.Component {
   }
 
   render() {   
-    const {applicants, navigation} = this.props
+    const {applicants} = this.props
     return (
       <ScrollView  horizontal={true}>
         {applicants ? applicants.map((applicant, index) => (

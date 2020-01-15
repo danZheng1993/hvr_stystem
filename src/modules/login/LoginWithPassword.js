@@ -3,17 +3,15 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  ScrollView,
   Image
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { Button, Loader, toast } from '../../components';
-import { fonts, colors } from '../../styles';
+import { Button, toast } from '../../components';
+import { colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
-import Icon from 'react-native-vector-icons/FontAwesome'
 import { Text } from '../../components/StyledText';
 import {login} from '../../redux/modules/auth'
 import { profileSelector, authloadingSelector } from '../../redux/selectors'
@@ -22,6 +20,7 @@ import { loadItem } from '../../redux/api/storage';
 import SyncStorage from 'sync-storage';
 import {NavigationActions} from 'react-navigation'
 import constants from '../../constants';
+
 class LoginWithPassword extends React.Component {
   constructor(props) {
     super(props)

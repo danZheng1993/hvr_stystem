@@ -10,8 +10,8 @@ import { connect } from 'react-redux';
 import { withState,compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { Button, Loader, RadioGroup, NoData } from '../../../../components'
-import { fonts, colors } from '../../../../styles';
+import { Loader, RadioGroup, NoData } from '../../../../components'
+import { colors } from '../../../../styles';
 import JobsList from './JobsList'
 import { getMyJob } from '../../../../redux/modules/job'
 import { jobsloadingSelector, profileSelector, settingsListSelector, myJobsSelector } from '../../../../redux/selectors'

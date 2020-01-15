@@ -2,27 +2,21 @@ import React from 'react';
 
 import {
   StyleSheet,
-  View,
   ScrollView,
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import { withState,compose } from 'recompose';
+import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { Button, Loader, MediaList, RadioGroup, NoData } from '../../../components'
-import { fonts, colors } from '../../../styles';
+import { Loader, MediaList, NoData } from '../../../components'
+import { colors } from '../../../styles';
 
 import { searchMedia } from '../../../redux/modules/media'
 import { mediasSearchResultSelector , mediasloadingSelector,  profileSelector } from '../../../redux/selectors'
 
 
 class MyCollection extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
 
   componentWillMount() {
     const {searchMedia, profile, navigation} = this.props

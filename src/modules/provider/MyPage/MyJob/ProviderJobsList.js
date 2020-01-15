@@ -3,24 +3,17 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  TouchableOpacity
 } from 'react-native';
-import moment from 'moment'
-import { fonts, colors } from '../../../../styles';
+import { colors } from '../../../../styles';
 import { TouchableRipple } from 'react-native-paper';
 import {NoData, Button, Text} from '../../../../components'
 import { getDateTimeStr } from '../../../../utils/helper';
 
 export default class ProviderJobsList extends React.Component {
-  constructor(props) {
-    super(props)
-    
-  }
 
   handleContact = (id) => {
     this.props.navigation.navigate('Chatting', {to: id})
-  } 
-
+  }
 
   render() {   
     const {jobs, navigation} = this.props
@@ -41,9 +34,9 @@ export default class ProviderJobsList extends React.Component {
              {job.status == '竞标中' && 
               <View style={styles.buttonsContainer}>
                 <Button
-                small
-                caption="联系需求方"
-                onPress={() => this.handleContact(job.creator)}
+                  small
+                  caption="联系需求方"
+                  onPress={() => this.handleContact(job.creator)}
                 />
               </View>}
              {job.status == '已选用' && 
@@ -62,9 +55,9 @@ export default class ProviderJobsList extends React.Component {
                 <Text size={14}>尾款(80%) : <Text>¥{job.price}</Text></Text>
                 <View style={styles.buttonsContainer}>
                   <Button
-                  small
-                  caption="联系需求方"
-                  onPress={() => this.handleContact(job.creator)}
+                    small
+                    caption="联系需求方"
+                    onPress={() => this.handleContact(job.creator)}
                   />
                 </View>
               </View>
@@ -74,15 +67,15 @@ export default class ProviderJobsList extends React.Component {
               <View stye={styles.textContainer}>
                 <View style={styles.buttonsContainer}>
                   <Button
-                  small
-                  caption="联系需求方"
-                  onPress={() => this.handleContact(job.creator)}
+                    small
+                    caption="联系需求方"
+                    onPress={() => this.handleContact(job.creator)}
                   />
                   <Button
-                  small
-                  bgColor={colors.warning}
-                  caption="上传视频链接"
-                  onPress={() => this.props.navigation.navigate('UploadMedia', {id: job._id})}
+                    small
+                    bgColor={colors.warning}
+                    caption="上传视频链接"
+                    onPress={() => this.props.navigation.navigate('UploadMedia', {id: job._id})}
                   />
                 </View>
               </View>
@@ -92,15 +85,15 @@ export default class ProviderJobsList extends React.Component {
                <View stye={styles.textContainer}>
                 <View style={styles.buttonsContainer}>
                   <Button
-                  small
-                  caption="联系需求方"
-                  onPress={() => this.handleContact(job.creator)}
+                    small
+                    caption="联系需求方"
+                    onPress={() => this.handleContact(job.creator)}
                   />
                   <Button
-                  small
-                  bgColor={colors.warning}
-                  caption="上传视频链接"
-                  onPress={() => this.props.navigation.navigate('UploadMedia', {id: job._id})}
+                    small
+                    bgColor={colors.warning}
+                    caption="上传视频链接"
+                    onPress={() => this.props.navigation.navigate('UploadMedia', {id: job._id})}
                   />
                 </View>
                </View>

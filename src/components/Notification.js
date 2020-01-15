@@ -1,22 +1,18 @@
 import { ListItem, Badge } from 'react-native-elements'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, {Component} from 'react'
-import {Button} from '../components'
-import Icon from 'react-native-vector-icons/Feather';
 import { colors, fonts } from '../styles';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import {findIndex} from 'lodash'
 import { createStructuredSelector } from 'reselect';
-import { NavigationActions } from 'react-navigation'
 import {getContacts, clearUnreadMessages} from '../redux/modules/auth'
 import { contactsSelector, unreadMessagesSelector} from '../redux/selectors'
 import constants from '../constants'
-import { loadItem, deleteItem } from '../redux/api/storage';
-import { Position } from 'toasted-notes';
+
 const iconTransaction = require('../../assets/images/transaction.png')
 const iconNotification = require('../../assets/images/notification.png')
 const iconActivity = require('../../assets/images/activity.png')
+
 class Notification extends React.Component {
     constructor(props) {
         super(props)
@@ -81,14 +77,14 @@ class Notification extends React.Component {
                 {!!contacts.length && contacts.map((contact, i) => (
                     typeof(contact) == "object" &&
                     <ListItem
-                    key={i}
-                    leftAvatar={{ source: { uri: constants.BASE_URL + contact.photo } }}
-                    avatarStyle={{ width: 100, height: 100, backgroundColor: 'white'}}
-                    title={contact.userName}
-                    subtitle={contact.overview}
-                    onPress={() => this.startChat(contact._id)}
-                    bottomDivider
-                    badge={!!unread[contact._id] ? { value: unread[contact._id] , textStyle: { color: 'white' }, badgeStyle: { backgroundColor: 'red' } }: null}
+                        key={i}
+                        leftAvatar={{ source: { uri: constants.BASE_URL + contact.photo } }}
+                        avatarStyle={{ width: 100, height: 100, backgroundColor: 'white'}}
+                        title={contact.userName}
+                        subtitle={contact.overview}
+                        onPress={() => this.startChat(contact._id)}
+                        bottomDivider
+                        badge={!!unread[contact._id] ? { value: unread[contact._id] , textStyle: { color: 'white' }, badgeStyle: { backgroundColor: 'red' } }: null}
                     />
                 ))}
             </View>

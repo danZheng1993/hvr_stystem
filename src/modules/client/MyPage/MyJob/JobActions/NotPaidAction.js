@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -12,6 +12,7 @@ import {updateMyJobsList, cancelJob, removeFromMyJobsList} from '../../../../../
 import {settingsListSelector} from '../../../../../redux/selectors'
 import {Button, Text} from '../../../../../components'
 import {colors} from '../../../../../styles'
+
 const NotPaidAction = props => {
   const {settings, job} = props
   return (

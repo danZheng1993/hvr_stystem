@@ -7,15 +7,12 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import { withState,compose } from 'recompose';
+import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
-import { Button, Loader, MediaList, RadioGroup, NoData, UsersList, NewsList } from '../components'
-import {ListItem} from 'react-native-elements'
-import { fonts, colors } from '../styles';
-import constants from '../constants'
-import { searchMedia } from '../redux/modules/media'
-import { mediasSearchResultSelector , mediasloadingSelector,  profileSelector, usersSearchResultSelector, newsSearchResultSelector } from '../redux/selectors'
+import { MediaList, NoData, UsersList, NewsList } from '../components'
+import { colors } from '../styles';
+import { mediasSearchResultSelector, usersSearchResultSelector, newsSearchResultSelector } from '../redux/selectors'
 
 
 class SearchResult extends React.Component {
@@ -34,7 +31,7 @@ class SearchResult extends React.Component {
 
   render() {    
     const {type} = this.state
-    const {medias, users, news, loading} = this.props
+    const {medias, users, news} = this.props
     return (
       <ScrollView style={[styles.container, type == 'news' && {backgroundColor: colors.white}]}>
         {type == 'media' &&
