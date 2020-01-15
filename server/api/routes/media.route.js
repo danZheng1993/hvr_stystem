@@ -22,6 +22,7 @@ router.route('/uploadlink/')
 router.route('/:mediaId')
   .get(mediaCtrl.read)
   .put(mediaCtrl.update)
+  .post(mediaCtrl.increaseVisits)
   .delete(mediaCtrl.remove);
 
 router.param('mediaId', mediaCtrl.getMediaByID);

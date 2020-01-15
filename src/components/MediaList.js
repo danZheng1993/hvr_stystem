@@ -15,6 +15,7 @@ import { colors } from '../styles';
 import constants from '../constants'
 import { Text, toast} from '../components'
 import { addToCollections, removeFromCollections, addToAttentions } from '../redux/modules/auth'
+import { increaseVisits } from '../redux/modules/media'
 import { authloadingSelector, profileSelector } from '../redux/selectors'
 import NoData from './NoData';
 class MediaList extends React.Component {
@@ -22,8 +23,9 @@ class MediaList extends React.Component {
     super(props)
     
   }
-  handlePlay(path) {
-    this.props.navigation.navigate('Player', {url: path})
+  handlePlay(media) {
+    this.props.increaseVisits({id: media._id})
+    this.props.navigation.navigate('Player', {url: media.path})
   }
 
   handleCollect(id) {
@@ -55,7 +57,7 @@ class MediaList extends React.Component {
         <ScrollView>      
          {Array.isArray(medias) ? medias.map((media, index) => (
            typeof(media) == 'object' && <View key={index}>
-              <TouchableOpacity onPress={() => this.handlePlay(media.path)} style={styles.touch}>
+              <TouchableOpacity onPress={() => this.handlePlay(media)} style={styles.touch}>
                 <ImageBackground
                   source={{ uri: constants.MEDIA_BASE_URL + media.snapshot }}
                   style={{width: '100%', height: '100%', flexDirection: 'column-reverse'}}
@@ -140,7 +142,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = {
   addToCollections,
   addToAttentions,
-  removeFromCollections
+  removeFromCollections,
+  increaseVisits
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

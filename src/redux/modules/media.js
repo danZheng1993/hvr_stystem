@@ -1,6 +1,16 @@
 import { createAction, handleActions } from 'redux-actions'
 import { requestSuccess, requestFail, requestPending } from '../api/request'
 import { omit, reject } from 'lodash'
+import {findIndex} from 'lodash'
+
+const updateVisits = (list, payload) => {
+  let index = findIndex(list, {_id: payload._id})
+  if (index == -1) return
+  const updated = list[index]
+  updated.visits = payload.visits
+  list.splice(index, 1, updated);
+  return [...list]
+}
 
 // ------------------------------------
 // Constants
@@ -14,6 +24,7 @@ export const SEARCH_MEDIA = 'SEARCH_MEDIA'
 export const UPLOAD_LINK = 'UPLOAD_LINK'
 export const GET_MY_MEDIAS = 'GET_MY_MEDIAS'
 export const REMOVE_COLLECTION = 'REMOVE_COLLECTION'
+export const INCREASE_VISITS = 'INCREASE_VISITS'
 export const SET_MEDIAS_PAGINATION = 'SET_MEDIAS_PAGINATION'
 
 // ------------------------------------
@@ -28,6 +39,7 @@ export const updateMedia = createAction(UPDATE_MEDIA)
 export const deleteMedia = createAction(DELETE_MEDIA)
 export const searchMedia = createAction(SEARCH_MEDIA)
 export const uploadLink = createAction(UPLOAD_LINK)
+export const increaseVisits = createAction(INCREASE_VISITS)
 export const removeCollection = createAction(REMOVE_COLLECTION)
 
 const initialState = {
@@ -179,6 +191,31 @@ export default handleActions({
   [requestFail(UPDATE_MEDIA)]: (state, { payload }) => ({
     ...state,
     status: requestFail(UPDATE_MEDIA),
+    error: payload,
+    loading: false
+  }),
+
+  [requestPending(INCREASE_VISITS)]: (state, { payload }) => ({
+    ...state,
+    status: requestPending(INCREASE_VISITS),
+    error: null,
+    loading: true,
+  }),
+
+  [requestSuccess(INCREASE_VISITS)]: (state, { payload }) => ({
+    ...state,
+    status: requestSuccess(INCREASE_VISITS),
+    myMedias: updateVisits(state.myMedias, payload),
+    medias: updateVisits(state.medias, payload),
+    searchResult: updateVisits(state.searchResult, payload),
+    media: payload,
+    error: null,
+    loading: false
+  }),
+
+  [requestFail(INCREASE_VISITS)]: (state, { payload }) => ({
+    ...state,
+    status: requestFail(INCREASE_VISITS),
     error: payload,
     loading: false
   }),

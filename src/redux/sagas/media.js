@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects'
 import { get, pick } from 'lodash'
-import { GET_MEDIA, GET_MEDIAS, CREATE_MEDIA, UPDATE_MEDIA, DELETE_MEDIA, SEARCH_MEDIA, UPLOAD_LINK, GET_MY_MEDIAS }
+import { GET_MEDIA, GET_MEDIAS, CREATE_MEDIA, UPDATE_MEDIA, DELETE_MEDIA, SEARCH_MEDIA, UPLOAD_LINK, GET_MY_MEDIAS, INCREASE_VISITS }
   from '../modules/media'
 import apiCall from '../api/apiCall'
 
@@ -40,6 +40,12 @@ const doUpdateMedia = apiCall({
   path: ({ payload }) => `/medias/${payload.id}/`
 })
 
+const doIncreaseVisits = apiCall({
+  type: INCREASE_VISITS,
+  method: 'post',
+  path: ({ payload }) => `/medias/${payload.id}/`
+})
+
 const doUploadLink = apiCall({
   type: UPLOAD_LINK,
   method: 'post',
@@ -62,4 +68,5 @@ export default function* rootSaga () {
   yield takeLatest(DELETE_MEDIA, doDeleteMedia)
   yield takeLatest(SEARCH_MEDIA, doSearchMedia)
   yield takeLatest(UPLOAD_LINK, doUploadLink)
+  yield takeLatest(INCREASE_VISITS, doIncreaseVisits)
 }

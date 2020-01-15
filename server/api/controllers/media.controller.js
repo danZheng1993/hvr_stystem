@@ -73,6 +73,18 @@ function update(req, res, next) {
   .catch(next);
 }
 
+function increaseVisits(req, res, next) {
+  console.log("increase visits", req.body)
+  if (req.media) {
+    Object.assign(req.media, {visits: req.media.visits + 1});
+  }
+  req.media.save()
+  .then((updatedMedia) => {
+    res.json(updatedMedia);
+  })
+  .catch(next);
+}
+
 function read(req, res) {
   Media.findById(req.media._id)
   .populate('creator', 'userName phoneNumber location companyName')
@@ -204,6 +216,7 @@ function getMediaByID(req, res, next, id) {
 module.exports = {
   create,
   update,
+  increaseVisits,
   read,
   list,
   remove,
