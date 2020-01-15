@@ -103,6 +103,13 @@ function cancel(req, res, next) {
   .catch(next);
 }
 
+function prompt(req, res, next) {
+  console.log("prompt job", req.job)
+  xmpp.send(`${req.job.hired}@desktop-jgen8l2/spark`, 'PLEASE!!!', false);
+  res.status(200).json({ message: 'success' });
+  return;
+}
+
 function giveFeedback(req, res, next) {
   console.log("giveFeedback?", req.body)
   if (!req.body) {4
@@ -270,6 +277,7 @@ module.exports = {
   getFeedback,
   hire,
   cancel,
+  prompt,
   giveFeedback,
   weeklyReport,
   getJobByID,

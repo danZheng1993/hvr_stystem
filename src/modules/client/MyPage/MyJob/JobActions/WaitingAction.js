@@ -7,14 +7,10 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { cancelJob, removeFromMyJobsList} from '../../../../../redux/modules/job'
-import {Button, Text} from '../../../../../components'
+import { cancelJob, removeFromMyJobsList, promptJob} from '../../../../../redux/modules/job'
+import {Button, Text, toast} from '../../../../../components'
 import {colors} from '../../../../../styles'
 import {settingsListSelector} from '../../../../../redux/selectors'
-
-const prompt = (id) => {
-  alert("请求成功")
-}
 
 const WaitingAction = props => {
   const {settings, job} = props
@@ -41,7 +37,10 @@ const WaitingAction = props => {
             small
             bgColor={colors.warning}
             caption="催一催"
-            onPress={() => prompt(job._id)}
+            onPress={() => props.promptJob({
+              id: job._id,
+              success: () => toast("请求成功")
+            })}
           />
         </View>
       </View>
@@ -71,6 +70,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   cancelJob,
+  promptJob,
   removeFromMyJobsList
 };
 

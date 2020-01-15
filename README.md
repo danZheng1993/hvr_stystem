@@ -4,15 +4,15 @@ ISSUES
 - chatting contact list 에서 마지막 통보문 얻기
 - /media보면  시청수 증가
 - invoice 에서 type 설정
-- jobs에서 지불할때 시간을 자료기지에 보관
+- /jobs에서 지불할때 시간을 자료기지에 보관
 - balance에 돈 쌓이기
-- 수요자가 독촉을 하면 message보내기
+- /수요자가 독촉을 하면 message보내기
 - Provider에 대한 론리 수정(VIP설정)
 - service 항목 설정 잘 안됨
 - 출금에 대한 대면
 - 메쎄지 관리(통지, 알림, 거래메쎄지, 메쎄지 누르면 해당부분으로 가고 목록에서 없어지기)
 - 화표 upload
-- ProviderWork 에서 media현시 style
+- MyVR 에서 media현시 style
 - 
 # HVR System 🚀
 
