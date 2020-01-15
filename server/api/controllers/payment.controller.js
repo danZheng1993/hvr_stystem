@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Payment = require('../models/payment.model');
 const Setting = require('../models/setting.model');
 const Job = require('../models/job.model');
+const User = require('../models/user.model');
 const ROLES = require('../constants/role');
 const STATUS = require('../constants/status');
 const xmpp = require('simple-xmpp')
@@ -46,8 +47,12 @@ function payUpfront(req, res, next) {
       .then((newJob) => {
         payment.save()
         .then((newPayment) => {
-          xmpp.send(`${updatedJob.hired}@desktop-jgen8l2/spark`, `${req.user.userName} paid ${updatedJob.upfront}`, false);
-          res.json(newJob);
+          User.updateOne({_id: newJob.hired}, { $inc: {balance: amount} }).exec()
+          .then((newuser) => {
+            xmpp.send(`${updatedJob.hired}@desktop-jgen8l2/spark`, `${req.user.userName} paid ${updatedJob.upfront}`, false);
+            res.json(newJob);
+          })
+          .catch(next);
         })
         .catch(next);
       })
@@ -100,8 +105,13 @@ function finalPay(req, res, next) {
       .then((newJob) => {
         payment.save()
         .then((newPayment) => {
-          xmpp.send(`${updatedJob.hired}@desktop-jgen8l2/spark`, `${req.user.userName} paid ${job.upfront}`, false);
-          res.json(newJob);
+          User.updateOne({_id: newJob.hired}, { $inc: {balance: amount} }).exec()
+          .then((newuser) => {
+            xmpp.send(`${updatedJob.hired}@desktop-jgen8l2/spark`, `${req.user.userName} paid ${job.upfront}`, false);
+            res.json(newJob);
+          })
+          .catch(next);
+
         })
         .catch(next);
       })
