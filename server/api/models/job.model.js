@@ -12,6 +12,12 @@ const JobSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  upfrontDate: {
+    type: Date,
+  },
+  finalPayDate: {
+    type: Date,
+  },
   location: {
     type: String,
     default: ''

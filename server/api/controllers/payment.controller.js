@@ -37,6 +37,7 @@ function payUpfront(req, res, next) {
       let updatedJob = new Job(
         Object.assign(job, {
           upfront: amount,
+          upfrontDate: new Date(),
           status: STATUS.WAITING,
         })
       )
@@ -90,6 +91,7 @@ function finalPay(req, res, next) {
       let updatedJob = new Job(
         Object.assign(job, {
           upfront: amount + job.upfront,
+          finalPayDate: new Date(),
           status: STATUS.GIVING_FEEDBACK,
         })
       )
