@@ -3,14 +3,13 @@ import { View, StyleSheet } from 'react-native'
 import { TextInput } from 'react-native-paper';
 
 import { colors } from '../../../styles'
-import { Button, Text } from '../../../components';
+import { Button, Text, RadioForm } from '../../../components';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 
 import { updateInvoice, updateMyInvoiceList } from '../../../redux/modules/invoice'
-import RadioForm from 'react-native-simple-radio-button';
 
 class InvoiceForm extends React.Component {
   constructor(props) {
@@ -18,26 +17,9 @@ class InvoiceForm extends React.Component {
     this.state = {
       invoice: {},
       headerType: '个人/事业单位',
-      radioGroup: [
-        {
-            label: '个人/事业单位',
-            value: '个人/事业单位'
-        },
-        {
-            label: '单位',
-            value: '单位',
-        },
-      ],
-      booleanGroup: [
-        {
-            label: '是',
-            value: true
-        },
-        {
-            label: '不',
-            value: false,
-        },
-      ],
+      headerTypes: ['个人/事业单位', '单位'],
+      booleanGroups: ['是', '否'],
+      booleanGroupsValue: [true, false],
       isMail: false,
       headerContent: '',
       mailAddress: '',
@@ -84,13 +66,10 @@ class InvoiceForm extends React.Component {
             <Text size={18} black style={{paddingLeft: 20}}>发票抬头</Text>
             <View style={styles.underline}>
               <RadioForm
-                radio_props={this.state.radioGroup}
-                initial={0}
-                formHorizontal={true}
-                labelHorizontal={true}
-                buttonColor={'#000000'}
-                animation={true}
-                onPress = {(value) => {this.setState({headerType: value})}}
+                items={this.state.headerTypes}
+                defaultIndex={0}
+                onChange={value => this.setState({headerType: this.state.headerTypes[value]})}
+                size={14}
               />
             </View>
             <View style={{alignSelf: 'stretch'}}>
@@ -120,13 +99,9 @@ class InvoiceForm extends React.Component {
               <Text size={18} black style={{paddingLeft: 20}}>是否邮寄</Text>
               <View style={styles.underline}>
                 <RadioForm
-                  radio_props={this.state.booleanGroup}
-                  initial={1}
-                  formHorizontal={true} 
-                  labelHorizontal={true}
-                  buttonColor={'#000000'}
-                  animation={true}
-                  onPress = {(value) => {this.setState({isMail: value})}}
+                  items={this.state.booleanGroups}
+                  onChange={value => this.setState({isMail: this.state.booleanGroupsValue[value]})}
+                  size={14}
                 />
               </View>
             </View>
@@ -169,7 +144,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     paddingVertical: 10,
-    marginVertical: 10
+    marginVertical: 10,
+    height: 50
   },
   componentsSection: {
     flexDirection: 'row',

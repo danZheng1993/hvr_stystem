@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Form } from 'react-native-validator-form';
-// import RadioForm from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker'
 import { Button, Loader, toast, RadioForm } from '../../components';
 import Modal from "react-native-modal";
@@ -67,7 +66,7 @@ class PostJob extends React.Component {
 
   handleClick = () => {
     const {subcategory, scene, type, description, budget, isPublic, service, count, start, end, location, systembudget} = this.state
-    var body = {subcategory, scene, type, description, budget, isPublic: !!isPublic, location, services: service, systembudget}
+    var body = {subcategory, scene, type, description, budget, isPublic: !isPublic, location, services: service, systembudget}
     if (type == 'VR全景直播') {
       body = {...body, start, end}
     } else {
@@ -154,7 +153,7 @@ class PostJob extends React.Component {
             </View>
             <View style={[styles.underline, styles.stretch]}>
               <Text size={14} bold>是否公开</Text>
-              <Text>{isPublic? '公开': '非公开'}</Text>
+              <Text>{isPublic? '非公开': '公开'}</Text>
             </View>
             <View style={styles.stretch}>
               <Text size={14} bold>需求描述</Text>
@@ -280,7 +279,7 @@ class PostJob extends React.Component {
                   </Text>
                   <RadioForm
                     items={['是', '否']}
-                    selectedIndex={this.state.radioGroup[index]}
+                    defaultIndex={this.state.radioGroup[index]}
                     onChange={value => this.handleSelect(index, value)}
                     size={14}
                   />
@@ -330,7 +329,7 @@ class PostJob extends React.Component {
             </View>
             <RadioForm
               items={['是', '否']}
-              selectedIndex={this.state.isPublic}
+              defaultIndex = {isPublic}
               onChange={value => this.setState({isPublic: value})}
               size={14}
             />
