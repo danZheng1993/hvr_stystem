@@ -7,6 +7,7 @@ import {
 import {Text} from './StyledText'
 import { colors } from '../styles';
 import constants from '../constants';
+import { TouchableRipple } from 'react-native-paper';
 
 export default class Profile extends React.Component {
   render() {   
@@ -15,10 +16,12 @@ export default class Profile extends React.Component {
       <View >
         {user &&
           <View style = {styles.row}>
+          <TouchableRipple onPress={() => this.props.navigation.navigate('BasicProfile', {update: 'photo'})}>
             <Image
               source={{uri: constants.BASE_URL + (user.photo ? user.photo: 'default.png')}}
               style={styles.photo}
             />
+          </TouchableRipple>
             <View style={{justifyContent: 'center',}}>
               <Text white bold size={18}>{user.userName}</Text>
               <Text white size={12}>{user.overview.slice(0,15)}</Text>

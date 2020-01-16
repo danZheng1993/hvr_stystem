@@ -38,7 +38,10 @@ const SettingSchema = new Schema({
     type: Number,
     default: 123
   },
-
+  service: {
+    type: String,
+    default: ''
+  },
 }, {
   timestamp: true,
 });

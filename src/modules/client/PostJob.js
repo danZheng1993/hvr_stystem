@@ -10,9 +10,9 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Form } from 'react-native-validator-form';
-import RadioForm from 'react-native-simple-radio-button';
+// import RadioForm from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker'
-import { Button, Loader, toast } from '../../components';
+import { Button, Loader, toast, RadioForm } from '../../components';
 import Modal from "react-native-modal";
 
 import { colors } from '../../styles';
@@ -34,22 +34,13 @@ class PostJob extends React.Component {
       subcategory: '',
       scenes: [],
       scene: '',
-      radioGroup: [
-        {
-            label: '是',
-            value: true
-        },
-        {
-            label: '不',
-            value: false,
-        },
-      ],
+      radioGroup: [],
+      services: [],
       service: '',
       description: '',
       budget: '',
       count: '',
-      isPublic: false,
-      serviceOptions : [],
+      isPublic: 0,
       isLive: false,
       isConfirm: false,
       start: new Date(),
@@ -64,7 +55,10 @@ class PostJob extends React.Component {
     const types = settings.type.split(",")
     const scenes = settings.scene.split(",")
     const subcategories = settings.subcategory.split(",")
-    this.setState({types, scenes, subcategories})
+    const services = settings.service.split(",")
+    let radioGroup = []
+    for (let i = 0; i<services.length; i++) radioGroup.push(1)
+    this.setState({types, scenes, subcategories, services, radioGroup})
     types.length && this.setState({type: types[0]})
     scenes.length && this.setState({scene: scenes[0]})
     subcategories.length && this.setState({subcategory: subcategories[0]})
@@ -73,7 +67,7 @@ class PostJob extends React.Component {
 
   handleClick = () => {
     const {subcategory, scene, type, description, budget, isPublic, service, count, start, end, location, systembudget} = this.state
-    var body = {subcategory, scene, type, description, budget, isPublic, location, services: service, systembudget}
+    var body = {subcategory, scene, type, description, budget, isPublic: !!isPublic, location, services: service, systembudget}
     if (type == 'VR全景直播') {
       body = {...body, start, end}
     } else {
@@ -87,28 +81,23 @@ class PostJob extends React.Component {
   };
 
   handleConfirm = () => {
-    const {serviceOptions, count, budget, description} = this.state
+    const {count, budget, description} = this.state
     if (!description || !count || !budget || isNaN(count) || isNaN(budget)) {
       toast('Wrong Input!')
       return
     }
-    const {services} = this.props
+    const {services, radioGroup} = this.state
     let str = ''
-    for (let i=0; i<serviceOptions.length; i++) {
-      str += services[serviceOptions[i]].service + ' '
+    for (let i=0; i < services.length; i++) {
+      !radioGroup[i] && (str += services[i]+ ' ')
     }
     this.setState({isConfirm: true, service: str})
   }
 
-  onhandleService = (value, index) => {
-    let {serviceOptions} = this.state
-    let option = serviceOptions.indexOf(index)
-    if (value && option == -1) {
-      serviceOptions.push(index)
-    } else if(!value && option != -1) {
-      serviceOptions.splice(index, 1);
-    }
-    this.setState({serviceOptions})
+  handleSelect = (index, value) => {
+    let {radioGroup} = this.state
+    radioGroup[index] = value
+    this.setState({radioGroup})
   }
 
   setType = (type) => {
@@ -125,8 +114,8 @@ class PostJob extends React.Component {
   }
 
   render() { 
-    const { services, jobsloading, settings} = this.props
-    const { types, scenes, subcategories } = this.state
+    const { jobsloading, settings} = this.props
+    const { types, scenes, subcategories, services } = this.state
     const {isLive, isConfirm, location, type, count, scene, subcategory, service, description, isPublic, budget, systembudget} = this.state
     const panoramaPrice = settings.panoramaPrice || 0
     return (
@@ -287,16 +276,13 @@ class PostJob extends React.Component {
                 {Array.isArray(services) && services.map((service, index) => (
                   <View key={index}>
                   <Text black>
-                    {service.name}
+                    是否需要{service}?
                   </Text>
                   <RadioForm
-                    radio_props={this.state.radioGroup}
-                    initial={1}
-                    formHorizontal={true}
-                    labelHorizontal={true}
-                    buttonColor={'#000000'}
-                    animation={true}
-                    onPress={(value) => {this.onhandleService(value, index)}}
+                    items={['是', '否']}
+                    selectedIndex={this.state.radioGroup[index]}
+                    onChange={value => this.handleSelect(index, value)}
+                    size={14}
                   />
                   </View>
                 ))}
@@ -343,13 +329,10 @@ class PostJob extends React.Component {
               </Text>
             </View>
             <RadioForm
-              radio_props={this.state.radioGroup}
-              initial={1}
-              formHorizontal={true}
-              labelHorizontal={true}
-              buttonColor={'#000000'}
-              animation={true}
-              onPress = {(value) => {this.setState({isPublic: value})}}
+              items={['是', '否']}
+              selectedIndex={this.state.isPublic}
+              onChange={value => this.setState({isPublic: value})}
+              size={14}
             />
           </View>
           <Button

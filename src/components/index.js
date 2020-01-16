@@ -1,6 +1,7 @@
 // ## Generator Components Imports
 import Button from './Button';
 import RadioGroup from './RadioGroup';
+import RadioForm from './RadioForm';
 import Dropdown from './Dropdown';
 import GridRow from './GridRow';
 import TextInput from './TextInput';
@@ -32,6 +33,7 @@ export {
   Bell,
   GoBack,
   RadioGroup,
+  RadioForm,
   Dropdown,
   GridRow,
   TextInput,
