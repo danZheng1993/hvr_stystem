@@ -38,7 +38,6 @@ const InvoiceSchema = new Schema({
   },
   taxNumber: {
     type: String,
-
   },
   isMail: {
     type: Boolean,

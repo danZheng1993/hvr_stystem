@@ -28,7 +28,7 @@ class MyPage extends React.Component {
     const {profile, unread, medias} = this.props
     const jobStatus = [
       {title: '竞标中', icon: iconBidding},
-      {title: '待支付', icon: iconPaying},
+      {title: '待付款', icon: iconPaying},
       {title: '待拍摄', icon: iconWaiting},
       {title: '待验收', icon: iconTesting},
       {title: '评价', icon: iconFeedback},

@@ -81,6 +81,7 @@ function getMyInvoice(req, res, next) {
     }
   }
   Invoice.find(where)
+  .populate('jobID', 'type')
   .then((entries) => {
     res.json(entries);
   })

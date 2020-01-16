@@ -47,7 +47,7 @@ class RequestInvoice extends React.Component {
           {Array.isArray(myInvoice) && myInvoice.map((invoice, index) => (
             <View style={styles.componentsSection} key={index}>
               <View style={{padding: 15}}>
-                <Text>全景制作（无拍摄，含简单后期）</Text>
+                <Text>{invoice.jobID.type}</Text>
                 <Text size={18} color={colors.secondary}>合同金额 : ¥{invoice.price}</Text>
               </View>
               <TouchableOpacity 

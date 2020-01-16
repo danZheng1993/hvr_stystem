@@ -75,10 +75,17 @@ class PostJob extends React.Component {
     this.setState({isConfirm: false})
     this.props.createJob({
       body,
-      success: () => this.props.navigation.navigate('ClientJob')
+      success: () => this.handleSuccess()
     })
   };
 
+  handleSuccess = () => {
+    const {types, scenes, subcategories, services} = this.state
+    let radioGroup = []
+    for (let i = 0; i<services.length; i++) radioGroup.push(1)
+    this.setState({type: types[0], scene: scenes[0], subcategory: subcategories[0], description: '', budget: '', isPublic: 0, location: '北京', systembudget: 0, service: '', radioGroup, count: ''})
+    this.props.navigation.navigate('ClientJob')
+  }
   handleConfirm = () => {
     const {count, budget, description} = this.state
     if (!description || !count || !budget || isNaN(count) || isNaN(budget)) {
@@ -176,17 +183,16 @@ class PostJob extends React.Component {
           onSubmit={this.handleConfirm}
         >
           <View style={[styles.componentsSection, styles.stretch]} >
-            <Text>拍摄城市: </Text> 
+            <Text black>拍摄城市: </Text> 
             <Text color={colors.primary} onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}>{location} ></Text>
           </View>
           <View style={styles.componentsSection} >
-            <View style={styles.row}>
-              <Text style={{flex: 1}} size={14}>服务类别:</Text>
+            <View style={[styles.row]}>
+              <Text style={{flex: 1}} size={14} black>服务类别:</Text>
               <View style={styles.border}>
                 <Picker
                   selectedValue={this.state.type}
                   style={styles.picker}
-                  itemStyle={{color: colors.secondary}}
                   onValueChange={(itemValue, itemIndex) =>
                     this.setType(itemValue)
                   }>
@@ -198,7 +204,7 @@ class PostJob extends React.Component {
             </View>
             { !isLive ?
             <View style={styles.row}>
-              <Text style={{flex: 1}} size={14}>场景数量:</Text>
+              <Text style={{flex: 1}} size={14} black>场景数量:</Text>
               <View style={{flex: 1, flexDirection: 'row'}}>
                 <TextInput
                   style={[styles.input, {width: '80%'}]}
@@ -237,7 +243,7 @@ class PostJob extends React.Component {
             </>
             }
             <View style={styles.row}>
-              <Text style={{flex: 1}} size={14}>拍摄场景:</Text>
+              <Text style={{flex: 1}} size={14} black>拍摄场景:</Text>
               <View style={styles.border}>
                 <Picker              
                   selectedValue={this.state.scene}
@@ -252,7 +258,7 @@ class PostJob extends React.Component {
               </View>
             </View>
             <View style={styles.row}>
-              <Text style={{flex: 1}} size={14}>行业类别:</Text>
+              <Text style={{flex: 1}} size={14} black>行业类别:</Text>
               <View style={styles.border}>
                 <Picker
                   selectedValue={this.state.subcategory}
@@ -268,8 +274,8 @@ class PostJob extends React.Component {
             </View>
           </View>
 
-          <View style = {styles.componentsSection}>
-            <Text size={14}>其他需求</Text>
+          <View style = {[styles.componentsSection, {paddingRight: 15}]}>
+            <Text size={14} style={{marginBottom: 10}}>其他需求</Text>
             <View style={{flexDirection: 'row'}}>
               <View style={{flex: 1}}>
                 {Array.isArray(services) && services.map((service, index) => (
@@ -293,8 +299,8 @@ class PostJob extends React.Component {
             </View>
           </View>
 
-          <View style= {styles.componentsSection}>
-            <Text size={14}>其他需求</Text>
+          <View style= {[styles.componentsSection, {paddingHorizontal: 15}]}>
+            <Text size={14} style={{paddingLeft: 15}}>其他需求</Text>
             <TextInput
               style={[styles.input,{ justifyContent: 'flex-start', padding: 0 }]}
               multiline={true}
@@ -372,7 +378,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     height:20,
-    fontSize: 4,
+    color: colors.gray,
   }, 
   underline: {
     borderBottomColor: colors.greybackground,
@@ -393,8 +399,7 @@ const styles = StyleSheet.create({
   },
   componentsSection: {
     backgroundColor: colors.white,
-    paddingRight: 15,
-    paddingLeft: 30,
+    paddingHorizontal: 30,
     paddingVertical: 10,
     marginBottom: 20,
     borderRadius: 5,
