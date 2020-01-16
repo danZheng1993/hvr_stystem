@@ -44,6 +44,7 @@ import ProviderJobDetail from '../provider/MyPage/MyJob/JobDetail';
 import UploadMedia from '../provider/MyPage/MyJob/UploadMedia';
 
 import Chatting from '../../components/Chatting';
+import ViewInvoice from '../../components/ViewInvoice';
 import WebViewer from '../../components/WebViewer';
 import SearchBar from '../../components/SearchBar';
 import Notification from '../../components/Notification';
@@ -424,6 +425,13 @@ const stackNavigator = createStackNavigator(
       screen: Chatting,
       navigationOptions: {
         title: '大众传媒',
+      },
+    },
+
+    ViewInvoice: {
+      screen: ViewInvoice,
+      navigationOptions: {
+        title: '',
       },
     },
 

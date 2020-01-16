@@ -3,6 +3,9 @@ const Invoice = require('../models/invoice.model');
 const ROLES = require('../constants/role');
 const STATUS = require('../constants/status')
 const xmpp = require('simple-xmpp')
+var formidable = require('formidable');
+var fs = require('fs');
+var path = require('path')
 
 function create(req, res, next) {
   const invoice = new Invoice(req.body);
@@ -114,12 +117,49 @@ function getInvoiceByID(req, res, next, id) {
   .catch(next);
 }
 
+function upload(req, res, next) {
+  console.log(">>uploadFile")
+  var form = new formidable.IncomingForm();
+  form.parse(req, function (err, fields, files) {
+    if (!files) return;
+    var oldpath = files.photo.path;
+    var directory = process.cwd() + '\\public\\invoiceImage\\'
+    var fileName = req.invoice._id + path.extname(files.photo.name);
+    fs.readFile(oldpath, function (err, data) {
+      if (err) throw err;
+      
+      // Write the file
+      fs.writeFile(directory + fileName, data, function (err) {
+          if (err) throw err;
+          res.end();
+          console.log('File written!');
+      });
+      
+      // Delete the file
+      fs.unlink(oldpath, function (err) {
+          if (err) throw err;
+      });
+      
+    });
+    console.log("update Invoice...")
+    Object.assign(req.invoice, {path: fileName, status: STATUS.INVOICE_RECEIVED});
+
+    req.invoice.save()
+    .then((updatedInvoice) => {
+      xmpp.send(`${updatedInvoice.sender}@desktop-jgen8l2/spark`, `${req.user.userName} billed invoice`, false);
+      res.json(updatedInvoice);
+    })
+    .catch(next);
+ });
+}
+
 module.exports = {
   create,
   update,
   read,
   list,
   remove,
+  upload,
   getInvoiceByID,
   getMyInvoice
 };

@@ -26,12 +26,14 @@ import MediaList from './MediaList'
 import Player from './Player'
 import Bell from './Bell'
 import GoBack from './GoBack'
+import ViewInvoice from './ViewInvoice'
 
 export {
   // ## Generator Components Exports
   Button,
   Bell,
   GoBack,
+  ViewInvoice,
   RadioGroup,
   RadioForm,
   Dropdown,

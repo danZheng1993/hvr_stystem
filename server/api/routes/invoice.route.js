@@ -15,6 +15,7 @@ router.route('/me/')
 
 router.route('/:invoiceId')
   .get(invoiceCtrl.read)
+  .post(invoiceCtrl.upload)
   .put(invoiceCtrl.update)
   .delete(invoiceCtrl.remove);
 

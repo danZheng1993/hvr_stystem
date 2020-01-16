@@ -31,7 +31,7 @@ class RequestInvoice extends React.Component {
         navigation.navigate('InvoiceForm', {invoice})
         break;
       case 'INVOICE_RECEIVED':
-        navigation.navigate('InvoiceForm', {invoice})
+        navigation.navigate('ViewInvoice', {invoice})
         break;
       default:
         break;
