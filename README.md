@@ -12,7 +12,7 @@ ISSUES
 - 출금에 대한 대면
 - 메쎄지 관리(통지, 알림, 거래메쎄지, 메쎄지 누르면 해당부분으로 가고 목록에서 없어지기)
 - 화표 upload
-- MyVR 에서 media현시 style
+- /MyVR 에서 media현시 style
 - 인증중심
 # HVR System 🚀
 
