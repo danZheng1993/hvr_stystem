@@ -39,6 +39,8 @@ import Provider from '../provider';
 import ApplyJob from '../provider/jobs/ApplyJob';
 import BillingInvoice from '../provider/MyPage/BillingInvoice'
 import Authentication from '../provider/MyPage/Authentication'
+import Balance from '../provider/MyPage/Balance'
+import Withdraw from '../provider/MyPage/Balance/Withdraw'
 import MyCreatedVR from '../provider/MyPage/MyCreatedVR'
 import ProviderJob from '../provider/MyPage/MyJob'
 import ProviderJobDetail from '../provider/MyPage/MyJob/JobDetail';
@@ -398,6 +400,20 @@ const stackNavigator = createStackNavigator(
       screen: Authentication,
       navigationOptions: {
         title: '认证中心',
+      },
+    },
+
+    Balance: {
+      screen: Balance,
+      navigationOptions: {
+        title: '我的余额',
+      },
+    },
+
+    Withdraw: {
+      screen: Withdraw,
+      navigationOptions: {
+        title: '提现',
       },
     },
 

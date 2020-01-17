@@ -16,7 +16,6 @@ class Authentication extends React.Component {
 
   render() {    
     const {profile} = this.props
-    console.warn(profile)
     return (
       <View style={styles.container}>
         <View style={styles.componentsSection}>
@@ -25,7 +24,10 @@ class Authentication extends React.Component {
         </View>
         <View style={styles.componentsSection}>
           <Text size={16} black bold>公司信息认证</Text>
-          <Text size={22} color={colors.primary} onPress={() => this.props.navigation.navigate('CompanyInfo')}>点击认证未认证</Text>
+          { profile.type !== '个人服务方'
+            ? <Text size={22}>已认证</Text>
+            : <Text size={22} color={colors.primary} onPress={() => this.props.navigation.navigate('CompanyInfo')}>点击认证</Text>
+          }
         </View>
       </View>
     );

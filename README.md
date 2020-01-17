@@ -13,8 +13,9 @@ ISSUES
 - 메쎄지 관리(통지, 알림, 거래메쎄지, 메쎄지 누르면 해당부분으로 가고 목록에서 없어지기)
 - 화표 system upload
 - /MyVR 에서 media현시 style
-- 인증중심
+- /인증중심
 - image변경안되는 문제
+- 직접 post에 대한 론리
 # HVR System 🚀
 
 *You're viewing the new and updated version of HVR System, previous version can be found under the [v1 branch](https://github.com/flatlogic/react-native-starter/tree/v1)*
