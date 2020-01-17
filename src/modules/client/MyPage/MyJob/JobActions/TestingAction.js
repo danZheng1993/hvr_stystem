@@ -41,7 +41,7 @@ const TestingAction = props => {
             small
             bgColor={colors.warning}
             caption="确认验收"
-            onPress={() => Confirm('提示', '是否确认验收并支付尾款', () => props.finalPay({
+            onPress={() => Confirm('提示', '确认支付吗？', () => props.finalPay({
               body: {id: props.job._id},
               success: (payload) => {props.updateMyJobsList(payload.data)}
             }))}

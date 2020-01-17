@@ -100,7 +100,7 @@ function cancel(req, res, next) {
   console.log(req.body)
   req.job.save()
   .then((updatedJob) => {
-    // xmpp.send(`${req.body.hired}@desktop-jgen8l2/spark`, 'congratulations! you were hired ', false);
+    xmpp.send(`${req.body.hired}@desktop-jgen8l2/spark`, 'job cancelled', false);
     res.json(updatedJob);
   })
   .catch(next);
