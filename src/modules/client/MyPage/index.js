@@ -140,7 +140,7 @@ class MyPage extends React.Component {
             title='帮助中心'
             hideChevron={false}
             chevron={{ color: colors.gray }}
-            onPress = {() => this.props.navigation.navigate('WebViewer', {url: constants + 'help.html'})}
+            onPress = {() => this.props.navigation.navigate('WebViewer', {url: constants.BASE_URL + 'help.html'})}
             bottomDivider
           />
           <ListItem

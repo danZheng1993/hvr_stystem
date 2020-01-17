@@ -96,7 +96,7 @@ class MyPage extends React.Component {
             title='认证中心'
             hideChevron={false}
             chevron={{ color: colors.gray }}
-            onPress = {() => this.props.navigation.navigate('MyContract')}
+            onPress = {() => this.props.navigation.navigate('Authentication')}
             bottomDivider
           />
           <ListItem
@@ -143,7 +143,7 @@ class MyPage extends React.Component {
             hideChevron={false}
             chevron={{ color: colors.gray }}
             bottomDivider
-            onPress = {() => this.props.navigation.navigate('WebViewer', {url: constants.BASE_URL + 'About_Us.html'})}
+            onPress = {() => this.props.navigation.navigate('WebViewer', {url: constants.BASE_URL + 'AboutUs.html'})}
           />
           <ListItem
             key={7}

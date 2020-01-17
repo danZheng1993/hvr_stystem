@@ -23,7 +23,7 @@ import { usersSearchResultSelector , usersloadingSelector,  profileSelector } fr
 class MyAttention extends React.Component {
   
   componentWillMount() {
-    const {searchUser, profile, navigation} = this.props
+    const {searchUser, profile} = this.props
     searchUser({
       body: {attentions: profile.attentions}
     })

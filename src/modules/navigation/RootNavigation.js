@@ -38,6 +38,7 @@ import ProviderDetail from '../client/Providers/ProviderDetail'
 import Provider from '../provider';
 import ApplyJob from '../provider/jobs/ApplyJob';
 import BillingInvoice from '../provider/MyPage/BillingInvoice'
+import Authentication from '../provider/MyPage/Authentication'
 import MyCreatedVR from '../provider/MyPage/MyCreatedVR'
 import ProviderJob from '../provider/MyPage/MyJob'
 import ProviderJobDetail from '../provider/MyPage/MyJob/JobDetail';
@@ -390,6 +391,13 @@ const stackNavigator = createStackNavigator(
       screen: BillingInvoice,
       navigationOptions: {
         title: '发票申请列表',
+      },
+    },
+
+    Authentication: {
+      screen: Authentication,
+      navigationOptions: {
+        title: '认证中心',
       },
     },
 
