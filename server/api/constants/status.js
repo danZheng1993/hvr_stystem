@@ -1,5 +1,6 @@
 module.exports = {
     BIDDING: '竞标中',
+    SELECTED: '已选用',
     NOT_PAID: '待付款',
     WAITING: '待拍摄',
     TESTING: '待验收',

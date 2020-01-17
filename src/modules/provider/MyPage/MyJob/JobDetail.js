@@ -2,13 +2,15 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  ScrollView
+  ScrollView,
+  TextInput
 } from 'react-native';
 
 import { colors } from '../../../../styles';
 import { JobDetail, Button, Text } from '../../../../components';
 import { getDateTimeStr } from '../../../../utils/helper';
 import {settingsListSelector} from '../../../../redux/selectors'
+import {cancelJob, removeFromMyJobsList, updateJob} from '../../../../redux/modules/job'
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -17,7 +19,7 @@ class ProviderJobDetail extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      price: 0,
+      price: '',
       job : null,
     }
   }
@@ -55,6 +57,28 @@ class ProviderJobDetail extends React.Component {
     )
   }
   
+  handleSuccess = (id) => {
+    this.props.removeFromMyJobsList({id})
+    this.props.navigation.goBack()
+  }
+
+  handleClick = () => {
+    let {price, job} = this.state
+    let {updateJob, navigation} = this.props
+    //  if (+price == 0) {
+    //    price = this.props.job.budget
+    //  }
+    if (!job) {
+      alert("error")
+      return
+    }
+    updateJob({
+      id: job._id,
+      body: {price, status: '待付款'},
+      success: () => navigation.goBack(),
+      fail: () => toast('失败')
+    })  
+  }
   render() {
     const { job } = this.state
     if (!job) {
@@ -81,14 +105,36 @@ class ProviderJobDetail extends React.Component {
             }
             {job.status == '已选用' && 
               <View style={styles.componentsSection}>
-                <Text size={14}>定价 : ¥{job.price}</Text>
-                <Text size={14}>订单总金额 : ¥{job.price}</Text>
+                <Text color={colors.redAlert}>提示：定价为最终项目价格，请在双方沟通确认后输入。</Text>
+                <View style={{flexDirection: 'row'}}>
+                  <Text>设置定价: </Text>
+                  <TextInput
+                    style={styles.input}
+                    keyboardType = 'numeric'             
+                    placeholder="输入报价"
+                    value={this.state.price}
+                    onChangeText={price => this.setState({ price })}
+                  />
+                </View>
                 <View style={styles.buttonsContainer}>
                   <Button
-                  small
-                  caption="联系需求方"
-                  onPress={() => this.props.navigation.navigate('Chatting', {to: job.creator})}
+                    small
+                    caption="联系需求方"
+                    onPress={() => this.props.navigation.navigate('Chatting', {to: job.creator})}
                   />
+                  <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <Text size={14} color={colors.primary}
+                      onPress={() => this.props.cancelJob({
+                        id: job._id,
+                        success: () => this.handleSuccess(job._id)
+                      })}>取消订单 </Text>
+                    <Button
+                      small
+                      bgColor={colors.warning}
+                      caption="投标"
+                      onPress={this.handleClick}
+                    />
+                  </View>
                 </View>
               </View>
             }
@@ -174,6 +220,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 5,
   },
+  input: {
+    height: 30,
+    marginRight: 10,
+    borderColor: colors.grey,
+    borderWidth: 1,
+    borderRadius: 2,
+    paddingVertical: 2,
+    paddingHorizontal: 10
+  },
 });
 
 const mapStateToProps = createStructuredSelector({
@@ -181,6 +236,9 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
+  cancelJob,
+  updateJob,
+  removeFromMyJobsList
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

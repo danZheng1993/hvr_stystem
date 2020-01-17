@@ -240,7 +240,7 @@ export default handleActions({
   [requestSuccess(UPDATE_JOB)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(UPDATE_JOB),
-    job: payload,
+    myJobs: refreshResult(state.myJobs, payload),
     error: null,
     loading: false
   }),

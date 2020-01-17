@@ -6,7 +6,10 @@ const STATUS = require('../constants/status')
 const xmpp = require('simple-xmpp')
 const _ = require('lodash')
 function create(req, res, next) {
-  const job = new Job({...req.body, creator: req.user._id});
+  let job = new Job({...req.body, creator: req.user._id});
+  if (req.body.hired) {
+    job = new Job({...req.body, creator: req.user._id, status: STATUS.SELECTED});
+  }
  // job.user = req.user._id;
 
   job.save()
