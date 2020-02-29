@@ -184,7 +184,7 @@ class PostJob extends React.Component {
           onSubmit={this.handleConfirm}
         >
           <View style={[styles.componentsSection, styles.stretch]} >
-            <Text black>拍摄城市: </Text> 
+            <Text black size={14}>城市选择: </Text> 
             <Text color={colors.primary} onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}>{location} ></Text>
           </View>
           <View style={styles.componentsSection} >
@@ -281,21 +281,23 @@ class PostJob extends React.Component {
               <View style={{flex: 1}}>
                 {Array.isArray(services) && services.map((service, index) => (
                   <View key={index}>
-                  <Text black>
-                    是否需要{service}?
-                  </Text>
-                  <RadioForm
-                    items={['是', '否']}
-                    defaultIndex={this.state.radioGroup[index]}
-                    onChange={value => this.handleSelect(index, value)}
-                    size={14}
-                  />
+                    <Text black>
+                      是否需要{service}?
+                    </Text>
+                    <View style={{width: '80%'}}>
+                      <RadioForm
+                        items={['是', '否']}
+                        defaultIndex={this.state.radioGroup[index]}
+                        onChange={value => this.handleSelect(index, value)}
+                        size={11}
+                      />
+                    </View>
                   </View>
                 ))}
               </View>
               <View style={{flex:1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, backgroundColor: colors.secondary, marginVertical: 20}}>
                 <Text white size={18}>平台预估价格</Text>
-                <Text white size={18}>¥{systembudget}</Text>
+                <Text white size={22} bold>¥{systembudget}</Text>
               </View>
             </View>
           </View>
@@ -303,7 +305,8 @@ class PostJob extends React.Component {
           <View style= {[styles.componentsSection, {paddingHorizontal: 15}]}>
             <Text size={14} style={{paddingLeft: 15}}>其他需求</Text>
             <TextInput
-              style={[styles.input,{ justifyContent: 'flex-start', padding: 0 }]}
+              textAlignVertical='top'
+              style={styles.input}
               multiline={true}
               maxLength={200}
               numberOfLines={6}
@@ -313,7 +316,7 @@ class PostJob extends React.Component {
             />
           </View>
           <View style={[styles.componentsSection, styles.stretch]}>
-            <View style={{flex: 1}}><Text>预算价格</Text></View>
+            <View style={{flex: 1}}><Text size={14}>预算价格</Text></View>
             <View style={{flex: 1, flexDirection: 'row'}}>
               <TextInput
                 style={[styles.input, {width: '80%'}]}
@@ -338,14 +341,14 @@ class PostJob extends React.Component {
               items={['是', '否']}
               defaultIndex = {isPublic}
               onChange={value => this.setState({isPublic: value})}
-              size={14}
+              size={12}
             />
           </View>
           <Button
             large
             bgColor={colors.secondary}
             style={styles.button}
-            caption="提交"
+            caption="提 交"
             onPress={() => this.refs.form.submit()}
           />
         </Form>   
@@ -388,7 +391,8 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'stretch',
-    marginBottom:50
+    marginBottom:50,
+    paddingVertical: 5
   },
   input: {
     height: 20,

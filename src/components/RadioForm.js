@@ -33,6 +33,7 @@ export default class RNSRadioGroup extends React.Component {
       style,
       size,
       small,
+      tintColor
     } = this.props
     const {selectedIndex} = this.state
     return (
@@ -54,7 +55,7 @@ export default class RNSRadioGroup extends React.Component {
               >
                 <Image
                   source={ isActive ? iconActive : iconInActive}
-                  style={styles.image} 
+                  style={[styles.image, tintColor && {tintColor: tintColor}]} 
                 />
                 <Text
                   style={[
@@ -80,6 +81,7 @@ const styles = {
   image: {
     width: 10,
     height: 10,
+    marginRight: 10,
     tintColor: colors.primary
   },
   small: {

@@ -183,10 +183,10 @@ function compareTransactions(req, res, next) {
         .then((lastmonthAmount) => {
           console.log(thisweekAmount, lastweekAmount, thismonthAmount, lastmonthAmount)
           const compare = {
-            thisweekAmount: thisweekAmount[0] ? thisweekAmount[0].amount : 0,
-            lastweekAmount: lastweekAmount[0] ? lastweekAmount[0].amount : 0,
-            thismonthAmount: thismonthAmount[0] ? thismonthAmount[0].amount : 0,
-            lastmonthAmount: lastmonthAmount[0] ? lastmonthAmount[0].amount : 0
+            thisweekAmount: thisweekAmount[0] ? thisweekAmount[0].amount.toFixed(2) : 0,
+            lastweekAmount: lastweekAmount[0] ? lastweekAmount[0].amount.toFixed(2) : 0,
+            thismonthAmount: thismonthAmount[0] ? thismonthAmount[0].amount.toFixed(2) : 0,
+            lastmonthAmount: lastmonthAmount[0] ? lastmonthAmount[0].amount.toFixed(2) : 0
           }
           console.log(compare)
           res.json(compare)

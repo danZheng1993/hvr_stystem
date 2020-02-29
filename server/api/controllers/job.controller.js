@@ -108,7 +108,7 @@ function cancel(req, res, next) {
 
 function prompt(req, res, next) {
   console.log("prompt job", req.job)
-  xmpp.send(`${req.job.hired}@desktop-jgen8l2/spark`, 'PLEASE!!!', false);
+  xmpp.send(`${req.job.hired}@desktop-jgen8l2/spark`, '请您尽快完成我的项目，静候佳音。', false);
   res.status(200).json({ message: 'success' });
   return;
 }

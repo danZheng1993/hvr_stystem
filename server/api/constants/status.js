@@ -14,4 +14,5 @@ module.exports = {
     INVOICE_SENT: 'INVOICE_SENT',
     INVOICE_RECEIVED: 'INVOICE_RECEIVED',
 
+    HOSTNAME: 'desktop-jgen8l2',
   };

@@ -20,7 +20,7 @@ const NotPaidAction = props => {
       <Text size={14}>签订合同: <Text color={colors.primary}>电子合同</Text></Text>
       <View style={styles.textContainer}>
         <Text size={14} color={colors.grey}>定价 : <Text>¥{job.price}</Text></Text>
-        <Text size={14} color={colors.secondary}>已支付首付款 : <Text>¥{job.price * settings.upfrontRate / 100}</Text></Text>
+        <Text size={14} color={colors.secondary}>需支付首付款 : <Text>¥{job.price * settings.upfrontRate / 100}</Text></Text>
       </View>
       <View style={styles.buttonsContainer}>
         <Button
@@ -38,7 +38,7 @@ const NotPaidAction = props => {
             small
             bgColor={colors.warning}
             caption="去支付"
-            onPress={() => Confirm('提示', '是否确认验收并支付尾款', () => props.payUpfront({
+            onPress={() => Confirm('提示', '是否确认支付首款？', () => props.payUpfront({
               body: {id: props.job._id},
               success: (payload) => {props.updateMyJobsList(payload.data)}
             }))}

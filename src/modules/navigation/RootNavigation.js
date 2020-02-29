@@ -72,7 +72,7 @@ const stackNavigator = createStackNavigator(
     Settings: {
       screen: Settings,
       navigationOptions: {
-        title: '设置',
+        title: '设 置',
       },
     },
     MyCreated: {

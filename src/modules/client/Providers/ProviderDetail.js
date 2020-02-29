@@ -90,7 +90,7 @@ class ProviderDetail extends React.Component {
                 />
                 <View style={{justifyContent: 'center',}}>
                   <Text white bold size={18}>{user.userName}</Text>
-                  <Text white>{user.location} \ 粉丝数 {user.balance}</Text>
+                  <Text white size={14}>{user.location} \ 粉丝数 {user.balance}</Text>
                 </View>
               </View>
             </View>
@@ -103,16 +103,16 @@ class ProviderDetail extends React.Component {
           </View>
           <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
             <View style={{alignItems: 'center'}}>
-              <Text white bold size={28}>{user.contacts.length}</Text>
-              <Text white>服务用户</Text>
+              <Text white bold size={24}>{user.contacts.length}</Text>
+              <Text white size={14}>服务用户</Text>
             </View>
             <View style={{alignItems: 'center'}}>
-              <Text white bold size={28}>{medias.length}</Text>
-              <Text white>发布视频</Text>
+              <Text white bold size={24}>{medias.length}</Text>
+              <Text white size={14}>发布视频</Text>
             </View>
             <View style={{alignItems: 'center'}}>
-              <Text white bold size={28}>{user.balance}</Text>
-              <Text white>播放数量</Text>
+              <Text white bold size={24}>{user.balance}</Text>
+              <Text white size={14}>播放数量</Text>
             </View>
           </View> 
           </View>
@@ -143,7 +143,7 @@ class ProviderDetail extends React.Component {
             style={{flex: 1, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', height: 30, borderTopLeftRadius: 5, borderBottomLeftRadius: 5}}   
             onPress={() => this.props.navigation.navigate('PostJob', {hired: user._id})}
           >
-            <Text white bold>约拍</Text>
+            <Text white bold>约 拍</Text>
           </TouchableOpacity>
           <TouchableOpacity 
             style={{flex: 1, backgroundColor: colors.bluish, alignItems: 'center', justifyContent: 'center', height: 30, borderTopRightRadius: 5, borderBottomRightRadius: 5}}   
@@ -154,6 +154,7 @@ class ProviderDetail extends React.Component {
           <Button
             style={{flex: 1}}
             small
+            size={28}
             icon={iconPhone}
             bgColor={colors.secondary}
             caption="电话"

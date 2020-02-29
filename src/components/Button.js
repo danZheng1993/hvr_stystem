@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.primaryBold,
   },
   captionSmall: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '500',
   },
   captionWithIcon: {

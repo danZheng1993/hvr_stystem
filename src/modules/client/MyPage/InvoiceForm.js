@@ -68,6 +68,7 @@ class InvoiceForm extends React.Component {
               <RadioForm
                 items={this.state.headerTypes}
                 defaultIndex={0}
+                tintColor={colors.secondary}
                 onChange={value => this.setState({headerType: this.state.headerTypes[value]})}
                 size={14}
               />
@@ -100,6 +101,7 @@ class InvoiceForm extends React.Component {
               <View style={styles.underline}>
                 <RadioForm
                   items={this.state.booleanGroups}
+                  tintColor={colors.secondary}
                   onChange={value => this.setState({isMail: this.state.booleanGroupsValue[value]})}
                   size={14}
                 />

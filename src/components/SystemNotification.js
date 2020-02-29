@@ -25,7 +25,7 @@ class SystemNotification extends React.Component {
                         // onPress = {() => props.navigation.navigate('PersonalInformation')}
                         bottomDivider
                     />
-                )) : <Text>No Items to display</Text> 
+                )) : <Text>暂无消息</Text> 
                 }
             </View>
         )

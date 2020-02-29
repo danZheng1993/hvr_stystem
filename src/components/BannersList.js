@@ -29,6 +29,7 @@ export default class BannersList extends React.Component {
       <View style={{width: '100%', height: 200}}>
         {banners && <SliderBox
           images={bannerImages}
+          circleLoop
           onCurrentImagePressed={index =>
             this.props.navigation.navigate('WebViewer', {url: banners[index].url})
           }

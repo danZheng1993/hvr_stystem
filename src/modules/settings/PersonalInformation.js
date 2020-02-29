@@ -11,14 +11,14 @@ const PersonalInformation = props => {
                     titleStyle = {{color: colors.secondary, fontWeight: 'bold', fontSize: 18}}
                     title='头像'
                     hideChevron={false}
-                    chevron={{ color: colors.secondary }}
+                    chevron={{ color: colors.secondary, size: 28 }}
                     onPress = {() => props.navigation.navigate('BasicProfile',{update: 'photo'})}
                     bottomDivider
                 />
                 <ListItem
                     key={2}
                     title='昵称'
-                    chevron={{ color: colors.secondary }}
+                    chevron={{ color: colors.secondary, size: 28 }}
                     titleStyle = {{color: colors.secondary, fontWeight: 'bold', fontSize: 18}}
                     hideChevron={false}
                     onPress = {() => props.navigation.navigate('BasicProfile', {update: 'userName'})}
@@ -30,7 +30,7 @@ const PersonalInformation = props => {
                     titleStyle = {{color: colors.secondary, fontWeight: 'bold', fontSize: 18}}
                     onPress = {() => props.navigation.navigate('BasicProfile', {update: 'overview'})}
                     hideChevron={false}
-                    chevron={{ color: colors.secondary }}
+                    chevron={{ color: colors.secondary, size: 28 }}
                 />
             </View>
         </View>

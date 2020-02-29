@@ -53,7 +53,7 @@ class GiveFeedback extends React.Component {
         <TextInput
           style={styles.input}
           outlined
-          placeholder="填写服务介绍"
+          placeholder="请填写您的评价"
           multiline
           maxLength={100}
           numberOfLines={10}

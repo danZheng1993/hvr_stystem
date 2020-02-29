@@ -25,14 +25,14 @@ const settings = props => {
                     titleStyle = {{color: colors.secondary, fontWeight: 'bold', fontSize: 18}}
                     title='个人资料设置'
                     hideChevron={false}
-                    chevron={{ color: colors.secondary }}
+                    chevron={{ color: colors.secondary, size: 28 }}
                     onPress = {() => props.navigation.navigate('PersonalInformation')}
                     bottomDivider
                 />
                 <ListItem
                     key={2}
                     title='账户安全'
-                    chevron={{ color: colors.secondary }}
+                    chevron={{ color: colors.secondary, size: 28}}
                     titleStyle = {{color: colors.secondary, fontWeight: 'bold', fontSize: 18}}
                     hideChevron={false}
                     onPress = {() => props.navigation.navigate('Security')}
@@ -43,7 +43,7 @@ const settings = props => {
                     title='清除缓存'
                     titleStyle = {{color: colors.secondary, fontWeight: 'bold', fontSize: 18}}
                     hideChevron={false}
-                    chevron={{ color: colors.secondary }}
+                    chevron={{ color: colors.secondary, size: 28 }}
                 />
             </View>
             <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', backgroundColor: colors.secondary, padding: 10}} onPress={() => clearStorage()}>

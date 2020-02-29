@@ -51,8 +51,8 @@ class ProviderJobDetail extends React.Component {
       <View>
         <Text size={14}>首付款 ({settings.upfrontRate}) : ¥{job.price * settings.upfrontRate / 100}</Text>
         <Text size={14}>尾款 ({100 - settings.upfrontRate}) : ¥{job.price * (100 - settings.upfrontRate) / 100}</Text>
-        <Text size={14}>首付款支付时间: {getDateTimeStr(job.created)}</Text>
-        <Text size={14}>尾款支付时间：{getDateTimeStr(job.created)}</Text>
+        <Text size={14}>首付款支付时间: {getDateTimeStr(job.upfrontDate)}</Text>
+        <Text size={14}>尾款支付时间：{getDateTimeStr(job.finalPayDate)}</Text>
       </View>
     )
   }

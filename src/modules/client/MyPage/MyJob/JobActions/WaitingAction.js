@@ -28,18 +28,18 @@ const WaitingAction = props => {
           onPress={() => props.navigation.navigate('Chatting', {to: props.job.hired})}
         />
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-          <Text size={12} color={colors.primary}
+          {/* <Text size={12} color={colors.primary}
            onPress={() => props.cancelJob({
             id: props.job._id,
             success: () => {props.removeFromMyJobsList({id: props.job._id})}
-          })}>取消订单</Text>
+          })}>取消订单</Text> */}
           <Button
             small
             bgColor={colors.warning}
             caption="催一催"
             onPress={() => props.promptJob({
               id: job._id,
-              success: () => toast("请求成功")
+              success: () => toast("催促信息已成功发送")
             })}
           />
         </View>
