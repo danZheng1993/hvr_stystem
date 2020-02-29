@@ -58,7 +58,7 @@ const MediaSchema = new Schema({
   },
   isAllowed: {
     type: Boolean,
-    default: false
+    default: null
   },
   recommend: {
     type: Boolean,

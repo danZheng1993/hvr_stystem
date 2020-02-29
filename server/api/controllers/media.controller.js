@@ -89,7 +89,7 @@ function read(req, res) {
   Media.findById(req.media._id)
   .populate('creator', 'userName phoneNumber location companyName')
   .populate('poster', 'userName phoneNumber location')
-  .populate('jobID', 'price')
+  .populate('jobID', 'price upfront')
   .then((media) => {
     console.log(media)
     if (!media) {
@@ -106,7 +106,13 @@ function read(req, res) {
   })
   .catch();
 }
-
+const string2boolean = (value) => {
+  if (value === 'false')
+    return false
+  if (value === 'true')
+    return true
+  return null
+}
 function list(req, res, next) {
   console.log("media",req.query)
   if (req.user.role !== ROLES.MANAGER   && req.user.role !== ROLES.CLIENT) {
@@ -119,9 +125,9 @@ function list(req, res, next) {
   if (req.query.filter) {
     let filter = JSON.parse(req.query.filter)
     if (filter) {
-      filter.checkOption &&(where['checkOption'] = filter.checkOption)
+      filter.checkOption &&(where['isAllowed'] = string2boolean(filter.checkOption))
       filter.title && (where['title'] = {$regex: filter.title, $options:"$i"})
-      filter.publicOption && (where['publicOption'] = (filter.publicOption == 'true' ? true: false))
+      filter.publicOption && (where['isPublic'] = string2boolean(filter.publicOption))
       if (filter.startDate || filter.endDate) {
         let created = {}
         filter.startDate && (created['$gte'] = filter.startDate)
