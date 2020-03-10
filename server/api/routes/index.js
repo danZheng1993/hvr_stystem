@@ -21,6 +21,7 @@ const mediaRoute = require('./media.route');
 const settingRoute = require('./setting.route');
 const invoiceRoute = require('./invoice.route');
 const logRoute = require('./log.route');
+const contractRoute = require('./contract.route');
 const statisticRoute = require('./statistic.route');
 const databaseRoute = require('./database.route');
 
@@ -37,6 +38,7 @@ router.use('/chats', authMiddleware, chatRoute);
 router.use('/payments', authMiddleware, paymentRoute);
 router.use('/invoices', authMiddleware, invoiceRoute);
 router.use('/logs', authMiddleware, logRoute);
+router.use('/contracts', authMiddleware, contractRoute);
 router.use('/medias', authMiddleware, mediaRoute);
 router.use('/news', authMiddleware, newsRoute);
 router.use('/banners', authMiddleware, bannerRoute);
