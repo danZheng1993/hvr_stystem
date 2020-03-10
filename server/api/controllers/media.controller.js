@@ -125,6 +125,7 @@ function list(req, res, next) {
   if (req.query.filter) {
     let filter = JSON.parse(req.query.filter)
     if (filter) {
+      filter.creator && (where['creator'] = filter.creator )
       filter.checkOption &&(where['isAllowed'] = string2boolean(filter.checkOption))
       filter.title && (where['title'] = {$regex: filter.title, $options:"$i"})
       filter.publicOption && (where['isPublic'] = string2boolean(filter.publicOption))
@@ -143,6 +144,7 @@ function list(req, res, next) {
     .limit(page_size)
     .skip(page_size * (page-1))
     .populate('creator', 'userName photo')
+    .populate('poster', 'userName photo')
     .then((medias) => {
          res.json({medias, count});
     })
