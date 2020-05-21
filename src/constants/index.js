@@ -1,4 +1,4 @@
-const ip = '192.168.1.90'
+const ip = '192.168.1.86'
 const port = 4000
 const baseUrl = `http://${ip}:${port}/`
 const constants = {
@@ -17,4 +17,4 @@ const constants = {
     IP: ip
 }
 
-export default constants    
+export default constants
