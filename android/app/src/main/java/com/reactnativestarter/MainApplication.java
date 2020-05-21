@@ -3,18 +3,21 @@ package com.reactnativestarter;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.RNTextInputMask.RNTextInputMaskPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.dylanvann.fastimage.FastImageViewPackage;
 import com.yourbrandlive.RNNyt360Video.RNNyt360VideoViewPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import rnxmpp.RNXMPPPackage;
 import com.rnfs.RNFSPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
-import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.localz.PinchPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactcommunity.rnlocalize.RNLocalizePackage;
 import com.BV.LinearGradient.LinearGradientPackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -35,12 +38,14 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new AsyncStoragePackage(),
+            new RNTextInputMaskPackage(),
+            new FastImageViewPackage(),
             new RNNyt360VideoViewPackage(),
             new RNCWebViewPackage(),
             new RNXMPPPackage(),
             new RNFSPackage(),
             new ImageResizerPackage(),
-            new AsyncStoragePackage(),
             new PinchPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage(),
