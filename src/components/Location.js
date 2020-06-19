@@ -1,22 +1,8 @@
 import React, {Component} from 'react'
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
-import AlphabetListView from 'react-native-alphabetlistview'
-// import CityList from 'rnkit-city-list'
 import SearchList, {HighlightableText} from '@unpourtous/react-native-search-list';
 
-var CityList= [ 
-	// {"searchStr": "北京"},
-	// {"searchStr": "上海"},
-	// {"searchStr": "广州"},
-	// {"searchStr": "深圳"},
-	// {"searchStr": "成都"},
-	// {"searchStr": "重庆"},
-	// {"searchStr": "天津"},
-	// {"searchStr": "杭州"},
-	// {"searchStr": "南京"},
-	// {"searchStr": "苏州"},
-	// {"searchStr": "武汉"},
-	// {"searchStr": "西安"},
+const CityList= [ 
 	{"searchStr": "阿坝"},
 	{"searchStr": "阿拉善"},
 	{"searchStr": "阿里"},
@@ -368,18 +354,19 @@ export default class Location extends Component {
 		}
 		navigation.goBack()
 	}
+
   // custom render row
   renderRow (item, sectionID, rowID, highlightRowFunc, isSearching) {
 	const {rowHeight} = this.state
     return (
       <TouchableOpacity onPress={() => this.handleChoose(item.searchStr)}>
         <View key={rowID} style={{flex: 1, marginLeft: 20, height: rowHeight, justifyContent: 'center'}}>
-          {/*use `HighlightableText` to highlight the search result*/}
+          {/* use `HighlightableText` to highlight the search result */}
           <HighlightableText
             matcher={item.matcher}
             text={item.searchStr}
-            textColor={'#000'}
-            hightlightTextColor={'#0069c0'}
+            textColor="#000"
+            hightlightTextColor="#0069c0"
           />
         </View>
       </TouchableOpacity>
@@ -400,7 +387,10 @@ export default class Location extends Component {
     return (
       <View style={styles.emptySearchResult}>
         <Text style={{color: '#979797', fontSize: 18, paddingTop: 20}}> No Result For <Text
-          style={{color: '#171a23', fontSize: 18}}>{searchStr}</Text></Text>
+          style={{color: '#171a23', fontSize: 18}}
+        >{searchStr}
+                                                                                      </Text>
+        </Text>
         <Text style={{color: '#979797', fontSize: 18, alignItems: 'center', paddingTop: 10}}>Please search again</Text>
       </View>
     )
@@ -419,23 +409,23 @@ export default class Location extends Component {
 
           rowHeight={rowHeight}
 
-          toolbarBackgroundColor={'#2196f3'}
+          toolbarBackgroundColor="#2196f3"
           title='城市'
           cancelTitle='取消'
           onClickBack={() => {}}
 
-          searchListBackgroundColor={'#2196f3'}
+          searchListBackgroundColor="#2196f3"
 
           searchBarToggleDuration={300}
 
-          searchInputBackgroundColor={'#0069c0'}
-          searchInputBackgroundColorActive={'#6ec6ff'}
-          searchInputPlaceholderColor={'#FFF'}
-          searchInputTextColor={'#FFF'}
-          searchInputTextColorActive={'#000'}
+          searchInputBackgroundColor="#0069c0"
+          searchInputBackgroundColorActive="#6ec6ff"
+          searchInputPlaceholderColor="#FFF"
+          searchInputTextColor="#FFF"
+          searchInputTextColorActive="#000"
           searchInputPlaceholder='搜索'
-          sectionIndexTextColor={'#6ec6ff'}
-          searchBarBackgroundColor={'#2196f3'}
+          sectionIndexTextColor="#6ec6ff"
+          searchBarBackgroundColor="#2196f3"
         />
       </View>
     )
