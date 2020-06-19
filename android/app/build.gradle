@@ -154,7 +154,6 @@ dependencies {
     implementation project(':react-native-fast-image')
     implementation project(':react-native-nyt-360-video')
     implementation project(':react-native-webview')
-    implementation project(':react-native-xmpp')
     implementation project(':react-native-fs')
     implementation project(':react-native-image-resizer')
     implementation project(':react-native-pinch')

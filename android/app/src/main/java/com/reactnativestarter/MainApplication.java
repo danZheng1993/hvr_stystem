@@ -3,16 +3,12 @@ package com.reactnativestarter;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
-import com.RNTextInputMask.RNTextInputMaskPackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import com.dylanvann.fastimage.FastImageViewPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.yourbrandlive.RNNyt360Video.RNNyt360VideoViewPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
-import rnxmpp.RNXMPPPackage;
 import com.rnfs.RNFSPackage;
-import fr.bamlab.rnimageresizer.ImageResizerPackage;
-import com.localz.PinchPackage;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactcommunity.rnlocalize.RNLocalizePackage;
@@ -43,7 +39,6 @@ public class MainApplication extends Application implements ReactApplication {
             new FastImageViewPackage(),
             new RNNyt360VideoViewPackage(),
             new RNCWebViewPackage(),
-            new RNXMPPPackage(),
             new RNFSPackage(),
             new ImageResizerPackage(),
             new PinchPackage(),

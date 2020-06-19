@@ -9,13 +9,13 @@ import {NavigationActions} from 'react-navigation'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
+import SyncStorage from 'sync-storage'
 import {loadItem} from '../../redux/api/storage'
 import { profileSelector } from '../../redux/selectors'
 import SendVerificationcode from '../components/SendVerificationCode'
-import SyncStorage from 'sync-storage'
 import colors from '../../styles/colors'
 import {Text} from '../../components'
-import XMPP from 'react-native-xmpp'
+import { XMPP } from '../../utils';
 import constants from '../../constants';
 
 class LoginWithSMS extends React.Component {
@@ -27,7 +27,6 @@ class LoginWithSMS extends React.Component {
         if (!profile) return
         const token = SyncStorage.get('token') || ''
         toast("登录成功!")
-        XMPP.connect(profile._id + constants.JID, token.slice(0,8),'RNXMPP.PLAIN',constants.IP,5222)
         if (profile.role == 'provider') {
           this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Provider' })], 0)
         } else if (profile.role =='client'){
@@ -40,19 +39,19 @@ class LoginWithSMS extends React.Component {
       return (
         <View style={styles.container}>
           <View>
-          <SendVerificationcode navigation={this.props.navigation} onSuccess={this.onSuccess}/>
-          <View style={styles.anchor}>
-            <View style={[styles.inputWrap, {alignItems: 'flex-start'}]}>
-              <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithPassword' })}>
+            <SendVerificationcode navigation={this.props.navigation} onSuccess={this.onSuccess} />
+            <View style={styles.anchor}>
+              <View style={[styles.inputWrap, {alignItems: 'flex-start'}]}>
+                <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithPassword' })}>
               密码登录
-              </Text>
-            </View>           
-            <View style={[styles.inputWrap, {alignItems: 'flex-end'}]}>
-              <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'PasswordRecovery' })}>
+                </Text>
+              </View>           
+              <View style={[styles.inputWrap, {alignItems: 'flex-end'}]}>
+                <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'PasswordRecovery' })}>
               忘记密码?
-              </Text>
+                </Text>
+              </View>
             </View>
-          </View>
           </View>
           <View style={{alignItems: 'center', alignSelf: 'flex-end', borderTopWidth: 1, borderTopColor: colors.greybackground}}>
             <Text color={colors.description}>使用第三方登录</Text>

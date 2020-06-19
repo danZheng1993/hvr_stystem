@@ -4,11 +4,13 @@ import {
   ImageBackground,
 } from 'react-native';
 
-import { Button } from '../../components';
-
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
+import SyncStorage from 'sync-storage';
+import {NavigationActions} from 'react-navigation'
+import { Button } from '../../components';
+
 
 import { getServices } from '../../redux/modules/service'
 
@@ -17,9 +19,7 @@ import { addToContacts, pushNotification, pushUnreadMessages } from '../../redux
 
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
-import SyncStorage from 'sync-storage';
-import XMPP from 'react-native-xmpp'
-import {NavigationActions} from 'react-navigation'
+import { XMPP } from '../../utils';
 import constants from '../../constants';
 
 class HomeScreen extends React.Component {
@@ -27,14 +27,15 @@ class HomeScreen extends React.Component {
     super(props)
     timer = null;
     XMPP.on('message', (message) => this.handleMessage(message));
-    XMPP.on('iq', (message) => console.log('IQ:' + message));
-    XMPP.on('presence', (message) => console.log('PRESENCE:' + message));
-    XMPP.on('error', (message) => console.log('ERROR:' + message));
-    XMPP.on('loginError', (message) => console.log('LOGIN ERROR:' + message));
+    XMPP.on('iq', (message) => console.log(`IQ:${  message}`));
+    XMPP.on('presence', (message) => console.log(`PRESENCE:${  message}`));
+    XMPP.on('error', (message) => console.log(`ERROR:${  message}`));
+    XMPP.on('loginError', (message) => console.log(`LOGIN ERROR:${  message}`));
     XMPP.on('login', (message) => console.log('LOGGED!'));
     XMPP.on('connect', (message) => console.log('CONNECTED!'));
     XMPP.on('disconnect', (message) => console.log('DISCONNECTED!'));
   }
+
   async componentWillMount(): void {
     const data = await SyncStorage.init();
     console.log('AsyncStorage is ready!');
@@ -50,13 +51,11 @@ class HomeScreen extends React.Component {
       console.warn(message.body)
       pushNotification(message)
       getMyJob()
-    } else {
-      if (profile.contacts.indexOf(from) == -1) {
+    } else if (profile.contacts.indexOf(from) == -1) {
         this.props.addToContacts({
           body: {contact: from}
         })
       }
-    }
   }
 
   componentDidMount() {
@@ -64,11 +63,12 @@ class HomeScreen extends React.Component {
       this.redirect()
     }, 5000);
   }
+
   redirect = () => {  
     const {profile} = this.props
     console.log("profile", profile)
     const token = SyncStorage.get('token') || '';
-    var route = 'Auth'
+    let route = 'Auth'
     if (profile) {
       XMPP.connect(profile._id + constants.JID, token.slice(0,8),'RNXMPP.PLAIN',constants.IP,5222)
     }
@@ -91,16 +91,16 @@ class HomeScreen extends React.Component {
           resizeMode="cover"
         >
           
-        <View style={{flex: 2,alignItems: 'flex-end',alignSelf: 'stretch',margin: 20}}>
-          <Button
-            small
-            secondary
-            rounded
-            style={commonStyles.button}
-            caption="跳跃"
-            onPress={() => this.handleClick()}
-          />
-        </View>
+          <View style={{flex: 2,alignItems: 'flex-end',alignSelf: 'stretch',margin: 20}}>
+            <Button
+              small
+              secondary
+              rounded
+              style={commonStyles.button}
+              caption="跳跃"
+              onPress={() => this.handleClick()}
+            />
+          </View>
         </ImageBackground>
       </View>
     );

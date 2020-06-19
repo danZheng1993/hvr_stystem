@@ -9,16 +9,16 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
+import { Form, TextValidator } from 'react-native-validator-form';
+import XMPP from 'react-native-xmpp'
+import SyncStorage from 'sync-storage';
+import {NavigationActions} from 'react-navigation'
 import { Button, toast } from '../../components';
 import { colors } from '../../styles';
-import { Form, TextValidator } from 'react-native-validator-form';
 import { Text } from '../../components/StyledText';
 import {login} from '../../redux/modules/auth'
 import { profileSelector, authloadingSelector } from '../../redux/selectors'
-import XMPP from 'react-native-xmpp'
 import { loadItem } from '../../redux/api/storage';
-import SyncStorage from 'sync-storage';
-import {NavigationActions} from 'react-navigation'
 import constants from '../../constants';
 
 class LoginWithPassword extends React.Component {
@@ -29,6 +29,7 @@ class LoginWithPassword extends React.Component {
       password: '222222',
     }
   }
+
   handleClick = () => {
     const { phoneNumber, password} = this.state  
     this.props.login({
@@ -44,7 +45,7 @@ class LoginWithPassword extends React.Component {
       if (!profile) return
       const token = SyncStorage.get('token') || ''
       toast("登录成功")
-      XMPP.connect(profile._id + constants.JID, token.slice(0,8),'RNXMPP.PLAIN',constants.IP,5222)
+      XMPP.start();
       if (profile.role == 'provider') {
         this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Provider' })], 0)
       } else if (profile.role =='client'){
@@ -57,54 +58,54 @@ class LoginWithPassword extends React.Component {
     const {loading, profile} = this.props
 
     return (
-        <View style={styles.container}>
-          {/* { <Loader
+      <View style={styles.container}>
+        {/* { <Loader
             loading={loading} /> } */}
-          <View style={styles.description}>
-            <Text size={28} black bold>
+        <View style={styles.description}>
+          <Text size={28} black bold>
               登录HVR
-            </Text>
-            <Text size={14} color={colors.description}>
+          </Text>
+          <Text size={14} color={colors.description}>
               登录使用更多服务
-            </Text>
-          </View>
-          <View style={{alignSelf: 'stretch'}}>
-            <Form
-                ref="form"
-                onSubmit={this.handleClick}
-            >
-              <TextValidator
-                name="phoneNumber"
-                maxLength={11}
-                label='手机号'
-                validators={['required', 'matchRegexp:^[0-9]{11}$']}
-                errorMessages={['需要输入此项', '无效电话号码']}
-                placeholder="输入手机号"
-                type="text"
-                value={this.state.phoneNumber}
-                onChangeText={phoneNumber => this.setState({ phoneNumber })}
-              />
-              <TextValidator
-                style={styles.input}
-                outlined
-                validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
-                errorMessages={['需要输入此项', '密码至少6字以上', '密码最多20字以下']}
-                label='设置密码'
-                placeholder="设置密码（6-20位字母数字组合)"
-                value={this.state.password}
-                secureTextEntry
-                maxLength={20}
-                onChangeText={password => this.setState({ password })}
-              />
-              <Button
-                large
-                bgColor={colors.primary}
-                style={styles.button}
-                caption="确定"
-                onPress={() => this.refs.form.submit()}
-              />
-            </Form>   
-            <View style={styles.anchor}>
+          </Text>
+        </View>
+        <View style={{alignSelf: 'stretch'}}>
+          <Form
+            ref="form"
+            onSubmit={this.handleClick}
+          >
+            <TextValidator
+              name="phoneNumber"
+              maxLength={11}
+              label='手机号'
+              validators={['required', 'matchRegexp:^[0-9]{11}$']}
+              errorMessages={['需要输入此项', '无效电话号码']}
+              placeholder="输入手机号"
+              type="text"
+              value={this.state.phoneNumber}
+              onChangeText={phoneNumber => this.setState({ phoneNumber })}
+            />
+            <TextValidator
+              style={styles.input}
+              outlined
+              validators={['required', 'minStringLength:6', 'maxStringLength:20']}                 
+              errorMessages={['需要输入此项', '密码至少6字以上', '密码最多20字以下']}
+              label='设置密码'
+              placeholder="设置密码（6-20位字母数字组合)"
+              value={this.state.password}
+              secureTextEntry
+              maxLength={20}
+              onChangeText={password => this.setState({ password })}
+            />
+            <Button
+              large
+              bgColor={colors.primary}
+              style={styles.button}
+              caption="确定"
+              onPress={() => this.refs.form.submit()}
+            />
+          </Form>   
+          <View style={styles.anchor}>
             <View style={[styles.inputWrap, {alignItems: 'flex-start'}]}>
               <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithSMS' })}>
               手机验证码登录
@@ -116,32 +117,32 @@ class LoginWithPassword extends React.Component {
               </Text>
             </View>
           </View>
-          </View>
+        </View>
           
-          <View style={{alignItems: 'center', borderTopWidth: 1, borderTopColor: colors.greybackground}}>
-            <Text size={12} color={colors.description}>使用第三方登录</Text>
-            <View style={styles.touch}>
-              <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeChat}>
-                <Image
-                  source={require('../../../assets/images/wechat.png')}
-                  style={styles.photo}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleQQ}>
-                <Image
-                  source={require('../../../assets/images/qq.png')}
-                  style={styles.photo}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeibo}>
-                <Image
-                  source={require('../../../assets/images/weibo.png')}
-                  style={styles.photo}
-                />
-              </TouchableOpacity>
-            </View>
+        <View style={{alignItems: 'center', borderTopWidth: 1, borderTopColor: colors.greybackground}}>
+          <Text size={12} color={colors.description}>使用第三方登录</Text>
+          <View style={styles.touch}>
+            <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeChat}>
+              <Image
+                source={require('../../../assets/images/wechat.png')}
+                style={styles.photo}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleQQ}>
+              <Image
+                source={require('../../../assets/images/qq.png')}
+                style={styles.photo}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeibo}>
+              <Image
+                source={require('../../../assets/images/weibo.png')}
+                style={styles.photo}
+              />
+            </TouchableOpacity>
           </View>
         </View>
+      </View>
     );
     }
 }

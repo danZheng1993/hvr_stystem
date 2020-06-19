@@ -4,13 +4,13 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import {Loader} from '../components'
+import { XMPP } from '../utils';
+import {Loader} from "."
 import { getChat } from '../redux/modules/chat'
 import { addToContacts } from '../redux/modules/auth'
 import {getUser} from '../redux/modules/user'
 import { chatsloadingSelector, chatsListSelector, profileSelector, userDetailSelector } from '../redux/selectors'
-import XMPP from 'react-native-xmpp'
-import constants from '../constants';
+import constants from '../constants'; 
 
 class Chatting extends React.Component {
   constructor(props) {
@@ -29,14 +29,14 @@ class Chatting extends React.Component {
 
   componentWillMount() {  
     const {navigation, profile, getUser} = this.props
-    let to = navigation.getParam('to', '')
+    const to = navigation.getParam('to', '')
     if (to != '') {
       if (profile.contacts.indexOf(to) == -1) {
         this.props.addToContacts({
           body: {contact: to}
         })
       }
-      this.setState({to, photo: to + '_photo.jpg'})
+      this.setState({to, photo: `${to  }_photo.jpg`})
       getUser({id: to})
       this.props.getChat({
         params: {to},
@@ -49,7 +49,7 @@ class Chatting extends React.Component {
   initMessages = (chatsList) => {
     const {profile, user} = this.props
     const {to} = this.state
-    var message= [
+    const message= [
       {
         _id: new Date().getTime(),
         text: 'Hello developer',
@@ -95,7 +95,7 @@ class Chatting extends React.Component {
       // if (navigation.state.routeName != 'Chatting') return
       if (from != to) return
 
-      var message= [
+      const message= [
         {
           _id: new Date().getTime(),
           text: 'Hello developer',
@@ -122,32 +122,31 @@ class Chatting extends React.Component {
   onSend(messages=[]) {
       console.log(messages)
       this._storeMessages(messages);
-      var JID = `${this.state.to}@desktop-jgen8l2/spark`
+      const JID = `${this.state.to}@desktop-jgen8l2/spark`
       XMPP.message(messages[0].text, JID)
   }
 
   render() {
-    var user = { _id: this.state.userId || -1 };
+    const user = { _id: this.state.userId || -1 };
     const {loading} = this.props
     return (
       <>
-        {loading? <Loader loading={loading} /> :
-        <GiftedChat
-          messages={this.state.messages}
-          onSend={this.onSend}
-          user={user}
-        /> }
+        {loading? <Loader loading={loading} /> : (
+          <GiftedChat
+            messages={this.state.messages}
+            onSend={this.onSend}
+            user={user}
+          />
+)}
       </>
     );
   }
 
   // Helper functions
   _storeMessages(messages) {
-    this.setState((previousState) => {
-      return {
+    this.setState((previousState) => ({
         messages: GiftedChat.append(previousState.messages, messages),
-      };
-    });
+      }));
   }
 }
 

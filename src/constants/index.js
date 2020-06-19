@@ -1,4 +1,5 @@
-const ip = '192.168.1.86'
+// const ip = '192.168.1.86'
+const ip = 'localhost'
 const port = 4000
 const baseUrl = `http://${ip}:${port}/`
 const constants = {
@@ -9,10 +10,10 @@ const constants = {
     SEND_SMS: 'SEND_SMS',
     CHECK_SMS: 'CHECK_SMS',
     BASE_URL: baseUrl,
-    INVOICE_BASE_URL: baseUrl + '/invoiceImage/',
-    BANNER_BASE_URL: baseUrl + '/bannersImage/',
-    NEWS_BASE_URL: baseUrl + '/newsImage/',
-    MEDIA_BASE_URL: baseUrl + '/mediaSource/',
+    INVOICE_BASE_URL: `${baseUrl}/invoiceImage/`,
+    BANNER_BASE_URL: `${baseUrl}/bannersImage/`,
+    NEWS_BASE_URL: `${baseUrl}/newsImage/`,
+    MEDIA_BASE_URL: `${baseUrl}/mediaSource/`,
     JID: `@${ip}/spark`,
     IP: ip
 }
