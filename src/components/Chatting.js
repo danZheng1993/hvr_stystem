@@ -4,7 +4,7 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { XMPP } from '../utils';
+import { XMPP } from '../helpers';
 import {Loader} from "."
 import { getChat } from '../redux/modules/chat'
 import { addToContacts } from '../redux/modules/auth'

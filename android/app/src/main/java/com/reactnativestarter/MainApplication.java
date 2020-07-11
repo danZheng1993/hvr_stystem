@@ -3,12 +3,15 @@ package com.reactnativestarter;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+
 import com.yourbrandlive.RNNyt360Video.RNNyt360VideoViewPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.rnfs.RNFSPackage;
-import fr.bamlab.rnimageresizer.ImageResizerPackage;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
+
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactcommunity.rnlocalize.RNLocalizePackage;
@@ -35,13 +38,10 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new AsyncStoragePackage(),
-            new RNTextInputMaskPackage(),
-            new FastImageViewPackage(),
             new RNNyt360VideoViewPackage(),
             new RNCWebViewPackage(),
             new RNFSPackage(),
             new ImageResizerPackage(),
-            new PinchPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage(),
             new RNLocalizePackage(),

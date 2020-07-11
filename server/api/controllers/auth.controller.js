@@ -1,24 +1,24 @@
 const jwt = require('jsonwebtoken');
+const axios = require('axios')
+const md5 = require('md5')
+const moment = require('moment')
+const ip = require('ip')
 const config = require('../../config');
 const User = require('../models/user.model');
 const Code = require('../models/code.model');
 const Log = require('../models/log.model');
-const axios = require('axios')
-const md5 = require('md5')
-const moment = require('moment')
 const PERMISSION = require('../constants/permission')
 const ROLE = require('../constants/role')
-const ip = require('ip')
 
 function getClientIp(req) {
-  var ipAddress;
+  let ipAddress;
   // The request may be forwarded from local web server.
-  var forwardedIpsStr = req.header('x-forwarded-for'); 
+  const forwardedIpsStr = req.header('x-forwarded-for'); 
   if (forwardedIpsStr) {
     // 'x-forwarded-for' header may return multiple IP addresses in
     // the format: "client IP, proxy 1 IP, proxy 2 IP" so take the
     // the first one
-    var forwardedIps = forwardedIpsStr.split(',');
+    const forwardedIps = forwardedIpsStr.split(',');
     ipAddress = forwardedIps[0];
   }
   if (!ipAddress) {
@@ -69,10 +69,12 @@ function login(req, res, next) {
 }
 
 function adminLogin(req, res, next) {
+  console.log(Number(req.body.phoneNumber));
   User.findOne({ phoneNumber: req.body.phoneNumber })
     .select('_id password phoneNumber userName role permission photo')
     .exec()
     .then((user) => {
+      console.log('match phoneNumber', user);
       if (!user) {
         return res.status(500).json({ message: 'phoneNumber or password does not match' });
       }
@@ -124,6 +126,7 @@ function signup(req, res, next) {
 
   user.save()
   .then((newUser) => {
+    console.log(newUser);
     const token = jwt.sign({
       _id: newUser._id, // eslint-disable-line
       userName: newUser.userName,
@@ -132,7 +135,7 @@ function signup(req, res, next) {
       permission: newUser.permission
     }, config.jwtSecret, { expiresIn: config.jwtExpires });
     console.log(newUser)
-    let data = {
+    const data = {
       username: newUser._id,
       name: newUser._id,
       password: token.slice(0,8)
@@ -162,9 +165,9 @@ function signup(req, res, next) {
 }
 
 function sendcode(req, res, next) {
-  let min = 1000, max = 9999
+  const min = 1000; const max = 9999
   // let key = Math.floor(Math.random() * (max - min + 1) ) + min;
-  let key= 1111
+  const key= 1111
   console.log(key)
 //  tKey = date
 
@@ -239,7 +242,7 @@ function checkcode(req, res, next) {
               token,
               info: user,
             })
-            return;
+            
           })
           .catch(next)
         }

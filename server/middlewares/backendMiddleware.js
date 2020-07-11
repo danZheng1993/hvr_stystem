@@ -1,11 +1,13 @@
 // set up backend
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors')
 const config = require('../config');
 const apiRoutes = require('../api/routes');
-const cors = require('cors')
+
 module.exports = (app, cb) => {
   mongoose.Promise = global.Promise;
+  console.log(config.mongoURL);
   mongoose.connect(config.mongoURL, (error) => {
     if (error) {
       console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console

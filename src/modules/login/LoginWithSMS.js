@@ -15,7 +15,7 @@ import { profileSelector } from '../../redux/selectors'
 import SendVerificationcode from '../components/SendVerificationCode'
 import colors from '../../styles/colors'
 import {Text} from '../../components'
-import { XMPP } from '../../utils';
+import { XMPP } from '../../helpers';
 import constants from '../../constants';
 
 class LoginWithSMS extends React.Component {

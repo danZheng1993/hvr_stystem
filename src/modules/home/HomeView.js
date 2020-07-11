@@ -19,7 +19,7 @@ import { addToContacts, pushNotification, pushUnreadMessages } from '../../redux
 
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
-import { XMPP } from '../../utils';
+import { XMPP } from '../../helpers';
 import constants from '../../constants';
 
 class HomeScreen extends React.Component {

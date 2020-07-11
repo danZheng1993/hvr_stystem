@@ -10,9 +10,9 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Form, TextValidator } from 'react-native-validator-form';
-import XMPP from 'react-native-xmpp'
 import SyncStorage from 'sync-storage';
-import {NavigationActions} from 'react-navigation'
+import {NavigationActions} from 'react-navigation';
+import { XMPP } from '../../helpers';
 import { Button, toast } from '../../components';
 import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
