@@ -48,6 +48,42 @@ const OrderSchema = new Schema({
   source: {
     type: String,
     default: ''
+  },
+  category: {
+    type: String,
+    default: '',
+  },
+  serviceCategory: {
+    type: String,
+    default: ''
+  },
+  location: {
+    type: String,
+    default: '',
+  },
+  sceneCount: {
+    type: String,
+    default: '',
+  },
+  sceneType: {
+    type: String,
+    default: '',
+  },
+  requirements: {
+    type: String,
+    default: '',
+  },
+  otherRequirements: {
+    type: String,
+    default: '',
+  },
+  downPaymentTime: {
+    type: Date,
+    default: null,
+  },
+  balancePaymentTime: {
+    type: Date,
+    default: null,
   }
 }, {
   timestamp: true,
