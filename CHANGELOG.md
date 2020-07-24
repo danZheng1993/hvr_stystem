@@ -9,7 +9,6 @@ It's a huge update that doesn't have a backward compability with the 1.x version
 - Removed Expo and transitioned to native projects, because of lots of restrictions that expo adds to your projects.
 - Added Plop generator for easy deveopment.
 - Added support for unit testing with Jest and Enzyme.
-- Added support for e2e testing with Detox.
 - New modular architecture that will help you speed up the applications development.
 - Lots of performance improvements in comparison with v1.0.0
 - Removed eslint styling rules in favour of prettier.

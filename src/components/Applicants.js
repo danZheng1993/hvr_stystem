@@ -15,6 +15,7 @@ import { colors } from '../styles';
 import Confirm from './Confirm'
 import { hireJob, updateMyJobsList } from '../redux/modules/job'
 import { jobsloadingSelector } from '../redux/selectors'
+import TAKE_PHOTO_IMAGE from '../../assets/images/takePhoto.png';
 
 class Applicants extends React.Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class Applicants extends React.Component {
           <View key={index} style={styles.componentsSection}>
             <View style={{justifyContent: 'center',alignItems: 'center', padding: 15}}>
               <Image
-                source={require('../../assets/images/takephoto.png')}
+                source={TAKE_PHOTO_IMAGE}
                 style={styles.photo}
               />
               <Text size={14} bold color={colors.secondary}>报价报价报价</Text>

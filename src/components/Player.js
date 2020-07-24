@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { colors } from '../styles';
 import constants from '../constants'
-import Nyt360Video from 'react-native-nyt-360-video';
+// import Nyt360Video from 'react-native-nyt-360-video';
 // import JWPlayer from 'react-native-jwplayer';
 
 export default class Player extends React.Component {
@@ -21,36 +21,33 @@ export default class Player extends React.Component {
 
   render() {   
     return (
-      <Nyt360Video
-        ref={ref => this.player = ref}
-        style={{flex: 1, backgroundColor:'#000000'}}
-        source={{ uri:constants.MEDIA_BASE_URL + this.state.path,
-          type: 'mono'}}
-        displayMode={'embedded'}
-        volume={1.0}
-        paused={false}
-        onLoad={(e) => console.log(e)}
-        onError={(e) => console.log(e)}
-        onEnd={(e) => console.log(e)}
-        onProgress={(e) => console.log(e)}
-        onPress={(e) => console.log(e)}
-        enableFullscreenButton={false}
-        enableCardboardButton={false}
-        enableTouchTracking={false}
-        hidesTransitionView={false}
-        enableInfoButton={false} />
-//     <View style={styles.container}>
-//   <JWPlayer
-//     style={styles.player}
-//     autostart={false}
-//     file={'https://content.jwplatform.com/manifests/vM7nH0Kl.m3u8'}
-//     onBeforePlay={() => this.onBeforePlay()}
-//     onPlay={() => this.onPlay()}
-//     onPlayerError={e => this.onPlayerError(e)}
-//     onBuffer={() => this.onBuffer()}
-//     onTime={time => this.onTime(time)}
-//   />
-// </View>
+      // <Viro360Video
+      //   source={{ uri:constants.MEDIA_BASE_URL + this.state.path }}
+      //   onFinish={this._onFinish}
+      //   onUpdateTime={this._onUpdateTime}
+      //   onError={this._videoError}
+      //   loop={true}
+      //   paused={false}
+      //   volume={1.0} />
+      // <Nyt360Video
+      //   ref={ref => this.player = ref}
+      //   style={{flex: 1, backgroundColor:'#000000'}}
+      //   source={{ uri:constants.MEDIA_BASE_URL + this.state.path,
+      //     type: 'mono'}}
+      //   displayMode={'embedded'}
+      //   volume={1.0}
+      //   paused={false}
+      //   onLoad={(e) => console.log(e)}
+      //   onError={(e) => console.log(e)}
+      //   onEnd={(e) => console.log(e)}
+      //   onProgress={(e) => console.log(e)}
+      //   onPress={(e) => console.log(e)}
+      //   enableFullscreenButton={false}
+      //   enableCardboardButton={false}
+      //   enableTouchTracking={false}
+      //   hidesTransitionView={false}
+      //   enableInfoButton={false} />
+      <View style={{ flex: 1, backgroundColor: 'black' }} />
     );
   }
 }

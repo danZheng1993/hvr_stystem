@@ -1,4 +1,4 @@
-framework module Pods_ReactNativeStarter {
+module Pods_ReactNativeStarter {
   umbrella header "Pods-ReactNativeStarter-umbrella.h"
 
   export *
