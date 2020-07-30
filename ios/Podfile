@@ -1,6 +1,6 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
-platform :ios, '9.0'
+platform :ios, '11.0'
 target 'ReactNativeStarter' do
   config = use_native_modules!
   use_react_native!(:path => config["reactNativePath"])
@@ -12,10 +12,13 @@ target 'ReactNativeStarter' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable these next few lines.
-  use_flipper!
-  post_install do |installer|
-    flipper_post_install(installer)
-  end
+  use_frameworks!
+  pod 'ViroReact', :path => '../node_modules/react-viro/ios/'
+  pod 'ViroKit', :path => '../node_modules/react-viro/ios/dist/ViroRenderer/'
+  # use_flipper!
+  # post_install do |installer|
+  #   flipper_post_install(installer)
+  # end
 end
 target 'ReactNativeStarter-tvOS' do
   # Pods for ReactNativeStarter-tvOS

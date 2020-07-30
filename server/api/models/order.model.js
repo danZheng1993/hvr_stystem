@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-import orderid = require('order-id')('secret');
+const orderid = require('order-id')('secret');
 
 const Schema = mongoose.Schema;
 

@@ -1,9 +1,9 @@
 import { takeLatest } from 'redux-saga/effects'
+import AsyncStorage from '@react-native-community/async-storage';
+import SyncStorage from 'sync-storage';
 import { DO_LOGIN, DO_SIGNUP, GET_PROFILE, SAVE_PROFILE, SEND_CODE, CHECK_CODE, ADD_TO_CONTACTS, GET_CONTACTS, ADD_TO_COLLECTIONS, ADD_TO_ATTENTIONS, REMOVE_FROM_COLLECTIONS, REMOVE_FROM_ATTENTIONS, } from '../modules/auth'
 import apiCall from '../api/apiCall'
-import { AsyncStorage } from 'react-native';
 import {saveItem, loadItem} from '../api/storage'
-import SyncStorage from 'sync-storage';
 
 const doLogin = apiCall({
   type: DO_LOGIN,

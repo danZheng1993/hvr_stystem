@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { requestSuccess, requestFail, requestPending } from '../api/request'
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import {updateUnreadMessageList, addToArray, clearUnreadMessageList} from '../api/helpers'
 // ------------------------------------
 // Constants

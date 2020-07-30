@@ -1,8 +1,9 @@
 import React from 'react';
-import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { View, Text } from 'react-native';
+
+import ModalDropdown from './ModalDropdown';
 
 import { colors } from '../styles';
 
