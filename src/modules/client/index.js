@@ -2,7 +2,7 @@
 import React from 'react';
 
 import { Image, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { colors, fonts } from '../../styles';
 
@@ -54,94 +54,57 @@ const styles = StyleSheet.create({
   },
 });
 
-export default createBottomTabNavigator(
-  {
-    首页: {
-      screen: HomeView,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    发现: {
-      screen: MediaSearch,
-      navigationOptions: {
-        
-      },
-    },
-    约拍: {
-      screen: PostJob,
-    },
-    服务: {
-      screen: Providers,
-      navigationOptions: {
-        
-      },
-    },
-    我的: {
-      screen: MyPage,
-      navigationOptions: {
-        
-      },
-    },
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => ({
-      // eslint-disable-next-line react/prop-types
-      tabBarItemContainer: ({focused}) => {
-        console.warn('a')
-      },
-      tabBarIcon: ({ focused }) => {
-        const { routeName } = navigation.state;
-        let iconSource;
-        switch (routeName) {
-          case '首页':
-            iconSource = iconHome;
-            break;
-          case '发现':
-            iconSource = iconEye;
-            break;
-          case '约拍':
-            iconSource = iconPost;
-            break;
-          case '服务':
-            iconSource = iconHeart;
-            break;
-          case '我的':
-            iconSource = iconUser;
-            break;
-          default:
-            iconSource = iconPost;
-        }
-        return (
-          <View style={styles.tabBarItemContainer}>
-            {iconSource !== iconPost
-              ? <Image
-                  resizeMode="contain"
-                  source={iconSource}
-                  style={[styles.tabBarIcon, focused && styles.tabBarIconFocused]}
-                />
-              : <TouchableOpacity onPress={() => {navigation.navigate('PostJob')}}>
-                  <Image
-                    resizeMode="cover"
-                    source={iconPost}
-                    style={{width:50, height: 50, marginBottom: 20}}
-                  />
-              </TouchableOpacity>
-            }
-          </View>
-        );
-      },
-    }),
-    tabBarPosition: 'bottom',
-    animationEnabled: true,
-    swipeEnabled: false,
-    tabBarOptions: {
+const BottomTab = createBottomTabNavigator();
+
+const TabBarIcon = ({ focused, source, width = 23, height = 23 }) => (
+  <Image
+    resizeMode="contain"
+    source={source}
+    style={[styles.tabBarIcon, { width, height }, focused && styles.tabBarIconFocused]}
+  />
+)
+
+export default () => (
+  <BottomTab.Navigator
+    tabBarOptions={{
       activeTintColor: colors.white,
       inactiveTintColor: colors.primary,
       showLabel: true,
       style: {
         backgroundColor: colors.secondary,
       },
-    },
-  },
+    }}
+  >
+    <BottomTab.Screen
+      name="首页"
+      component={HomeView}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={iconHome} /> }}
+    />
+    <BottomTab.Screen
+      name="发现"
+      component={MediaSearch}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={iconEye} /> }}
+    />
+    <BottomTab.Screen
+      name="约拍"
+      component={PostJob}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={iconPost} width={50} height={50} /> }}
+      listeners={({ navigation }) => ({
+        tabPress: () => {
+          e.preventDefault();
+          navigation.navigate('PostJob');
+        }
+      })}
+    />
+    <BottomTab.Screen
+      name="服务"
+      component={Providers}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={iconHeart} /> }}
+    />
+    <BottomTab.Screen
+      name="我的"
+      component={MyPage}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={iconUser} /> }}
+    />
+  </BottomTab.Navigator>
 );

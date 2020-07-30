@@ -8,15 +8,12 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import SyncStorage from 'sync-storage';
-import {NavigationActions} from 'react-navigation'
+import { CommonActions } from '@react-navigation/native';
+
 import { Button } from '../../components';
-
-
 import { getServices } from '../../redux/modules/service'
-
 import { getMyJob } from '../../redux/modules/job'
 import { addToContacts, pushNotification, pushUnreadMessages } from '../../redux/modules/auth'
-
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
 import { XMPP } from '../../helpers';
@@ -74,7 +71,7 @@ class HomeScreen extends React.Component {
     }
     if (profile && profile.role == 'provider') route = 'Provider'
     else if (profile && profile.role == 'client') route = 'Client'
-    this.props.navigation.reset([NavigationActions.navigate({ routeName: route })], 0)
+    this.props.navigation.reset([CommonActions.navigate({ routeName: route })], 0)
   }
 
   handleClick = () => {

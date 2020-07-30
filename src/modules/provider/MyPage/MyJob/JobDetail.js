@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  TextInput
+  TextInput,
+  Alert,
 } from 'react-native';
 
 import { colors } from '../../../../styles';
@@ -69,7 +70,7 @@ class ProviderJobDetail extends React.Component {
     //    price = this.props.job.budget
     //  }
     if (!job) {
-      alert("error")
+      Alert.alert("error")
       return
     }
     updateJob({

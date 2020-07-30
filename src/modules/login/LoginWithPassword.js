@@ -11,7 +11,8 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Form, TextValidator } from 'react-native-validator-form';
 import SyncStorage from 'sync-storage';
-import {NavigationActions} from 'react-navigation';
+import { CommonActions } from '@react-navigation/native';
+
 import { XMPP } from '../../helpers';
 import { Button, toast } from '../../components';
 import { colors } from '../../styles';
@@ -47,9 +48,9 @@ class LoginWithPassword extends React.Component {
       toast("登录成功")
       XMPP.start();
       if (profile.role == 'provider') {
-        this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Provider' })], 0)
+        this.props.navigation.reset([CommonActions.navigate({ routeName: 'Provider' })], 0)
       } else if (profile.role =='client'){
-        this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Client' })], 0)
+        this.props.navigation.reset([CommonActions.navigate({ routeName: 'Client' })], 0)
       }
     })
   }

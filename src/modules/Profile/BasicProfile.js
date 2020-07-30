@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity, TextInput} from 'react-native'
+import { View, Image, StyleSheet, TouchableOpacity, TextInput, Alert} from 'react-native'
 
 import ImagePicker from 'react-native-image-picker'
 import { colors } from '../../styles'
@@ -50,7 +50,7 @@ class BasicProfile extends React.Component {
     if (photo) {
       uploadFile('profile/me', 'post',this.createFormData(photo, { type: "photo"}))
       .then(res => console.log(res))
-      .catch(err => alert(err))
+      .catch(err => Alert.alert(err))
     }
     if (userName || overview) {
       this.props.saveProfile({
@@ -80,7 +80,7 @@ class BasicProfile extends React.Component {
         console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-        alert(response.customButton);
+        Alert.alert(response.customButton);
       } else {
         let source = response;
         this.setState({

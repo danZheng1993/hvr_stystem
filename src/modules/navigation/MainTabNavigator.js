@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react';
-import { Image, View, StyleSheet, Text } from 'react-native';
-import { createBottomTabNavigator } from 'react-navigation';
+import { Image, View, StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { colors, fonts } from '../../styles';
 
@@ -10,8 +10,6 @@ import CalendarScreen from '../calendar/CalendarViewContainer';
 import GridsScreen from '../grids/GridsViewContainer';
 import PagesScreen from '../pages/PagesViewContainer';
 import ComponentsScreen from '../components/ComponentsViewContainer';
-import AuthScreen from '../auth/AuthView';
-import GalleryScreen from '../gallery/GalleryViewContainer';
 
 const iconHome = require('../../../assets/images/tabbar/home.png');
 const iconCalendar = require('../../../assets/images/tabbar/calendar.png');
@@ -58,99 +56,43 @@ const styles = StyleSheet.create({
   },
 });
 
-export default createBottomTabNavigator(
-  {
-    Home: {
-      screen: HomeScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Calendar: {
-      screen: AuthScreen,
-      navigationOptions: {
-        header: (
-          <View style={styles.headerContainer}>
-            <Image style={styles.headerImage} source={hederBackground} />
-            <Text style={styles.headerCaption}>Calendar</Text>
-          </View>
-        ),
-      },
-    },
-    Grids: {
-      screen: GridsScreen,
-      navigationOptions: {
-        header: (
-          <View style={styles.headerContainer}>
-            <Image style={styles.headerImage} source={hederBackground} />
-            <Text style={styles.headerCaption}>Grids</Text>
-          </View>
-        ),
-      },
-    },
-    Pages: {
-      screen: PagesScreen,
-      navigationOptions: {
-        header: (
-          <View style={styles.headerContainer}>
-            <Image style={styles.headerImage} source={hederBackground} />
-            <Text style={styles.headerCaption}>Pages</Text>
-          </View>
-        ),
-      },
-    },
-    Components: {
-      screen: ComponentsScreen,
-      navigationOptions: {
-        header: (
-          <View style={styles.headerContainer}>
-            <Image style={styles.headerImage} source={hederBackground} />
-            <Text style={styles.headerCaption}>Components</Text>
-          </View>
-        ),
-      },
-    },
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => ({
-      // eslint-disable-next-line react/prop-types
-      tabBarIcon: ({ focused }) => {
-        const { routeName } = navigation.state;
-        let iconSource;
-        switch (routeName) {
-          case 'Home':
-            iconSource = iconHome;
-            break;
-          case 'Calendar':
-            iconSource = iconCalendar;
-            break;
-          case 'Grids':
-            iconSource = iconGrids;
-            break;
-          case 'Pages':
-            iconSource = iconPages;
-            break;
-          case 'Components':
-            iconSource = iconComponents;
-            break;
-          default:
-            iconSource = iconComponents;
-        }
-        return (
-          <View style={styles.tabBarItemContainer}>
-            <Image
-              resizeMode="contain"
-              source={iconSource}
-              style={[styles.tabBarIcon, focused && styles.tabBarIconFocused]}
-            />
-          </View>
-        );
-      },
-    }),
-    tabBarPosition: 'bottom',
-    animationEnabled: false,
-    swipeEnabled: false,
-    tabBarOptions: {
+const TabBarIcon = ({ focused, name }) => {
+  let iconSource;
+  switch (name) {
+    case 'Home':
+      iconSource = iconHome;
+      break;
+    case 'Calendar':
+      iconSource = iconCalendar;
+      break;
+    case 'Grids':
+      iconSource = iconGrids;
+      break;
+    case 'Pages':
+      iconSource = iconPages;
+      break;
+    case 'Components':
+      iconSource = iconComponents;
+      break;
+    default:
+      iconSource = iconComponents;
+  }
+  return (
+    <View style={styles.tabBarItemContainer}>
+      <Image
+        resizeMode="contain"
+        source={iconSource}
+        style={[styles.tabBarIcon, focused && styles.tabBarIconFocused]}
+      />
+    </View>
+  );
+}
+
+const BottomTab = createBottomTabNavigator();
+
+export default () => (
+  <BottomTab.Navigator
+    tabBarOptions={{
       showLabel: true,
       style: {
         backgroundColor: colors.white,
@@ -160,6 +102,41 @@ export default createBottomTabNavigator(
       labelStyle: {
         color: colors.grey,
       },
-    },
-  },
+    }}
+  >
+    <BottomTab.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon name="Home" focused={focused} /> }}
+    />
+    <BottomTab.Screen
+      name="Calendar"
+      component={CalendarScreen}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon name="Calendar" focused={focused} /> }}
+    />
+    <BottomTab.Screen
+      name="Grids"
+      component={GridsScreen}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon name="Grids" focused={focused} /> }}
+    />
+    <BottomTab.Screen
+      name="Pages"
+      component={PagesScreen}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon name="PagesScreen" focused={focused} /> }}
+    />
+    <BottomTab.Screen
+      name="Components"
+      component={ComponentsScreen}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon name="Components" focused={focused} /> }}
+    />
+  </BottomTab.Navigator>
 );
+
+/*
+header: (
+  <View style={styles.headerContainer}>
+    <Image style={styles.headerImage} source={hederBackground} />
+    <Text style={styles.headerCaption}>Components</Text>
+  </View>
+)
+*/

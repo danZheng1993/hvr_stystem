@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableHighlight} from 'react-native';
-import ListPopover from 'react-native-list-popover';
+
+import ListPopover from './ListPopover';
 
 export default class Select extends React.Component {
   constructor(props) {

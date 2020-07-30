@@ -4,16 +4,18 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import {NavigationActions} from 'react-navigation'
+import { CommonActions } from '@react-navigation/native';
+import { Form, TextValidator } from 'react-native-validator-form';
+
 import { Button } from '../../components';
 import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
-import { Form, TextValidator } from 'react-native-validator-form';
 import { signup, sendcode, checkcode } from '../../redux/modules/auth'
 
 var timer
@@ -70,14 +72,14 @@ class SignupAsClient extends React.Component {
 
     if (!phoneNumber || !verificationCode || !password || !passwordConfirm || password!=passwordConfirm) return;
     if (counter == 60) {
-      alert("try again")
+      Alert.alert("try again")
       return;
     }
     clearInterval(timer)
     this.props.checkcode({
       body:{ phoneNumber, code: verificationCode, password, role: 'client'},
-      success: () => this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Client' })], 0),
-      fail:() => alert("验证码出错")
+      success: () => this.props.navigation.reset([CommonActions.navigate({ routeName: 'Client' })], 0),
+      fail:() => Alert.alert("验证码出错")
     })
   }
 

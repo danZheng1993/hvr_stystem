@@ -5,11 +5,12 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-import {NavigationActions} from 'react-navigation'
+import { CommonActions } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import SyncStorage from 'sync-storage'
+
 import {loadItem} from '../../redux/api/storage'
 import { profileSelector } from '../../redux/selectors'
 import SendVerificationcode from '../components/SendVerificationCode'
@@ -28,9 +29,9 @@ class LoginWithSMS extends React.Component {
         const token = SyncStorage.get('token') || ''
         toast("登录成功!")
         if (profile.role == 'provider') {
-          this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Provider' })], 0)
+          this.props.navigation.reset([CommonActions.navigate({ routeName: 'Provider' })], 0)
         } else if (profile.role =='client'){
-          this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Client' })], 0)
+          this.props.navigation.reset([CommonActions.navigate({ routeName: 'Client' })], 0)
         }
       })
     }

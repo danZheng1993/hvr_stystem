@@ -1,16 +1,15 @@
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import { TextInput } from 'react-native-paper';
-
 import ImagePicker from 'react-native-image-picker'
-import { colors } from '../../styles'
-import { Button } from '../../components';
-import { Text } from '../../components/StyledText';
-
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import {NavigationActions} from 'react-navigation'
+import { CommonActions } from '@react-navigation/native';
+
+import { colors } from '../../styles'
+import { Button } from '../../components';
+import { Text } from '../../components/StyledText';
 import { saveProfile } from '../../redux/modules/auth'
 import uploadFile from '../../redux/api/upload'
 import { profileSelector } from '../../redux/selectors'
@@ -29,12 +28,12 @@ class CompanyInfo extends React.Component {
     if (photo) {
       uploadFile('profile/me', 'post',this.createFormData(photo, { type: "companyLicense"}))
       .then(res => console.log(res))
-      .catch(err => alert(err))
+      .catch(err => Alert.alert(err))
     }
     this.props.saveProfile({
       body: {companyName: name}
     })
-    this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Provider' })], 0)
+    this.props.navigation.reset([CommonActions.navigate({ routeName: 'Provider' })], 0)
   };
     
   createFormData = (photo, body) => {

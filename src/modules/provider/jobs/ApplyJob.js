@@ -4,6 +4,7 @@ import {
   View,
   ScrollView,
   TextInput,
+  Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -38,7 +39,7 @@ class ApplyJob extends React.Component {
     //    price = this.props.job.budget
     //  }
     if (!job) {
-      alert("error")
+      Alert.alert("error")
       return
     }
     applyJob({

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import { TextInput } from 'react-native-paper';
 
 import ImagePicker from 'react-native-image-picker'
@@ -29,12 +29,12 @@ class ShootingID extends React.Component {
     if (frontPhoto) {
       uploadFile('profile/me', 'post',this.createFormData(frontPhoto, { type: "frontID"}))
       .then(res => console.log(res))
-      .catch(err => alert(err))
+      .catch(err => Alert.alert(err))
     }
     if (backPhoto) {
       uploadFile('profile/me', 'post',this.createFormData(backPhoto, { type: "backID"}))
       .then(res => console.log(res))
-      .catch(err => alert(err))
+      .catch(err => Alert.alert(err))
     }
     this.props.navigation.navigate({ routeName: 'CompanyInfo' })
   };
@@ -73,7 +73,7 @@ class ShootingID extends React.Component {
         console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-        alert(response.customButton);
+        Alert.alert(response.customButton);
       } else {
         let source = response;
         this.setState({
@@ -99,7 +99,7 @@ class ShootingID extends React.Component {
         console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-        alert(response.customButton);
+        Alert.alert(response.customButton);
       } else {
         let source = response;
         this.setState({

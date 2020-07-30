@@ -5,6 +5,7 @@ import {
   View,
   ScrollView,
   Text,
+  Alert,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -57,12 +58,12 @@ class BillingInvoice extends React.Component {
         console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-        alert(response.customButton);
+        Alert.alert(response.customButton);
       } else {
         let source = response;
         uploadFile(`invoices/${id}`, 'post',this.createFormData(source, { type: "photo"}))
           .then(res => console.log("res>>>",res))
-          .catch(err => alert(err))
+          .catch(err => Alert.alert(err))
       }
     });
   }

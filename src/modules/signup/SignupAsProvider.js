@@ -2,12 +2,14 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  Alert,
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import {NavigationActions} from 'react-navigation'
+import { CommonActions } from '@react-navigation/native';
+
 import { Button } from '../../components';
 import { colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
@@ -67,14 +69,14 @@ class SignupAsProvider extends React.Component {
 
     if (!phoneNumber || !verificationCode || !password || !passwordConfirm || password!=passwordConfirm) return;
     if (counter == 60) {
-      alert("try again")
+      Alert.alert("try again")
       return;
     }
     clearInterval(timer)
     this.props.checkcode ({
       body:{ phoneNumber, code: verificationCode, password, role: 'provider'},
-      success: () => this.props.navigation.reset([NavigationActions.navigate({ routeName: 'BasicProfile' })], 0),
-      fail:() => alert("验证码出错")
+      success: () => this.props.navigation.reset([CommonActions.navigate({ routeName: 'BasicProfile' })], 0),
+      fail:() => Alert.alert("验证码出错")
     })
   }
 

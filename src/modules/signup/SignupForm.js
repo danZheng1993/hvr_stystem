@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  Alert,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -57,7 +58,7 @@ class SignupForm extends React.Component {
           body: {phoneNumber, password},
           success: () => this.props.navigation.navigate({ routeName: 'BasicProfile' })
         }),
-        fail:() => alert("验证码出错")
+        fail:() => Alert.alert("验证码出错")
       })
     }
     render(){
