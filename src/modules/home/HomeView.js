@@ -71,7 +71,7 @@ class HomeScreen extends React.Component {
     }
     if (profile && profile.role == 'provider') route = 'Provider'
     else if (profile && profile.role == 'client') route = 'Client'
-    this.props.navigation.reset([CommonActions.navigate({ routeName: route })], 0)
+    this.props.navigation.navigate(route);
   }
 
   handleClick = () => {

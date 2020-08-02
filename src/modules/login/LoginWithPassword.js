@@ -48,9 +48,9 @@ class LoginWithPassword extends React.Component {
       toast("登录成功")
       XMPP.start();
       if (profile.role == 'provider') {
-        this.props.navigation.reset([CommonActions.navigate({ routeName: 'Provider' })], 0)
+        this.props.navigation.navigate('Provider');
       } else if (profile.role =='client'){
-        this.props.navigation.reset([CommonActions.navigate({ routeName: 'Client' })], 0)
+        this.props.navigation.navigate('Client');
       }
     })
   }

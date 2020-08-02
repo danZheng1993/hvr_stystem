@@ -90,7 +90,7 @@ export default () => (
       component={PostJob}
       options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={iconPost} width={50} height={50} /> }}
       listeners={({ navigation }) => ({
-        tabPress: () => {
+        tabPress: (e) => {
           e.preventDefault();
           navigation.navigate('PostJob');
         }

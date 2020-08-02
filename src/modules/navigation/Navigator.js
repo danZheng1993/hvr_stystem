@@ -11,7 +11,7 @@ export default function NavigatorView() {
   // return <AuthScreen />;
 
   return  (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       {/* <View style={{height: 50, backgroundColor: colors.secondary}}></View> */}
       <AppNavigator />
     </View>

@@ -1,4 +1,5 @@
 // const ip = '192.168.1.86'
+// const ip = 'localhost'
 const ip = 'localhost'
 const port = 4000
 const baseUrl = `http://${ip}:${port}/`

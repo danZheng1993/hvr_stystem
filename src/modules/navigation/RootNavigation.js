@@ -84,17 +84,17 @@ const MainNavigator = () => (
       ),
     }}
   >
-    <Stack.Screen name="Main" component={HomeScreen} options={{ header: null }} />
+    <Stack.Screen name="Main" component={HomeScreen} options={{ headerShown: false }} />
     <Stack.Screen name="Settings" component={Settings} options={{ title: '设 置' }} />
     <Stack.Screen name="MyCreated" component={Developing} options={{ title: '我发布的' }} />
     <Stack.Screen name="VRShop" component={Developing} options={{ title: '我的VR' }} />
     <Stack.Screen name="MyContract" component={Developing} options={{ title: '我的合同' }} />
-    <Stack.Screen name="Auth" component={AuthScreen} options={{ header: null }} />
+    <Stack.Screen name="Auth" component={AuthScreen} options={{ headerShown: false }} />
     <Stack.Screen
       name="Signup"
       component={SignupScreen}
       options={({ navigation }) => ({
-        header: null,
+        headerShown: false,
         title: '',
         headerStyle: {
           elevation: 0, // remove shadow on Android
@@ -257,12 +257,10 @@ const MainNavigator = () => (
             <Icon name="angle-left" size={30} color={colors.black}/>
           </TouchableOpacity>
         ),
-        headerRight:  (
-          (
-            <Text size={12} style={{color: colors.primary, paddingRight: 25}} onPress={() => navigation.navigate('Signup')}>
-              注册
-            </Text> 
-          )
+        headerRight: () => (
+          <Text size={12} style={{color: colors.primary, paddingRight: 25}} onPress={() => navigation.navigate('Signup')}>
+            注册
+          </Text> 
         ),
       })}
     />
@@ -300,10 +298,10 @@ const MainNavigator = () => (
         ),
       })}
     />
-    <Stack.Screen name="Provider" component={Provider} options={{ header: null }} />
-    <Stack.Screen name="ProviderDetail" component={ProviderDetail} options={{ header: null }} />
+    <Stack.Screen name="Provider" component={Provider} options={{ headerShown: false }} />
+    <Stack.Screen name="ProviderDetail" component={ProviderDetail} options={{ headerShown: false }} />
     <Stack.Screen name="ApplyJob" component={ApplyJob} options={{ title: '接单列表' }} />
-    <Stack.Screen name="Client" component={Client} options={{ header: null }} />
+    <Stack.Screen name="Client" component={Client} options={{ headerShown: false }} />
     <Stack.Screen name="PostJob" component={PostJob} options={{ title: '需求发布' }} />
     <Stack.Screen name="ClientJobDetail" component={ClientJobDetail} options={{ title: '订单详情' }} />
     <Stack.Screen name="GiveFeedback" component={GiveFeedback} options={{ title: '意见反馈' }} />
@@ -321,11 +319,11 @@ const MainNavigator = () => (
     <Stack.Screen name="SystemNotification" component={SystemNotification} options={{ title: '通知消息' }} />
     <Stack.Screen name="PersonalInformation" component={PersonalInformation} options={{ title: '' }} />
     <Stack.Screen name="Security" component={Security} options={{ title: '安全验证' }} />
-    <Stack.Screen name="WebViewer" component={WebViewer} options={{ header: null }} />
-    <Stack.Screen name="SearchBar" component={SearchBar} options={{ header: null }} />
-    <Stack.Screen name="Player" component={Player} options={{ header: null }} />
+    <Stack.Screen name="WebViewer" component={WebViewer} options={{ headerShown: false }} />
+    <Stack.Screen name="SearchBar" component={SearchBar} options={{ headerShown: false }} />
+    <Stack.Screen name="Player" component={Player} options={{ headerShown: false }} />
     <Stack.Screen name="SearchResult" component={SearchResult} options={{ title: '搜索结果' }} />
-    <Stack.Screen name="Location" component={Location} options={{ header: null }} />
+    <Stack.Screen name="Location" component={Location} options={{ headerShown: false }} />
     <Stack.Screen name="Gallery" component={GalleryScreen} options={{ title: 'Gallery' }} />
     <Stack.Screen name="Article" component={AvailableInFullVersion} options={{ title: '' }} />
     <Stack.Screen name="Chat" component={AvailableInFullVersion} options={{ title: '' }} />
@@ -334,8 +332,8 @@ const MainNavigator = () => (
   </Stack.Navigator>
 )
 
-export default () => {
+export default () => (
   <NavigationContainer>
     <MainNavigator />
   </NavigationContainer>
-}
+);
