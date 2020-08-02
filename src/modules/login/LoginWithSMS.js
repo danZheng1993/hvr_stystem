@@ -29,9 +29,9 @@ class LoginWithSMS extends React.Component {
         const token = SyncStorage.get('token') || ''
         toast("登录成功!")
         if (profile.role == 'provider') {
-          this.props.navigation.reset([CommonActions.navigate({ routeName: 'Provider' })], 0)
+          this.props.navigation.reset([CommonActions.navigate('Provider')], 0)
         } else if (profile.role =='client'){
-          this.props.navigation.reset([CommonActions.navigate({ routeName: 'Client' })], 0)
+          this.props.navigation.reset([CommonActions.navigate('Client')], 0)
         }
       })
     }
@@ -43,12 +43,12 @@ class LoginWithSMS extends React.Component {
             <SendVerificationcode navigation={this.props.navigation} onSuccess={this.onSuccess} />
             <View style={styles.anchor}>
               <View style={[styles.inputWrap, {alignItems: 'flex-start'}]}>
-                <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithPassword' })}>
+                <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate('LoginWithPassword')}>
               密码登录
                 </Text>
               </View>           
               <View style={[styles.inputWrap, {alignItems: 'flex-end'}]}>
-                <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'PasswordRecovery' })}>
+                <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate('PasswordRecovery')}>
               忘记密码?
                 </Text>
               </View>

@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const authCtrl = require('../controllers/auth.controller');
 const router = express.Router();
 
@@ -17,5 +18,36 @@ router.route('/sendcode')
 router.route('/checkcode')
   .post(authCtrl.checkcode);
 
-router.route('/')
+router.route('/test_deeplinking')
+  .get(function (req, res) {
+    res.redirect('hvr://test/return');
+  })
+
+router.route('/auth/qq')
+  .get(
+    passport.authenticate('qq'),
+    function(req, res){
+      // The request will be redirected to qq for authentication, so this
+      // function will not be called.
+    }
+  );
+
+router.route('/auth/qq/callback')
+  .get(
+    passport.authenticate('qq', { failureRedirect: '/auth/fail' }),
+    function(req, res) {
+      // Successful authentication, redirect home.
+      res.redirect('hvr://qq/auth/success');
+    }  
+  )
+
+router.route('/auth/wechat')
+  .get(passport.authenticate('wechat'));
+
+router.route('/auth/wechat/callback')
+  .get(passport.authenticate('wechat', {
+    failureRedirect: '/auth/fail',
+    successReturnToOrRedirect: 'hvr://wechat/auth/success'
+  }))
+
 module.exports = router;

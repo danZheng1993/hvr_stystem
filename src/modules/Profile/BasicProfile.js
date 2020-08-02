@@ -58,7 +58,7 @@ class BasicProfile extends React.Component {
       })
     }
     if (update == '')
-      this.props.navigation.navigate({ routeName: 'ShootingID' })
+      this.props.navigation.navigate('ShootingID')
     else 
       this.props.navigation.goBack()
   };

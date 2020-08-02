@@ -33,7 +33,7 @@ class CompanyInfo extends React.Component {
     this.props.saveProfile({
       body: {companyName: name}
     })
-    this.props.navigation.reset([CommonActions.navigate({ routeName: 'Provider' })], 0)
+    this.props.navigation.reset([CommonActions.navigate('Provider')], 0)
   };
     
   createFormData = (photo, body) => {

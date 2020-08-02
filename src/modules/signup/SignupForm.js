@@ -56,7 +56,7 @@ class SignupForm extends React.Component {
         body:{ phoneNumber, code: verificationCode},
         success: () => this.props.signup({
           body: {phoneNumber, password},
-          success: () => this.props.navigation.navigate({ routeName: 'BasicProfile' })
+          success: () => this.props.navigation.navigate('BasicProfile')
         }),
         fail:() => Alert.alert("验证码出错")
       })

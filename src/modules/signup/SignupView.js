@@ -12,11 +12,11 @@ import { Text } from '../../components/StyledText';
 export default function SignupView(props) {
 
   const handleProvider = () => {
-    props.navigation.navigate({ routeName: 'SignupAsProvider' })
+    props.navigation.navigate('SignupAsProvider')
   };
 
   const handleClient = () => {
-    props.navigation.navigate({ routeName: 'SignupAsClient' })
+    props.navigation.navigate('SignupAsClient')
   };
 
   return (

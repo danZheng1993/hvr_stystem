@@ -12,7 +12,7 @@ import BasicProfile from './BasicProfile'
 export default function CreateProfile(props) {
 
   const handleClick = () => {
-    props.navigation.navigate({ routeName: 'CreateProfile' })
+    props.navigation.navigate('CreateProfile')
 
   };
   return (

@@ -36,7 +36,7 @@ class ShootingID extends React.Component {
       .then(res => console.log(res))
       .catch(err => Alert.alert(err))
     }
-    this.props.navigation.navigate({ routeName: 'CompanyInfo' })
+    this.props.navigation.navigate('CompanyInfo')
   };
   
   createFormData = (photo, body) => {

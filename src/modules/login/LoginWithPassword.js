@@ -108,12 +108,12 @@ class LoginWithPassword extends React.Component {
           </Form>   
           <View style={styles.anchor}>
             <View style={[styles.inputWrap, {alignItems: 'flex-start'}]}>
-              <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'LoginWithSMS' })}>
+              <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate('LoginWithSMS')}>
               手机验证码登录
               </Text>
             </View>           
             <View style={[styles.inputWrap, {alignItems: 'flex-end'}]}>
-              <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate({ routeName: 'PasswordRecovery' })}>
+              <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate('PasswordRecovery')}>
               忘记密码?
               </Text>
             </View>

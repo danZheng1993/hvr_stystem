@@ -78,7 +78,7 @@ class SignupAsClient extends React.Component {
     clearInterval(timer)
     this.props.checkcode({
       body:{ phoneNumber, code: verificationCode, password, role: 'client'},
-      success: () => this.props.navigation.reset([CommonActions.navigate({ routeName: 'Client' })], 0),
+      success: () => this.props.navigation.reset([CommonActions.navigate('Client')], 0),
       fail:() => Alert.alert("验证码出错")
     })
   }
