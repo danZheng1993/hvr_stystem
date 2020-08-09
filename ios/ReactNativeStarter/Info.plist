@@ -5,8 +5,10 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleURLName</key>
-			<string>hvr</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>hvr</string>
+			</array>
 		</dict>
 	</array>
 	<key>NSCameraUsageDescription</key>

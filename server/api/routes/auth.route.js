@@ -20,7 +20,7 @@ router.route('/checkcode')
 
 router.route('/test_deeplinking')
   .get(function (req, res) {
-    res.redirect('hvr://test/return');
+    res.redirect('hvr://test/return?token=1');
   })
 
 router.route('/auth/qq')
@@ -34,11 +34,8 @@ router.route('/auth/qq')
 
 router.route('/auth/qq/callback')
   .get(
-    passport.authenticate('qq', { failureRedirect: '/auth/fail' }),
-    function(req, res) {
-      // Successful authentication, redirect home.
-      res.redirect('hvr://qq/auth/success');
-    }  
+    passport.authenticate('qq', { failureRedirect: 'hvr://auth/failure' }),
+    authCtrl.qqAuth,
   )
 
 router.route('/auth/wechat')
@@ -46,8 +43,7 @@ router.route('/auth/wechat')
 
 router.route('/auth/wechat/callback')
   .get(passport.authenticate('wechat', {
-    failureRedirect: '/auth/fail',
-    successReturnToOrRedirect: 'hvr://wechat/auth/success'
-  }))
+    failureRedirect: 'hvr://auth/failure',
+  }), authCtrl.wechatAuth);
 
 module.exports = router;

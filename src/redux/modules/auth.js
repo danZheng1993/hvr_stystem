@@ -23,6 +23,7 @@ export const ADD_TO_ATTENTIONS = 'ADD_TO_ATTENTIONS'
 export const REMOVE_FROM_ATTENTIONS = 'REMOVE_FROM_ATTENTIONS'
 export const SEND_CODE = 'SEND_CODE'
 export const CHECK_CODE = 'CHECK_CODE'
+export const THIRD_PARTY_SUCCESS = 'THIRD_PARTY_SUCCESS'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -32,6 +33,7 @@ export const logout = createAction(DO_LOGOUT, (callback) => {
   AsyncStorage.removeItem('hvr_auth', () => {callback}) 
 })
 export const signup = createAction(DO_SIGNUP)
+export const thirdPartyAuthSuccess = createAction(THIRD_PARTY_SUCCESS)
 export const checkcode = createAction(CHECK_CODE)
 export const sendcode = createAction(SEND_CODE)
 export const getProfile = createAction(GET_PROFILE)
@@ -113,6 +115,15 @@ export default handleActions({
     me: null,
     error: payload,
     loading: false
+  }),
+
+  [THIRD_PARTY_SUCCESS]: (state, { payload }) => ({
+    ...state,
+    token: payload,
+    status: THIRD_PARTY_SUCCESS,
+    loading: false,
+    unread: {},
+    notification: [],
   }),
 
   [DO_LOGOUT]: (state, { payload }) => ({

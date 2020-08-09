@@ -6,6 +6,9 @@ import { requestPending } from 'redux/api/request'
 import { isAdmin, isManager } from './roleHelpers'
 import LoggingIn from 'components/LoggingIn'
 
+import { Linking } from 'react-native';
+import constants from '../constants'
+
 const locationHelper = locationHelperBuilder({})
 
 export const isLoggingIn = state => requestPending(DO_LOGIN) === state.auth.status
@@ -46,3 +49,12 @@ export const userIsNotAuthenticatedRedir = connectedRouterRedirect({
   redirectPath: (state, ownProps) => locationHelper.getRedirectQueryParam(ownProps) || '/dashboard',
   allowRedirectBack: false
 })
+
+export const initQQAuth = () => {
+  Linking.openURL(`${constants.BASE_URL}/auth/qq`);
+}
+
+export const initWeChatAuth = () => {
+  // Linking.openURL(`${constants.BASE_URL}/auth/wechat`);
+  Linking.openURL(`${constants.BASE_URL}/auth/test_deeplinking`);
+}

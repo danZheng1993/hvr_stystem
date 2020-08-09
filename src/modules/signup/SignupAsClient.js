@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Linking,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -16,7 +17,9 @@ import { Form, TextValidator } from 'react-native-validator-form';
 import { Button } from '../../components';
 import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
-import { signup, sendcode, checkcode } from '../../redux/modules/auth'
+import { signup, sendcode, checkcode, thirdPartyAuthSuccess } from '../../redux/modules/auth'
+import constants from '../../constants';
+import { authResponseAnalyse } from '../../utils/helper';
 
 var timer
 class SignupAsClient extends React.Component {
@@ -31,7 +34,7 @@ class SignupAsClient extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // custom rule will have name 'isPasswordMatch'
     Form.addValidationRule('isPasswordMatch', (value) => {
       if (value !== this.state.password) {
@@ -39,10 +42,30 @@ class SignupAsClient extends React.Component {
       }
       return true;
     });
+    Linking.addEventListener('url', this.handleOpenURL);
   }
 
   componentWillUnmount() {
     Form.removeValidationRule('isPasswordMatch');
+    Linking.removeEventListener('url', this.handleOpenURL);
+  }
+
+  handleWeChat = () => {
+    Linking.openURL(`${constants.BASE_URL}/auth/wechat`);
+  }
+
+  handleQQ = () => {
+    Linking.openURL(`${constants.BASE_URL}auth/qq`)
+  }
+
+  handleOpenURL = (event) => {
+    if (event.url.startsWith('hvr://auth')) {
+      const token = authResponseAnalyse(event.url);
+      if (token) {
+        this.props.thirdPartyAuthSuccess(result)
+        this.props.navigation.reset([CommonActions.navigate('Client')]);
+      }
+    }
   }
 
   sendCode = () => {
@@ -235,7 +258,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = {
   signup,
   sendcode,
-  checkcode
+  checkcode,
+  thirdPartyAuthSuccess,
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

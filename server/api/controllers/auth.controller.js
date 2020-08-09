@@ -254,10 +254,20 @@ function checkcode(req, res, next) {
     })
     .catch(next);
   }
+
+function wechatAuth(req, res, next) {
+
+}
+
+function qqAuth(req, res, next) {
+
+}
 module.exports = {
   login,
   signup,
   sendcode,
   checkcode,
-  adminLogin
+  adminLogin,
+  wechatAuth,
+  qqAuth,
 };
