@@ -6,6 +6,7 @@ import { createAction, handleActions } from 'redux-actions'
 // ------------------------------------
 export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED'
 export const MESSAGE_VIEWED = 'MESSAGE_RECEIVED'
+export const TOKEN_GENERATED = 'TOKEN_GENERATED'
 
 // ------------------------------------
 // Actions
@@ -13,9 +14,11 @@ export const MESSAGE_VIEWED = 'MESSAGE_RECEIVED'
 
 export const messageReceived = createAction(MESSAGE_RECEIVED)
 export const messageViewed = createAction(MESSAGE_VIEWED)
+export const tokenGenerated = createAction(TOKEN_GENERATED)
 
 const initialState = {
-  messages: []
+  messages: [],
+  token: null,
 }
 
 // ------------------------------------
@@ -34,5 +37,9 @@ export default handleActions({
       ...state,
       messages: newMessages
     };
-  }
+  },
+  [TOKEN_GENERATED]: (state, { payload }) => ({
+    ...state,
+    token: payload,
+  })
 }, initialState);

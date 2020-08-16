@@ -222,3 +222,5 @@ export const myInvoiceSelector = (state) =>
 export const myJobsSelector = (state) =>
   get(state, 'job.myJobs', false)
 
+export const tokenSelector = (state) =>
+  get(state, 'message.token', '');

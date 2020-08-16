@@ -24,8 +24,8 @@ class SearchResult extends React.Component {
   }
 
   componentWillMount() {
-    const {navigation} = this.props
-    let type = navigation.getParam('type', '')
+    const { route } = this.props
+    const { type = '' } = route.params;
     this.setState({type})
   }
 

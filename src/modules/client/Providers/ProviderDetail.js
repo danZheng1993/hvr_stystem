@@ -34,8 +34,8 @@ class ProviderDetail extends React.Component {
   }
 
   componentWillMount() {
-    const {getFeedback, searchMedia, navigation} = this.props
-    let user = navigation.getParam('user', null)
+    const {getFeedback, searchMedia} = this.props
+    let { user } = this.props.route.params;
     if (user) {
       this.setState({user})
       getFeedback({

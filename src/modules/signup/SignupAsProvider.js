@@ -16,6 +16,7 @@ import { colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
 import { signup, sendcode, checkcode, registerPushyToken } from '../../redux/modules/auth'
 import { Text } from '../../components/StyledText';
+import { tokenSelector } from '../../redux/selectors';
 
 var timer
 class SignupAsProvider extends React.Component {
@@ -77,11 +78,9 @@ class SignupAsProvider extends React.Component {
     this.props.checkcode ({
       body:{ phoneNumber, code: verificationCode, password, role: 'provider'},
       success: () => {
-        Pushy.register()
-          .then((deviceToken) => {
-            this.props.registerPushyToken({ deviceToken });
-            Pushy.subscribe('provider');
-          });
+        const { deviceToken, registerPushyToken } = this.props;
+        registerPushyToken({ deviceToken });
+        Pushy.subscribe('provider');
         this.props.navigation.reset([CommonActions.navigate('BasicProfile')], 0);
       },
       fail:() => Alert.alert("验证码出错")
@@ -202,6 +201,7 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
+  deviceToken: tokenSelector
 });
 
 const mapDispatchToProps = {

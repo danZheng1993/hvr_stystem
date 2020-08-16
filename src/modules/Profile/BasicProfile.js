@@ -28,8 +28,8 @@ class BasicProfile extends React.Component {
   }
 
   componentWillMount() {
-    const {navigation, profile} = this.props
-    let update = navigation.getParam('update', 'none')
+    const {profile} = this.props
+    let update = this.props.route.params;
     if (update != 'none') {
       this.setState({update})
     }

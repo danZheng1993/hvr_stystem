@@ -24,9 +24,9 @@ class ApplyJob extends React.Component {
     }
   }
 
-  componentWillMount() {
-    const {navigation} = this.props
-    let job = navigation.getParam('job', null)
+  componentDidMount() {
+    const {route} = this.props
+    const { job } = route.params;
     if (job) {
       this.setState({job})
     }

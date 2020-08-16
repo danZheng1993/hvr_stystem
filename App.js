@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import Pushy from 'pushy-react-native';
 
 import { store } from './src/redux/store';
-import { messageReceived } from './src/redux/modules/message';
+import { messageReceived, tokenGenerated } from './src/redux/modules/message';
 import AppView from './src/modules/AppViewContainer';
 
 console.disableYellowBox = true;
@@ -24,13 +24,15 @@ export default function App() {
         }
       });
     }
-    Pushy.register();
+    Pushy.register().then((deviceToken) => {
+      store.dispatch(tokenGenerated(deviceToken));
+    });
     Pushy.setNotificationListener(async (data) => {
       let notificationTitle = 'HVR System';
       let notificationText = data.message || 'Test notification';
       Pushy.notify(notificationTitle, notificationText, data);
       store.dispatch(messageReceived({ message: data.message }));
-  });
+    });
   })
   return (
     <Provider store={store}>

@@ -9,8 +9,8 @@ export default class WebViewer extends Component {
 		}
 	}
   componentWillMount() {
-		const {navigation} = this.props
-		let url = navigation.getParam('url', constants.BASE_URL + 'error.html')
+    const {route} = this.props
+    const { url = constants.BASE_URL + 'error.html' } = route.params;
 		this.setState({url})
 	}
   render() {

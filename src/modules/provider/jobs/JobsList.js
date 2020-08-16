@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = createStructuredSelector({
   jobs: jobsSearchResultSelector,
   jobsloading: jobsloadingSelector,
-  profile: profileSelector
+  profile: profileSelector,
 });
 
 const mapDispatchToProps = {

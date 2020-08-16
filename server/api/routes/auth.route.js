@@ -1,7 +1,9 @@
 const express = require('express');
 const passport = require('passport');
-const authCtrl = require('../controllers/auth.controller');
+const WechatStrategy = require('passport-wechat');
 const router = express.Router();
+
+const authCtrl = require('../controllers/auth.controller');
 
 router.route('/login')
   .post(authCtrl.login);
@@ -22,6 +24,22 @@ router.route('/test_deeplinking')
   .get(function (req, res) {
     res.redirect('hvr://test/return?token=1');
   })
+
+// passport.use(new WechatStrategy({
+//     appID: '',
+//     name: '虚拟现实市场',
+//     appSecret: '',
+//     client: 'web',
+//     callbackURL: '',
+//     scope: 'snsapi_userinfo',
+//     state: '',
+//     getToken: '',
+//     saveToken: '',
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//     return done(err,profile);
+//   }
+// ));
 
 router.route('/auth/qq')
   .get(

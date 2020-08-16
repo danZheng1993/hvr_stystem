@@ -17,7 +17,7 @@ export default class Player extends React.Component {
     }
   }
   componentWillMount() {
-    const path = this.props.navigation.getParam('url', 'default.mp4')
+    const { url: path = 'default.mp4' } = this.props.route.params;
     this.setState({path})
   }
 

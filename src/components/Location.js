@@ -347,8 +347,8 @@ export default class Location extends Component {
 	}
 
 	handleChoose = (location) => {
-		const {navigation} = this.props
-		const chooseLocation = navigation.getParam('chooseLocation', null)
+		const {navigation, route} = this.props
+    const { chooseLocation } = route.params
 		if (chooseLocation) {
 			chooseLocation(location)
 		}

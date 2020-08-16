@@ -9,8 +9,8 @@ export default class ViewInvoice extends Component {
 		}
 	}
   componentWillMount() {
-		const {navigation} = this.props
-		let invoice = navigation.getParam('invoice', {})
+		const {route} = this.props
+    const { invoice } = route.params;
 		invoice && this.setState({url: constants.INVOICE_BASE_URL +  invoice.path})
 	}
   render() {

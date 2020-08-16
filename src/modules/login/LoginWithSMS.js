@@ -13,7 +13,7 @@ import SyncStorage from 'sync-storage';
 import Pushy from 'pushy-react-native';
 
 import {loadItem} from '../../redux/api/storage'
-import { profileSelector } from '../../redux/selectors'
+import { profileSelector, tokenSelector } from '../../redux/selectors'
 import SendVerificationcode from '../components/SendVerificationCode'
 import colors from '../../styles/colors'
 import {Text} from '../../components'
@@ -24,20 +24,18 @@ import { registerPushyToken } from '../../redux/modules/auth';
 class LoginWithSMS extends React.Component {
 
     onSuccess = () => {
-      Pushy.register()
-        .then((deviceToken) => {
-          this.props.registerPushyToken({ deviceToken });
-        }).catch(err => {
-          alert(err.message);
-        })
+      const { deviceToken, registerPushyToken } = this.props;
+      registerPushyToken({ deviceToken });
       loadItem('hvr_auth').then((val) => {
         const {profile} = this.props
         if (!profile) return
         const token = SyncStorage.get('token') || ''
         toast("登录成功!")
         if (profile.role == 'provider') {
+          Pushy.subscribe('provider');
           this.props.navigation.reset([CommonActions.navigate('Provider')], 0)
         } else if (profile.role =='client'){
+          Pushy.subscribe('client');
           this.props.navigation.reset([CommonActions.navigate('Client')], 0)
         }
       })
@@ -119,7 +117,8 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  profile: profileSelector
+  profile: profileSelector,
+  deviceToken: tokenSelector,
 });
 
 const mapDispatchToProps = {

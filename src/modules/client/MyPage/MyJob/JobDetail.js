@@ -25,8 +25,7 @@ class ClientJobDetail extends React.Component {
   }
   
   componentWillMount() {
-    const { navigation } = this.props
-    let id = navigation.getParam('id', '')
+    let { id } = this.props.route.params
     if (id) {
       this.setState({id})
     }

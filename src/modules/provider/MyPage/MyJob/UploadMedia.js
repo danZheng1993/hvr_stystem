@@ -22,8 +22,7 @@ class UploadMedia extends React.Component {
   }
 
   componentWillMount() {
-    const { navigation} = this.props
-    let id = navigation.getParam('id', 'NO-ID')
+    const { id = 'NO-ID' } = this.props.route.params;
     if (id != 'NO-ID') {
       this.setState({id})
     }

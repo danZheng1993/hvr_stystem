@@ -19,7 +19,7 @@ import { Button, toast } from '../../components';
 import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
 import { login, registerPushyToken } from '../../redux/modules/auth'
-import { profileSelector, authloadingSelector } from '../../redux/selectors'
+import { profileSelector, authloadingSelector, tokenSelector } from '../../redux/selectors'
 import { loadItem } from '../../redux/api/storage';
 import constants from '../../constants';
 
@@ -36,29 +36,27 @@ class LoginWithPassword extends React.Component {
     const { phoneNumber, password} = this.state  
     this.props.login({
       body: {phoneNumber, password},
-      success: () =>     this.redirect(),
+      success: () => this.redirect(),
       fail: () => toast("电话号码或密码有误!")
     })
   };
   
   redirect() {
-    const { profile, navigation, registerPushyToken } = this.props;
-    Pushy.register()
-      .then((deviceToken) => {
-        registerPushyToken({ deviceToken });
-      })
-
-    // loadItem('hvr_auth').then((val) => {
-    //   if (!profile) return
-    //   const token = SyncStorage.get('token') || ''
-    //   toast("登录成功")
-    //   XMPP.start();
-    //   if (profile.role == 'provider') {
-    //     navigation.navigate('Provider');
-    //   } else if (profile.role =='client'){
-    //     navigation.navigate('Client');
-    //   }
-    // })
+    const { profile, navigation, registerPushyToken, deviceToken } = this.props;
+    registerPushyToken({ deviceToken });
+    loadItem('hvr_auth').then((val) => {
+      if (!profile) return
+      const token = SyncStorage.get('token') || ''
+      toast("登录成功")
+      XMPP.start();
+      if (profile.role == 'provider') {
+        // Pushy.subscribe('provider');
+        navigation.navigate('Provider');
+      } else if (profile.role =='client'){
+        // Pushy.subscribe('client');
+        navigation.navigate('Client');
+      }
+    })
   }
 
   render() {
@@ -198,7 +196,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = createStructuredSelector({
   profile: profileSelector,
-  loading: authloadingSelector
+  loading: authloadingSelector,
+  deviceToken: tokenSelector,
 });
 
 const mapDispatchToProps = {

@@ -1,6 +1,6 @@
 // const ip = '192.168.1.86'
 // const ip = 'localhost'
-const ip = 'localhost'
+const ip = '192.168.0.169'
 const port = 4000
 const baseUrl = `http://${ip}:${port}/`
 const constants = {

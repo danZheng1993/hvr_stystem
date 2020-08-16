@@ -21,6 +21,7 @@ import { Text } from '../../components/StyledText';
 import { signup, sendcode, checkcode, thirdPartyAuthSuccess, registerPushyToken } from '../../redux/modules/auth'
 import constants from '../../constants';
 import { authResponseAnalyse } from '../../utils/helper';
+import { tokenSelector } from '../../redux/selectors';
 
 var timer
 class SignupAsClient extends React.Component {
@@ -103,11 +104,9 @@ class SignupAsClient extends React.Component {
     this.props.checkcode({
       body:{ phoneNumber, code: verificationCode, password, role: 'client'},
       success: () => {
-        Pushy.register()
-          .then((deviceToken) => {
-            this.props.registerPushyToken({ deviceToken });
-            Pushy.subscribe('client');
-          });
+        const { deviceToken, registerPushyToken } = this.props;
+        registerPushyToken({ deviceToken });
+        Pushy.subscribe('client');
         this.props.navigation.reset([CommonActions.navigate('Client')], 0);
       },
       fail:() => Alert.alert("验证码出错")
@@ -261,6 +260,7 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
+  deviceToken: tokenSelector,
 });
 
 const mapDispatchToProps = {

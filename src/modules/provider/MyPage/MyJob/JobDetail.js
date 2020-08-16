@@ -26,8 +26,7 @@ class ProviderJobDetail extends React.Component {
   }
 
   componentWillMount() {
-    const { navigation} = this.props
-    let job = navigation.getParam('job', '')
+    const { job } = this.props.route.params;
     if (job) {
       this.setState({job})
     }
