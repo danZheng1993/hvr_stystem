@@ -24,6 +24,7 @@ export const REMOVE_FROM_ATTENTIONS = 'REMOVE_FROM_ATTENTIONS'
 export const SEND_CODE = 'SEND_CODE'
 export const CHECK_CODE = 'CHECK_CODE'
 export const THIRD_PARTY_SUCCESS = 'THIRD_PARTY_SUCCESS'
+export const REGISTER_PUSHY_TOKEN = 'REGISTER_PUSH_TOKEN'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -49,6 +50,7 @@ export const pushUnreadMessages = createAction(PUSH_UNREAD_MESSAGES)
 export const clearUnreadMessages = createAction(CLEAR_UNREAD_MESSAGES)
 export const addToSearch = createAction(ADD_TO_SEARCH)
 export const clearSearch = createAction(CLEAR_SEARCH)
+export const registerPushyToken = createAction(REGISTER_PUSHY_TOKEN)
 
 const getInitialState = async () => {
   let authRestore = await AsyncStorage.getItem('hvr_auth') || null

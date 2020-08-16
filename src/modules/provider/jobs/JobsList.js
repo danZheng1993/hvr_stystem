@@ -14,7 +14,7 @@ import { Loader, NoData, Profile, Text} from '../../../components';
 import { colors } from '../../../styles';
 
 import { searchJob } from '../../../redux/modules/job'
-import {  jobsloadingSelector, profileSelector, jobsSearchResultSelector } from '../../../redux/selectors'
+import { jobsloadingSelector, profileSelector, jobsSearchResultSelector } from '../../../redux/selectors'
 import { getSettings } from '../../../redux/modules/setting';
 import { getDateTimeStr } from '../../../utils/helper';
 import Bell from '../../../components/Bell';

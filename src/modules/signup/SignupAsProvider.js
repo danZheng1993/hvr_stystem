@@ -9,11 +9,12 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { CommonActions } from '@react-navigation/native';
+import Pushy from 'pushy-react-native';
 
 import { Button } from '../../components';
 import { colors } from '../../styles';
 import { Form, TextValidator } from 'react-native-validator-form';
-import { signup, sendcode, checkcode } from '../../redux/modules/auth'
+import { signup, sendcode, checkcode, registerPushyToken } from '../../redux/modules/auth'
 import { Text } from '../../components/StyledText';
 
 var timer
@@ -75,7 +76,14 @@ class SignupAsProvider extends React.Component {
     clearInterval(timer)
     this.props.checkcode ({
       body:{ phoneNumber, code: verificationCode, password, role: 'provider'},
-      success: () => this.props.navigation.reset([CommonActions.navigate('BasicProfile')], 0),
+      success: () => {
+        Pushy.register()
+          .then((deviceToken) => {
+            this.props.registerPushyToken({ deviceToken });
+            Pushy.subscribe('provider');
+          });
+        this.props.navigation.reset([CommonActions.navigate('BasicProfile')], 0);
+      },
       fail:() => Alert.alert("验证码出错")
     })
   }
@@ -199,7 +207,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = {
   signup,
   sendcode,
-  checkcode
+  checkcode,
+  registerPushyToken,
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

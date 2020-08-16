@@ -12,12 +12,13 @@ import { createStructuredSelector } from 'reselect';
 import { Form, TextValidator } from 'react-native-validator-form';
 import SyncStorage from 'sync-storage';
 import { CommonActions } from '@react-navigation/native';
+import Pushy from 'pushy-react-native';
 
 import { XMPP } from '../../helpers';
 import { Button, toast } from '../../components';
 import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
-import {login} from '../../redux/modules/auth'
+import { login, registerPushyToken } from '../../redux/modules/auth'
 import { profileSelector, authloadingSelector } from '../../redux/selectors'
 import { loadItem } from '../../redux/api/storage';
 import constants from '../../constants';
@@ -41,23 +42,27 @@ class LoginWithPassword extends React.Component {
   };
   
   redirect() {
-    loadItem('hvr_auth').then((val) => {
-      const {profile} = this.props
-      if (!profile) return
-      const token = SyncStorage.get('token') || ''
-      toast("登录成功")
-      XMPP.start();
-      if (profile.role == 'provider') {
-        this.props.navigation.navigate('Provider');
-      } else if (profile.role =='client'){
-        this.props.navigation.navigate('Client');
-      }
-    })
+    const { profile, navigation, registerPushyToken } = this.props;
+    Pushy.register()
+      .then((deviceToken) => {
+        registerPushyToken({ deviceToken });
+      })
+
+    // loadItem('hvr_auth').then((val) => {
+    //   if (!profile) return
+    //   const token = SyncStorage.get('token') || ''
+    //   toast("登录成功")
+    //   XMPP.start();
+    //   if (profile.role == 'provider') {
+    //     navigation.navigate('Provider');
+    //   } else if (profile.role =='client'){
+    //     navigation.navigate('Client');
+    //   }
+    // })
   }
 
   render() {
     const {loading, profile} = this.props
-
     return (
       <View style={styles.container}>
         {/* { <Loader
@@ -198,6 +203,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   login,
+  registerPushyToken,
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

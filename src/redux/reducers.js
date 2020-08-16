@@ -20,6 +20,7 @@ import invoice from './modules/invoice'
 import gallery from '../modules/gallery/GalleryState';
 import app from '../modules/AppState';
 import calendar from '../modules/calendar/CalendarState';
+import message from './modules/message';
 
 export default combineReducers({
   auth,
@@ -41,5 +42,6 @@ export default combineReducers({
   banner,
   news,
   media,
-  invoice
+  invoice,
+  message
 })

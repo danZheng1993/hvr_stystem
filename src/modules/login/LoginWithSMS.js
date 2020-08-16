@@ -9,7 +9,8 @@ import { CommonActions } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import SyncStorage from 'sync-storage'
+import SyncStorage from 'sync-storage';
+import Pushy from 'pushy-react-native';
 
 import {loadItem} from '../../redux/api/storage'
 import { profileSelector } from '../../redux/selectors'
@@ -18,11 +19,17 @@ import colors from '../../styles/colors'
 import {Text} from '../../components'
 import { XMPP } from '../../helpers';
 import constants from '../../constants';
+import { registerPushyToken } from '../../redux/modules/auth';
 
 class LoginWithSMS extends React.Component {
 
     onSuccess = () => {
-      console.warn('success')
+      Pushy.register()
+        .then((deviceToken) => {
+          this.props.registerPushyToken({ deviceToken });
+        }).catch(err => {
+          alert(err.message);
+        })
       loadItem('hvr_auth').then((val) => {
         const {profile} = this.props
         if (!profile) return
@@ -116,6 +123,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
+  registerPushyToken
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

@@ -1,7 +1,7 @@
 import { takeLatest } from 'redux-saga/effects'
 import AsyncStorage from '@react-native-community/async-storage';
 import SyncStorage from 'sync-storage';
-import { DO_LOGIN, DO_SIGNUP, GET_PROFILE, SAVE_PROFILE, SEND_CODE, CHECK_CODE, ADD_TO_CONTACTS, GET_CONTACTS, ADD_TO_COLLECTIONS, ADD_TO_ATTENTIONS, REMOVE_FROM_COLLECTIONS, REMOVE_FROM_ATTENTIONS, } from '../modules/auth'
+import { DO_LOGIN, DO_SIGNUP, GET_PROFILE, SAVE_PROFILE, SEND_CODE, CHECK_CODE, ADD_TO_CONTACTS, GET_CONTACTS, ADD_TO_COLLECTIONS, ADD_TO_ATTENTIONS, REMOVE_FROM_COLLECTIONS, REMOVE_FROM_ATTENTIONS, REGISTER_PUSHY_TOKEN } from '../modules/auth'
 import apiCall from '../api/apiCall'
 import {saveItem, loadItem} from '../api/storage'
 
@@ -155,6 +155,22 @@ const doRemoveFromAttentions = apiCall({
   }
 })
 
+const doRegisterPushyToken = apiCall({
+  type: REGISTER_PUSHY_TOKEN,
+  method: 'patch',
+  path: () => '/profile/me/',
+  success: (res, action) => {
+    loadItem('hvr_auth')
+    .then(val => {
+      let token = JSON.parse(val).token
+      saveItem('hvr_auth', JSON.stringify({
+        info: res.data,
+        token: token
+      })).then(() => console.log("Register Token Success"))
+    })
+  }
+})
+
 export default function* rootSaga () {
   yield takeLatest(DO_LOGIN, doLogin)
   yield takeLatest(DO_SIGNUP, doSignup)
@@ -168,4 +184,5 @@ export default function* rootSaga () {
   yield takeLatest(ADD_TO_ATTENTIONS, doAddToAttentions)
   yield takeLatest(REMOVE_FROM_ATTENTIONS, doRemoveFromAttentions)
   yield takeLatest(GET_CONTACTS, doGetContacts)
+  yield takeLatest(REGISTER_PUSHY_TOKEN, doRegisterPushyToken)
 }

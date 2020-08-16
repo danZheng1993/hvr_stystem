@@ -25,6 +25,7 @@ const contractRoute = require('./contract.route');
 const statisticRoute = require('./statistic.route');
 const databaseRoute = require('./database.route');
 const ordersRoute = require('./orders.route');
+const messageRoute = require('./message.route');
 
 const router = express.Router();
 const authMiddleware = expressJwt({ secret: config.jwtSecret });
@@ -53,5 +54,7 @@ router.use('/scenes', sceneRoute);
 router.use('/subcategorys', subcategoryRoute);
 router.use('/services', serviceRoute);
 router.use('/order', ordersRoute);
+
+router.use('/messages', messageRoute)
 
 module.exports = router;

@@ -13,11 +13,12 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { CommonActions } from '@react-navigation/native';
 import { Form, TextValidator } from 'react-native-validator-form';
+import Pushy from 'pushy-react-native';
 
 import { Button } from '../../components';
 import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
-import { signup, sendcode, checkcode, thirdPartyAuthSuccess } from '../../redux/modules/auth'
+import { signup, sendcode, checkcode, thirdPartyAuthSuccess, registerPushyToken } from '../../redux/modules/auth'
 import constants from '../../constants';
 import { authResponseAnalyse } from '../../utils/helper';
 
@@ -101,7 +102,14 @@ class SignupAsClient extends React.Component {
     clearInterval(timer)
     this.props.checkcode({
       body:{ phoneNumber, code: verificationCode, password, role: 'client'},
-      success: () => this.props.navigation.reset([CommonActions.navigate('Client')], 0),
+      success: () => {
+        Pushy.register()
+          .then((deviceToken) => {
+            this.props.registerPushyToken({ deviceToken });
+            Pushy.subscribe('client');
+          });
+        this.props.navigation.reset([CommonActions.navigate('Client')], 0);
+      },
       fail:() => Alert.alert("验证码出错")
     })
   }
@@ -260,6 +268,7 @@ const mapDispatchToProps = {
   sendcode,
   checkcode,
   thirdPartyAuthSuccess,
+  registerPushyToken,
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
