@@ -26,6 +26,7 @@ export default class Player extends React.Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#3f3f3f' }}>
         <Video360 urlVideo={constants.MEDIA_BASE_URL + this.state.path} modeVideo={1} style={{ flex: 1}} />
+        {/* <Video360 urlVideo="http://903317e44c09.ngrok.io/mediaSource/default.mp4" modeVideo={1} style={{ flex: 1}} /> */}
       </View>
     );
   }
