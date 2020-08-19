@@ -1,13 +1,13 @@
 import React from 'react';
 import {
   StyleSheet,
+  View,
 } from 'react-native';
-import { Viro360Video } from 'react-viro';
+import Video360 from 'react-native-video360plugin';
+import { get } from 'lodash';
 
 import { colors } from '../styles';
 import constants from '../constants'
-// import Nyt360Video from 'react-native-nyt-360-video';
-// import JWPlayer from 'react-native-jwplayer';
 
 export default class Player extends React.Component {
   constructor(props) {
@@ -17,20 +17,16 @@ export default class Player extends React.Component {
     }
   }
   componentWillMount() {
-    const { url: path = 'default.mp4' } = this.props.route.params;
+    const routeParams = get(this.props, 'route.params', {});
+    const { url: path = 'default.mp4' } = routeParams;
     this.setState({path})
   }
 
-  render() {   
+  render() {
     return (
-      <Viro360Video
-        source={{ uri:constants.MEDIA_BASE_URL + this.state.path }}
-        onFinish={this._onFinish}
-        onUpdateTime={this._onUpdateTime}
-        onError={this._videoError}
-        loop={true}
-        paused={false}
-        volume={1.0} />
+      <View style={{ flex: 1, backgroundColor: '#3f3f3f' }}>
+        <Video360 urlVideo={constants.MEDIA_BASE_URL + this.state.path} modeVideo={1} style={{ flex: 1}} />
+      </View>
     );
   }
 }

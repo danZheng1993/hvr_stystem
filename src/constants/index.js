@@ -4,7 +4,7 @@
 // const ip = '192.168.0.169'
 // const port = 4000
 // const baseUrl = `http://${ip}:${port}/`
-const baseUrl = 'https://ccc88fce3059.ngrok.io'
+const baseUrl = 'https://903317e44c09.ngrok.io'
 const constants = {
     SMS_VERIFICATION: 'SMS_VERIFICATION',
     PASSWORD_VERIFICATION: 'PASSWORD_VERIFICATION',

@@ -6,6 +6,7 @@ import Pushy from 'pushy-react-native';
 import { store } from './src/redux/store';
 import { messageReceived, tokenGenerated } from './src/redux/modules/message';
 import AppView from './src/modules/AppViewContainer';
+import { Player } from './src/components';
 
 console.disableYellowBox = true;
 
