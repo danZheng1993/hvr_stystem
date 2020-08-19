@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Media = require('../models/media.model');
 const Job = require('../models/job.model');
 const ROLES = require('../constants/role');
-const STATUS = require('../constants/status')
-const xmpp = require('simple-xmpp')
+const STATUS = require('../constants/status');
+const { sendPushyNotification } = require('./message.controller');
 function create(req, res, next) {
   const media = new Media(req.body);
 
@@ -43,7 +43,19 @@ function uploadLink(req, res, next) {
         });
         media.save()
         .then((newMedia) => {
-          xmpp.send(`${newJob.creator}@desktop-jgen8l2/spark`, `uploaded the media.`, false);
+          sendPushyNotification(
+            'user',
+            newJob.creator,
+            {
+              message: `${req.user.userName} uploaded the media`,
+              jobId: newJob._id,
+              sender: req.user._id,
+            }, {
+              body: `${req.user.userName} uploaded the media`,
+              badge: 1,
+              sound: 'ping.aiff',
+            }
+          );
           res.json(newJob);
         })
         .catch(next);  

@@ -2,9 +2,41 @@ const mongoose = require('mongoose');
 const Message = require('../models/message.model');
 const ROLES = require('../constants/role');
 
+function sendPushyNotification(
+  target,
+  targetId,
+  notificationData,
+  notificationBody = {
+    body: "You have a notification.",
+    badge: 1,
+    sound: "ping.aiff",
+  }
+) {
+  if (target === 'user') {
+    fetch('https://api.pushy.me/pushy?api_key=112a882e185bf44ffef5eaa14189a1e53c961a0cd2685286c5e09c0726d524a4', {
+      method: 'POST',
+      body: JSON.stringify({
+        to: targetId,
+        data: notificationData,
+        notification: notificationBody
+      })
+    });
+  } else {
+    fetch('https://api.pushy.me/pushy?api_key=112a882e185bf44ffef5eaa14189a1e53c961a0cd2685286c5e09c0726d524a4', {
+      method: 'POST',
+      body: JSON.stringify({
+        to: `/topics/${target}`,
+        data: notificationData,
+        notification: notificationBody
+      })
+    });
+  }
+}
+
 function create(req, res, next) {
   const message = new Message(req.body);
-
+  const { target, targetId, message } = req.body;
+  sendPushyNotification(target, targetId, { message })
   message.save()
   .then((newMessage) => {
     res.json(newMessage);
@@ -77,4 +109,5 @@ module.exports = {
   list,
   remove,
   getMessageById,
+  sendPushyNotification,
 };

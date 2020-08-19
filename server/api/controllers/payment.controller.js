@@ -5,7 +5,6 @@ const Job = require('../models/job.model');
 const User = require('../models/user.model');
 const ROLES = require('../constants/role');
 const STATUS = require('../constants/status');
-const xmpp = require('simple-xmpp')
 
 function payUpfront(req, res, next) {
   console.log("upfront", req.body.id)
@@ -49,7 +48,19 @@ function payUpfront(req, res, next) {
         .then((newPayment) => {
           User.updateOne({_id: newJob.hired}, { $inc: {balance: amount} }).exec()
           .then((newuser) => {
-            xmpp.send(`${updatedJob.hired}@desktop-jgen8l2/spark`, `${req.user.userName} paid ${updatedJob.upfront}`, false);
+            sendPushyNotification(
+              'user',
+              updatedJob.hired,
+              {
+                message: `${req.user.userName} paid ${updatedJob.upfront}`,
+                jobId: updatedJob._id,
+                sender: req.user._id,
+              }, {
+                body: `${req.user.userName} paid ${updatedJob.upfront}`,
+                badge: 1,
+                sound: 'ping.aiff',
+              }
+            );
             res.json(newJob);
           })
           .catch(next);
@@ -107,7 +118,19 @@ function finalPay(req, res, next) {
         .then((newPayment) => {
           User.updateOne({_id: newJob.hired}, { $inc: {balance: amount} }).exec()
           .then((newuser) => {
-            xmpp.send(`${updatedJob.hired}@desktop-jgen8l2/spark`, `${req.user.userName} paid ${job.upfront}`, false);
+            sendPushyNotification(
+              'user',
+              updatedJob.hired,
+              {
+                message: `${req.user.userName} paid ${job.upfront}`,
+                jobId: updatedJob._id,
+                sender: req.user._id,
+              }, {
+                body: `${req.user.userName} paid ${job.upfront}`,
+                badge: 1,
+                sound: 'ping.aiff',
+              }
+            );
             res.json(newJob);
           })
           .catch(next);

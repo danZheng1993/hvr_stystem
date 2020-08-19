@@ -8,26 +8,11 @@ const port = require('./port');
 const backendSetup = require('./middlewares/backendMiddleware');
 const resolve = require('path').resolve;
 const app = express();
-var xmpp = require('simple-xmpp');
 
 var jid = 'system@localhost/spark';
 var pwd = 'HVRsystem123$%^';
 var server = 'localhost';
 
-xmpp.on('online', function(data) {
-    console.log('Connected with JID: ' + data.jid.user);
-});
-
-xmpp.on('error', function(err) {
-    console.error("error:", JSON.stringify(err));
-});
-
-xmpp.connect({
-    jid: jid,
-    password: pwd,
-    host: server,
-    port: 5222
-});
 backendSetup(app);
 
 // In production we need to pass these values in instead of relying on webpack

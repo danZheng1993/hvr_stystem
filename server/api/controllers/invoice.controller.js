@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Invoice = require('../models/invoice.model');
 const ROLES = require('../constants/role');
 const STATUS = require('../constants/status')
-const xmpp = require('simple-xmpp')
 var formidable = require('formidable');
 var fs = require('fs');
-var path = require('path')
+var path = require('path');
+const { sendPushyNotification } = require('./message.controller');
 
 function create(req, res, next) {
   const invoice = new Invoice(req.body);
@@ -22,7 +22,19 @@ function update(req, res, next) {
 
   req.invoice.save()
   .then((updatedInvoice) => {
-    xmpp.send(`${updatedInvoice.receiver}@desktop-jgen8l2/spark`, `${req.user.userName} sent invoice`, false);
+    sendPushyNotification(
+      'user',
+      updatedInvoice.receiver,
+      {
+        message: `${req.user.userName} updated invoice`,
+        invoiceId: updatedInvoice.id,
+        sender: req.user.id,
+      }, {
+        body: `${req.user.userName} updated invoice`,
+        badge: 1,
+        sound: 'ping.aiff',
+      }
+    );
     res.json(updatedInvoice);
   })
   .catch(next);
@@ -146,7 +158,19 @@ function upload(req, res, next) {
 
     req.invoice.save()
     .then((updatedInvoice) => {
-      xmpp.send(`${updatedInvoice.sender}@desktop-jgen8l2/spark`, `${req.user.userName} billed invoice`, false);
+      sendPushyNotification(
+        'user',
+        updatedInvoice.receiver,
+        {
+          message: `${req.user.userName} billed invoice`,
+          invoiceId: updatedInvoice.id,
+          sender: req.user._id,
+        }, {
+          body: `${req.user.userName} billed invoice`,
+          badge: 1,
+          sound: 'ping.aiff',
+        }
+      );
       res.json(updatedInvoice);
     })
     .catch(next);

@@ -3,8 +3,9 @@ const Job = require('../models/job.model');
 const Invoice = require('../models/invoice.model');
 const ROLES = require('../constants/role');
 const STATUS = require('../constants/status')
-const xmpp = require('simple-xmpp')
-const _ = require('lodash')
+const _ = require('lodash');
+const { sendPushyNotification } = require('./message.controller');
+const { updateInvoice } = require('../../../src/redux/modules/invoice');
 function create(req, res, next) {
   let job = new Job({...req.body, creator: req.user._id});
   if (req.body.hired) {
@@ -42,7 +43,19 @@ function apply(req, res, next) {
   }
   req.job.save()
   .then((updatedJob) => {
-    xmpp.send(`${updatedJob.creator}@desktop-jgen8l2/spark`, `${req.user.userName} applied to your job at price ${req.body.price}`, false);
+    sendPushyNotification(
+      'user',
+      updatedJob.creator,
+      {
+        message: `${req.user.userName} applied to your job at price ${req.body.price}`,
+        jobId: updatedJob._id,
+        sender: req.user._id,
+      }, {
+        body: `${req.user.userName} applied to your job at price ${req.body.price}`,
+        badge: 1,
+        sound: 'ping.aiff',
+      }
+    );
     res.json(updatedJob);
   })
   .catch(next);
@@ -88,7 +101,19 @@ function hire(req, res, next) {
   console.log(req.body)
   req.job.save()
   .then((updatedJob) => {
-    xmpp.send(`${req.body.hired}@desktop-jgen8l2/spark`, 'congratulations! you were hired ', false);
+    sendPushyNotification(
+      'user',
+      req.body.hired,
+      {
+        message: 'Congratulations! You were hired',
+        jobId: updatedJob._id,
+        sender: req.user._id,
+      }, {
+        body: 'Congratulations! You were hired',
+        badge: 1,
+        sound: 'ping.aiff',
+      }
+    );
     res.json(updatedJob);
   })
   .catch(next);
@@ -100,7 +125,19 @@ function cancel(req, res, next) {
   console.log(req.body)
   req.job.save()
   .then((updatedJob) => {
-    xmpp.send(`${req.body.hired}@desktop-jgen8l2/spark`, 'job cancelled', false);
+    sendPushyNotification(
+      'user',
+      req.body.hired,
+      {
+        message: 'Job cancelled',
+        jobId: updatedJob._id,
+        sender: req.user._id,
+      }, {
+        body: 'Job cancelled',
+        badge: 1,
+        sound: 'ping.aiff',
+      }
+    );
     res.json(updatedJob);
   })
   .catch(next);
@@ -108,7 +145,19 @@ function cancel(req, res, next) {
 
 function prompt(req, res, next) {
   console.log("prompt job", req.job)
-  xmpp.send(`${req.job.hired}@desktop-jgen8l2/spark`, '请您尽快完成我的项目，静候佳音。', false);
+  sendPushyNotification(
+    'user',
+    req.job.hired,
+    {
+      message: '请您尽快完成我的项目，静候佳音。',
+      jobId: req.job._id,
+      sender: req.user._id,
+    }, {
+      body: '请您尽快完成我的项目，静候佳音。',
+      badge: 1,
+      sound: 'ping.aiff',
+    }
+  );
   res.status(200).json({ message: 'success' });
   return;
 }
@@ -131,7 +180,19 @@ function giveFeedback(req, res, next) {
     })
     invoice.save()
     .then((newInvoice) => {
-      xmpp.send(`${updatedJob.hired}@desktop-jgen8l2/spark`, `${req.user.userName} finished the job`, false);
+      sendPushyNotification(
+        'user',
+        updatedJob.creator,
+        {
+          message: `${req.user.userName} finished the job`,
+          jobId: updatedJob._id,
+          sender: req.user._id,
+        }, {
+          body: `${req.user.userName} finished the job`,
+          badge: 1,
+          sound: 'ping.aiff',
+        }
+      );
       res.json(updatedJob);
     })
     .catch(next)
