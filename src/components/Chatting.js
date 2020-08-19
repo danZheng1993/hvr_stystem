@@ -29,7 +29,7 @@ class Chatting extends React.Component {
 
   componentWillMount() {  
     const {route, profile, getUser} = this.props
-    const { to } = route.params
+    const { to } = route.params || {}
     if (to != '') {
       if (profile.contacts.indexOf(to) == -1) {
         this.props.addToContacts({

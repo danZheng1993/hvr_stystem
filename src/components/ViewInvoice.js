@@ -10,7 +10,7 @@ export default class ViewInvoice extends Component {
 	}
   componentWillMount() {
 		const {route} = this.props
-    const { invoice } = route.params;
+    const { invoice } = route.params || {};
 		invoice && this.setState({url: constants.INVOICE_BASE_URL +  invoice.path})
 	}
   render() {

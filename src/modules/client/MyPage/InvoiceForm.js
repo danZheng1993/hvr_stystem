@@ -29,7 +29,7 @@ class InvoiceForm extends React.Component {
 
   componentWillMount() {
     const {route} = this.props
-    const { invoice } = route.params;
+    const { invoice } = route.params || {};
     if (invoice) {
       this.setState({invoice})
     }

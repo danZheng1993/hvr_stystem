@@ -10,7 +10,7 @@ export default class WebViewer extends Component {
 	}
   componentWillMount() {
     const {route} = this.props
-    const { url = constants.BASE_URL + 'error.html' } = route.params;
+    const { url = constants.BASE_URL + 'error.html' } = route.params || {};
 		this.setState({url})
 	}
   render() {

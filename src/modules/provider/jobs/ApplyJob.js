@@ -26,7 +26,7 @@ class ApplyJob extends React.Component {
 
   componentDidMount() {
     const {route} = this.props
-    const { job } = route.params;
+    const { job } = route.params || {};
     if (job) {
       this.setState({job})
     }

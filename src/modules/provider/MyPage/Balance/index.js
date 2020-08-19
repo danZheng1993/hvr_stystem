@@ -6,7 +6,7 @@ import { TouchableRipple } from 'react-native-paper';
 export default class Balance extends Component {
   render() {
     const {route} = this.props
-    const { balance = 0 } = route.params;
+    const { balance = 0 } = route.params || {};
     return (
       <View style={styles.container}>
         <View style={styles.componentsSection}>

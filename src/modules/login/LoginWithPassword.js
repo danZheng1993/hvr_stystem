@@ -43,17 +43,18 @@ class LoginWithPassword extends React.Component {
   
   redirect() {
     const { profile, navigation, registerPushyToken, deviceToken } = this.props;
+    console.log({ deviceToken });
     registerPushyToken({ deviceToken });
     loadItem('hvr_auth').then((val) => {
       if (!profile) return
       const token = SyncStorage.get('token') || ''
       toast("登录成功")
-      XMPP.start();
+      // XMPP.start();
       if (profile.role == 'provider') {
-        // Pushy.subscribe('provider');
+        Pushy.subscribe('provider');
         navigation.navigate('Provider');
       } else if (profile.role =='client'){
-        // Pushy.subscribe('client');
+        Pushy.subscribe('client');
         navigation.navigate('Client');
       }
     })

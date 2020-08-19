@@ -1,8 +1,10 @@
 // const ip = '192.168.1.86'
 // const ip = 'localhost'
-const ip = '192.168.0.169'
-const port = 4000
-const baseUrl = `http://${ip}:${port}/`
+// const ip = 'ccc88fce3059.ngrok.io'
+// const ip = '192.168.0.169'
+// const port = 4000
+// const baseUrl = `http://${ip}:${port}/`
+const baseUrl = 'https://ccc88fce3059.ngrok.io'
 const constants = {
     SMS_VERIFICATION: 'SMS_VERIFICATION',
     PASSWORD_VERIFICATION: 'PASSWORD_VERIFICATION',
@@ -15,8 +17,8 @@ const constants = {
     BANNER_BASE_URL: `${baseUrl}/bannersImage/`,
     NEWS_BASE_URL: `${baseUrl}/newsImage/`,
     MEDIA_BASE_URL: `${baseUrl}/mediaSource/`,
-    JID: `@${ip}/spark`,
-    IP: ip
+    // JID: `@${ip}/spark`,
+    // IP: ip
 }
 
 export default constants
