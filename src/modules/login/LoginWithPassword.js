@@ -14,7 +14,7 @@ import SyncStorage from 'sync-storage';
 import { CommonActions } from '@react-navigation/native';
 import Pushy from 'pushy-react-native';
 
-import { XMPP } from '../../helpers';
+// import { XMPP } from '../../helpers';
 import { Button, toast } from '../../components';
 import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
@@ -46,14 +46,18 @@ class LoginWithPassword extends React.Component {
     console.log({ deviceToken });
     registerPushyToken({ deviceToken });
     loadItem('hvr_auth').then((val) => {
-      if (!profile) return
-      const token = SyncStorage.get('token') || ''
+      const profile = JSON.parse(val);
+      if (!profile) {
+        console.log('profile not exists');
+        return
+      }
       toast("登录成功")
       // XMPP.start();
-      if (profile.role == 'provider') {
+      Pushy.subscribe('all');
+      if (profile.info.role == 'provider') {
         Pushy.subscribe('provider');
         navigation.navigate('Provider');
-      } else if (profile.role =='client'){
+      } else if (profile.info.role =='client'){
         Pushy.subscribe('client');
         navigation.navigate('Client');
       }

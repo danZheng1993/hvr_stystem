@@ -17,7 +17,7 @@ import { profileSelector, tokenSelector } from '../../redux/selectors'
 import SendVerificationcode from '../components/SendVerificationCode'
 import colors from '../../styles/colors'
 import {Text} from '../../components'
-import { XMPP } from '../../helpers';
+// import { XMPP } from '../../helpers';
 import constants from '../../constants';
 import { registerPushyToken } from '../../redux/modules/auth';
 
@@ -27,10 +27,11 @@ class LoginWithSMS extends React.Component {
       const { deviceToken, registerPushyToken } = this.props;
       registerPushyToken({ deviceToken });
       loadItem('hvr_auth').then((val) => {
-        const {profile} = this.props
+        const profile = JSON.parse(val);
         if (!profile) return
         const token = SyncStorage.get('token') || ''
         toast("登录成功!")
+        Pushy.subscribe('all');
         if (profile.role == 'provider') {
           Pushy.subscribe('provider');
           this.props.navigation.reset([CommonActions.navigate('Provider')], 0)

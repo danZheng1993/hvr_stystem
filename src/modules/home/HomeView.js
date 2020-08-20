@@ -16,7 +16,7 @@ import { getMyJob } from '../../redux/modules/job'
 import { addToContacts, pushNotification, pushUnreadMessages } from '../../redux/modules/auth'
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
-import { XMPP } from '../../helpers';
+// import { XMPP } from '../../helpers';
 import constants from '../../constants';
 
 class HomeScreen extends React.Component {

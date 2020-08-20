@@ -80,6 +80,7 @@ class SignupAsProvider extends React.Component {
       success: () => {
         const { deviceToken, registerPushyToken } = this.props;
         registerPushyToken({ deviceToken });
+        Pushy.subscribe('all');
         Pushy.subscribe('provider');
         this.props.navigation.reset([CommonActions.navigate('BasicProfile')], 0);
       },

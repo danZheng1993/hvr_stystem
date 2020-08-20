@@ -106,6 +106,7 @@ class SignupAsClient extends React.Component {
       success: () => {
         const { deviceToken, registerPushyToken } = this.props;
         registerPushyToken({ deviceToken });
+        Pushy.subscribe('all');
         Pushy.subscribe('client');
         this.props.navigation.reset([CommonActions.navigate('Client')], 0);
       },
