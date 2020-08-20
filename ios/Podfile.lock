@@ -10,13 +10,16 @@ PODS:
     - AppCenter/Crashes
     - AppCenterReactNativeShared
     - React
-  - AppCenter/Analytics (3.3.1):
+  - AppCenter/Analytics (3.3.2):
     - AppCenter/Core
-  - AppCenter/Core (3.3.1)
-  - AppCenter/Crashes (3.3.1):
+  - AppCenter/Core (3.3.2)
+  - AppCenter/Crashes (3.3.2):
     - AppCenter/Core
-  - AppCenterReactNativeShared (3.1.0):
-    - AppCenter/Core (= 3.3.1)
+  - AppCenterReactNativeShared (3.1.1):
+    - AppCenter/Core (= 3.3.2)
+  - AWSCore (2.6.35)
+  - AWSDynamoDB (2.6.35):
+    - AWSCore (= 2.6.35)
   - boost-for-react-native (1.63.0)
   - BVLinearGradient (2.5.6):
     - React
@@ -39,6 +42,14 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - GoogleToolboxForMac/Defines (2.1.0)
+  - GoogleToolboxForMac/Logger (2.1.0):
+    - GoogleToolboxForMac/Defines (= 2.1.0)
+  - GTMSessionFetcher/Core (1.1.6)
+  - GVRAudioSDK (1.120.0)
+  - GVRSDK (1.120.0):
+    - GoogleToolboxForMac/Logger (= 2.1.0)
+    - GTMSessionFetcher/Core (= 1.1.6)
   - PushyRN (1.0.15):
     - React (< 1.0.0, >= 0.13.0)
   - RCTRequired (0.63.2)
@@ -215,8 +226,6 @@ PODS:
     - React
   - react-native-safe-area-context (3.1.1):
     - React
-  - react-native-video360 (1.0.6):
-    - React
   - react-native-webview (10.3.2):
     - React
   - React-RCTActionSheet (0.63.2):
@@ -297,6 +306,11 @@ PODS:
     - React
   - RNVectorIcons (7.0.0):
     - React
+  - ViroKit (1.0):
+    - AWSDynamoDB (~> 2.6.7)
+    - GVRAudioSDK (= 1.120.0)
+    - GVRSDK (= 1.120.0)
+  - ViroReact (1.0)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -326,7 +340,6 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
-  - react-native-video360 (from `../node_modules/react-native-video360plugin`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -347,13 +360,21 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - ViroKit (from `../node_modules/react-viro/ios/dist/ViroRenderer/`)
+  - ViroReact (from `../node_modules/react-viro/ios/`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
     - AppCenter
     - AppCenterReactNativeShared
+    - AWSCore
+    - AWSDynamoDB
     - boost-for-react-native
+    - GoogleToolboxForMac
+    - GTMSessionFetcher
+    - GVRAudioSDK
+    - GVRSDK
 
 EXTERNAL SOURCES:
   appcenter-analytics:
@@ -404,8 +425,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
-  react-native-video360:
-    :path: "../node_modules/react-native-video360plugin"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-RCTActionSheet:
@@ -446,15 +465,21 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  ViroKit:
+    :path: "../node_modules/react-viro/ios/dist/ViroRenderer/"
+  ViroReact:
+    :path: "../node_modules/react-viro/ios/"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AppCenter: 76ecf7e959a68e36b0fd314e8dc5897660214423
+  AppCenter: aba7de06e4c2184f90dc84f7866bd07f82427d69
   appcenter-analytics: bce201b504c8138d235e6f42de1f36d30d2cd7f5
   appcenter-core: 086ab16077baef60368c6a119af6e9e127406286
   appcenter-crashes: 10790bf670f79150f1654d79f76c10a8b4936688
-  AppCenterReactNativeShared: 2ec88a4ac2c52cdbc828a1f9c16244b534c84026
+  AppCenterReactNativeShared: b9fa50d999e830e03f086f487b1aa0f9772088c1
+  AWSCore: 2dab62ef2e5ca5d8c72c6cbdb3a6ea1532c27c2b
+  AWSDynamoDB: f4902fc37384dcf9547e2d8a32a5b208d4d1d996
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   DoubleConversion: cde416483dac037923206447da6e1454df403714
@@ -462,6 +487,10 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: dc7fa9088f0f2a998503a352b0554d69a4391c5a
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
+  GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
+  GTMSessionFetcher: 6aacd0ab48ddf0c3633ab2642d792abfcad1b08a
+  GVRAudioSDK: 302f0a8f190d855868ea07f246ce4f9b44c392ae
+  GVRSDK: 0cb9d0ce06a84d698e61e3db9509766022dcf815
   PushyRN: ae0f72f504f8194962de4abd65749088c2f24f98
   RCTRequired: f13f25e7b12f925f1f6a6a8c69d929a03c0129fe
   RCTTypeSafety: 44982c5c8e43ff4141eb519a8ddc88059acd1f3a
@@ -477,7 +506,6 @@ SPEC CHECKSUMS:
   react-native-image-picker: 3d3f85baabca60a00b75fb8facc1376db7bbdafa
   react-native-netinfo: a53b00d949b6456913aaf507d9dba90c4008c611
   react-native-safe-area-context: 344b969c45af3d8464d36e8dea264942992ef033
-  react-native-video360: e90b34666d4b12de4507972608b12e753d19dfee
   react-native-webview: 679b6f400176e2ea8a785acf7ae16cf282e7d1eb
   React-RCTActionSheet: 910163b6b09685a35c4ebbc52b66d1bfbbe39fc5
   React-RCTAnimation: 9a883bbe1e9d2e158d4fb53765ed64c8dc2200c6
@@ -498,8 +526,10 @@ SPEC CHECKSUMS:
   RNReanimated: c2bb7438b57a3d987bb2e4e6e4bca94787e30b02
   RNScreens: c526239bbe0e957b988dacc8d75ac94ec9cb19da
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
+  ViroKit: 759e65a21a70c26d75890507e218b99ce4ce99d0
+  ViroReact: 7ec32276dcd1883662b4587eaedfff67f7fc3625
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
 
-PODFILE CHECKSUM: adb0f0fb3ac86cd97ee890763274dd0e7b98acf6
+PODFILE CHECKSUM: 682e43eacf97e22826cc86253fb1fb2f8c2088f1
 
 COCOAPODS: 1.9.1
