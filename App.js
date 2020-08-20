@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { Platform, PermissionsAndroid } from 'react-native';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react'
 import Pushy from 'pushy-react-native';
 
-import { store } from './src/redux/store';
+import { store, persistor } from './src/redux/store';
 import { messageReceived, tokenGenerated } from './src/redux/modules/message';
 import AppView from './src/modules/AppViewContainer';
 import { Player } from './src/components';
@@ -38,7 +39,9 @@ export default function App() {
   })
   return (
     <Provider store={store}>
-      <AppView />
+      <PersistGate persistor={persistor}>
+        <AppView />
+      </PersistGate>
     </Provider>
   );
 }
