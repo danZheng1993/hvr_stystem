@@ -4,6 +4,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native';
 import { colors } from '../../../styles';
 import { connect } from 'react-redux';
@@ -33,7 +34,7 @@ class HomeView extends React.Component {
     console.log(banners, news, medias)
     return (
       <View style={styles.container}>
-        <View style={{ height: 50, flexDirection: "row", backgroundColor: colors.secondary, padding: 10 }}>
+        <View style={{ flexDirection: "row", backgroundColor: colors.secondary, padding: 10, paddingTop: Platform.OS === 'ios' ? 25 : 15, }}>
           <TouchableOpacity 
             style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
             onPress={() => this.props.navigation.navigate('SearchBar')}

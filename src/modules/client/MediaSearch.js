@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
   ScrollView,
+  Platform,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -62,7 +63,7 @@ class MediaSearch extends React.Component {
       sortedMedias =  _.orderBy(medias, 'created', 'desc');
     return (
       <>
-        <View style={{flexDirection:'row', paddingHorizontal: 20, backgroundColor: colors.secondary, paddingTop: 10}}>
+        <View style={{flexDirection:'row', paddingHorizontal: 20, backgroundColor: colors.secondary, paddingTop: Platform.OS === 'ios' ? 25 : 15}}>
           <View style={{flex: 4}}>
             <SearchBar
                 containerStyle={{height: 30, padding: 0, backgroundColor: colors.secondary, borderColor: colors.bluish,  borderBottomColor: 'transparent', borderTopColor: 'transparent'}}

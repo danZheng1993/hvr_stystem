@@ -17,6 +17,7 @@ import { profileSelector, tokenSelector } from '../../redux/selectors'
 import SendVerificationcode from '../components/SendVerificationCode'
 import colors from '../../styles/colors'
 import {Text} from '../../components'
+// import { XMPP } from '../../helpers';
 import constants from '../../constants';
 import { registerPushyToken } from '../../redux/modules/auth';
 

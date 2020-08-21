@@ -5,6 +5,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Platform
 } from 'react-native';
 
 import { SearchBar } from 'react-native-elements';
@@ -48,7 +49,7 @@ class Providers extends React.Component {
     const {location} = this.state
     return (
       <>
-      <View style={{flexDirection:'row', paddingRight: 20, backgroundColor: colors.secondary, paddingVertical: 10}}>
+      <View style={{flexDirection:'row', paddingRight: 20, backgroundColor: colors.secondary, paddingVertical: 10, paddingTop: Platform.OS === 'ios' ? 25 : 15}}>
         <TouchableOpacity 
           style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10, flexDirection: 'row'}}
           onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation})}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, ImageBackground, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, ScrollView, ImageBackground, TouchableOpacity, Image, Platform } from 'react-native';
 import { colors } from '../../../styles';
 import { ListItem } from 'react-native-elements'
 import { connect } from 'react-redux';
@@ -40,7 +40,7 @@ class MyPage extends React.Component {
             width: '100%'}}
           resizeMode="cover"
         >
-        <View style={{padding: 15}}>
+        <View style={{padding: 15, paddingTop: Platform.OS === 'ios' ? 25 : 15}}>
           <View style={{flexDirection: 'row'}}>
             <Profile user = {profile} navigation={this.props.navigation} />
             <View style={styles.settingsContainer}>

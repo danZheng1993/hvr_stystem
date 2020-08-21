@@ -23,9 +23,10 @@ export default () => (
 			},
 			style: {
         backgroundColor: colors.secondary,
-        padding: 10,
         justifyContent: 'center',
-        alignItems :'center'
+        alignItems :'center',
+        height: 64,
+        paddingBottom: 16,
 			},
     }}
   >

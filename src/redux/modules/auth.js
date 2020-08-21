@@ -29,7 +29,7 @@ export const REGISTER_PUSHY_TOKEN = 'REGISTER_PUSH_TOKEN'
 // Actions
 // ------------------------------------
 
-export const login = createAction(DO_LOGIN)
+export const login = createAction(DO_LOGIN);
 export const logout = createAction(DO_LOGOUT, (callback) => {
   AsyncStorage.removeItem('hvr_auth', () => {callback}) 
 })

@@ -15,7 +15,7 @@ import { CommonActions } from '@react-navigation/native';
 import Pushy from 'pushy-react-native';
 
 import { XMPP } from '../../helpers';
-import { Button, toast } from '../../components';
+import { Button, toast, Loader } from '../../components';
 import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
 import { login, registerPushyToken } from '../../redux/modules/auth'
@@ -36,24 +36,20 @@ class LoginWithPassword extends React.Component {
     const { phoneNumber, password} = this.state  
     this.props.login({
       body: {phoneNumber, password},
-      success: () => this.redirect(),
+      success: this.redirect,
       fail: () => toast("电话号码或密码有误!")
     })
   };
   
-  redirect() {
-    const { profile, navigation, registerPushyToken, deviceToken } = this.props;
+  redirect = (res) => {
+    const { navigation, registerPushyToken, deviceToken } = this.props;
     console.log({ deviceToken });
     registerPushyToken({ deviceToken });
-    loadItem('hvr_auth').then((val) => {
-      const profile = JSON.parse(val);
-      if (!profile) {
-        console.log('profile not exists');
-        return
-      }
-      toast("登录成功")
-      XMPP.start();
-      Pushy.subscribe('all');
+    const profile = res.data;
+    toast("登录成功")
+    XMPP.start();
+    Pushy.subscribe('all');
+    setTimeout(() => {
       if (profile.info.role == 'provider') {
         Pushy.subscribe('provider');
         navigation.navigate('Provider');
@@ -61,15 +57,15 @@ class LoginWithPassword extends React.Component {
         Pushy.subscribe('client');
         navigation.navigate('Client');
       }
-    })
+    }, 300);
   }
 
   render() {
     const {loading, profile} = this.props
     return (
       <View style={styles.container}>
-        {/* { <Loader
-            loading={loading} /> } */}
+        { <Loader
+            loading={loading} /> }
         <View style={styles.description}>
           <Text size={28} black bold>
               登录HVR
@@ -114,7 +110,7 @@ class LoginWithPassword extends React.Component {
               onPress={() => this.refs.form.submit()}
             />
           </Form>   
-          <View style={styles.anchor}>
+          {/* <View style={styles.anchor}>
             <View style={[styles.inputWrap, {alignItems: 'flex-start'}]}>
               <Text size={14} color={colors.primary} onPress={() => this.props.navigation.navigate('LoginWithSMS')}>
               手机验证码登录
@@ -125,7 +121,7 @@ class LoginWithPassword extends React.Component {
               忘记密码?
               </Text>
             </View>
-          </View>
+          </View> */}
         </View>
           
         <View style={{alignItems: 'center', borderTopWidth: 1, borderTopColor: colors.greybackground}}>

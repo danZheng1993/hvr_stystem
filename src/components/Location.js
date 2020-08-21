@@ -365,17 +365,53 @@ export default class Location extends Component {
   // custom render row
   renderRow = ({ item }) => {
     const {rowHeight, searchStr} = this.state
-    // const stringArray = [];
-    // while(item.searchStr.length > 0) {
-    //   const indexOf = item.searchStr.indexOf(searchStr);
-    //   if (indexOf > -1) {
-    //     item.slice(0, indexOf+1);
-    //   }
-    // }
+    const stringArray = [];
+    if (searchStr.length > 0) {
+      let orgString = item.searchStr;
+      while(orgString.length > 0) {
+        const indexOf = orgString.indexOf(searchStr);
+        console.log({ indexOf });
+        if (indexOf > -1) {
+          let part = orgString.slice(0, indexOf);
+          stringArray.push({
+            text: part,
+            highlight: false,
+          });
+          orgString = orgString.slice(indexOf);
+          part = orgString.slice(0, searchStr.length);
+          stringArray.push({
+            text: searchStr,
+            highlight: true,
+          });
+          orgString = orgString.slice(searchStr.length);
+        } else {
+          stringArray.push({
+            text: orgString,
+            highlight: false,
+          });
+          console.log({ stringArray });
+          break;
+        }
+      }
+    } else {
+      stringArray.push({
+        text: item.searchStr,
+        highlight: false,
+      });
+    }
     return (
       <TouchableOpacity onPress={() => this.handleChoose(item.searchStr)}>
         <View style={{flex: 1, marginLeft: 20, height: rowHeight, justifyContent: 'center'}}>
-          <Text>{item.searchStr}</Text>
+          <Text>
+            {stringArray.map((part, idx) => (
+              <Text
+                style={part.highlight ? styles.highlightText : styles.normalText}
+                key={`text_part_${idx}`}
+              >
+                {part.text}
+              </Text>
+            ))}
+          </Text>
           {/* <HighlightableText
             matcher={item.matcher}
             text={item.searchStr}
@@ -422,40 +458,14 @@ export default class Location extends Component {
         <SearchBar
           value={searchStr}
           onChangeText={this.handleChangeText}
+          lightTheme
         />
         <FlatList
-          data={CityList.filter((item) => item.searchStr.startsWith(searchStr))}
+          data={CityList.filter((item) => item.searchStr.includes(searchStr))}
           renderItem={this.renderRow}
           ListEmptyComponent={this.renderEmptyResult}
           keyExtractor={(item, idx) => `city_${idx}`}
         />
-        {/* <SearchList
-          data={CityList}
-          renderRow={this.renderRow.bind(this)}
-          renderEmptyResult={this.renderEmptyResult.bind(this)}
-          renderBackButton={() => null}
-          renderEmpty={this.renderEmpty.bind(this)}
-
-          rowHeight={rowHeight}
-
-          toolbarBackgroundColor="#2196f3"
-          title='城市'
-          cancelTitle='取消'
-          onClickBack={() => {}}
-
-          searchListBackgroundColor="#2196f3"
-
-          searchBarToggleDuration={300}
-
-          searchInputBackgroundColor="#0069c0"
-          searchInputBackgroundColorActive="#6ec6ff"
-          searchInputPlaceholderColor="#FFF"
-          searchInputTextColor="#FFF"
-          searchInputTextColorActive="#000"
-          searchInputPlaceholder='搜索'
-          sectionIndexTextColor="#6ec6ff"
-          searchBarBackgroundColor="#2196f3"
-        /> */}
       </View>
     )
   }
@@ -491,5 +501,12 @@ const styles = StyleSheet.create({
 	  flexDirection: 'column',
 	  justifyContent: 'flex-start',
 	  marginTop: 50
-	}
-  })
+  },
+  highlightText: {
+    color: '#0069c0',
+    fontWeight: '500',
+  },
+  normalText: {
+    color: '#000',
+  }
+})

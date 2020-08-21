@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -49,7 +50,7 @@ class JobsList extends React.Component {
     const {location} = this.state
     return (
       <>
-        <View style={{ height: 50, flexDirection: "row", backgroundColor: colors.secondary, justifyContent: 'space-between', paddingVertical: 5, paddingHorizontal: 10}}>
+        <View style={{ flexDirection: "row", backgroundColor: colors.secondary, justifyContent: 'space-between', paddingVertical: 5, paddingHorizontal: 10, paddingTop: Platform.OS === 'ios' ? 25 : 15}}>
           <TouchableOpacity 
             style={{ justifyContent:"center", alignItems:"center"}}
             onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation})}

@@ -30,9 +30,11 @@ class SendVerificationCode extends React.Component {
     if(phoneNumber.length != 11 || !Number.isInteger(+phoneNumber)) return;
     this.props.sendcode({
       body: { phoneNumber: phoneNumber},
-      success: () => {    
+      success: (res) => {    
+        console.log('sms response', res);
         timer = setInterval(this.countTime, 1000)
         this.setState({isCheck: true})
+        onSuccess(res);
       }
     })
   };

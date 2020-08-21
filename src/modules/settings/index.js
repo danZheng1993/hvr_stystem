@@ -15,7 +15,7 @@ const settings = props => {
   const navigation = useNavigation();
     clearStorage = ()=> {
         clearItem().then(() => {
-            props.logout(navigation.reset([CommonActions.navigate({ routeName: 'Auth' })], 0))
+            props.logout(navigation.popToTop())
         })
     }
     return (

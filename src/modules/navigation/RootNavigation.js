@@ -289,12 +289,10 @@ const MainNavigator = () => (
             <Icon name="angle-left" size={30} color={colors.black}/>
           </TouchableOpacity>
         ),
-        headerRight:  (
-          (
-            <Text size={12} style={{color: colors.primary, paddingRight: 25}} onPress={() => navigation.navigate('Signup')}>
-              注册
-            </Text> 
-          )
+        headerRight: (props) => (
+          <Text size={12} style={{color: colors.primary, paddingRight: 25}} onPress={() => navigation.navigate('Signup')}>
+            注册
+          </Text>
         ),
       })}
     />

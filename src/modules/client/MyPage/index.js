@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import { StyleSheet, View, ScrollView, TouchableOpacity, ImageBackground, Image, Platform } from 'react-native';
 import { colors, fonts } from '../../../styles';
 import { ListItem } from 'react-native-elements'
 import { connect } from 'react-redux';
@@ -43,7 +43,7 @@ class MyPage extends React.Component {
           style={{ width: '100%'}}
           resizeMode="cover"
       >
-        <View style={{padding: 15}}>
+        <View style={styles.headerContainer}>
           <View style={{flexDirection: 'row'}}>
             <Profile user = {profile} navigation={this.props.navigation} />
             <View style={styles.settingsContainer}>
@@ -159,6 +159,10 @@ class MyPage extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    padding: 15,
+    paddingTop: Platform.OS === 'ios' ? 25 : 15,
+  },
   container: {
     flex: 1,
     backgroundColor: colors.bluish,
