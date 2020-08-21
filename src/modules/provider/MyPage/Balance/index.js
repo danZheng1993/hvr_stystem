@@ -14,7 +14,7 @@ export default class Balance extends Component {
           <Text size={48} bold black>￥{balance}</Text>
           <View style={{borderTopColor: colors.greybackground, borderTopWidth: 1, alignSelf: 'stretch'}}>
           </View>
-          <TouchableRipple onPress={() => navigation.navigate('Withdraw')} style={{backgroundColor: colors.secondary, paddingVertical: 5, paddingHorizontal: 70, marginVertical: 20}}>
+          <TouchableRipple onPress={() => this.props.navigation.navigate('Withdraw')} style={{backgroundColor: colors.secondary, paddingVertical: 5, paddingHorizontal: 70, marginVertical: 20}}>
             <Text white bold size={18}>提现</Text>
           </TouchableRipple>
           <Text>说明：每周可提现一次，提现统一在下周一到账， 节假日顺延。</Text>

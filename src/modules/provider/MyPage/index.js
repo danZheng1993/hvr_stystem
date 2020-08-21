@@ -9,6 +9,7 @@ import { Profile, Text, Bell } from '../../../components';
 import { profileSelector, unreadMessagesSelector, myMediasSelector, mediasloadingSelector } from '../../../redux/selectors'
 import { getMyMedias} from '../../../redux/modules/media'
 import constants from '../../../constants'
+import { isIphoneX } from '../../../helpers';
 
 const iconSetting = require('../../../../assets/images/setting.png');
 const iconBidding = require('../../../../assets/images/bidding.png');

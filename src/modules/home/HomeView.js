@@ -2,6 +2,7 @@ import React from 'react';
 import {
   View,
   ImageBackground,
+  Platform,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -16,7 +17,7 @@ import { getMyJob } from '../../redux/modules/job'
 import { addToContacts, pushNotification, pushUnreadMessages } from '../../redux/modules/auth'
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
-import { XMPP } from '../../helpers';
+import { XMPP, isIphoneX } from '../../helpers';
 import constants from '../../constants';
 
 class HomeScreen extends React.Component {
@@ -84,7 +85,7 @@ class HomeScreen extends React.Component {
       <View style={{flex: 1}}>
         <ImageBackground
           source={require('../../../assets/images/background.png')}
-          style={{flex: 1}}
+          style={{flex: 1, paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 24 : 16 : 0 }}
           resizeMode="cover"
         >
           

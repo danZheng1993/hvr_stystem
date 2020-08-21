@@ -16,6 +16,7 @@ import { createStructuredSelector } from 'reselect';
 import { bannersListSelector, newssListSelector, mediasListSelector, newssloadingSelector, bannersloadingSelector, mediasloadingSelector} from '../../../redux/selectors'
 import { RadioGroup, MediaList, Loader, Text, Bell, NewsList, BannersList } from '../../../components';
 import { getSettings } from '../../../redux/modules/setting';
+import { isIphoneX } from '../../../helpers';
 const iconSearch = require('../../../../assets/images/search.png');
 const iconBar = require('../../../../assets/images/bar.png');
 

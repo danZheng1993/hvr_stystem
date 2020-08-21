@@ -17,7 +17,7 @@ export default class JobsList extends React.Component {
   render() {   
     const {jobs, navigation, upfrontRate} = this.props
     return (
-      <View style={{paddingBottom: 20}}>          
+      <View style={{paddingBottom: 20,}}>          
         {jobs.length ? jobs.map((job, index) => (
           <TouchableRipple key={index} onPress={() => navigation.navigate('ClientJobDetail', {id: job._id})}>
             <View key={index} style={styles.componentsSection}>

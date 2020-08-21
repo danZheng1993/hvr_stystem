@@ -4,7 +4,7 @@ import {
   View,
 } from 'react-native';
 // import Video360 from 'react-native-video360plugin';
-import { Viro360Video } from 'react-viro';
+import Video360 from '@uscsf/react-native-video360';
 import { get } from 'lodash';
 
 import { colors } from '../styles';
@@ -26,15 +26,11 @@ export default class Player extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#3f3f3f' }}>
-        <Viro360Video
+        <Video360
           // source={require("./default.mp4")}
           source={{ uri: constants.MEDIA_BASE_URL + this.state.path }}
-          loop={true}
-          paused={false}
-          volume={1.0}
+          style={{ flex: 1}}
         />
-        {/* <Video360 urlVideo={constants.MEDIA_BASE_URL + this.state.path} modeVideo={1} style={{ flex: 1}} /> */}
-        {/* <Video360 urlVideo="http://903317e44c09.ngrok.io/mediaSource/default.mp4" modeVideo={1} style={{ flex: 1}} /> */}
       </View>
     );
   }

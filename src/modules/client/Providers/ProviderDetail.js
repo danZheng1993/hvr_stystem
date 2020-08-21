@@ -21,6 +21,7 @@ import { mediasloadingSelector, mediasSearchResultSelector, jobsloadingSelector,
 import ProviderWorks from './ProviderWorks';
 import ProviderFeedbacks from './ProviderFeedbacks';
 import constants from '../../../constants'
+import { isIphoneX } from '../../../helpers';
 
 const iconPhone = require('../../../../assets/images/phone.png')
 
@@ -79,7 +80,7 @@ class ProviderDetail extends React.Component {
             width: '100%'}}
           resizeMode="cover"
         >
-        <View style={{padding: 15}}>
+        <View style={{padding: 15, paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 48 : 25 : 15}}>
           <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
             <View style={{flexDirection: 'row'}}>
               <GoBack navigation={this.props.navigation} color={colors.white} />

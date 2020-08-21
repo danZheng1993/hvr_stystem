@@ -10,6 +10,7 @@ import {sum, values} from 'lodash'
 import {getMyMedias} from '../../../redux/modules/media'
 import { profileSelector, unreadMessagesSelector, myMediasSelector } from '../../../redux/selectors'
 import constants from '../../../constants';
+import { isIphoneX } from '../../../helpers';
 
 const iconBidding = require('../../../../assets/images/bidding.png');
 const iconSetting = require('../../../../assets/images/setting.png');
@@ -40,7 +41,7 @@ class MyPage extends React.Component {
       <>
       <ImageBackground
           source={require('../../../../assets/images/profileBackground.png')}
-          style={{ width: '100%'}}
+          style={{ width: '100%', paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 48 : 25 : 15 }}
           resizeMode="cover"
       >
         <View style={styles.headerContainer}>

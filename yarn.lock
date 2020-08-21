@@ -1417,6 +1417,11 @@
     md5 "^2.2.1"
     prop-types "^15.6.0"
 
+"@uscsf/react-native-video360@^0.5.6":
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/@uscsf/react-native-video360/-/react-native-video360-0.5.6.tgz#d1a164c104e5332aa1bda953cac8d980e7afcd75"
+  integrity sha512-G7auJfAsqGDl+Qy39RHHcKZ7JmXv9hQSncOEsaMh3v/jZimjbPNRUtuhTL5NxcjLgGkVr1ELNU3DhcBmWIQCig==
+
 "@xmpp/base64@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@xmpp/base64/-/base64-0.11.0.tgz#fd3158c947484ddd554c8d09bbd126b455a74010"
@@ -6582,13 +6587,6 @@ react-test-renderer@16.13.1:
     prop-types "^15.6.2"
     react-is "^16.8.6"
     scheduler "^0.19.1"
-
-react-viro@2.17.0:
-  version "2.17.0"
-  resolved "https://registry.yarnpkg.com/react-viro/-/react-viro-2.17.0.tgz#2e46dbf33111c79eaa6af58e008b1eb7f900cd00"
-  integrity sha512-5100TePD0X62DRCF1ELOOz/J0b+NJNcQHlppqFW4OHwzxI2ONfSKWAkwooYseinHgSWqe12z5jWf51aF7aHuDQ==
-  dependencies:
-    prop-types "^15.5.10"
 
 react@16.13.1:
   version "16.13.1"

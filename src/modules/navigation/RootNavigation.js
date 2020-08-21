@@ -319,7 +319,7 @@ const MainNavigator = () => (
     <Stack.Screen name="Security" component={Security} options={{ title: '安全验证' }} />
     <Stack.Screen name="WebViewer" component={WebViewer} options={{ headerShown: false }} />
     <Stack.Screen name="SearchBar" component={SearchBar} options={{ headerShown: false }} />
-    <Stack.Screen name="Player" component={Player} />
+    <Stack.Screen name="Player" component={Player} options={{ title: '' }} />
     <Stack.Screen name="SearchResult" component={SearchResult} options={{ title: '搜索结果' }} />
     <Stack.Screen name="Location" component={Location} options={{ title: 'Location' }} />
     <Stack.Screen name="Gallery" component={GalleryScreen} options={{ title: 'Gallery' }} />

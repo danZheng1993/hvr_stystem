@@ -39,14 +39,6 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - GoogleToolboxForMac/Defines (2.1.0)
-  - GoogleToolboxForMac/Logger (2.1.0):
-    - GoogleToolboxForMac/Defines (= 2.1.0)
-  - GTMSessionFetcher/Core (1.1.6)
-  - GVRAudioSDK (1.120.0)
-  - GVRSDK (1.120.0):
-    - GoogleToolboxForMac/Logger (= 2.1.0)
-    - GTMSessionFetcher/Core (= 1.1.6)
   - PushyRN (1.0.15):
     - React (< 1.0.0, >= 0.13.0)
   - RCTRequired (0.63.2)
@@ -223,6 +215,9 @@ PODS:
     - React
   - react-native-safe-area-context (3.1.6):
     - React
+  - react-native-video360 (0.5.6):
+    - React
+    - SGPlayerVR
   - react-native-webview (10.7.0):
     - React
   - React-RCTActionSheet (0.63.2):
@@ -305,10 +300,7 @@ PODS:
     - React
   - RNVectorIcons (7.0.0):
     - React
-  - ViroKit (1.0):
-    - GVRAudioSDK (= 1.120.0)
-    - GVRSDK (= 1.120.0)
-  - ViroReact (1.0)
+  - SGPlayerVR (2.0.3)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -338,6 +330,7 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - "react-native-video360 (from `../node_modules/@uscsf/react-native-video360`)"
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -359,8 +352,6 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
-  - ViroKit (from `../node_modules/react-viro/ios/dist/ViroRenderer/`)
-  - ViroReact (from `../node_modules/react-viro/ios/`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -368,10 +359,7 @@ SPEC REPOS:
     - AppCenter
     - AppCenterReactNativeShared
     - boost-for-react-native
-    - GoogleToolboxForMac
-    - GTMSessionFetcher
-    - GVRAudioSDK
-    - GVRSDK
+    - SGPlayerVR
 
 EXTERNAL SOURCES:
   appcenter-analytics:
@@ -422,6 +410,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-video360:
+    :path: "../node_modules/@uscsf/react-native-video360"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-RCTActionSheet:
@@ -464,10 +454,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
-  ViroKit:
-    :path: "../node_modules/react-viro/ios/dist/ViroRenderer/"
-  ViroReact:
-    :path: "../node_modules/react-viro/ios/"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -484,10 +470,6 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: dc7fa9088f0f2a998503a352b0554d69a4391c5a
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
-  GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
-  GTMSessionFetcher: 6aacd0ab48ddf0c3633ab2642d792abfcad1b08a
-  GVRAudioSDK: 302f0a8f190d855868ea07f246ce4f9b44c392ae
-  GVRSDK: 0cb9d0ce06a84d698e61e3db9509766022dcf815
   PushyRN: ae0f72f504f8194962de4abd65749088c2f24f98
   RCTRequired: f13f25e7b12f925f1f6a6a8c69d929a03c0129fe
   RCTTypeSafety: 44982c5c8e43ff4141eb519a8ddc88059acd1f3a
@@ -503,6 +485,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: 3d3f85baabca60a00b75fb8facc1376db7bbdafa
   react-native-netinfo: 38a1e0b3e89b48e4b5833ed475d8df5f049f6f90
   react-native-safe-area-context: 4fb3cdeb4a405ec19f18aca80ef2144381ffc761
+  react-native-video360: 1899b2931e6c84409bd07783314860b281ea028b
   react-native-webview: 6edf4d6f71b9161fc3e96083726a538ee395304d
   React-RCTActionSheet: 910163b6b09685a35c4ebbc52b66d1bfbbe39fc5
   React-RCTAnimation: 9a883bbe1e9d2e158d4fb53765ed64c8dc2200c6
@@ -524,10 +507,9 @@ SPEC CHECKSUMS:
   RNReanimated: 89f5e0a04d1dd52fbf27e7e7030d8f80a646a3fc
   RNScreens: b748efec66e095134c7166ca333b628cd7e6f3e2
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
-  ViroKit: b3c0e0d4a40c2e78d31bb09740a49cd8bf6bd68f
-  ViroReact: 7ec32276dcd1883662b4587eaedfff67f7fc3625
+  SGPlayerVR: fb77d8b7c21cc0607bd78714f716dc88b6c6349e
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
 
-PODFILE CHECKSUM: 682e43eacf97e22826cc86253fb1fb2f8c2088f1
+PODFILE CHECKSUM: a0632084bc86887b941695073e3179c4c4684344
 
 COCOAPODS: 1.9.1
