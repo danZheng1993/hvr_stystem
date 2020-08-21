@@ -72,6 +72,9 @@ export default () => (
       showLabel: true,
       style: {
         backgroundColor: colors.secondary,
+        paddingBottom: 8,
+        paddingTop: 8,
+        height: 64,
       },
     }}
   >
@@ -88,7 +91,7 @@ export default () => (
     <BottomTab.Screen
       name="约拍"
       component={PostJob}
-      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={iconPost} width={50} height={50} /> }}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={iconPost} width={32} height={32} /> }}
       listeners={({ navigation }) => ({
         tabPress: (e) => {
           e.preventDefault();

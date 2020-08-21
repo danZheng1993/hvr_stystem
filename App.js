@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Platform, PermissionsAndroid } from 'react-native';
+import { Platform, PermissionsAndroid, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
 import Pushy from 'pushy-react-native';

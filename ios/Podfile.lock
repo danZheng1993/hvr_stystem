@@ -17,9 +17,6 @@ PODS:
     - AppCenter/Core
   - AppCenterReactNativeShared (3.1.1):
     - AppCenter/Core (= 3.3.2)
-  - AWSCore (2.6.35)
-  - AWSDynamoDB (2.6.35):
-    - AWSCore (= 2.6.35)
   - boost-for-react-native (1.63.0)
   - BVLinearGradient (2.5.6):
     - React
@@ -307,7 +304,6 @@ PODS:
   - RNVectorIcons (7.0.0):
     - React
   - ViroKit (1.0):
-    - AWSDynamoDB (~> 2.6.7)
     - GVRAudioSDK (= 1.120.0)
     - GVRSDK (= 1.120.0)
   - ViroReact (1.0)
@@ -368,8 +364,6 @@ SPEC REPOS:
   trunk:
     - AppCenter
     - AppCenterReactNativeShared
-    - AWSCore
-    - AWSDynamoDB
     - boost-for-react-native
     - GoogleToolboxForMac
     - GTMSessionFetcher
@@ -478,8 +472,6 @@ SPEC CHECKSUMS:
   appcenter-core: 086ab16077baef60368c6a119af6e9e127406286
   appcenter-crashes: 10790bf670f79150f1654d79f76c10a8b4936688
   AppCenterReactNativeShared: b9fa50d999e830e03f086f487b1aa0f9772088c1
-  AWSCore: 2dab62ef2e5ca5d8c72c6cbdb3a6ea1532c27c2b
-  AWSDynamoDB: f4902fc37384dcf9547e2d8a32a5b208d4d1d996
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   DoubleConversion: cde416483dac037923206447da6e1454df403714
@@ -526,7 +518,7 @@ SPEC CHECKSUMS:
   RNReanimated: c2bb7438b57a3d987bb2e4e6e4bca94787e30b02
   RNScreens: c526239bbe0e957b988dacc8d75ac94ec9cb19da
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
-  ViroKit: 759e65a21a70c26d75890507e218b99ce4ce99d0
+  ViroKit: b3c0e0d4a40c2e78d31bb09740a49cd8bf6bd68f
   ViroReact: 7ec32276dcd1883662b4587eaedfff67f7fc3625
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
 

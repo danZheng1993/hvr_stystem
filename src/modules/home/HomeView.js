@@ -16,21 +16,21 @@ import { getMyJob } from '../../redux/modules/job'
 import { addToContacts, pushNotification, pushUnreadMessages } from '../../redux/modules/auth'
 import { profileSelector } from '../../redux/selectors'
 import { commonStyles } from '../../styles'
-// import { XMPP } from '../../helpers';
+import { XMPP } from '../../helpers';
 import constants from '../../constants';
 
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
     timer = null;
-    // XMPP.on('message', (message) => this.handleMessage(message));
-    // XMPP.on('iq', (message) => console.log(`IQ:${  message}`));
-    // XMPP.on('presence', (message) => console.log(`PRESENCE:${  message}`));
-    // XMPP.on('error', (message) => console.log(`ERROR:${  message}`));
-    // XMPP.on('loginError', (message) => console.log(`LOGIN ERROR:${  message}`));
-    // XMPP.on('login', (message) => console.log('LOGGED!'));
-    // XMPP.on('connect', (message) => console.log('CONNECTED!'));
-    // XMPP.on('disconnect', (message) => console.log('DISCONNECTED!'));
+    XMPP.on('message', (message) => this.handleMessage(message));
+    XMPP.on('iq', (message) => console.log(`IQ:${  message}`));
+    XMPP.on('presence', (message) => console.log(`PRESENCE:${  message}`));
+    XMPP.on('error', (message) => console.log(`ERROR:${  message}`));
+    XMPP.on('loginError', (message) => console.log(`LOGIN ERROR:${  message}`));
+    XMPP.on('login', (message) => console.log('LOGGED!'));
+    XMPP.on('connect', (message) => console.log('CONNECTED!'));
+    XMPP.on('disconnect', (message) => console.log('DISCONNECTED!'));
   }
 
   async componentWillMount(): void {
@@ -66,9 +66,9 @@ class HomeScreen extends React.Component {
     console.log("profile", profile)
     const token = SyncStorage.get('token') || '';
     let route = 'Auth'
-    // if (profile) {
-    //   XMPP.connect(profile._id + constants.JID, token.slice(0,8),'RNXMPP.PLAIN',constants.IP,5222)
-    // }
+    if (profile) {
+      XMPP.start();
+    }
     if (profile && profile.role == 'provider') route = 'Provider'
     else if (profile && profile.role == 'client') route = 'Client'
     this.props.navigation.navigate(route);

@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { TextInput } from 'react-native-paper';
+import { get } from 'lodash';
 
 import { colors } from '../../../../styles'
 import { Button } from '../../../../components';
@@ -22,8 +23,9 @@ class GiveFeedback extends React.Component {
   }
 
   componentWillMount() {
-    const { id = 'NO-ID' } = this.props.route.params;
-    if (id != 'NO-ID') {
+    const { route = {} } = this.props;
+    const id = get(route, 'params.id');
+    if (id) {
       this.setState({id: id})
     }
   }

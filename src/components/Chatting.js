@@ -4,6 +4,7 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
+import { xml } from '@xmpp/client';
 import { XMPP } from '../helpers';
 import {Loader} from "."
 import { getChat } from '../redux/modules/chat'
@@ -120,10 +121,13 @@ class Chatting extends React.Component {
    * and store it in this component's state.
    */
   onSend(messages=[]) {
-      console.log(messages)
       this._storeMessages(messages);
       const JID = `${this.state.to}@desktop-jgen8l2/spark`
-      XMPP.message(messages[0].text, JID)
+      XMPP.send(xml(
+        "message",
+        { to: JID },
+        xml("body", {}, messages[0].text),
+      ));
   }
 
   render() {

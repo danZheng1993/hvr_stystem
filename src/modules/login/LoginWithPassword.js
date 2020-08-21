@@ -14,7 +14,7 @@ import SyncStorage from 'sync-storage';
 import { CommonActions } from '@react-navigation/native';
 import Pushy from 'pushy-react-native';
 
-// import { XMPP } from '../../helpers';
+import { XMPP } from '../../helpers';
 import { Button, toast } from '../../components';
 import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
@@ -52,7 +52,7 @@ class LoginWithPassword extends React.Component {
         return
       }
       toast("登录成功")
-      // XMPP.start();
+      XMPP.start();
       Pushy.subscribe('all');
       if (profile.info.role == 'provider') {
         Pushy.subscribe('provider');

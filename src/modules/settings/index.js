@@ -4,7 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { CommonActions } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 
 import {logout} from '../../redux/modules/auth'
 import { clearItem } from '../../redux/api/storage'
@@ -12,9 +12,10 @@ import colors from '../../styles/colors'
 import {Text} from '../../components'
 
 const settings = props => {
+  const navigation = useNavigation();
     clearStorage = ()=> {
         clearItem().then(() => {
-            props.logout(props.navigation.reset([CommonActions.navigate({ routeName: 'Auth' })], 0))
+            props.logout(navigation.reset([CommonActions.navigate({ routeName: 'Auth' })], 0))
         })
     }
     return (

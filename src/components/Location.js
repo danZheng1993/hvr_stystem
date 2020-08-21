@@ -1,6 +1,12 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
-import SearchList, {HighlightableText} from '@unpourtous/react-native-search-list';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+} from 'react-native'
+import { SearchBar } from 'react-native-elements';
 
 const CityList= [ 
 	{"searchStr": "阿坝"},
@@ -342,7 +348,8 @@ export default class Location extends Component {
 	  super(props, context);
   
 	  this.state = {
-		  rowHeight : 40
+      rowHeight : 40,
+      searchStr: '',
 	  };
 	}
 
@@ -356,25 +363,32 @@ export default class Location extends Component {
 	}
 
   // custom render row
-  renderRow (item, sectionID, rowID, highlightRowFunc, isSearching) {
-	const {rowHeight} = this.state
+  renderRow = ({ item }) => {
+    const {rowHeight, searchStr} = this.state
+    // const stringArray = [];
+    // while(item.searchStr.length > 0) {
+    //   const indexOf = item.searchStr.indexOf(searchStr);
+    //   if (indexOf > -1) {
+    //     item.slice(0, indexOf+1);
+    //   }
+    // }
     return (
       <TouchableOpacity onPress={() => this.handleChoose(item.searchStr)}>
-        <View key={rowID} style={{flex: 1, marginLeft: 20, height: rowHeight, justifyContent: 'center'}}>
-          {/* use `HighlightableText` to highlight the search result */}
-          <HighlightableText
+        <View style={{flex: 1, marginLeft: 20, height: rowHeight, justifyContent: 'center'}}>
+          <Text>{item.searchStr}</Text>
+          {/* <HighlightableText
             matcher={item.matcher}
             text={item.searchStr}
             textColor="#000"
             hightlightTextColor="#0069c0"
-          />
+          /> */}
         </View>
       </TouchableOpacity>
     )
   }
 
   // render empty view when datasource is empty
-  renderEmpty () {
+  renderEmpty = () => {
     return (
       <View style={styles.emptyDataSource}>
         <Text style={{color: '#979797', fontSize: 18, paddingTop: 20}}> No Content </Text>
@@ -383,7 +397,8 @@ export default class Location extends Component {
   }
 
   // render empty result view when search result is empty
-  renderEmptyResult (searchStr) {
+  renderEmptyResult = () => {
+    const { searchStr } = this.state;
     return (
       <View style={styles.emptySearchResult}>
         <Text style={{color: '#979797', fontSize: 18, paddingTop: 20}}> No Result For <Text
@@ -396,11 +411,25 @@ export default class Location extends Component {
     )
   }
 
+  handleChangeText = (text) => {
+    this.setState({ searchStr: text });
+  }
+
   render () {
-	const {rowHeight} = this.state
+    const {rowHeight, searchStr} = this.state
     return (
       <View style={styles.container}>
-        <SearchList
+        <SearchBar
+          value={searchStr}
+          onChangeText={this.handleChangeText}
+        />
+        <FlatList
+          data={CityList.filter((item) => item.searchStr.startsWith(searchStr))}
+          renderItem={this.renderRow}
+          ListEmptyComponent={this.renderEmptyResult}
+          keyExtractor={(item, idx) => `city_${idx}`}
+        />
+        {/* <SearchList
           data={CityList}
           renderRow={this.renderRow.bind(this)}
           renderEmptyResult={this.renderEmptyResult.bind(this)}
@@ -426,7 +455,7 @@ export default class Location extends Component {
           searchInputPlaceholder='搜索'
           sectionIndexTextColor="#6ec6ff"
           searchBarBackgroundColor="#2196f3"
-        />
+        /> */}
       </View>
     )
   }

@@ -27,7 +27,7 @@ class MyJobList extends React.Component {
   }
 
   componentWillMount() {
-    const {getMyJob} = this.props
+    const {getMyJob, route} = this.props
     const { selected = 0 } = route.params || {}
     this.props.setRadioGroupsState({ ...this.props.radioGroupsState, 0: selected })
     this.setState({selected})
