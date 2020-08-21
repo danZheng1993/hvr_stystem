@@ -6,6 +6,7 @@ import { colors, fonts } from '../../styles';
 
 import MyPage from './MyPage';
 import JobsList from './jobs/JobsList'
+import { isIphoneX } from '../../helpers';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -26,7 +27,7 @@ export default () => (
         justifyContent: 'center',
         alignItems :'center',
         height: 64,
-        paddingBottom: 16,
+        paddingBottom: isIphoneX() ? 24 : 16,
 			},
     }}
   >

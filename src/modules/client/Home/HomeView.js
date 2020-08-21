@@ -34,7 +34,7 @@ class HomeView extends React.Component {
     console.log(banners, news, medias)
     return (
       <View style={styles.container}>
-        <View style={{ flexDirection: "row", backgroundColor: colors.secondary, padding: 10, paddingTop: Platform.OS === 'ios' ? 25 : 15, }}>
+        <View style={{ flexDirection: "row", backgroundColor: colors.secondary, padding: 10, paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 48 : 25 : 15, }}>
           <TouchableOpacity 
             style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
             onPress={() => this.props.navigation.navigate('SearchBar')}

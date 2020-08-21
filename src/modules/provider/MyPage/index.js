@@ -40,7 +40,7 @@ class MyPage extends React.Component {
             width: '100%'}}
           resizeMode="cover"
         >
-        <View style={{padding: 15, paddingTop: Platform.OS === 'ios' ? 25 : 15}}>
+        <View style={{padding: 15, paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 48 : 25 : 15}}>
           <View style={{flexDirection: 'row'}}>
             <Profile user = {profile} navigation={this.props.navigation} />
             <View style={styles.settingsContainer}>

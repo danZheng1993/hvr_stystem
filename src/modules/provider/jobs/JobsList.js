@@ -19,6 +19,7 @@ import { jobsloadingSelector, profileSelector, jobsSearchResultSelector } from '
 import { getSettings } from '../../../redux/modules/setting';
 import { getDateTimeStr } from '../../../utils/helper';
 import Bell from '../../../components/Bell';
+import { isIphoneX } from '../../../helpers';
 
 class JobsList extends React.Component {
   constructor(props) {
@@ -50,7 +51,7 @@ class JobsList extends React.Component {
     const {location} = this.state
     return (
       <>
-        <View style={{ flexDirection: "row", backgroundColor: colors.secondary, justifyContent: 'space-between', paddingVertical: 5, paddingHorizontal: 10, paddingTop: Platform.OS === 'ios' ? 25 : 15}}>
+        <View style={{ flexDirection: "row", backgroundColor: colors.secondary, justifyContent: 'space-between', paddingVertical: 5, paddingHorizontal: 10, paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 48 : 25 : 15}}>
           <TouchableOpacity 
             style={{ justifyContent:"center", alignItems:"center"}}
             onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation})}

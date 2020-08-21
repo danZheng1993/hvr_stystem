@@ -16,6 +16,7 @@ import { colors } from '../../styles';
 
 import { searchMedia } from '../../redux/modules/media'
 import { mediasSearchResultSelector, mediasloadingSelector, profileSelector } from '../../redux/selectors'
+import { isIphoneX } from '../../helpers';
 
 const status = ['关注', '热门', '最新']
 
@@ -63,7 +64,7 @@ class MediaSearch extends React.Component {
       sortedMedias =  _.orderBy(medias, 'created', 'desc');
     return (
       <>
-        <View style={{flexDirection:'row', paddingHorizontal: 20, backgroundColor: colors.secondary, paddingTop: Platform.OS === 'ios' ? 25 : 15}}>
+        <View style={{flexDirection:'row', paddingHorizontal: 20, backgroundColor: colors.secondary, paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 48 : 25 : 15}}>
           <View style={{flex: 4}}>
             <SearchBar
                 containerStyle={{height: 30, padding: 0, backgroundColor: colors.secondary, borderColor: colors.bluish,  borderBottomColor: 'transparent', borderTopColor: 'transparent'}}

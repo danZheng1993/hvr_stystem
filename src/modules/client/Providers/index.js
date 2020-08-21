@@ -16,6 +16,7 @@ import { Loader, UsersList, NoData, Text, BannersList} from '../../../components
 import { colors } from '../../../styles';
 import { searchUser } from '../../../redux/modules/user'
 import { usersloadingSelector, usersSearchResultSelector, bannersListSelector } from '../../../redux/selectors'
+import { isIphoneX } from '../../../helpers';
 
 const iconLocation = require('../../../../assets/images/location.png');
 
@@ -49,7 +50,7 @@ class Providers extends React.Component {
     const {location} = this.state
     return (
       <>
-      <View style={{flexDirection:'row', paddingRight: 20, backgroundColor: colors.secondary, paddingVertical: 10, paddingTop: Platform.OS === 'ios' ? 25 : 15}}>
+      <View style={{flexDirection:'row', paddingRight: 20, backgroundColor: colors.secondary, paddingVertical: 10, paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 48 : 25 : 15}}>
         <TouchableOpacity 
           style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10, flexDirection: 'row'}}
           onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation})}
