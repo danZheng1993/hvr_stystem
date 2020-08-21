@@ -224,3 +224,17 @@ export const myJobsSelector = (state) =>
 
 export const tokenSelector = (state) =>
   get(state, 'message.token', '');
+
+export const messageSelector = (state) =>
+  get(state, 'message.messages', []);
+
+export const unreadNotificationCountSelector = (state) => {
+  const messages = get(state, 'message.messages', [])
+  const unreads = messages.filter(message => !message.read);
+  return unreads.length;
+};
+
+export const unreadNotificationSelector = (state) => {
+  const messages = get(state, 'message.messages', [])
+  return messages.filter(message => !message.read);
+}

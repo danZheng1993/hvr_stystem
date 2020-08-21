@@ -11,6 +11,7 @@ import PostJob from './PostJob'
 import MyPage from './MyPage'
 import Providers from './Providers';
 import MediaSearch from './MediaSearch';
+import { isIphoneX } from '../../helpers';
 
 const iconPost = require('../../../assets/images/post.png');
 const iconHome = require('../../../assets/images/home.png');
@@ -72,9 +73,9 @@ export default () => (
       showLabel: true,
       style: {
         backgroundColor: colors.secondary,
-        paddingBottom: 8,
-        paddingTop: 8,
-        height: 64,
+        paddingBottom: isIphoneX() ? 24 : 16,
+        paddingTop: isIphoneX() ? 16 : 8,
+        height: isIphoneX() ? 86 : 64,
       },
     }}
   >

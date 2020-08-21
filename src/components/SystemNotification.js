@@ -5,7 +5,7 @@ import { colors } from '../styles';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { notificationsSelector} from '../redux/selectors'
+import { messageSelector} from '../redux/selectors'
 
 class SystemNotification extends React.Component {
 
@@ -14,13 +14,13 @@ class SystemNotification extends React.Component {
     }
 
     render () {
-        const {notification} = this.props
+        const {messages} = this.props
         return (
             <View style={styles.container}>
-                {notification.length ? notification.map((notificationItem, index) => (
+                {messages.length ? messages.map((message, index) => (
                     <ListItem
                         key={index}
-                        title= {notificationItem.body}
+                        title= {message.message}
                         hideChevron={false}
                         // onPress = {() => props.navigation.navigate('PersonalInformation')}
                         bottomDivider
@@ -41,7 +41,7 @@ const styles= StyleSheet.create({
   },
 })
 const mapStateToProps = createStructuredSelector({
-    notification: notificationsSelector
+    messages: messageSelector
 });
 
 const mapDispatchToProps = {

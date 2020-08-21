@@ -27,14 +27,13 @@ export default function App() {
       });
     }
     Pushy.register().then((deviceToken) => {
-      console.log({ deviceToken });
       store.dispatch(tokenGenerated(deviceToken));
     });
     Pushy.setNotificationListener(async (data) => {
       let notificationTitle = 'HVR System';
       let notificationText = data.message || 'Test notification';
       Pushy.notify(notificationTitle, notificationText, data);
-      store.dispatch(messageReceived({ message: data.message }));
+      store.dispatch(messageReceived(data));
     });
   })
   return (

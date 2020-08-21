@@ -11,6 +11,7 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Form } from 'react-native-validator-form';
 import DatePicker from 'react-native-datepicker'
+import ModalSelector from 'react-native-modal-selector'
 import { Button, Loader, toast, RadioForm } from '../../components';
 import Modal from "react-native-modal";
 
@@ -29,10 +30,13 @@ class PostJob extends React.Component {
     this.state = {
       types: [],
       type: '',
+      typeKey: -1,
       subcategories: [],
       subcategory: '',
+      subcategoryKey: -1,
       scenes: [],
       scene: '',
+      sceneKey: -1,
       radioGroup: [],
       services: [],
       service: '',
@@ -122,8 +126,8 @@ class PostJob extends React.Component {
 
   render() { 
     const { jobsloading, settings} = this.props
-    const { types, scenes, subcategories, services } = this.state
-    const {isLive, isConfirm, location, type, count, scene, subcategory, service, description, isPublic, budget, systembudget} = this.state
+    const { types, typeKey, scenes, sceneKey, subcategories, services } = this.state
+    const {isLive, isConfirm, location, type, count, scene, subcategory, subcategoryKey, service, description, isPublic, budget, systembudget} = this.state
     const panoramaPrice = settings.panoramaPrice || 0
     return (
       <ScrollView style={styles.container}>
@@ -191,16 +195,14 @@ class PostJob extends React.Component {
             <View style={[styles.row]}>
               <Text style={{flex: 1}} size={14} black>服务类别:</Text>
               <View style={styles.border}>
-                <Picker
-                  selectedValue={this.state.type}
-                  style={styles.picker}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setType(itemValue)
-                  }>
-                  {  Array.isArray(types) && types.map((item, index) => (
-                      <Picker.Item key={index} label={item} value={item} />
-                  )) }
-                </Picker>
+                <ModalSelector
+                  data={types.map((type, idx) => ({ key: idx, label: type }))}
+                  selectedKey={typeKey}
+                  initValue="服务类别"
+                  initValueTextStyle={styles.selectedItem}
+                  selectTextStyle={styles.selectedItem}
+                  onChange={(option) => { this.setState({ type: option.label, typeKey: option.key }); }}
+                />
               </View>
             </View>
             { !isLive ?
@@ -246,31 +248,27 @@ class PostJob extends React.Component {
             <View style={styles.row}>
               <Text style={{flex: 1}} size={14} black>拍摄场景:</Text>
               <View style={styles.border}>
-                <Picker              
-                  selectedValue={this.state.scene}
-                  style={styles.picker}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({scene: itemValue})
-                  }>
-                  {  Array.isArray(scenes) && scenes.map((item, index) => (
-                      <Picker.Item key={index} label={item} value={item} />
-                  )) }
-                </Picker>
+                <ModalSelector
+                  data={scenes.map((scene, idx) => ({ key: idx, label: scene }))}
+                  selectedKey={sceneKey}
+                  initValue="拍摄场景"
+                  initValueTextStyle={styles.selectedItem}
+                  selectTextStyle={styles.selectedItem}
+                  onChange={(option) => { this.setState({ scene: option.label, sceneKey: option.key }); }}
+                />
               </View>
             </View>
             <View style={styles.row}>
               <Text style={{flex: 1}} size={14} black>行业类别:</Text>
               <View style={styles.border}>
-                <Picker
-                  selectedValue={this.state.subcategory}
-                  style={styles.picker}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({subcategory: itemValue})
-                  }>
-                  {  Array.isArray(subcategories) && subcategories.map((item, index) => (
-                      <Picker.Item key={index} label={item} value={item} style={{padding: 12}}/>
-                  )) }
-                </Picker>
+                <ModalSelector
+                  data={subcategories.map((subcategory, idx) => ({ key: idx, label: subcategory }))}
+                  selectedKey={subcategoryKey}
+                  initValue="行业类别"
+                  initValueTextStyle={styles.selectedItem}
+                  selectTextStyle={styles.selectedItem}
+                  onChange={(option) => { this.setState({ subcategory: option.label, subcategoryKey: option.key }); }}
+                />
               </View>
             </View>
           </View>
@@ -409,6 +407,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 5,
   },
+  selectedItem: {
+    fontSize: 14,
+  }
 });
 
 
