@@ -9,8 +9,9 @@ export const verifyStateSelector = (state) =>
 export const authloadingSelector = (state) =>
   get(state, 'auth.loading', false)
 
-export const profileSelector = (state) =>
-  get(state, 'auth.me', null)
+export const profileSelector = (state) => {
+  return get(state, 'auth.me', null);
+}
 
 export const unreadMessagesSelector = (state) =>
   get(state, 'auth.unread', {})

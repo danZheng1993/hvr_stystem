@@ -70,3 +70,26 @@ export default ({
     })
   }
 }
+
+export const postApi = (url, data) =>
+  axios.request({
+    url,
+    method: 'POST',
+    headers: defaultHeaders(),
+    data,
+  });
+
+export const getApi = (url, data) =>
+  axios.request({
+    url,
+    method: 'GET',
+    headers: defaultHeaders(),
+  });
+
+export const updateApi = (url, data) =>
+  axios.request({
+    url,
+    method: 'PUT',
+    headers: defaultHeaders(),
+    data,
+  });

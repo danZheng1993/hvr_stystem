@@ -4,12 +4,10 @@
 // const ip = '192.168.0.169'
 // const port = 4000
 // const baseUrl = `http://${ip}:${port}/`
-const baseUrl = 'https://dry-dawn-50400.herokuapp.com/'
-const XMPP_DOMAIN = 'dry-dawn-50400.herokuapp.com';
-const XMPP_PORT = '5222';
+// const baseUrl = 'https://dry-dawn-50400.herokuapp.com/'
+const baseUrl = 'http://localhost:4000'
+// const baseUrl = 'http://192.168.0.169:4000'
 // const baseUrl = 'http://localhost';
-// const XMPP_DOMAIN = 'localhost';
-// const XMPP_PORT = '5222';
 const constants = {
     SMS_VERIFICATION: 'SMS_VERIFICATION',
     PASSWORD_VERIFICATION: 'PASSWORD_VERIFICATION',
@@ -22,9 +20,6 @@ const constants = {
     BANNER_BASE_URL: `${baseUrl}/bannersImage/`,
     NEWS_BASE_URL: `${baseUrl}/newsImage/`,
     MEDIA_BASE_URL: `${baseUrl}/mediaSource/`,
-    JID: `@${XMPP_DOMAIN}:${XMPP_PORT}/spark`,
-    XMPP_DOMAIN,
-    XMPP_PORT,
     // IP: ip
 }
 

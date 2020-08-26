@@ -29,8 +29,6 @@ export const getDateStr = (dateTime) =>
 export const getPageCount = ({ page_size, count }) =>
   Math.ceil(count / page_size)
 
-export { default as XMPP } from './xmpp';
-
 export const isIphoneX = () => {
   const dim = Dimensions.get('window');
 
