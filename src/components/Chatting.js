@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { TouchableOpacity, Text, Dimensions } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat';
+import { View, TouchableOpacity, Text, Dimensions } from 'react-native';
+import { GiftedChat, Send } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
@@ -225,13 +225,15 @@ class Chatting extends React.Component {
   }
 
   renderSend = (props) => (
-    <TouchableOpacity style={styles.sendButton} {...props}>
-      <Text style={styles.sendButtonText}>发送</Text>
-    </TouchableOpacity>
-  )
+    <Send {...props}>
+      <View style={styles.sendButton}>
+        <Text style={styles.sendButtonText}>发送</Text>
+      </View>
+    </Send>
+  );
 
   renderLoadEarlier = (props) => (
-    <TouchableOpacity style={styles.loadEarlierButton} {...props}>
+    <TouchableOpacity style={styles.loadEarlierButton} onPress={props.onLoadEarlier}>
       <Text style={styles.loadEarlierText}>加载早期消息</Text>
     </TouchableOpacity>
   )
