@@ -360,7 +360,16 @@ export default class Location extends Component {
 			chooseLocation(location)
 		}
 		navigation.goBack()
-	}
+  }
+  
+  handleReset = () => {
+    const {navigation, route} = this.props
+    const { resetLocation } = route.params || {}
+		if (resetLocation) {
+			resetLocation();
+		}
+		navigation.goBack()
+  }
 
   // custom render row
   renderRow = ({ item }) => {
@@ -437,12 +446,20 @@ export default class Location extends Component {
     const { searchStr } = this.state;
     return (
       <View style={styles.emptySearchResult}>
-        <Text style={{color: '#979797', fontSize: 18, paddingTop: 20}}> No Result For <Text
+        <Text style={{color: '#979797', fontSize: 18, paddingTop: 20}}> <Text
           style={{color: '#171a23', fontSize: 18}}
-        >{searchStr}
-                                                                                      </Text>
+        >{searchStr} </Text>没有结果
         </Text>
-        <Text style={{color: '#979797', fontSize: 18, alignItems: 'center', paddingTop: 10}}>Please search again</Text>
+        <Text
+          style={{
+            color: '#979797',
+            fontSize: 18,
+            alignItems: 'center',
+            paddingTop: 10
+          }}
+        >
+          请尝试使用其他关键字
+        </Text>
       </View>
     )
   }
@@ -455,11 +472,18 @@ export default class Location extends Component {
     const {rowHeight, searchStr} = this.state
     return (
       <View style={styles.container}>
-        <SearchBar
-          value={searchStr}
-          onChangeText={this.handleChangeText}
-          lightTheme
-        />
+        <View style={styles.header}>
+          <View style={styles.searchBar}>
+            <SearchBar
+              value={searchStr}
+              onChangeText={this.handleChangeText}
+              lightTheme
+            />
+          </View>
+          <TouchableOpacity style={styles.resetButton} onPress={this.handleReset}>
+            <Text style={styles.resetButtonText}>重置位置</Text>
+          </TouchableOpacity>
+        </View>
         <FlatList
           data={CityList.filter((item) => item.searchStr.includes(searchStr))}
           renderItem={this.renderRow}
@@ -477,7 +501,19 @@ const styles = StyleSheet.create({
 	  backgroundColor: '#efefef',
 	  flexDirection: 'column',
 	  justifyContent: 'flex-start'
-	},
+  },
+  header: {
+    flexDirection: 'row',
+  },
+  searchBar: {
+    flex: 1,
+  },
+  resetButton: {
+    paddingHorizontal: 16,
+    backgroundColor: 'rgb(226, 232, 237)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 	welcome: {
 	  fontSize: 20,
 	  textAlign: 'center',

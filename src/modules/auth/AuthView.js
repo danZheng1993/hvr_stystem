@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 
 import { Button } from '../../components';
@@ -17,6 +18,9 @@ export default function AuthScreen(props) {
   const handleSignup = () => {
     props.navigation.navigate('Signup')
   };
+  const handleTerms = () => {
+    props.navigation.navigate('Terms')
+  }
   return (
     <View style={styles.container}>
       <View style={styles.logo}>
@@ -41,10 +45,14 @@ export default function AuthScreen(props) {
           caption="注册"
           onPress={() => handleSignup()}
         />
-        <Text size= {10} style={{color: colors.description}}>
-          我已阅读并同意 
-          <Text size={10} style={{color: colors.primary}}> 服务条款和隐私政策 </Text>
-        </Text>
+        <View style={styles.termsWrapper}>
+          <Text size= {10} style={{color: colors.description}}>
+            我已阅读并同意
+          </Text>
+          <TouchableOpacity onPress={handleTerms}>
+            <Text size={10} style={{color: colors.primary}}> 服务条款和隐私政策 </Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={{justifyContent: "center", alignItems: 'center'}}>
       </View>
@@ -73,4 +81,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 100
   },
+  termsWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  }
 });

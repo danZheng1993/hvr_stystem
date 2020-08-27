@@ -10,7 +10,8 @@ import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVer
 import GalleryScreen from '../gallery/GalleryViewContainer';
 
 import HomeScreen from '../home/HomeView';
-import AuthScreen from '../auth/AuthView'
+import AuthScreen from '../auth/AuthView';
+import TermsScreen from '../auth/Terms';
 
 import LoginWithPassword from '../login/LoginWithPassword'
 import LoginWithSMS from '../login/LoginWithSMS'
@@ -74,7 +75,10 @@ const MainNavigator = () => (
       },
       headerTintColor: '#222222',
       headerLeft: props => (
-        <TouchableOpacity onPress={props.onPress} style={{ paddingLeft: 25 }}>
+        <TouchableOpacity
+          onPress={props.onPress}
+          style={{ paddingVertical: 12, paddingHorizontal: 24 }}
+        >
           <Image
             source={require('../../../assets/images/icons/arrow-back.png')}
             resizeMode="contain"
@@ -90,6 +94,7 @@ const MainNavigator = () => (
     <Stack.Screen name="VRShop" component={Developing} options={{ title: '我的VR' }} />
     <Stack.Screen name="MyContract" component={Developing} options={{ title: '我的合同' }} />
     <Stack.Screen name="Auth" component={AuthScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="Terms" component={TermsScreen} options={{ title: '服务条款和隐私政策' }} />
     <Stack.Screen
       name="Signup"
       component={SignupScreen}

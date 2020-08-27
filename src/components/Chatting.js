@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { TouchableOpacity, Text, Dimensions } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -7,6 +8,7 @@ import { createStructuredSelector } from 'reselect';
 import socketIO from 'socket.io-client';
 import moment from 'moment';
 import { reverse } from "lodash";
+
 import {Loader} from "."
 import { getChat } from '../redux/modules/chat'
 import { addToContacts } from '../redux/modules/auth'
@@ -14,6 +16,32 @@ import {getUser} from '../redux/modules/user'
 import { chatsloadingSelector, chatsListSelector, profileSelector, userDetailSelector } from '../redux/selectors'
 import constants from '../constants'; 
 import { postApi, getApi } from '../redux/api/apiCall';
+import { colors} from '../styles';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('screen');
+
+const styles = {
+  sendButton: {
+    padding: 16,
+  },
+  sendButtonText: {
+    color: colors.primary,
+    fontWeight: 'bold',
+  },
+  loadEarlierButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 18,
+    backgroundColor: colors.primaryLight,
+    width: 150,
+    alignItems: 'center',
+    marginVertical: 24,
+    marginHorizontal: (SCREEN_WIDTH - 150) / 2,
+  },
+  loadEarlierText: {
+    color: colors.white,
+  }
+}
 
 class Chatting extends React.Component {
   constructor(props) {
@@ -196,6 +224,18 @@ class Chatting extends React.Component {
     }
   }
 
+  renderSend = (props) => (
+    <TouchableOpacity style={styles.sendButton} {...props}>
+      <Text style={styles.sendButtonText}>发送</Text>
+    </TouchableOpacity>
+  )
+
+  renderLoadEarlier = (props) => (
+    <TouchableOpacity style={styles.loadEarlierButton} {...props}>
+      <Text style={styles.loadEarlierText}>加载早期消息</Text>
+    </TouchableOpacity>
+  )
+
   render() {
     const user = { _id: this.state.userId || -1 };
     const {loading} = this.props
@@ -208,6 +248,9 @@ class Chatting extends React.Component {
             user={user}
             loadEarlier={true}
             onLoadEarlier={this.loadEarlier}
+            renderSend={this.renderSend}
+            placeholder="键入消息。。。"
+            renderLoadEarlier={this.renderLoadEarlier}
           />
         )}
       </>

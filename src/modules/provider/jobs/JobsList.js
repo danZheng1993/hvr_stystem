@@ -46,6 +46,15 @@ class JobsList extends React.Component {
     })
   }
 
+  resetLocation = () => {
+    const {searchJob, getSettings} = this.props
+    this.setState({location: '北京'})
+    getSettings()
+    searchJob({
+      body: {location: '北京'}
+    })
+  }
+
   render() {
     const {jobs, jobsloading} = this.props
     const {location} = this.state
@@ -54,7 +63,7 @@ class JobsList extends React.Component {
         <View style={{ flexDirection: "row", backgroundColor: colors.secondary, justifyContent: 'space-between', paddingVertical: 5, paddingHorizontal: 10, paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 48 : 25 : 15}}>
           <TouchableOpacity 
             style={{ justifyContent:"center", alignItems:"center"}}
-            onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation})}
+            onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation, resetLocation: this.resetLocation})}
             >
             <Icon name="location" size={25} color="white" />
             <Text style={{color: colors.white, margin: 0}}>{location}</Text>
@@ -68,7 +77,7 @@ class JobsList extends React.Component {
             <Bell navigation={this.props.navigation}/>
           </View>
         </View>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
          { jobsloading ? <Loader
           loading={jobsloading} /> :
          jobs.length ? jobs.map((job, index) => (
@@ -104,6 +113,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bluish,
     paddingHorizontal: 15,
     paddingTop: 20,
+  },
+
+  contentContainer: {
+    paddingBottom: 20,
   },
   
   picker: {

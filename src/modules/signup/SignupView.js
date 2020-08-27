@@ -3,6 +3,8 @@ import {
   StyleSheet,
   View,
   Image,
+  TouchableOpacity,
+  // Text,
 } from 'react-native';
 
 import { Button } from '../../components';
@@ -18,6 +20,10 @@ export default function SignupView(props) {
   const handleClient = () => {
     props.navigation.navigate('SignupAsClient')
   };
+
+  const handleLogin = () => {
+    props.navigation.navigate('LoginWithPassword')
+  }
 
   return (
     <View style={styles.container}>
@@ -44,6 +50,14 @@ export default function SignupView(props) {
           caption="我是服务方"
           onPress={() => handleProvider()}
         />
+        <View style={styles.termsWrapper}>
+          <Text size= {10} style={{color: colors.description}}>
+            已经有账户了
+          </Text>
+          <TouchableOpacity onPress={handleLogin}>
+            <Text size={10} style={{color: colors.primary}}>在此处登录</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -68,5 +82,9 @@ const styles = StyleSheet.create({
   description: {
     alignItems: "center",
     marginBottom: 100
+  },
+  termsWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
   }
 });

@@ -26,8 +26,8 @@ class LoginWithPassword extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      phoneNumber: '22222222222',
-      password: '222222',
+      phoneNumber: '',
+      password: '',
     }
   }
 
@@ -123,7 +123,7 @@ class LoginWithPassword extends React.Component {
         </View>
           
         <View style={{alignItems: 'center', borderTopWidth: 1, borderTopColor: colors.greybackground}}>
-          <Text size={12} color={colors.description}>使用第三方登录</Text>
+          {/* <Text size={12} color={colors.description}>使用第三方登录</Text>
           <View style={styles.touch}>
             <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeChat}>
               <Image
@@ -143,7 +143,7 @@ class LoginWithPassword extends React.Component {
                 style={styles.photo}
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </View>
     );

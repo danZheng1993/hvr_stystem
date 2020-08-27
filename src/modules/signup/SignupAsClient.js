@@ -72,14 +72,17 @@ class SignupAsClient extends React.Component {
 
   sendCode = () => {
     const { phoneNumber } = this.state
-    if(phoneNumber.length != 11 || !Number.isInteger(+phoneNumber)) return;
-
-    this.props.sendcode({
-      body: { phoneNumber: phoneNumber},
-      success: () => {
-        timer = setInterval(this.countTime, 1000)
-      }
-    })
+    if(phoneNumber.length != 11 || !Number.isInteger(+phoneNumber)) {
+      Alert.alert('电话号码无效');
+    } else {
+      this.props.sendcode({
+        body: { phoneNumber: phoneNumber},
+        success: () => {
+          Alert.alert('短信发送验证码。代码有效期为60秒。');
+          timer = setInterval(this.countTime, 1000)
+        }
+      })
+    }
   }
 
   countTime = () => {
