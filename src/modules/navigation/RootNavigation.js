@@ -59,6 +59,8 @@ import Developing from '../../components/Developing'
 import Settings from '../settings';
 import PersonalInformation from '../settings/PersonalInformation';
 import Security from '../settings/Security';
+import AboutUs from '../auth/AboutUs';
+import Help from '../auth/Help';
 
 const Stack = createStackNavigator();
 
@@ -332,6 +334,8 @@ const MainNavigator = () => (
     <Stack.Screen name="Chat" component={AvailableInFullVersion} options={{ title: '' }} />
     <Stack.Screen name="Messages" component={AvailableInFullVersion} options={{ title: '' }} />
     <Stack.Screen name="Charts" component={AvailableInFullVersion} options={{ title: '' }} />
+    <Stack.Screen name="AboutUs" component={AboutUs} options={{ title: '' }} />
+    <Stack.Screen name="Help" component={Help} options={{ title: '' }} />
   </Stack.Navigator>
 )
 

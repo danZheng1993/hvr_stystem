@@ -141,7 +141,7 @@ class MyPage extends React.Component {
             title='帮助中心'
             hideChevron={false}
             chevron={{ color: colors.gray }}
-            onPress = {() => this.props.navigation.navigate('WebViewer', {url: constants.BASE_URL + 'help.html'})}
+            onPress = {() => this.props.navigation.navigate('Help')}
             bottomDivider
           />
           <ListItem
@@ -150,7 +150,7 @@ class MyPage extends React.Component {
             title='关于我们'
             hideChevron={false}
             chevron={{ color: colors.gray }}
-            onPress = {() => this.props.navigation.navigate('WebViewer', {url: constants.BASE_URL + 'AboutUs.html'})}
+            onPress = {() => this.props.navigation.navigate('AboutUs')}
           />
         </View>
       </ScrollView>
