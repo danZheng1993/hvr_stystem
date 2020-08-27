@@ -144,7 +144,7 @@ class MyPage extends React.Component {
             hideChevron={false}
             chevron={{ color: colors.gray }}
             bottomDivider
-            onPress = {() => this.props.navigation.navigate('WebViewer', {url: constants.BASE_URL + 'AboutUs.html'})}
+            onPress = {() => this.props.navigation.navigate('AboutUs')}
           />
           <ListItem
             key={7}

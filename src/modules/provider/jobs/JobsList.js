@@ -63,7 +63,7 @@ class JobsList extends React.Component {
         <View style={{ flexDirection: "row", backgroundColor: colors.secondary, justifyContent: 'space-between', paddingVertical: 5, paddingHorizontal: 10, paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 48 : 25 : 15}}>
           <TouchableOpacity 
             style={{ justifyContent:"center", alignItems:"center"}}
-            onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation, resetLocation: this.resetLocation})}
+            onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation, resetLocation: this.resetLocation, location })}
             >
             <Icon name="location" size={25} color="white" />
             <Text style={{color: colors.white, margin: 0}}>{location}</Text>
@@ -95,7 +95,7 @@ class JobsList extends React.Component {
                 <Text size={14}>需求方预算价格: ¥{job.budget}</Text>
                 <Text size={14} color={colors.primary} onPress={() => {
                   this.props.navigation.navigate('ApplyJob', {
-                    job
+                    job,
                 });}}>查看更多</Text>
               </View>
             </View>

@@ -469,6 +469,8 @@ export default class Location extends Component {
   }
 
   render () {
+    const {route} = this.props
+    const { location } = route.params || {}
     const {rowHeight, searchStr} = this.state
     return (
       <View style={styles.container}>
@@ -480,9 +482,11 @@ export default class Location extends Component {
               lightTheme
             />
           </View>
-          <TouchableOpacity style={styles.resetButton} onPress={this.handleReset}>
-            <Text style={styles.resetButtonText}>重置位置</Text>
-          </TouchableOpacity>
+          {location !== '北京' && (
+            <TouchableOpacity style={styles.resetButton} onPress={this.handleReset}>
+              <Text style={styles.resetButtonText}>重置位置</Text>
+            </TouchableOpacity>
+          )}
         </View>
         <FlatList
           data={CityList.filter((item) => item.searchStr.includes(searchStr))}

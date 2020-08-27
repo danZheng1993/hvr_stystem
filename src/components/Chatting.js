@@ -17,6 +17,7 @@ import { chatsloadingSelector, chatsListSelector, profileSelector, userDetailSel
 import constants from '../constants'; 
 import { postApi, getApi } from '../redux/api/apiCall';
 import { colors} from '../styles';
+import { ActivityIndicator } from 'react-native-paper';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 
@@ -40,6 +41,13 @@ const styles = {
   },
   loadEarlierText: {
     color: colors.white,
+  },
+  loadingIndicator: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    marginVertical: 24,
+    marginHorizontal: (SCREEN_WIDTH - 150) / 2,
+    alignItems: 'center',
   }
 }
 
@@ -50,6 +58,7 @@ class Chatting extends React.Component {
       messages: [],
       userId: null,
       to: '',
+      loadingEarlier: false,
     };
 
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
@@ -112,12 +121,15 @@ class Chatting extends React.Component {
 
   loadEarlier = async () => {
     const { messages } = this.state;
+    this.setState({ loadingEarlier: true });
     const receiver = this.state.to;
     const sender = this.props.profile._id;
-    const lastDate = moment(messages[messages.length - 1].createdAt).add(moment().utcOffset(), 'minutes').subtract(1, 'day').startOf('date').toISOString();
-    const startDate = moment(messages[messages.length - 1].createdAt).add(moment().utcOffset(), 'minutes').subtract(1, 'day').endOf('date').toISOString();
+    const lastDate = moment(messages[messages.length - 1].createdAt).subtract(1, 'day').endOf('date').add(moment().utcOffset(), 'minutes').toISOString();
+    const startDate = moment(messages[messages.length - 1].createdAt).subtract(1, 'day').startOf('date').add(moment().utcOffset(), 'minutes').toISOString();
     try {
       const result = await getApi(`/chats?filter[sender]=${sender}&filter[receiver]=${receiver}&filter[start]=${startDate}&filter[end]=${lastDate}`);
+      console.log(result.data.chats);
+      console.log({ startDate, lastDate, sender, receiver })
       const messages = result.data.chats.map((chat) => ({
         _id: chat._id,
         text: chat.message,
@@ -127,10 +139,12 @@ class Chatting extends React.Component {
         createdAt: chat.created
       }));
       this.setState((previousState) => ({
-        messages: GiftedChat.prepend(previousState.messages, messages),
+        messages: GiftedChat.prepend(previousState.messages, reverse(messages)),
       }));
     } catch(err) {
       console.log('chats fetch', err);
+    } finally {
+      this.setState({ loadingEarlier: false });
     }
   }
   
@@ -232,15 +246,19 @@ class Chatting extends React.Component {
     </Send>
   );
 
-  renderLoadEarlier = (props) => (
+  renderLoadEarlier = (props) => this.state.loadingEarlier ? (
+    <View style={styles.loadingIndicator}>
+      <ActivityIndicator color={colors.secondary} size="small" />
+    </View>
+  ): (
     <TouchableOpacity style={styles.loadEarlierButton} onPress={props.onLoadEarlier}>
       <Text style={styles.loadEarlierText}>加载早期消息</Text>
     </TouchableOpacity>
   )
 
   render() {
-    const user = { _id: this.state.userId || -1 };
     const {loading} = this.props
+    const user = { _id: this.state.userId || -1 };
     return (
       <>
         {loading? <Loader loading={loading} /> : (
