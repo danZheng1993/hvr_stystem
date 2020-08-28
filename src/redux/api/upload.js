@@ -14,7 +14,6 @@ defaultHeaders = () => {
   return headers;
 }
 let upload = (uri, method, data) => {
-  console.log("upload")
   return fetch(constants.BASE_URL + uri, {
       method: method,
       body: data,

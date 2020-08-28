@@ -58,7 +58,6 @@ const doSaveProfile = apiCall({
   method: 'patch',
   path: () => '/profile/me/',
   success: (res, action) => {
-    console.log(res)
     loadItem('hvr_auth')
     .then(val => {
       let token = JSON.parse(val).token

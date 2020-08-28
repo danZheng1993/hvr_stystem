@@ -13,6 +13,15 @@ import { saveProfile } from '../../redux/modules/auth'
 import { profileSelector } from '../../redux/selectors'
 import uploadFile from '../../redux/api/upload'
 import constants from '../../constants'
+import reactotron from '../../../ReactotronConfig';
+
+export const eXTtoType = {
+  jpeg: 'jpeg',
+  jpg: 'jpg',
+  png: 'png',
+  mov: 'video/quicktime',
+  mp4: 'video/mp4'
+};
 
 class BasicProfile extends React.Component {
   constructor(props) {
@@ -29,7 +38,7 @@ class BasicProfile extends React.Component {
 
   componentWillMount() {
     const {profile} = this.props
-    let update = this.props.route.params;
+    let { update } = this.props.route.params;
     if (update != 'none') {
       this.setState({update})
     }
@@ -44,13 +53,13 @@ class BasicProfile extends React.Component {
   }
 
   handleClick = () => {
-    const {userName, photo, overview,update,location} = this.state
+    const {userName, photo, overview, update,location} = this.state
     const {profile} = this.props
-    console.log(profile)
     if (photo) {
-      uploadFile('profile/me', 'post',this.createFormData(photo, { type: "photo"}))
-      .then(res => console.log(res))
-      .catch(err => Alert.alert(err))
+      const formData = this.createFormData(photo, { type: "photo"});
+      uploadFile('profile/me', 'POST', formData)
+        .then(res => console.log('upload success', res))
+        .catch(err => console.log('upload error', err))
     }
     if (userName || overview) {
       this.props.saveProfile({
@@ -73,7 +82,7 @@ class BasicProfile extends React.Component {
     };
     ImagePicker.showImagePicker(options, response => {
       console.log('Response = ', response);
- 
+      
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -82,9 +91,8 @@ class BasicProfile extends React.Component {
         console.log('User tapped custom button: ', response.customButton);
         Alert.alert(response.customButton);
       } else {
-        let source = response;
         this.setState({
-          photo: source,
+          photo: response,
         });
       }
     });
@@ -92,9 +100,11 @@ class BasicProfile extends React.Component {
 
   createFormData = (photo, body) => {
     const data = new FormData();
+    const nameParts = photo.uri.split('.');
+    const ext = nameParts[nameParts.length - 1];
     data.append("photo", {
-      name: photo.fileName,
-      type: photo.type,
+      name: `profile.${ext}`,
+      type: 'photo',
       uri: photo.uri
         // Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
     });
@@ -102,7 +112,6 @@ class BasicProfile extends React.Component {
     Object.keys(body).forEach(key => {
       data.append(key, body[key]);
     });
-    console.log("uplaod", data)
     return data;
   };
 
@@ -121,7 +130,8 @@ class BasicProfile extends React.Component {
             source={{ uri: photo ? photo.uri : url }}
             style={styles.photo}
           />  
-        </TouchableOpacity> }
+        </TouchableOpacity>
+        }
         {(update == '' || update == 'userName') && 
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
           <Text>用户昵称</Text>
@@ -137,7 +147,8 @@ class BasicProfile extends React.Component {
         { update == '' && 
         <Text style={{marginBottom: 10}}>所在城市 
           <Text color={colors.secondary} onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}> {location}></Text>
-        </Text> }
+        </Text>
+        }
         {(update == '' || update == 'overview') && 
         <View>
           <Text >用户昵称</Text>
@@ -183,7 +194,10 @@ const styles = StyleSheet.create({
   photo: {
     width: 100,
     height: 100,
-    borderRadius: 50
+    borderRadius: 50,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: colors.primary,
   },
   button: {
     alignSelf: 'stretch',

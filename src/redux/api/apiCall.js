@@ -60,6 +60,7 @@ export default ({
     })
   } catch (err) {
     const errRes = get(err, 'response', err)
+    console.log({ errRes });
 
     failCallback && failCallback(errRes)
     fail && fail(errRes)

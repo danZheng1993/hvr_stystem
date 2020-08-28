@@ -106,11 +106,11 @@ class MyPage extends React.Component {
             title='我的合同'
             hideChevron={false}
             chevron={{ color: colors.gray }}
-            onPress = {() => this.props.navigation.navigate('MyContract')}
+            onPress = {() => this.props.navigation.navigate('ProviderJob')}
             bottomDivider
           />
           
-          <ListItem
+          {/* <ListItem
             key={3}
             titleStyle = {{color: colors.black}}
             title='VR商城'
@@ -118,8 +118,8 @@ class MyPage extends React.Component {
             chevron={{ color: colors.gray }}
             onPress = {() => this.props.navigation.navigate('VRShop')}
             bottomDivider
-          />
-          <ListItem
+          /> */}
+          {/* <ListItem
             key={4}
             titleStyle = {{color: colors.black}}
             title='直播管理'
@@ -127,7 +127,7 @@ class MyPage extends React.Component {
             chevron={{ color: colors.gray }}
             onPress = {() => this.props.navigation.navigate('MyContract')}
             bottomDivider
-          />
+          /> */}
           <ListItem
             key={5}
             titleStyle = {{color: colors.black}}

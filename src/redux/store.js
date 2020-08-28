@@ -5,8 +5,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import { compose } from 'redux'
+
 import reducer from './reducers';
 import sagas from './sagas'
+import reactotron from '../../ReactotronConfig';
 
 const persistConfig = {
   key: 'root',
@@ -21,14 +24,17 @@ const persistedReducer = persistReducer(
 const sagaMiddleware = createSagaMiddleware()
 export const store = createStore(
   persistedReducer,
-  applyMiddleware(
-    thunkMiddleware,
-    sagaMiddleware,
-    createLogger({
-      collapsed: true,
-      // eslint-disable-next-line no-undef
-      predicate: () => __DEV__,
-    }),
+  compose(
+    applyMiddleware(
+      thunkMiddleware,
+      sagaMiddleware,
+      createLogger({
+        collapsed: true,
+        // eslint-disable-next-line no-undef
+        predicate: () => __DEV__,
+      }),
+    ),
+    reactotron.createEnhancer()
   )
 );
 
