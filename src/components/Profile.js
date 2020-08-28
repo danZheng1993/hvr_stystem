@@ -18,7 +18,7 @@ export default class Profile extends React.Component {
           <View style = {styles.row}>
           <TouchableRipple onPress={() => this.props.navigation.navigate('BasicProfile', {update: 'photo'})}>
             <Image
-              source={{uri: constants.BASE_URL + 'profileImage/' + (user.photo ? user.photo: 'default.png')}}
+              source={{uri: constants.BASE_URL + 'profileImage/' + (user.photo ? user.photo: 'default.png') + `?t=${new Date().toISOString()}`}}
               style={styles.photo}
             />
           </TouchableRipple>

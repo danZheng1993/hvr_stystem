@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity, TextInput, Alert} from 'react-native'
+import { View, Image, StyleSheet, TouchableOpacity, TextInput, Alert, Platform} from 'react-native'
 
 import ImagePicker from 'react-native-image-picker'
 import { colors } from '../../styles'
@@ -14,6 +14,7 @@ import { profileSelector } from '../../redux/selectors'
 import uploadFile from '../../redux/api/upload'
 import constants from '../../constants'
 import reactotron from '../../../ReactotronConfig';
+import { ActivityIndicator } from 'react-native-paper';
 
 export const eXTtoType = {
   jpeg: 'jpeg',
@@ -47,7 +48,8 @@ class BasicProfile extends React.Component {
         userName: profile.userName,
         location: profile.location,
         overview: profile.overview,
-        url: constants.BASE_URL + profile.photo
+        url: constants.BASE_URL + 'profileImage/' + profile.photo + `?t=${new Date().toISOString()}`,
+        loadingImage: false,
       })
     }
   }
@@ -58,13 +60,14 @@ class BasicProfile extends React.Component {
     if (photo) {
       const formData = this.createFormData(photo, { type: "photo"});
       uploadFile('profile/me', 'POST', formData)
-        .then(res => console.log('upload success', res))
+        .then(res => {
+          if (userName || overview) {
+            this.props.saveProfile({
+              body: {userName, overview, location}
+            })
+          }
+        })
         .catch(err => console.log('upload error', err))
-    }
-    if (userName || overview) {
-      this.props.saveProfile({
-        body: {userName, overview, location}
-      })
     }
     if (update == '')
       this.props.navigation.navigate('ShootingID')
@@ -81,7 +84,6 @@ class BasicProfile extends React.Component {
       },
     };
     ImagePicker.showImagePicker(options, response => {
-      console.log('Response = ', response);
       
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -100,13 +102,12 @@ class BasicProfile extends React.Component {
 
   createFormData = (photo, body) => {
     const data = new FormData();
-    const nameParts = photo.uri.split('.');
+    const nameParts = (Platform.OS === 'ios' ? photo.uri : photo.path).split('.');
     const ext = nameParts[nameParts.length - 1];
     data.append("photo", {
       name: `profile.${ext}`,
-      type: 'photo',
-      uri: photo.uri
-        // Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+      type: 'image/*',
+      uri: Platform.OS === 'android' ? `file://${photo.path}` : photo.uri,
     });
   
     Object.keys(body).forEach(key => {
@@ -120,16 +121,25 @@ class BasicProfile extends React.Component {
   }
 
   render() {
-    const { photo , update, location, url} = this.state
+    const { photo , update, location, url, loadingImage} = this.state
     return (
       <View style={styles.container}>
       <Text size={28} bold black style={{marginBottom: 30, alignSelf: 'center'}}>信息填写</Text>
         {(update == '' || update == 'photo') && 
          <TouchableOpacity onPress={this.handleChoosePhoto} style={{alignSelf: 'center'}}>
-          <Image
-            source={{ uri: photo ? photo.uri : url }}
-            style={styles.photo}
-          />  
+          <View style={styles.photoWrapper}>
+            <Image
+              source={{ uri: photo ? photo.uri : url }}
+              style={styles.photo}
+              onLoadStart={() => this.setState({ loadingImage: true })}
+              onLoadEnd={() => this.setState({ loadingImage: false, })}
+            />
+            {loadingImage && (
+              <View style={styles.loadingIndicator}>
+                <ActivityIndicator size="small" />
+              </View>
+            )}
+          </View>
         </TouchableOpacity>
         }
         {(update == '' || update == 'userName') && 
@@ -195,9 +205,26 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
+  },
+  photoWrapper: {
+    position: 'relative',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     borderStyle: 'solid',
     borderWidth: 1,
     borderColor: colors.primary,
+    overflow: 'hidden',
+  },
+  loadingIndicator: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: 100,
+    height: 100,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   button: {
     alignSelf: 'stretch',
