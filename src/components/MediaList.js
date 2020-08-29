@@ -18,6 +18,9 @@ import { addToCollections, removeFromCollections, addToAttentions } from '../red
 import { increaseVisits } from '../redux/modules/media'
 import { authloadingSelector, profileSelector } from '../redux/selectors'
 import NoData from './NoData';
+import HeartO from '../../assets/images/heart-o.png';
+import Heart from '../../assets/images/heart.png';
+
 class MediaList extends React.Component {
   constructor(props) {
     super(props)
@@ -87,22 +90,12 @@ class MediaList extends React.Component {
                   }
                 </View>
                 <View style={{flexDirection: 'row', }}>
-                  {
-                    collections.indexOf(media._id) == -1
-                      ? 
-                        <TouchableOpacity onPress={() => {this.handleCollect(media._id)}}>
-                          <Image
-                            source={require('../../assets/images/heart-o.png')}
-                            style={{width: 20, height: 20, tintColor: colors.gray}}
-                          />
-                        </TouchableOpacity>
-                      : <TouchableOpacity onPress={() => {this.handleCancel(media._id)}}>
-                          <Image
-                            source={require('../../assets/images/heart.png')}
-                            style={{width: 20, height: 20}}
-                          />
-                        </TouchableOpacity>
-                  }
+                  <TouchableOpacity onPress={() => { collections.indexOf(media._id) == -1 ? this.handleCollect(media._id) : this.handleCancel(media._id) }}>
+                    <Image
+                      source={collections.indexOf(media._id) == -1 ? HeartO : Heart}
+                      style={{width: 20, height: 20, tintColor: colors.gray}}
+                    />
+                  </TouchableOpacity>
                   <TouchableOpacity style={{marginLeft: 10}} onPress={() => null}>
                     <Image
                       source={require('../../assets/images/follow.png')}

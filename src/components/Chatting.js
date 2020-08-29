@@ -18,6 +18,7 @@ import constants from '../constants';
 import { postApi, getApi } from '../redux/api/apiCall';
 import { colors} from '../styles';
 import { ActivityIndicator } from 'react-native-paper';
+import reactotron from 'reactotron-react-native';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 
@@ -120,16 +121,14 @@ class Chatting extends React.Component {
   }
 
   loadEarlier = async () => {
-    const { messages } = this.state;
+    const { messages: originMessages } = this.state;
     this.setState({ loadingEarlier: true });
     const receiver = this.state.to;
     const sender = this.props.profile._id;
-    const lastDate = moment(messages[messages.length - 1].createdAt).subtract(1, 'day').endOf('date').add(moment().utcOffset(), 'minutes').toISOString();
-    const startDate = moment(messages[messages.length - 1].createdAt).subtract(1, 'day').startOf('date').add(moment().utcOffset(), 'minutes').toISOString();
     try {
+      const lastDate = moment(originMessages[originMessages.length - 1].createdAt).subtract(1, 'day').endOf('date').add(moment().utcOffset(), 'minutes').toISOString();
+      const startDate = moment(originMessages[originMessages.length - 1].createdAt).subtract(1, 'day').startOf('date').add(moment().utcOffset(), 'minutes').toISOString();
       const result = await getApi(`/chats?filter[sender]=${sender}&filter[receiver]=${receiver}&filter[start]=${startDate}&filter[end]=${lastDate}`);
-      console.log(result.data.chats);
-      console.log({ startDate, lastDate, sender, receiver })
       const messages = result.data.chats.map((chat) => ({
         _id: chat._id,
         text: chat.message,
@@ -142,6 +141,7 @@ class Chatting extends React.Component {
         messages: GiftedChat.prepend(previousState.messages, reverse(messages)),
       }));
     } catch(err) {
+      reactotron.log(err);
       console.log('chats fetch', err);
     } finally {
       this.setState({ loadingEarlier: false });

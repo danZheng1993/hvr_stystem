@@ -2,10 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  TouchableOpacity,
-  Image
 } from 'react-native';
-
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
@@ -28,20 +25,26 @@ class LoginWithPassword extends React.Component {
     this.state = {
       phoneNumber: '',
       password: '',
+      authLoading: false,
     }
   }
 
   handleClick = () => {
     const { phoneNumber, password} = this.state  
+    this.setState({ authLoading: true });
     this.props.login({
       body: {phoneNumber, password},
       success: this.redirect,
-      fail: () => toast("电话号码或密码有误!")
+      fail: () => {
+        this.setState({ authLoading: false });
+        toast("电话号码或密码有误!");
+      }
     })
   };
   
   redirect = (res) => {
     const { navigation, registerPushyToken, deviceToken } = this.props;
+    this.setState({ authLoading: false });
     console.log({ deviceToken });
     registerPushyToken({ deviceToken });
     const profile = res.data;
@@ -60,10 +63,11 @@ class LoginWithPassword extends React.Component {
 
   render() {
     const {loading, profile} = this.props
+    const { authLoading } = this.state;
     return (
       <View style={styles.container}>
         { <Loader
-            loading={loading} /> }
+            loading={loading && authLoading} /> }
         <View style={styles.description}>
           <Text size={28} black bold>
               登录HVR

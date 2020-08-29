@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import constants from '../constants'
 import { colors } from '../styles';
 import { isIphoneX } from '../helpers';
+import reactotron from 'reactotron-react-native';
 
 export default class WebViewer extends Component {
 	constructor(props) {
@@ -13,18 +14,27 @@ export default class WebViewer extends Component {
 			url: ''
 		}
 	}
-  componentWillMount() {
+  componentDidMount() {
     const {route} = this.props
     const { url = constants.BASE_URL + 'error.html' } = route.params || {};
 		this.setState({url})
+  }
+  componentDidUpdate(prevProps) {
+    const { route } = this.props;
+    const { route: prevRoute } = prevProps; 
+    const { url: prevUrl = constants.BASE_URL + 'error.html' } = prevRoute.params || {};
+    const { url = constants.BASE_URL + 'error.html' } = route.params || {};
+    if (prevUrl !== url) {
+      this.setState({ url });
+    }
   }
   handleClose = () => {
     this.props.navigation.goBack();
   }
   render() {
-		const {url} = this.state
+    const {url} = this.state;
     return (
-      <View>
+      <View style={styles.wrapper}>
         <View style={styles.header}>
           <TouchableOpacity style={styles.button} onPress={this.handleClose}>
             <Ionicons name="close-circle-outline" size={24} color="white" />
@@ -32,7 +42,7 @@ export default class WebViewer extends Component {
         </View>
         <WebView
           source={{uri: url}}
-          style={{marginTop: 20}}
+          style={{flex: 1}}
         />
       </View>
     );

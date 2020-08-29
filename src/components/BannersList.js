@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import constants from '../constants'
 import { SliderBox } from 'react-native-image-slider-box';
+import reactotron from 'reactotron-react-native';
 
 export default class BannersList extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ export default class BannersList extends React.Component {
   }
   componentWillMount() {
     const {banners} = this.props
+    console.log({ banners });
     let bannerImages = []
     if (banners.length) {
       banners.map((banner, index) => {
