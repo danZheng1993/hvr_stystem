@@ -133,6 +133,7 @@ class BasicProfile extends React.Component {
               style={styles.photo}
               onLoadStart={() => this.setState({ loadingImage: true })}
               onLoadEnd={() => this.setState({ loadingImage: false, })}
+              onError={() => this.setState({ loadingImage: false })}
             />
             {loadingImage && (
               <View style={styles.loadingIndicator}>

@@ -75,7 +75,7 @@ class Providers extends React.Component {
       <Loader
         loading={usersloading} />
       <BannersList banners={banners} navigation={this.props.navigation} />
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
          {users.length? users.map((user, index) => (
            <View style={styles.componentsSection} key={index}>
              <UsersList user={user} navigation={this.props.navigation}/>
@@ -92,6 +92,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.bluish,
     padding: 20
+  },
+
+  contentContainer: {
+    paddingVertical: 20,
   },
   
   picker: {
