@@ -102,8 +102,9 @@ class Chatting extends React.Component {
   initChat = async (to = undefined) => {
     const receiver = to || this.state.to;
     const sender = this.props.profile._id;
-    const startDate = moment().startOf('date').add(moment().utcOffset(), 'minutes').toISOString();
-    const endDate = moment().endOf('date').add(moment().utcOffset(), 'minutes').toISOString();
+    const startDate = moment().startOf('date').toISOString();
+    const endDate = moment().endOf('date').toISOString();
+    // .add(moment().utcOffset(), 'minutes')
     try {
       const result = await getApi(`/chats?filter[sender]=${sender}&filter[receiver]=${receiver}&filter[start]=${startDate}&filter[end]=${endDate}`);
       const messages = result.data.chats.map((chat) => ({
@@ -126,8 +127,8 @@ class Chatting extends React.Component {
     const receiver = this.state.to;
     const sender = this.props.profile._id;
     try {
-      const lastDate = moment(originMessages[originMessages.length - 1].createdAt).subtract(1, 'day').endOf('date').add(moment().utcOffset(), 'minutes').toISOString();
-      const startDate = moment(originMessages[originMessages.length - 1].createdAt).subtract(1, 'day').startOf('date').add(moment().utcOffset(), 'minutes').toISOString();
+      const lastDate = moment(originMessages[originMessages.length - 1].createdAt).subtract(1, 'day').endOf('date').toISOString();
+      const startDate = moment(originMessages[originMessages.length - 1].createdAt).subtract(1, 'day').startOf('date').toISOString();
       const result = await getApi(`/chats?filter[sender]=${sender}&filter[receiver]=${receiver}&filter[start]=${startDate}&filter[end]=${lastDate}`);
       const messages = result.data.chats.map((chat) => ({
         _id: chat._id,

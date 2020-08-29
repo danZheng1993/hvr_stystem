@@ -4,16 +4,23 @@ import {
   View,
   Image,
   ImageBackground,
+  ActivityIndicator
 } from 'react-native';
 import constants from '../constants'
 import { colors } from '../styles';
 import { TouchableRipple } from 'react-native-paper';
 import {Text} from './StyledText';
 
+import DefaultAvatarImage from '../../assets/images/default-avatar.png';
+
 export default class UsersList extends React.Component {
+  state = {
+    loading: false,
+    imageFailed: false,
+  }
   render() {   
     const {user, navigation} = this.props
-    console.log(user)
+    const { imageFailed, loading } = this.state;
     return (
       <TouchableRipple onPress={() => navigation.navigate('ProviderDetail', {user: user})} style={{marginBottom: 10}}>
       {user &&
@@ -24,10 +31,20 @@ export default class UsersList extends React.Component {
               resizeMode="cover"
           >
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Image
-                source={{uri: constants.BASE_URL + (user.photo ? user.photo: 'default.png')}}
-                style={styles.photo}
-              />
+              <View style={styles.imageWrapper}>
+                <Image
+                  source={!imageFailed ? {uri: constants.BASE_URL + 'profileImage/' + user.photo + `?t=${new Date().toISOString()}`} : DefaultAvatarImage}
+                  style={styles.photo}
+                  onLoadStart={() => this.setState({ loading: true })}
+                  onLoadEnd={() => this.setState({ loading: false })}
+                  onError={() => this.setState({ imageFailed: true, loading: false })}
+                />
+                {loading && (
+                  <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="small" color="white" />
+                  </View>
+                )}
+              </View>
               <Text bold>{user.userName}</Text>
               <Text size={12} >{user.overview}</Text>
             </View>
@@ -44,9 +61,26 @@ export default class UsersList extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  imageWrapper: {
+    width: 50,
+    height: 50,
+    position: 'relative',
+    borderRadius: 25,
+    overflow: 'hidden',
+  }, 
   photo: {
-    borderRadius: 50,
+    borderRadius: 25,
+    borderColor: colors.gray,
+    backgroundColor: colors.info,
     width: 50,
     height: 50
   },
+  loadingContainer: {
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
