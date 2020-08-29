@@ -124,7 +124,7 @@ class BasicProfile extends React.Component {
   }
 
   render() {
-    const { photo , update, location, url, loadingImage} = this.state
+    const { photo , update, location, url, loadingImage, imgError} = this.state
     return (
       <View style={styles.container}>
       <Text size={28} bold black style={{marginBottom: 30, alignSelf: 'center'}}>信息填写</Text>
@@ -134,7 +134,7 @@ class BasicProfile extends React.Component {
             <Image
               source={imgError ? DefaultAvatar : { uri: photo ? photo.uri : url }}
               style={styles.photo}
-              onLoadStart={() => this.setState({ loadingImage: true, imgError: false, })}
+              onLoadStart={() => {if(!imgError) { this.setState({ loadingImage: true, imgError: false, }) }}}
               onLoadEnd={() => this.setState({ loadingImage: false, })}
               onError={() => this.setState({ loadingImage: false, imgError: true })}
             />
