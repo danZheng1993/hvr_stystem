@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Image, StyleSheet, TouchableOpacity, TextInput, Alert, Platform} from 'react-native'
+import { ActivityIndicator } from 'react-native-paper';
 
 import ImagePicker from 'react-native-image-picker'
 import { colors } from '../../styles'
@@ -13,8 +14,8 @@ import { saveProfile } from '../../redux/modules/auth'
 import { profileSelector } from '../../redux/selectors'
 import uploadFile from '../../redux/api/upload'
 import constants from '../../constants'
-import reactotron from '../../../ReactotronConfig';
-import { ActivityIndicator } from 'react-native-paper';
+import DefaultAvatar from '../../../assets/images/default-avatar.png'
+
 
 export const eXTtoType = {
   jpeg: 'jpeg',
@@ -33,7 +34,8 @@ class BasicProfile extends React.Component {
       overview: '',
       update: '',
       location: '北京',
-      url: '../../../assets/images/takephoto.png'
+      url: '../../../assets/images/takephoto.png',
+      imgError: false,
     }
   }
 
@@ -94,6 +96,7 @@ class BasicProfile extends React.Component {
         Alert.alert(response.customButton);
       } else {
         this.setState({
+          imgError: false,
           photo: response,
         });
       }
@@ -129,11 +132,11 @@ class BasicProfile extends React.Component {
          <TouchableOpacity onPress={this.handleChoosePhoto} style={{alignSelf: 'center'}}>
           <View style={styles.photoWrapper}>
             <Image
-              source={{ uri: photo ? photo.uri : url }}
+              source={imgError ? DefaultAvatar : { uri: photo ? photo.uri : url }}
               style={styles.photo}
-              onLoadStart={() => this.setState({ loadingImage: true })}
+              onLoadStart={() => this.setState({ loadingImage: true, imgError: false, })}
               onLoadEnd={() => this.setState({ loadingImage: false, })}
-              onError={() => this.setState({ loadingImage: false })}
+              onError={() => this.setState({ loadingImage: false, imgError: true })}
             />
             {loadingImage && (
               <View style={styles.loadingIndicator}>
