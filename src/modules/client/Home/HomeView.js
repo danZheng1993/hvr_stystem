@@ -77,7 +77,7 @@ export default () => {
           <Bell/>
         </View>
       </View>
-      <Loader loading={loading} />
+      <Loader loading={loading && isFocused} />
 
       <View style={{ flex: 1, display: tabIndex == 0 || tabIndex === 2 ? undefined : 'none' }}>
         <BannersList banners={banners}/>
