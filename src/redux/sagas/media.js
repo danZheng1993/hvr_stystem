@@ -13,7 +13,7 @@ const doGetMedia = apiCall({
 const dogetMediaList = apiCall({
   type: GET_MEDIAS,
   method: 'get',
-  path: () => `/medias/`,
+  path: () => `/medias/?filter=${JSON.stringify({ isPublic: true })}`,
 })
 
 const doGetMyMedias = apiCall({
