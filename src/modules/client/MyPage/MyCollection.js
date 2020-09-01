@@ -13,7 +13,7 @@ import { Loader, MediaList, NoData } from '../../../components'
 import { colors } from '../../../styles';
 
 import { searchMedia } from '../../../redux/modules/media'
-import { mediasSearchResultSelector , mediasloadingSelector,  profileSelector } from '../../../redux/selectors'
+import { mediasSearchResultSelector , mediaLoadingSelector,  profileSelector } from '../../../redux/selectors'
 
 
 class MyCollection extends React.Component {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = createStructuredSelector({
   medias: mediasSearchResultSelector,
-  loading: mediasloadingSelector,
+  loading: mediaLoadingSelector,
   profile: profileSelector
 });
 

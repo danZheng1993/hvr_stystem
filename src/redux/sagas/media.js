@@ -10,7 +10,7 @@ const doGetMedia = apiCall({
   path: ({ payload }) => `/medias/${payload.id}/`
 })
 
-const doGetMedias = apiCall({
+const dogetMediaList = apiCall({
   type: GET_MEDIAS,
   method: 'get',
   path: () => `/medias/`,
@@ -68,7 +68,7 @@ const doTrashMedia = apiCall({
 
 export default function* rootSaga () {
   yield takeLatest(GET_MEDIA, doGetMedia)
-  yield takeLatest(GET_MEDIAS, doGetMedias)
+  yield takeLatest(GET_MEDIAS, dogetMediaList)
   yield takeLatest(GET_MY_MEDIAS, doGetMyMedias)
   yield takeLatest(CREATE_MEDIA, doCreateMedia)
   yield takeLatest(UPDATE_MEDIA, doUpdateMedia)

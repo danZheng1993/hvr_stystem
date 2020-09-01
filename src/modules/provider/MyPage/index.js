@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Profile, Text, Bell } from '../../../components';
-import { profileSelector, unreadMessagesSelector, myMediasSelector, mediasloadingSelector } from '../../../redux/selectors'
+import { profileSelector, unreadMessagesSelector, myMediasSelector, mediaLoadingSelector } from '../../../redux/selectors'
 import { getMyMedias} from '../../../redux/modules/media'
 import constants from '../../../constants'
 import { isIphoneX } from '../../../helpers';

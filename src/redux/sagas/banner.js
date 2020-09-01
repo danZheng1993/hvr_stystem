@@ -13,7 +13,7 @@ const doGetBanner = apiCall({
 const doGetBanners = apiCall({
   type: GET_BANNERS,
   method: 'get',
-  path: () => `/banners/`,
+  path: () => `/banners/?filter=${JSON.stringify({ status: true })}`,
 })
 
 const doCreateBanner = apiCall({

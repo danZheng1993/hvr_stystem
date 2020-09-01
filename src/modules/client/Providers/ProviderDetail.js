@@ -17,7 +17,7 @@ import { colors } from '../../../styles';
 import { addToAttentions } from '../../../redux/modules/auth'
 import { searchMedia } from '../../../redux/modules/media'
 import { getFeedback } from '../../../redux/modules/job'
-import { mediasloadingSelector, mediasSearchResultSelector, jobsloadingSelector, jobsFeedbackSelector, profileSelector} from '../../../redux/selectors'
+import { mediaLoadingSelector, mediasSearchResultSelector, jobsloadingSelector, jobsFeedbackSelector, profileSelector} from '../../../redux/selectors'
 import ProviderWorks from './ProviderWorks';
 import ProviderFeedbacks from './ProviderFeedbacks';
 import constants from '../../../constants'
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = createStructuredSelector({
-  loading: jobsloadingSelector || mediasloadingSelector,
+  loading: jobsloadingSelector || mediaLoadingSelector,
   feedbacks: jobsFeedbackSelector,
   medias: mediasSearchResultSelector,
   profile: profileSelector,

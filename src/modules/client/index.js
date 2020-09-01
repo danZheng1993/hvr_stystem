@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { colors, fonts } from '../../styles';
 
-import HomeView from './Home/HomeContainer';
+import HomeView from './Home/HomeView';
 import PostJob from './PostJob'
 import MyPage from './MyPage'
 import Providers from './Providers';

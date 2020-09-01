@@ -11,7 +11,7 @@ import { searchMedia } from '../redux/modules/media'
 import { searchNews } from '../redux/modules/news'
 import { addToSearch, clearSearch } from '../redux/modules/auth'
 import _ from 'lodash'
-import { usersloadingSelector, mediasloadingSelector, newssloadingSelector, settingsListSelector, recentSearchSelector } from '../redux/selectors'
+import { usersloadingSelector, mediaLoadingSelector, newsLoadingSelector, settingsListSelector, recentSearchSelector } from '../redux/selectors'
 
 class Search extends React.Component {
     constructor(props) {
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     }
 })
 const mapStateToProps = createStructuredSelector({
-    loading: usersloadingSelector || mediasloadingSelector || newssloadingSelector,
+    loading: usersloadingSelector || mediaLoadingSelector || newsLoadingSelector,
     settings: settingsListSelector,
     recentSearch: recentSearchSelector
 });

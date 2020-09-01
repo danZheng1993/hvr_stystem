@@ -18,7 +18,7 @@ export const SET_NEWSS_PAGINATION = 'SET_NEWSS_PAGINATION'
 // ------------------------------------
 
 export const getNews = createAction(GET_NEWS)
-export const getNewss = createAction(GET_NEWSS)
+export const getNewsList = createAction(GET_NEWSS)
 export const createNews = createAction(CREATE_NEWS)
 export const updateNews = createAction(UPDATE_NEWS)
 export const searchNews = createAction(SEARCH_NEWS)

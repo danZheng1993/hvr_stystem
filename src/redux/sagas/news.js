@@ -10,10 +10,10 @@ const doGetNews = apiCall({
   path: ({ payload }) => `/news/${payload.id}/`
 })
 
-const doGetNewss = apiCall({
+const dogetNewsList = apiCall({
   type: GET_NEWSS,
   method: 'get',
-  path: () => `/news/`,
+  path: () => `/news/?filter=${JSON.stringify({ setBanner: true })}`,
 })
 
 const doSearchNews = apiCall({
@@ -43,7 +43,7 @@ const doDeleteNews = apiCall({
 
 export default function* rootSaga () {
   yield takeLatest(GET_NEWS, doGetNews)
-  yield takeLatest(GET_NEWSS, doGetNewss)
+  yield takeLatest(GET_NEWSS, dogetNewsList)
   yield takeLatest(CREATE_NEWS, doCreateNews)
   yield takeLatest(UPDATE_NEWS, doUpdateNews)
   yield takeLatest(SEARCH_NEWS, doSearchNews)

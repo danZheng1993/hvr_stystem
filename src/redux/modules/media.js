@@ -33,7 +33,7 @@ export const SET_MEDIAS_PAGINATION = 'SET_MEDIAS_PAGINATION'
 // ------------------------------------
 
 export const getMedia = createAction(GET_MEDIA)
-export const getMedias = createAction(GET_MEDIAS)
+export const getMediaList = createAction(GET_MEDIAS)
 export const getMyMedias = createAction(GET_MY_MEDIAS)
 export const createMedia = createAction(CREATE_MEDIA)
 export const updateMedia = createAction(UPDATE_MEDIA)

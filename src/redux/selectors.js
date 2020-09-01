@@ -112,13 +112,13 @@ export const invoiceStateSelector = (state) =>
 export const mediaDetailSelector = (state) =>
   get(state, 'media.media', {})
 
-export const mediasListSelector = (state) =>
+export const mediaListSelector = (state) =>
   get(state, 'media.medias', [])
 
 export const mediasSearchResultSelector = (state) =>
   get(state, 'media.searchResult', [])
 
-export const mediasloadingSelector = (state) =>
+export const mediaLoadingSelector = (state) =>
   get(state, 'media.loading', false)
 
 export const mediaStateSelector = (state) =>
@@ -166,10 +166,10 @@ export const chatStateSelector = (state) =>
   export const newsDetailSelector = (state) =>
   get(state, 'news.news', {})
 
-export const newssListSelector = (state) =>
+export const newsListSelector = (state) =>
   get(state, 'news.newss', [])
 
-  export const newssloadingSelector = (state) =>
+  export const newsLoadingSelector = (state) =>
   get(state, 'news.loading', false)
 
 export const newsStateSelector = (state) =>
@@ -184,7 +184,7 @@ export const bannerDetailSelector = (state) =>
 export const bannersListSelector = (state) =>
   get(state, 'banner.banners', [])
 
-  export const bannersloadingSelector = (state) =>
+  export const bannerLoadingSelector = (state) =>
   get(state, 'banner.loading', false)
 
 export const bannerStateSelector = (state) =>

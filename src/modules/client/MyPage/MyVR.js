@@ -17,7 +17,7 @@ import { colors } from '../../../styles';
 import constants from '../../../constants'
 
 import { getMyMedias } from '../../../redux/modules/media'
-import { mediasloadingSelector,  profileSelector, myMediasSelector } from '../../../redux/selectors'
+import { mediaLoadingSelector,  profileSelector, myMediasSelector } from '../../../redux/selectors'
 
 class MyVR extends React.Component {
 
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = createStructuredSelector({
   medias: myMediasSelector,
-  loading: mediasloadingSelector,
+  loading: mediaLoadingSelector,
   profile: profileSelector
 });
 

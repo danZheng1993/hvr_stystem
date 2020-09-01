@@ -18,7 +18,7 @@ import { Loader, NoData, Text, Confirm } from '../../../components'
 import { colors } from '../../../styles';
 import constants from '../../../constants'
 import { getMyMedias, trashMedia, increaseVisits } from '../../../redux/modules/media'
-import { mediasloadingSelector,  profileSelector, myMediasSelector } from '../../../redux/selectors'
+import { mediaLoadingSelector,  profileSelector, myMediasSelector } from '../../../redux/selectors'
 import { getDateStr } from '../../../utils/helper';
 
 
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = createStructuredSelector({
   medias: myMediasSelector,
-  loading: mediasloadingSelector,
+  loading: mediaLoadingSelector,
   profile: profileSelector
 });
 

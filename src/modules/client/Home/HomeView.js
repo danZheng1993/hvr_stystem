@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,89 +6,102 @@ import {
   Image,
   Platform,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+
+import SearchIcon from '../../../../assets/images/search.png';
+import BarIcon from '../../../../assets/images/bar.png';
+
 import { colors } from '../../../styles';
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
-import { getNewss } from '../../../redux/modules/news'
+import { getNewsList } from '../../../redux/modules/news'
 import { getBanners } from '../../../redux/modules/banner'
-import { getMedias } from '../../../redux/modules/media'
-import { createStructuredSelector } from 'reselect';
-import { bannersListSelector, newssListSelector, mediasListSelector, newssloadingSelector, bannersloadingSelector, mediasloadingSelector} from '../../../redux/selectors'
+import { getMediaList } from '../../../redux/modules/media'
+import {
+  bannersListSelector,
+  newsListSelector,
+  mediaListSelector,
+  newsLoadingSelector,
+  bannerLoadingSelector,
+  mediaLoadingSelector
+} from '../../../redux/selectors'
 import { RadioGroup, MediaList, Loader, Text, Bell, NewsList, BannersList } from '../../../components';
 import { getSettings } from '../../../redux/modules/setting';
 import { isIphoneX } from '../../../helpers';
-const iconSearch = require('../../../../assets/images/search.png');
-const iconBar = require('../../../../assets/images/bar.png');
 
-class HomeView extends React.Component {
+const tabs = ['融媒体资讯', '精选', 'VR直播'];
 
-   componentWillMount() {
-      const {getBanners, getNewss, getMedias, getSettings} = this.props
-      getBanners()
-      getNewss()
-      getMedias()
-      getSettings()
-   }
-
-  render() {
-    const {tabIndex, banners, news, medias, loading} = this.props
-    console.log(banners, news, medias)
-    return (
-      <View style={styles.container}>
-        <View style={{ flexDirection: "row", backgroundColor: colors.secondary, padding: 10, paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 48 : 25 : 15, }}>
-          <TouchableOpacity 
-            style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
-            onPress={() => this.props.navigation.navigate('SearchBar')}
-          >
-            <Image
-              resizeMode="contain"
-              source={iconSearch}
-              style={{width:20, height: 20}}
-            />
-          </TouchableOpacity>
-          <RadioGroup
-            size={16}
-            selectedIndex={this.props.tabIndex}
-            items={this.props.tabs}
-            onChange={this.props.setTabIndex}
-            underline
+export default () => {
+  const dispatch = useDispatch();
+  const [tabIndex, setTabIndex] = useState(0);
+  const news = useSelector(newsListSelector);
+  const banners = useSelector(bannersListSelector);
+  const medias = useSelector(mediaListSelector);
+  const newsLoading = useSelector(newsLoadingSelector);
+  const bannerLoading = useSelector(bannerLoadingSelector);
+  const mediaLoading = useSelector(mediaLoadingSelector);
+  const navigation = useNavigation();
+  const loading = newsLoading || bannerLoading || mediaLoading;
+  useEffect(() => {
+    dispatch(getBanners());
+    dispatch(getNewsList());
+    dispatch(getMediaList());
+    dispatch(getSettings());
+  }, []);
+  return (
+    <View style={styles.container}>
+      <View style={{ flexDirection: "row", backgroundColor: colors.secondary, padding: 10, paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 48 : 25 : 15, }}>
+        <TouchableOpacity 
+          style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
+          onPress={() => navigation.navigate('SearchBar')}
+        >
+          <Image
+            resizeMode="contain"
+            source={SearchIcon}
+            style={{width:20, height: 20}}
           />
-          <View style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}>
-            <Bell navigation={this.props.navigation}/>
-          </View>
+        </TouchableOpacity>
+        <RadioGroup
+          size={16}
+          selectedIndex={tabIndex}
+          items={tabs}
+          onChange={setTabIndex}
+          underline
+        />
+        <View style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}>
+          <Bell/>
         </View>
-        <Loader loading={loading} />
-
-        {tabIndex == 0 &&
-          <>
-            <BannersList banners={banners} navigation={this.props.navigation}/>
-            <View style={{paddingTop: 15, paddingLeft: 15}}>
-              <Text bold black size={18} style={{borderLeftColor: colors.secondary, borderLeftWidth: 3, paddingLeft: 10}}>热门资讯</Text>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text>OVERSEAS ZONE</Text>
-                <Image
-                  resizeMode="cover"
-                  source={iconBar}
-                  style={{tintColor: colors.lightGray}}
-                />
-              </View>
-            </View>
-            <View style={{flexBasis: 1, flexGrow: 1}}>
-              <NewsList news={news} navigation={this.props.navigation} />
-            </View>
-          </>
-        }
-        {tabIndex == 1 &&
-          medias && <MediaList medias={medias} navigation={this.props.navigation} />
-        }
-        {tabIndex == 2 &&
-          <>
-            <BannersList banners={banners} navigation={this.props.navigation}/>
-          </>
-        }
       </View>
-    );
-  }
+      <Loader loading={loading} />
+
+      {tabIndex == 0 &&
+        <>
+          <BannersList banners={banners}/>
+          <View style={{paddingTop: 15, paddingLeft: 15}}>
+            <Text bold black size={18} style={{borderLeftColor: colors.secondary, borderLeftWidth: 3, paddingLeft: 10}}>热门资讯</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text>OVERSEAS ZONE</Text>
+              <Image
+                resizeMode="cover"
+                source={BarIcon}
+                style={{tintColor: colors.lightGray}}
+              />
+            </View>
+          </View>
+          <View style={{flexBasis: 1, flexGrow: 1}}>
+            <NewsList news={news} />
+          </View>
+        </>
+      }
+      {tabIndex == 1 &&
+        medias && <MediaList medias={medias} />
+      }
+      {tabIndex == 2 &&
+        <>
+          <BannersList banners={banners} />
+        </>
+      }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -97,21 +110,3 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
 });
-
-const mapStateToProps = createStructuredSelector({
-  news: newssListSelector,
-  banners : bannersListSelector,
-  medias: mediasListSelector,
-  loading: newssloadingSelector || bannersloadingSelector || mediasloadingSelector
-});
-
-const mapDispatchToProps = {
-  getNewss,
-  getBanners,
-  getMedias,
-  getSettings
-};
-
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
-
-export default compose(withConnect)(HomeView);
