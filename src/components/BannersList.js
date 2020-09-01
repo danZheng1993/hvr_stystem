@@ -11,7 +11,9 @@ export default ({ banners }) => {
   const [validBannerList, setValidBannerList] = useState([]);
   const navigation = useNavigation();
   useEffect(() => {
-    setValidBannerList(banners.filter(banner => typeof(banner) === 'object'))
+    if (banners.length > 0) {
+      setValidBannerList(banners.filter(banner => typeof(banner) === 'object'))
+    }
   }, [banners]);
   const imgList = validBannerList.map(banner => constants.BANNER_BASE_URL + banner.image);
   return (

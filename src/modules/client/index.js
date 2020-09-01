@@ -6,18 +6,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { colors, fonts } from '../../styles';
 
+import PostIcon from '../../../assets/images/post.png';
+import HomeIcon from '../../../assets/images/home.png';
+import EyeIcon from '../../../assets/images/eye.png';
+import UserIcon from '../../../assets/images/user.png';
+import HeartIcon from '../../../assets/images/heart-o.png';
+
 import HomeView from './Home/HomeView';
 import PostJob from './PostJob'
 import MyPage from './MyPage'
 import Providers from './Providers';
 import MediaSearch from './MediaSearch';
 import { isIphoneX } from '../../helpers';
-
-const iconPost = require('../../../assets/images/post.png');
-const iconHome = require('../../../assets/images/home.png');
-const iconEye = require('../../../assets/images/eye.png');
-const iconUser = require('../../../assets/images/user.png');
-const iconHeart = require('../../../assets/images/heart-o.png');
 
 const styles = StyleSheet.create({
   tabBarItemContainer: {
@@ -82,17 +82,17 @@ export default () => (
     <BottomTab.Screen
       name="首页"
       component={HomeView}
-      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={iconHome} /> }}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={HomeIcon} /> }}
     />
     <BottomTab.Screen
       name="发现"
       component={MediaSearch}
-      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={iconEye} /> }}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={EyeIcon} /> }}
     />
     <BottomTab.Screen
       name="约拍"
       component={PostJob}
-      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={iconPost} width={32} height={32} /> }}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={PostIcon} width={32} height={32} /> }}
       listeners={({ navigation }) => ({
         tabPress: (e) => {
           e.preventDefault();
@@ -103,12 +103,12 @@ export default () => (
     <BottomTab.Screen
       name="服务"
       component={Providers}
-      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={iconHeart} /> }}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={HeartIcon} /> }}
     />
     <BottomTab.Screen
       name="我的"
       component={MyPage}
-      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={iconUser} /> }}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={UserIcon} /> }}
     />
   </BottomTab.Navigator>
 );

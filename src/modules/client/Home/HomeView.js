@@ -6,7 +6,7 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import SearchIcon from '../../../../assets/images/search.png';
@@ -40,13 +40,19 @@ export default () => {
   const bannerLoading = useSelector(bannerLoadingSelector);
   const mediaLoading = useSelector(mediaLoadingSelector);
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const loading = newsLoading || bannerLoading || mediaLoading;
   useEffect(() => {
-    dispatch(getBanners());
-    dispatch(getNewsList());
-    dispatch(getMediaList());
     dispatch(getSettings());
   }, []);
+  useEffect(() => {
+    if (isFocused) {
+      dispatch(getBanners());
+      dispatch(getNewsList());
+      dispatch(getMediaList());
+    }
+  }, [isFocused]);
+  
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", backgroundColor: colors.secondary, padding: 10, paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 48 : 25 : 15, }}>
@@ -73,9 +79,9 @@ export default () => {
       </View>
       <Loader loading={loading} />
 
-      {tabIndex == 0 &&
-        <>
-          <BannersList banners={banners}/>
+      <View style={{ flex: 1, display: tabIndex == 0 || tabIndex === 2 ? undefined : 'none' }}>
+        <BannersList banners={banners}/>
+        <View style={{ flex: 1, display: tabIndex === 2 ? 'none' : undefined }}>
           <View style={{paddingTop: 15, paddingLeft: 15}}>
             <Text bold black size={18} style={{borderLeftColor: colors.secondary, borderLeftWidth: 3, paddingLeft: 10}}>热门资讯</Text>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -90,16 +96,11 @@ export default () => {
           <View style={{flexBasis: 1, flexGrow: 1}}>
             <NewsList news={news} />
           </View>
-        </>
-      }
-      {tabIndex == 1 &&
-        medias && <MediaList medias={medias} />
-      }
-      {tabIndex == 2 &&
-        <>
-          <BannersList banners={banners} />
-        </>
-      }
+        </View>
+      </View>
+      <View style={{ flex: 1, display: tabIndex == 1 ? undefined : 'none' }}>
+        <MediaList medias={medias} />
+      </View>
     </View>
   );
 }

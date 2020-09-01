@@ -35,7 +35,7 @@ class SearchResult extends React.Component {
     return (
       <ScrollView style={[styles.container, type == 'news' && {backgroundColor: colors.white}]}>
         {type == 'media' &&
-          (medias.length ? <MediaList medias={medias} navigation={this.props.navigation}/>: <NoData />)}
+          (medias.length ? <MediaList medias={medias}/>: <NoData />)}
         {type == 'user' &&
           (users.length ? 
             <View style={{padding: 10}}>
@@ -46,7 +46,7 @@ class SearchResult extends React.Component {
             : <NoData />)}
         {type == 'news' && 
           (news.length
-            ? <NewsList news={news} navigation={this.props.navigation} />
+            ? <NewsList news={news} />
             : <NoData />)
          }
       </ScrollView>
