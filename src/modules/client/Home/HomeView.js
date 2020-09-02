@@ -33,6 +33,7 @@ const tabs = ['融媒体资讯', '精选', 'VR直播'];
 export default () => {
   const dispatch = useDispatch();
   const [tabIndex, setTabIndex] = useState(0);
+  const [newsRefreshing, setNewsRefreshing] = useState(false);
   const news = useSelector(newsListSelector);
   const banners = useSelector(bannersListSelector);
   const medias = useSelector(mediaListSelector);
@@ -41,10 +42,11 @@ export default () => {
   const mediaLoading = useSelector(mediaLoadingSelector);
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  const loading = newsLoading || bannerLoading || mediaLoading;
+  const loading = (newsLoading || bannerLoading || mediaLoading) && !newsRefreshing;
   useEffect(() => {
     dispatch(getSettings());
   }, []);
+
   useEffect(() => {
     if (isFocused) {
       dispatch(getBanners());
@@ -52,6 +54,17 @@ export default () => {
       dispatch(getMediaList());
     }
   }, [isFocused]);
+
+  useEffect(() => {
+    if (!newsLoading) {
+      setNewsRefreshing(newsLoading);
+    }
+  }, [newsLoading]);
+
+  handleNewsRefresh = () => {
+    setNewsRefreshing(true);
+    dispatch(getNewsList());
+  }
   
   return (
     <View style={styles.container}>
@@ -94,7 +107,7 @@ export default () => {
             </View>
           </View>
           <View style={{flexBasis: 1, flexGrow: 1}}>
-            <NewsList news={news} />
+            <NewsList news={news} refreshing={newsLoading} onRefresh={handleNewsRefresh} />
           </View>
         </View>
       </View>
