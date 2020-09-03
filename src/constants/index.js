@@ -13,6 +13,7 @@ const constants = {
     BANNER_BASE_URL: `${baseUrl}/bannersImage/`,
     NEWS_BASE_URL: `${baseUrl}/newsImage/`,
     MEDIA_BASE_URL: `${baseUrl}/mediaSource/`,
+    SPLASH_BASE_URL: `${baseUrl}/splashImage/`,
     // IP: ip
 }
 
