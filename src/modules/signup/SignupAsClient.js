@@ -7,13 +7,13 @@ import {
   Alert,
   Linking,
 } from 'react-native';
-
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { CommonActions } from '@react-navigation/native';
 import { Form, TextValidator } from 'react-native-validator-form';
 import Pushy from 'pushy-react-native';
+import * as WeChat from 'react-native-wechat-lib';
 
 import { Button } from '../../components';
 import { colors } from '../../styles';
@@ -52,8 +52,10 @@ class SignupAsClient extends React.Component {
     Linking.removeEventListener('url', this.handleOpenURL);
   }
 
-  handleWeChat = () => {
-    Linking.openURL(`${constants.BASE_URL}/auth/wechat`);
+  handleWeChat = async () => {
+    // Linking.openURL(`${constants.BASE_URL}/auth/wechat`);
+    const result = await WeChat.sendAuthRequest('snsapi_userinfo', '123');
+    console.log(result);
   }
 
   handleQQ = () => {
@@ -206,7 +208,7 @@ class SignupAsClient extends React.Component {
                 style={styles.photo}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleQQ}>
+            {/* <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleQQ}>
               <Image
                 source={require('../../../assets/images/qq.png')}
                 style={styles.photo}
@@ -217,7 +219,7 @@ class SignupAsClient extends React.Component {
                 source={require('../../../assets/images/weibo.png')}
                 style={styles.photo}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>

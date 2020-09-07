@@ -16,19 +16,45 @@ import DefaultAvatarImage from '../../assets/images/default-avatar.png';
 
 export default class Profile extends React.Component {
   state = {
-    imageFailed: false,
-    loading: false,
+    avatarImage: false,
+    loading: null,
+  }
+
+  componentDidMount() {
+    const { user } = this.props
+    this.setState({
+      avatarImage: {uri: constants.BASE_URL + 'profileImage/' + user.photo + `?t=${new Date().toISOString()}`}
+    });
   }
 
   componentDidUpdate(prevProps) {
     if (get(prevProps, 'user.photo') !== get(this.props, 'user.photo')) {
-      this.setState({ imageFailed: false });
+      const { user } = this.props
+      this.setState({
+        avatarImage: {uri: constants.BASE_URL + 'profileImage/' + user.photo + `?t=${new Date().toISOString()}`}
+      });
     }
+  }
+
+  handleAvatarLoadStart = () => {
+    console.log('start loading');
+    this.setState({ loading: true });
+  }
+
+  handleAvatarLoadEnd = () => {
+    console.log('load end');
+    this.setState({ loading: false });
+  }
+
+  handleAvatarLoadError = (err) => {
+    console.log('load error', err);
+    this.setState({ loading: false, avatarImage: DefaultAvatarImage });
   }
 
   render() {   
     const {user} = this.props
-    const { imageFailed, loading } = this.state;
+    const { loading, avatarImage } = this.state;
+    console.log({ avatarImage });
     return (
       <View >
         {user &&
@@ -36,11 +62,11 @@ export default class Profile extends React.Component {
           <TouchableRipple onPress={() => this.props.navigation.navigate('BasicProfile', {update: 'photo'})}>
             <View style={styles.imageWrapper}>
               <Image
-                source={!imageFailed ? {uri: constants.BASE_URL + 'profileImage/' + user.photo + `?t=${new Date().toISOString()}`} : DefaultAvatarImage}
+                source={avatarImage}
                 style={styles.photo}
-                onLoadStart={() => this.setState({ loading: true })}
-                onLoadEnd={() => this.setState({ loading: false })}
-                onError={() => this.setState({ imageFailed: true, loading: false })}
+                onLoadStart={this.handleAvatarLoadStart}
+                onLoad={this.handleAvatarLoadEnd}
+                onError={this.handleAvatarLoadError}
               />
               {loading && (
                 <View style={styles.loadingContainer}>

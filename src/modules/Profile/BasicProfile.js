@@ -15,6 +15,7 @@ import { profileSelector } from '../../redux/selectors'
 import uploadFile from '../../redux/api/upload'
 import constants from '../../constants'
 import DefaultAvatar from '../../../assets/images/default-avatar.png'
+import reactotron from 'reactotron-react-native';
 
 
 export const eXTtoType = {
@@ -107,6 +108,7 @@ class BasicProfile extends React.Component {
     const data = new FormData();
     const nameParts = (Platform.OS === 'ios' ? photo.uri : photo.path).split('.');
     const ext = nameParts[nameParts.length - 1];
+    reactotron.log(photo.uri, photo.path);
     data.append("photo", {
       name: `profile.${ext}`,
       type: 'image/*',

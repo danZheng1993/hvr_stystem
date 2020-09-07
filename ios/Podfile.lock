@@ -47,6 +47,8 @@ PODS:
     - Folly (= 2020.01.13.00)
     - RCTRequired (= 0.63.2)
     - React-Core (= 0.63.2)
+  - RCTWeChat (1.1.23):
+    - React
   - React (0.63.2):
     - React-Core (= 0.63.2)
     - React-Core/DevSupport (= 0.63.2)
@@ -318,6 +320,7 @@ DEPENDENCIES:
   - PushyRN (from `../node_modules/pushy-react-native`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
+  - RCTWeChat (from `../node_modules/react-native-wechat-lib`)
   - React (from `../node_modules/react-native/`)
   - React-callinvoker (from `../node_modules/react-native/ReactCommon/callinvoker`)
   - React-Core (from `../node_modules/react-native/`)
@@ -389,6 +392,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
   RCTTypeSafety:
     :path: "../node_modules/react-native/Libraries/TypeSafety"
+  RCTWeChat:
+    :path: "../node_modules/react-native-wechat-lib"
   React:
     :path: "../node_modules/react-native/"
   React-callinvoker:
@@ -478,6 +483,7 @@ SPEC CHECKSUMS:
   PushyRN: ae0f72f504f8194962de4abd65749088c2f24f98
   RCTRequired: f13f25e7b12f925f1f6a6a8c69d929a03c0129fe
   RCTTypeSafety: 44982c5c8e43ff4141eb519a8ddc88059acd1f3a
+  RCTWeChat: 830f091a4b4d8842b5858e9d71201757d93333cf
   React: e1c65dd41cb9db13b99f24608e47dd595f28ca9a
   React-callinvoker: 552a6a6bc8b3bb794cf108ad59e5a9e2e3b4fc98
   React-Core: 9d341e725dc9cd2f49e4c49ad1fc4e8776aa2639
@@ -516,6 +522,6 @@ SPEC CHECKSUMS:
   SGPlayerVR: fb77d8b7c21cc0607bd78714f716dc88b6c6349e
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
 
-PODFILE CHECKSUM: a0632084bc86887b941695073e3179c4c4684344
+PODFILE CHECKSUM: 6943ae46a56b9831d07f32c7232cf6a03963e20c
 
 COCOAPODS: 1.9.1
