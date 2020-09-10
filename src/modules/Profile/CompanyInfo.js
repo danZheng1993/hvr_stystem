@@ -14,6 +14,8 @@ import { saveProfile } from '../../redux/modules/auth'
 import uploadFile from '../../redux/api/upload'
 import { profileSelector } from '../../redux/selectors'
 
+import CompanyLicensePlaceholder from '../../../assets/images/companyLicense.png';
+
 class CompanyInfo extends React.Component {
   constructor(props) {
     super(props)
@@ -33,7 +35,10 @@ class CompanyInfo extends React.Component {
     this.props.saveProfile({
       body: {companyName: name}
     })
-    this.props.navigation.reset([CommonActions.navigate('Provider')], 0)
+    this.props.navigation.reset({
+      routes: [{ name: 'Provider' }],
+      index: 0
+    });
   };
     
   createFormData = (photo, body) => {
@@ -87,7 +92,7 @@ class CompanyInfo extends React.Component {
               onPress={this.handleChoosePhoto}
             /> :
             <Image
-              source={require('../../../assets/images/companyLicense.png')}
+              source={CompanyLicensePlaceholder}
               style={styles.photo}
               onPress={this.handleChoosePhoto}
             />

@@ -15,6 +15,9 @@ import { saveProfile } from '../../redux/modules/auth'
 import uploadFile from '../../redux/api/upload'
 import { profileSelector } from '../../redux/selectors'
 
+import FrontIDPlaceholder from '../../../assets/images/front.png';
+import BackIDPlaceholder from '../../../assets/images/back.png';
+
 class ShootingID extends React.Component {
   constructor(props) {
     super(props)
@@ -122,7 +125,7 @@ class ShootingID extends React.Component {
               onPress={this.handleChoosePhoto}
             /> :
             <Image
-              source={require('../../../assets/images/front.png')}
+              source={FrontIDPlaceholder}
               style={styles.photo}
             />
             }    
@@ -138,7 +141,7 @@ class ShootingID extends React.Component {
               onPress={this.handleChoosePhoto}
             /> :
             <Image
-              source={require('../../../assets/images/back.png')}
+              source={BackIDPlaceholder}
               style={styles.photo}
             />
             }    

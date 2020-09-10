@@ -79,7 +79,10 @@ const MainNavigator = () => (
       headerLeft: props => (
         <TouchableOpacity
           onPress={props.onPress}
-          style={{ paddingVertical: 12, paddingHorizontal: 24 }}
+          style={{
+            paddingHorizontal: 25,
+            paddingVertical: 8,
+          }}
         >
           <Image
             source={require('../../../assets/images/icons/arrow-back.png')}
@@ -112,18 +115,25 @@ const MainNavigator = () => (
           <TouchableOpacity
             onPress={props.onPress}
             style={{
-              paddingLeft: 25,
+              paddingHorizontal: 25,
+              paddingVertical: 8,
             }}
           >
             <Icon name="angle-left" size={30} color={colors.black}/>
           </TouchableOpacity>
         ),
-        headerRight:  (
-          (
-            <Text size={12} style={{color: colors.primary, paddingRight: 25}} onPress={() => navigation.navigate('LoginWithPassword')}>
+        headerRight: props => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('LoginWithPassword')}
+            style={{
+              paddingHorizontal: 25,
+              paddingVertical: 8,
+            }}
+          >
+            <Text size={12} style={{color: colors.primary}}>
               登录
-            </Text> 
-          )
+            </Text>
+          </TouchableOpacity>
         ),
       })}
     />
@@ -141,7 +151,8 @@ const MainNavigator = () => (
           <TouchableOpacity
             onPress={props.onPress}
             style={{
-              paddingLeft: 25,
+              paddingHorizontal: 25,
+              paddingVertical: 8,
             }}
           >
             <Icon name="angle-left" size={30} color={colors.black}/>
@@ -163,7 +174,8 @@ const MainNavigator = () => (
           <TouchableOpacity
             onPress={props.onPress}
             style={{
-              paddingLeft: 25,
+              paddingHorizontal: 25,
+              paddingVertical: 8,
             }}
           >
             <Icon name="angle-left" size={30} color={colors.black}/>
@@ -185,18 +197,25 @@ const MainNavigator = () => (
           <TouchableOpacity
             onPress={props.onPress}
             style={{
-              paddingLeft: 25,
+              paddingHorizontal: 25,
+              paddingVertical: 8,
             }}
           >
             <Icon name="angle-left" size={30} color={colors.black}/>
           </TouchableOpacity>
         ),
-        headerRight:  (
-          (
-            <Text size={12} style={{color: colors.primary, paddingRight: 25}} onPress={() => navigation.navigate('Provider')}>
+        headerRight: props => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Provider')}
+            style={{
+              paddingHorizontal: 25,
+              paddingVertical: 8,
+            }}
+          >
+            <Text size={12} style={{color: colors.primary}}>
               跳跃
-            </Text> 
-          )
+            </Text>
+          </TouchableOpacity>
         ),
       })}
     />
@@ -214,7 +233,8 @@ const MainNavigator = () => (
           <TouchableOpacity
             onPress={props.onPress}
             style={{
-              paddingLeft: 25,
+              paddingHorizontal: 25,
+              paddingVertical: 8,
             }}
           >
             <Icon name="angle-left" size={30} color={colors.black}/>
@@ -236,7 +256,8 @@ const MainNavigator = () => (
           <TouchableOpacity
             onPress={props.onPress}
             style={{
-              paddingLeft: 25,
+              paddingHorizontal: 25,
+              paddingVertical: 8,
             }}
           >
             <Icon name="angle-left" size={30} color={colors.black}/>
@@ -258,16 +279,25 @@ const MainNavigator = () => (
           <TouchableOpacity
             onPress={props.onPress}
             style={{
-              paddingLeft: 25,
+              paddingHorizontal: 25,
+              paddingVertical: 8,
             }}
           >
             <Icon name="angle-left" size={30} color={colors.black}/>
           </TouchableOpacity>
         ),
         headerRight: () => (
-          <Text size={12} style={{color: colors.primary, paddingRight: 25}} onPress={() => navigation.navigate('Signup')}>
-            注册
-          </Text> 
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Signup')}
+            style={{
+              paddingHorizontal: 25,
+              paddingVertical: 8,
+            }}
+          >
+            <Text size={12} style={{color: colors.primary}}>
+              注册
+            </Text> 
+          </TouchableOpacity>
         ),
       })}
     />
@@ -290,16 +320,25 @@ const MainNavigator = () => (
           <TouchableOpacity
             onPress={props.onPress}
             style={{
-              paddingLeft: 25,
+              paddingHorizontal: 25,
+              paddingVertical: 8,
             }}
           >
             <Icon name="angle-left" size={30} color={colors.black}/>
           </TouchableOpacity>
         ),
         headerRight: (props) => (
-          <Text size={12} style={{color: colors.primary, paddingRight: 25}} onPress={() => navigation.navigate('Signup')}>
-            注册
-          </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Signup')}
+            style={{
+              paddingHorizontal: 25,
+              paddingVertical: 8,
+            }}
+          >
+            <Text size={12} style={{color: colors.primary}} >
+              注册
+            </Text>
+          </TouchableOpacity>
         ),
       })}
     />

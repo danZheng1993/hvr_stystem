@@ -10,6 +10,7 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { CommonActions } from '@react-navigation/native';
 import Pushy from 'pushy-react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 
 import { Button } from '../../components';
 import { colors } from '../../styles';
@@ -78,11 +79,17 @@ class SignupAsProvider extends React.Component {
     this.props.checkcode ({
       body:{ phoneNumber, code: verificationCode, password, role: 'provider'},
       success: () => {
-        const { deviceToken, registerPushyToken } = this.props;
-        registerPushyToken({ deviceToken });
-        Pushy.subscribe('all');
-        Pushy.subscribe('provider');
-        this.props.navigation.reset([CommonActions.navigate('BasicProfile')], 0);
+        setTimeout(() => {
+          console.log('provider signup');
+          const { deviceToken, registerPushyToken } = this.props;
+          registerPushyToken({ deviceToken });
+          Pushy.subscribe('all');
+          Pushy.subscribe('provider');
+          this.props.navigation.reset({
+            routes: [{ name: 'BasicProfile' }],
+            index: 0
+          });
+        }, 300);
       },
       fail:() => Alert.alert("验证码出错")
     })
@@ -96,7 +103,7 @@ class SignupAsProvider extends React.Component {
     const { counter } = this.state
 
     return (
-      <View style={styles.container}>
+      <KeyboardAwareScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <Text size={28} bold black>服务方注册</Text>
         <Form
             ref="form"
@@ -167,7 +174,7 @@ class SignupAsProvider extends React.Component {
             onPress={this.handleSubmit}
           />
         </Form>   
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
@@ -175,10 +182,11 @@ class SignupAsProvider extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  contentContainer: {
+    padding: 70,
     alignItems: 'center',
     justifyContent: 'space-around',
-    paddingHorizontal: 70,
-    marginBottom: 70,
   },
   buttonsContainer: {
     flex: 1,

@@ -10,10 +10,10 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { CommonActions } from '@react-navigation/native';
 import { Form, TextValidator } from 'react-native-validator-form';
 import Pushy from 'pushy-react-native';
 import * as WeChat from 'react-native-wechat-lib';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 
 import { Button } from '../../components';
 import { colors } from '../../styles';
@@ -67,7 +67,10 @@ class SignupAsClient extends React.Component {
       const token = authResponseAnalyse(event.url);
       if (token) {
         this.props.thirdPartyAuthSuccess(result)
-        this.props.navigation.reset([CommonActions.navigate('Client')]);
+        this.props.navigation.reset({
+          routes: [{ name: 'Client' }],
+          index: 0
+        });
       }
     }
   }
@@ -109,11 +112,17 @@ class SignupAsClient extends React.Component {
     this.props.checkcode({
       body:{ phoneNumber, code: verificationCode, password, role: 'client'},
       success: () => {
-        const { deviceToken, registerPushyToken } = this.props;
-        registerPushyToken({ deviceToken });
-        Pushy.subscribe('all');
-        Pushy.subscribe('client');
-        this.props.navigation.reset([CommonActions.navigate('Client')], 0);
+        setTimeout(() => {
+          console.log('client signup');
+          Pushy.subscribe('all');
+          Pushy.subscribe('client');
+          const { deviceToken, registerPushyToken } = this.props;
+          registerPushyToken({ deviceToken });
+          this.props.navigation.reset({
+            routes: [{ name: 'Client' }],
+            index: 0
+          });
+        }, 300);
       },
       fail:() => Alert.alert("验证码出错")
     })
@@ -127,7 +136,7 @@ class SignupAsClient extends React.Component {
     const { counter } = this.state
 
     return (
-      <View style={styles.container}>
+      <KeyboardAwareScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <Text size={28} bold black>需求方注册</Text>
         <Form
             ref="form"
@@ -222,7 +231,7 @@ class SignupAsClient extends React.Component {
             </TouchableOpacity> */}
           </View>
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
@@ -230,10 +239,11 @@ class SignupAsClient extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  contentContainer: {
+    padding: 70,
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 50,
-    paddingVertical: 30
+    justifyContent: 'space-around',
   },
   photo: {
     borderRadius: 25,

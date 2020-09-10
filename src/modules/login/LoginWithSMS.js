@@ -33,10 +33,16 @@ class LoginWithSMS extends React.Component {
         Pushy.subscribe('all');
         if (profile.role == 'provider') {
           Pushy.subscribe('provider');
-          this.props.navigation.reset([CommonActions.navigate('Provider')], 0)
+          this.props.navigation.reset({
+            routes: [{ name: 'Provider' }],
+            index: 0
+          });
         } else if (profile.role =='client'){
           Pushy.subscribe('client');
-          this.props.navigation.reset([CommonActions.navigate('Client')], 0)
+          this.props.navigation.reset({
+            routes: [{ name: 'Client' }],
+            index: 0
+          });
         }
       })
     }

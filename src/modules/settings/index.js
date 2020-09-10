@@ -13,14 +13,18 @@ import {Text} from '../../components'
 
 const settings = props => {
   const navigation = useNavigation();
-  clearStorage = ()=> {
+  const clearStorage = ()=> {
     Alert.alert('你想注销吗？', '', [
       { text: '取消' },
       {
         text: '可以',
         onPress: () => {
+          navigation.reset({
+            routes: [{ name: 'Main' }],
+            index: 0
+          });
           clearItem().then(() => {
-            props.logout(navigation.popToTop())
+            props.logout();
           });
         }
       }

@@ -42,7 +42,7 @@ class BasicProfile extends React.Component {
 
   componentWillMount() {
     const {profile} = this.props
-    let { update } = this.props.route.params;
+    const { update = '' } = this.props.route.params || {};
     if (update != 'none') {
       this.setState({update})
     }
@@ -161,9 +161,14 @@ class BasicProfile extends React.Component {
         </View>
         }
         { update == '' && 
-        <Text style={{marginBottom: 10}}>所在城市 
-          <Text color={colors.secondary} onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}> {location}></Text>
-        </Text>
+        <TouchableOpacity
+          style={{ paddingVertical: 16, }}
+          onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}
+        >
+          <Text style={{marginBottom: 10}}>所在城市 
+            <Text color={colors.secondary}> {location}></Text>
+          </Text>
+        </TouchableOpacity>
         }
         {(update == '' || update == 'overview') && 
         <View>
