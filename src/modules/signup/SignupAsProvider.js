@@ -137,10 +137,13 @@ class SignupAsProvider extends React.Component {
               />
             </View>
             <View style={{alignSelf: 'center'}}>
-              {counter == 60 ? 
-                <Text style={{color: colors.primary}} onPress={() => this.sendCode()}>获得验证码 </Text> :
+              {counter == 60 ? (
+                <TouchableOpacity style={{ paddingHorizontal: 16, paddingVertical: 8 }} onPress={() => this.sendCode()}>
+                  <Text style={{color: colors.primary}}>获得验证码 </Text>  
+                </TouchableOpacity>
+              ) : (
                 <Text style={{color: colors.description}}>{counter}s 重新获取 </Text>
-              }
+              )}
             </View>
           </View>
           <TextValidator
