@@ -13,7 +13,7 @@ import CONSTANTS from './src/constants';
 
 const initWeChat = async () => {
   try {
-    const result = await WeChat.registerApp(CONSTANTS.WECHAT_APP_ID);
+    const result = await WeChat.registerApp(CONSTANTS.WECHAT_APP_ID, 'https://hvr.app');
     console.log('wechat init', result);
   } catch (err) {
     console.log('wechat init fail', err);
