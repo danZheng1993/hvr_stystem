@@ -14,6 +14,7 @@ const constants = {
     NEWS_BASE_URL: `${baseUrl}/newsImage/`,
     MEDIA_BASE_URL: `${baseUrl}/mediaSource/`,
     SPLASH_BASE_URL: `${baseUrl}/splashImage/`,
+    WECHAT_APP_ID: 'wx832bdf14313c1570',
     // IP: ip
 }
 

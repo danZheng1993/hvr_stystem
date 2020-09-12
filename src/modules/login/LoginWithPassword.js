@@ -2,6 +2,8 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -10,6 +12,7 @@ import { Form, TextValidator } from 'react-native-validator-form';
 import SyncStorage from 'sync-storage';
 import { CommonActions } from '@react-navigation/native';
 import Pushy from 'pushy-react-native';
+import * as WeChat from 'react-native-wechat-lib';
 
 import { Button, toast, Loader } from '../../components';
 import { colors } from '../../styles';
@@ -26,6 +29,23 @@ class LoginWithPassword extends React.Component {
       phoneNumber: '',
       password: '',
       authLoading: false,
+    }
+  }
+
+  handleWeChat = async () => {
+    try {
+      const result = await WeChat.sendAuthRequest('snsapi_userinfo', 'wechat_hvr_integration');
+      this.setState({ authLoading: true });
+      this.props.login({
+        body: { code: result.code, type: 'wechat' },
+        success: this.redirect,
+        fail: () => {
+          this.setState({ authLoading: false });
+          toast("电话号码或密码有误!");
+        }
+      })
+    } catch (err) {
+      console.log('wechat auth fail', err);
     }
   }
 
@@ -127,7 +147,7 @@ class LoginWithPassword extends React.Component {
         </View>
           
         <View style={{alignItems: 'center', borderTopWidth: 1, borderTopColor: colors.greybackground}}>
-          {/* <Text size={12} color={colors.description}>使用第三方登录</Text>
+          <Text size={12} color={colors.description}>使用第三方登录</Text>
           <View style={styles.touch}>
             <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeChat}>
               <Image
@@ -135,7 +155,7 @@ class LoginWithPassword extends React.Component {
                 style={styles.photo}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleQQ}>
+            {/* <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleQQ}>
               <Image
                 source={require('../../../assets/images/qq.png')}
                 style={styles.photo}
@@ -146,8 +166,8 @@ class LoginWithPassword extends React.Component {
                 source={require('../../../assets/images/weibo.png')}
                 style={styles.photo}
               />
-            </TouchableOpacity>
-          </View> */}
+            </TouchableOpacity> */}
+          </View>
         </View>
       </View>
     );

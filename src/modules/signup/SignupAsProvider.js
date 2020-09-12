@@ -4,6 +4,7 @@ import {
   View,
   Alert,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -11,7 +12,8 @@ import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { CommonActions } from '@react-navigation/native';
 import Pushy from 'pushy-react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import * as WeChat from 'react-native-wechat-lib';
 
 import { Button } from '../../components';
 import { colors } from '../../styles';
@@ -66,6 +68,31 @@ class SignupAsProvider extends React.Component {
       clearInterval(timer)
     }
     this.setState({counter})
+  }
+
+  handleWeChat = async () => {
+    // Linking.openURL(`${constants.BASE_URL}/auth/wechat`);
+    try {
+      const result = await WeChat.sendAuthRequest('snsapi_userinfo', 'wechat_hvr_integration');
+      this.props.signup({
+        body: { code: result.code, role: 'client', type: 'client' },
+        success: () => {
+          setTimeout(() => {
+            Pushy.subscribe('all');
+            Pushy.subscribe('client');
+            const { deviceToken, registerPushyToken } = this.props;
+            registerPushyToken({ deviceToken });
+            this.props.navigation.reset({
+              routes: [{ name: 'Client' }],
+              index: 0
+            });
+          }, 300);
+        },
+        fail:() => Alert.alert("无法注册")
+      })
+    } catch (err) {
+      console.log('wechat auth fail', err);
+    }
   }
 
   submit = () => {
@@ -178,6 +205,29 @@ class SignupAsProvider extends React.Component {
             onPress={this.handleSubmit}
           />
         </Form>   
+        <View style={{alignItems: 'center', borderTopWidth: 1, borderTopColor: colors.greybackground}}>
+          <Text size={12} color={colors.description}>使用第三方登录</Text>
+          <View style={styles.touch}>
+            <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeChat}>
+              <Image
+                source={require('../../../assets/images/wechat.png')}
+                style={styles.photo}
+              />
+            </TouchableOpacity>
+            {/* <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleQQ}>
+              <Image
+                source={require('../../../assets/images/qq.png')}
+                style={styles.photo}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeibo}>
+              <Image
+                source={require('../../../assets/images/weibo.png')}
+                style={styles.photo}
+              />
+            </TouchableOpacity> */}
+          </View>
+        </View>
       </KeyboardAwareScrollView>
     );
   }
@@ -209,7 +259,16 @@ const styles = StyleSheet.create({
   verificationCode: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  }
+  },
+  touch: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  photo: {
+    borderRadius: 25,
+    width: 50,
+    height: 50
+  },
 });
 
 

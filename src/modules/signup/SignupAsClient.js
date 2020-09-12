@@ -19,7 +19,6 @@ import { Button } from '../../components';
 import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
 import { signup, sendcode, checkcode, thirdPartyAuthSuccess, registerPushyToken } from '../../redux/modules/auth'
-import constants from '../../constants';
 import { authResponseAnalyse } from '../../utils/helper';
 import { tokenSelector } from '../../redux/selectors';
 
@@ -54,24 +53,26 @@ class SignupAsClient extends React.Component {
 
   handleWeChat = async () => {
     // Linking.openURL(`${constants.BASE_URL}/auth/wechat`);
-    const result = await WeChat.sendAuthRequest('snsapi_userinfo', '123');
-    console.log(result);
-  }
-
-  handleQQ = () => {
-    Linking.openURL(`${constants.BASE_URL}auth/qq`)
-  }
-
-  handleOpenURL = (event) => {
-    if (event.url.startsWith('hvr://auth')) {
-      const token = authResponseAnalyse(event.url);
-      if (token) {
-        this.props.thirdPartyAuthSuccess(result)
-        this.props.navigation.reset({
-          routes: [{ name: 'Client' }],
-          index: 0
-        });
-      }
+    try {
+      const result = await WeChat.sendAuthRequest('snsapi_userinfo', 'wechat_hvr_integration');
+      this.props.signup({
+        body: { code: result.code, role: 'client', type: 'wechat' },
+        success: () => {
+          setTimeout(() => {
+            Pushy.subscribe('all');
+            Pushy.subscribe('client');
+            const { deviceToken, registerPushyToken } = this.props;
+            registerPushyToken({ deviceToken });
+            this.props.navigation.reset({
+              routes: [{ name: 'Client' }],
+              index: 0
+            });
+          }, 300);
+        },
+        fail:() => Alert.alert("无法注册")
+      })
+    } catch (err) {
+      console.log('wechat auth fail', err);
     }
   }
 
@@ -113,7 +114,6 @@ class SignupAsClient extends React.Component {
       body:{ phoneNumber, code: verificationCode, password, role: 'client'},
       success: () => {
         setTimeout(() => {
-          console.log('client signup');
           Pushy.subscribe('all');
           Pushy.subscribe('client');
           const { deviceToken, registerPushyToken } = this.props;

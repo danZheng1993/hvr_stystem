@@ -1,5 +1,5 @@
 {
-  "name": "HVR",
+  "name": "HVRAPP",
   "version": "2.0.0",
   "private": false,
   "scripts": {
@@ -63,6 +63,7 @@
     "react-native-validator-form": "^1.0.0",
     "react-native-vector-icons": "^7.0.0",
     "react-native-webview": "^10.3.2",
+    "react-native-wechat": "^1.9.12",
     "react-native-wechat-lib": "^1.1.23",
     "react-redux": "^7.2.0",
     "recompose": "^0.30.0",

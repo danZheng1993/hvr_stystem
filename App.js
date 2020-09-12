@@ -9,8 +9,18 @@ import { store, persistor } from './src/redux/store';
 import { messageReceived, tokenGenerated } from './src/redux/modules/message';
 import AppView from './src/modules/AppViewContainer';
 import { Player } from './src/components';
+import CONSTANTS from './src/constants';
 
-WeChat.registerApp('wx832dbf14313c1570', 'universalLink');
+const initWeChat = async () => {
+  try {
+    const result = await WeChat.registerApp(CONSTANTS.WECHAT_APP_ID);
+    console.log('wechat init', result);
+  } catch (err) {
+    console.log('wechat init fail', err);
+  }
+};
+
+initWeChat();
 
 console.disableYellowBox = true;
 

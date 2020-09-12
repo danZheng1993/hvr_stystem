@@ -1,4 +1,4 @@
-package com.reactnativestarter.wxapi;
+package com.hvr.app.wxapi;
 
 import android.app.Activity;
 import android.os.Bundle;

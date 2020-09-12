@@ -25,6 +25,7 @@ export const SEND_CODE = 'SEND_CODE'
 export const CHECK_CODE = 'CHECK_CODE'
 export const THIRD_PARTY_SUCCESS = 'THIRD_PARTY_SUCCESS'
 export const REGISTER_PUSHY_TOKEN = 'REGISTER_PUSH_TOKEN'
+export const DO_WECHAT_SIGNUP = 'DO_WECHAT_SIGNUP'
 // ------------------------------------
 // Actions
 // ------------------------------------

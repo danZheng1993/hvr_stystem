@@ -1,4 +1,4 @@
-package com.reactnativestarter;
+package com.hvr.app;
 
 import com.facebook.react.ReactActivity;
 

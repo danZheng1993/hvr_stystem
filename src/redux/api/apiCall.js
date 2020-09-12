@@ -2,7 +2,6 @@ import axios from 'axios'
 import { call, put } from 'redux-saga/effects'
 import { get } from 'lodash'
 import { requestFail, requestPending, requestSuccess } from './request'
-import { AsyncStorage } from 'react-native'
 import SyncStorage from 'sync-storage';
 import constants from '../../constants'
 const defaultHeaders = () => {
