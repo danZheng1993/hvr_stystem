@@ -170,7 +170,7 @@ class Chatting extends React.Component {
           createdAt: messageItem.sentDate,
           user: {
             _id: (messageItem.to == to) ? -1: 2,
-            avatar: constants.BASE_URL +  user.photo
+            avatar: constants.BASE_URL + 'profileImage/' + user.photo
           }
         })
       ))

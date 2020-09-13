@@ -271,7 +271,10 @@ export default handleActions({
   [requestSuccess(SAVE_PROFILE)]: (state, { payload }) => ({
     ...state,
     status: requestSuccess(SAVE_PROFILE),
-    me: payload,
+    me: {
+      ...payload,
+      photo: `${payload.photo}?${new Date().toISOString()}`
+    },
     error: null,
     loading: false
   }),

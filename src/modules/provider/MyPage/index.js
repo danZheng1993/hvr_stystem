@@ -61,7 +61,7 @@ class MyPage extends React.Component {
               <Text white>我发布的</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{alignItems: 'center'}}  onPress={() => this.props.navigation.navigate('Balance', {balance: profile.balance})}>
-              <Text white bold size={28}>{profile.balance}</Text>
+              <Text white bold size={28}>{profile.balance.toFixed(2)}</Text>
               <Text white>我的余额</Text>
             </TouchableOpacity>
           </View> 

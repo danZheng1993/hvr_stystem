@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -15,6 +15,19 @@ import {colors} from '../../../../../styles'
 
 const TestingAction = props => {
   const {job, settings} = props
+  const [media, setMedia] = useState(null);
+  useEffect(() => {
+    getMedia();
+  })
+
+  const getMedia = async () => {
+    try {
+      const result = await getApi(`/jobs/media?jobID=${job._id}`);
+      setMedia(result.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <View>
       <Text size={14}>签订合同: <Text color={colors.primary}>电子合同</Text></Text>
@@ -29,14 +42,16 @@ const TestingAction = props => {
           onPress={() => props.navigation.navigate('Chatting', {to: props.job.hired})}
         />
         <View style={{flexDirection: 'row'}}>
-          <Button
-            small
-            bordered
-            primary
-            style={{marginRight: 5}}
-            caption="查看视频"
-            onPress={() => props.navigation.navigate('Player')}
-          />
+          {media && (
+            <Button
+              small
+              bordered
+              primary
+              caption="查看视频"
+              style={{marginRight: 5}}
+              onPress={() => navigation.navigate('Player', { url: media.path })}
+            />
+          )}
           <Button
             small
             bgColor={colors.warning}

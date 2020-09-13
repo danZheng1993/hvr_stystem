@@ -15,12 +15,18 @@ import DefaultAvatarImage from '../../assets/images/default-avatar.png';
 
 export default class UsersList extends React.Component {
   state = {
+    date: new Date(),
     loading: false,
     imageFailed: false,
   }
+
+  componentDidMount() {
+    this.setState({ date: new Date() });
+  }
+
   render() {   
     const {user, navigation} = this.props
-    const { imageFailed, loading } = this.state;
+    const { imageFailed, loading, date } = this.state;
     return (
       <TouchableRipple onPress={() => navigation.navigate('ProviderDetail', {user: user})} style={{marginBottom: 10}}>
       {user &&
@@ -33,10 +39,10 @@ export default class UsersList extends React.Component {
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <View style={styles.imageWrapper}>
                 <Image
-                  source={!imageFailed ? {uri: constants.BASE_URL + 'profileImage/' + user.photo + `?t=${new Date().toISOString()}`} : DefaultAvatarImage}
+                  source={!imageFailed ? {uri: constants.BASE_URL + 'profileImage/' + user.photo + `?t=${date.toISOString()}`} : DefaultAvatarImage}
                   style={styles.photo}
                   onLoadStart={() => this.setState({ loading: true })}
-                  onLoadEnd={() => this.setState({ loading: false })}
+                  onLoad={() => this.setState({ loading: false })}
                   onError={() => this.setState({ imageFailed: true, loading: false })}
                 />
                 {loading && (
@@ -51,7 +57,7 @@ export default class UsersList extends React.Component {
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <Text color={colors.primary}>服务雇主: {user.contacts.length}家</Text>
               <Text color={colors.primary}>发布作品: 3个</Text>
-              <Text color={colors.primary}>播放量:{user.balance}</Text>
+              <Text color={colors.primary}>播放量:{user.balance.toFixed(2)}</Text>
               <Text color={colors.primary}>坐标: {user.location}</Text>
             </View>
           </ImageBackground>}

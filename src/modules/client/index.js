@@ -57,11 +57,13 @@ const styles = StyleSheet.create({
 
 const BottomTab = createBottomTabNavigator();
 
-const TabBarIcon = ({ focused, source, width = 23, height = 23 }) => (
+const TabBarIcon = ({ focused, noTint, source, width = 23, height = 23 }) => (
   <Image
     resizeMode="contain"
     source={source}
-    style={[styles.tabBarIcon, { width, height }, focused && styles.tabBarIconFocused]}
+    width={width}
+    height={height}
+    style={[!noTint && styles.tabBarIcon, { width, height, marginBottom: 8 }, !noTint && focused && styles.tabBarIconFocused]}
   />
 )
 
@@ -75,7 +77,7 @@ export default () => (
         backgroundColor: colors.secondary,
         paddingBottom: isIphoneX() ? 24 : 16,
         paddingTop: isIphoneX() ? 16 : 8,
-        height: isIphoneX() ? 86 : 64,
+        height: isIphoneX() ? 86 : 72,
       },
     }}
   >
@@ -92,7 +94,7 @@ export default () => (
     <BottomTab.Screen
       name="约拍"
       component={PostJob}
-      options={{ tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} source={PostIcon} width={32} height={32} /> }}
+      options={{ tabBarIcon: ({ focused }) => <TabBarIcon noTint source={PostIcon} width={32} height={32} /> }}
       listeners={({ navigation }) => ({
         tabPress: (e) => {
           e.preventDefault();

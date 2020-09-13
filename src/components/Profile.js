@@ -23,7 +23,7 @@ export default class Profile extends React.Component {
   componentDidMount() {
     const { user } = this.props
     this.setState({
-      avatarImage: {uri: constants.BASE_URL + 'profileImage/' + user.photo + `?t=${new Date().toISOString()}`}
+      avatarImage: {uri: constants.BASE_URL + 'profileImage/' + user.photo}
     });
   }
 
@@ -31,7 +31,7 @@ export default class Profile extends React.Component {
     if (get(prevProps, 'user.photo') !== get(this.props, 'user.photo')) {
       const { user } = this.props
       this.setState({
-        avatarImage: {uri: constants.BASE_URL + 'profileImage/' + user.photo + `?t=${new Date().toISOString()}`}
+        avatarImage: {uri: constants.BASE_URL + 'profileImage/' + user.photo}
       });
     }
   }
@@ -54,7 +54,6 @@ export default class Profile extends React.Component {
   render() {   
     const {user} = this.props
     const { loading, avatarImage } = this.state;
-    console.log({ avatarImage });
     return (
       <View >
         {user &&

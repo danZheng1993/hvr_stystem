@@ -30,7 +30,9 @@ class ProviderDetail extends React.Component {
     super(props)
     this.state = {
       select: 0,
-      user: null
+      user: null,
+      loading: false,
+      imageFailed: true,
     }
   }
 
@@ -86,8 +88,11 @@ class ProviderDetail extends React.Component {
               <GoBack navigation={this.props.navigation} color={colors.white} />
               <View style = {{flexDirection: 'row'}}>
                 <Image
-                  source={{uri: constants.BASE_URL + (user.photo ? user.photo: 'default.png')}}
+                  source={{uri: constants.BASE_URL + 'profileImage/' + (user.photo ? user.photo: 'default.png')}}
                   style={styles.photo}
+                  onLoadStart={() => this.setState({ loading: true })}
+                  onLoad={() => this.setState({ loading: false })}
+                  onError={() => this.setState({ imageFailed: true, loading: false })}
                 />
                 <View style={{justifyContent: 'center',}}>
                   <Text white bold size={18}>{user.userName}</Text>
@@ -112,7 +117,7 @@ class ProviderDetail extends React.Component {
               <Text white size={14}>发布视频</Text>
             </View>
             <View style={{alignItems: 'center'}}>
-              <Text white bold size={24}>{user.balance}</Text>
+              <Text white bold size={24}>{user.balance.toFixed(2)}</Text>
               <Text white size={14}>播放数量</Text>
             </View>
           </View> 

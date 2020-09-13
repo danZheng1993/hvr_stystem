@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,8 +9,22 @@ import TestingAction from './TestingAction'
 import WaitingAction from './WaitingAction'
 import {colors} from '../../../../../styles'
 import { getDateTimeStr } from '../../../../../utils/helper';
+import { getApi } from '../../../../../redux/api/apiCall';
 
 const FeedbackAction = ({navigation,job}) => {
+  const [media, setMedia] = useState(null);
+  useEffect(() => {
+    getMedia();
+  })
+
+  const getMedia = async () => {
+    try {
+      const result = await getApi(`/jobs/media?jobID=${job._id}`);
+      setMedia(result.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <View>
       <Text size={14}>首付款支付时间 : <Text>¥{getDateTimeStr(job.upfrontDate)}</Text></Text>
@@ -23,14 +37,16 @@ const FeedbackAction = ({navigation,job}) => {
           onPress={() => navigation.navigate('Chatting', {to: job.hired})}
         />
         <View style={{flexDirection: 'row'}}>
-          <Button
-            small
-            bordered
-            primary
-            caption="查看视频"
-            style={{marginRight: 5}}
-            onPress={() => navigation.navigate('Player')}
-          />
+          {media && (
+            <Button
+              small
+              bordered
+              primary
+              caption="查看视频"
+              style={{marginRight: 5}}
+              onPress={() => navigation.navigate('Player', { url: media.path })}
+            />
+          )}
           <Button
             small
             bgColor={colors.warning}
@@ -44,6 +60,20 @@ const FeedbackAction = ({navigation,job}) => {
 }
 
 const FinishingAction = ({navigation, job}) => {
+  const [media, setMedia] = useState(null);
+  useEffect(() => {
+    getMedia();
+  })
+
+  const getMedia = async () => {
+    try {
+      const result = await getApi(`/jobs/media?jobID=${job._id}`);
+      setMedia(result.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  console.log({ media });
   return (
     <View>
       <Text size={14}>首付款支付时间 : <Text>¥{getDateTimeStr(job.created)}</Text></Text>
@@ -55,13 +85,16 @@ const FinishingAction = ({navigation, job}) => {
           caption="联系服务商"
           onPress={() => navigation.navigate('Chatting', {to: job.hired})}
         />
-        <Button
-          small
-          bordered
-          primary
-          caption="查看视频"
-          onPress={() => navigation.navigate('Player')}
-        />
+        {media && (
+          <Button
+            small
+            bordered
+            primary
+            caption="查看视频"
+            style={{marginRight: 5}}
+            onPress={() => navigation.navigate('Player', { url: media.path })}
+          />
+        )}
       </View>
     </View>
   )
