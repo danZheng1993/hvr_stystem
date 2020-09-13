@@ -83,7 +83,7 @@ class SignupAsProvider extends React.Component {
             const { deviceToken, registerPushyToken } = this.props;
             registerPushyToken({ deviceToken });
             this.props.navigation.reset({
-              routes: [{ name: 'Client' }],
+              routes: [{ name: 'BasicProfile' }],
               index: 0
             });
           }, 300);
