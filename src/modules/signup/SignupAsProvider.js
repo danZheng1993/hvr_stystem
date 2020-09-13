@@ -77,11 +77,11 @@ class SignupAsProvider extends React.Component {
       if (isInstalled) {
         const result = await WeChat.sendAuthRequest('snsapi_userinfo', 'wechat_hvr_integration');
         this.props.signup({
-          body: { code: result.code, role: 'client', type: 'wechat' },
+          body: { code: result.code, role: 'provider', type: 'wechat' },
           success: () => {
             setTimeout(() => {
               Pushy.subscribe('all');
-              Pushy.subscribe('client');
+              Pushy.subscribe('provider');
               const { deviceToken, registerPushyToken } = this.props;
               registerPushyToken({ deviceToken });
               this.props.navigation.reset({
