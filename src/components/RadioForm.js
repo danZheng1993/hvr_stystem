@@ -81,7 +81,7 @@ const styles = {
   image: {
     width: 10,
     height: 10,
-    marginRight: 10,
+    marginRight: 4,
     tintColor: colors.primary
   },
   small: {
