@@ -34,16 +34,21 @@ class LoginWithPassword extends React.Component {
 
   handleWeChat = async () => {
     try {
-      const result = await WeChat.sendAuthRequest('snsapi_userinfo', 'wechat_hvr_integration');
-      this.setState({ authLoading: true });
-      this.props.login({
-        body: { code: result.code, type: 'wechat' },
-        success: this.redirect,
-        fail: () => {
-          this.setState({ authLoading: false });
-          toast("电话号码或密码有误!");
-        }
-      })
+      const isInstalled = await WeChat.isWXAppInstalled();
+      if (isInstalled) {
+        const result = await WeChat.sendAuthRequest('snsapi_userinfo', 'wechat_hvr_integration');
+        this.setState({ authLoading: true });
+        this.props.login({
+          body: { code: result.code, type: 'wechat' },
+          success: this.redirect,
+          fail: () => {
+            this.setState({ authLoading: false });
+            toast("帐户尚未关联!");
+          }
+        })
+      } else {
+        toast("未安装微信应用");
+      }
     } catch (err) {
       console.log('wechat auth fail', err);
     }

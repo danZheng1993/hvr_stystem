@@ -65,7 +65,7 @@ class LoginWithSMS extends React.Component {
               </View>
             </View>
           </View>
-          <View style={{alignItems: 'center', alignSelf: 'flex-end', borderTopWidth: 1, borderTopColor: colors.greybackground}}>
+          {/* <View style={{alignItems: 'center', alignSelf: 'flex-end', borderTopWidth: 1, borderTopColor: colors.greybackground}}>
             <Text color={colors.description}>使用第三方登录</Text>
             <View style={styles.touch}>
               <TouchableOpacity style={{flex: 1, alignItems: 'center'}} onPress={this.handleWeChat}>
@@ -87,7 +87,7 @@ class LoginWithSMS extends React.Component {
                 />
               </TouchableOpacity>
             </View>
-          </View>
+          </View> */}
         </View>
       );
     }

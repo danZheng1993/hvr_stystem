@@ -73,23 +73,28 @@ class SignupAsProvider extends React.Component {
   handleWeChat = async () => {
     // Linking.openURL(`${constants.BASE_URL}/auth/wechat`);
     try {
-      const result = await WeChat.sendAuthRequest('snsapi_userinfo', 'wechat_hvr_integration');
-      this.props.signup({
-        body: { code: result.code, role: 'client', type: 'client' },
-        success: () => {
-          setTimeout(() => {
-            Pushy.subscribe('all');
-            Pushy.subscribe('client');
-            const { deviceToken, registerPushyToken } = this.props;
-            registerPushyToken({ deviceToken });
-            this.props.navigation.reset({
-              routes: [{ name: 'BasicProfile' }],
-              index: 0
-            });
-          }, 300);
-        },
-        fail:() => Alert.alert("无法注册")
-      })
+      const isInstalled = await WeChat.isWXAppInstalled();
+      if (isInstalled) {
+        const result = await WeChat.sendAuthRequest('snsapi_userinfo', 'wechat_hvr_integration');
+        this.props.signup({
+          body: { code: result.code, role: 'client', type: 'wechat' },
+          success: () => {
+            setTimeout(() => {
+              Pushy.subscribe('all');
+              Pushy.subscribe('client');
+              const { deviceToken, registerPushyToken } = this.props;
+              registerPushyToken({ deviceToken });
+              this.props.navigation.reset({
+                routes: [{ name: 'InitProfile' }],
+                index: 0
+              });
+            }, 300);
+          },
+          fail:() => Alert.alert("无法注册")
+        })
+      } else {
+        toast("未安装微信应用");
+      }
     } catch (err) {
       console.log('wechat auth fail', err);
     }

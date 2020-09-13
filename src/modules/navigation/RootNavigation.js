@@ -138,6 +138,18 @@ const MainNavigator = () => (
       })}
     />
     <Stack.Screen
+      name="InitProfile"
+      component={BasicProfile}
+      options={{
+        title: '',
+        headerStyle: {
+          elevation: 0, // remove shadow on Android
+          shadowOpacity: 0, // remove shadow on iOS
+          backgroundColor: colors.white,
+        },
+      }}
+    />
+    <Stack.Screen
       name="BasicProfile"
       component={BasicProfile}
       options={{
@@ -147,17 +159,19 @@ const MainNavigator = () => (
           shadowOpacity: 0, // remove shadow on iOS
           backgroundColor: colors.white,
         },
-        headerLeft: props => (
-          <TouchableOpacity
-            onPress={props.onPress}
-            style={{
-              paddingHorizontal: 25,
-              paddingVertical: 8,
-            }}
-          >
-            <Icon name="angle-left" size={30} color={colors.black}/>
-          </TouchableOpacity>
-        ),
+        headerLeft: props => {
+          return (
+            <TouchableOpacity
+              onPress={props.onPress}
+              style={{
+                paddingHorizontal: 25,
+                paddingVertical: 8,
+              }}
+            >
+              <Icon name="angle-left" size={30} color={colors.black}/>
+            </TouchableOpacity>
+          )
+        },
       }}
     />
     <Stack.Screen

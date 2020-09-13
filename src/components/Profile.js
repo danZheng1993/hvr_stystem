@@ -59,22 +59,22 @@ export default class Profile extends React.Component {
       <View >
         {user &&
           <View style = {styles.row}>
-          <TouchableRipple onPress={() => this.props.navigation.navigate('BasicProfile', {update: 'photo'})}>
-            <View style={styles.imageWrapper}>
-              <Image
-                source={avatarImage}
-                style={styles.photo}
-                onLoadStart={this.handleAvatarLoadStart}
-                onLoad={this.handleAvatarLoadEnd}
-                onError={this.handleAvatarLoadError}
-              />
-              {loading && (
-                <View style={styles.loadingContainer}>
-                  <ActivityIndicator size="small" color="white" />
-                </View>
-              )}
-            </View>
-          </TouchableRipple>
+            <TouchableRipple onPress={() => this.props.navigation.navigate('BasicProfile', {update: 'photo'})}>
+              <View style={styles.imageWrapper}>
+                <Image
+                  source={avatarImage}
+                  style={styles.photo}
+                  onLoadStart={this.handleAvatarLoadStart}
+                  onLoad={this.handleAvatarLoadEnd}
+                  onError={this.handleAvatarLoadError}
+                />
+                {loading && (
+                  <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="small" color="white" />
+                  </View>
+                )}
+              </View>
+            </TouchableRipple>
             <View style={{justifyContent: 'center',}}>
               <Text white bold size={18}>{user.userName}</Text>
               <Text white size={12}>{user.overview.slice(0,15)}</Text>
@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     borderRadius: 35,
     overflow: 'hidden',
+    marginRight: 16,
   }, 
   photo: {
     borderRadius: 35,
