@@ -1,14 +1,13 @@
 
 import React from 'react';
-import { View, TouchableOpacity, Text, Dimensions } from 'react-native';
+import { View, TouchableOpacity, Text, Dimensions, ActivityIndicator, Image, TouchableWithoutFeedback } from 'react-native';
 import { GiftedChat, Send } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import socketIO from 'socket.io-client';
 import moment from 'moment';
-import { reverse } from "lodash";
-
+import { reverse, get } from "lodash";
 import {Loader} from "."
 import { getChat } from '../redux/modules/chat'
 import { addToContacts } from '../redux/modules/auth'
@@ -17,7 +16,8 @@ import { chatsloadingSelector, chatsListSelector, profileSelector, userDetailSel
 import constants from '../constants'; 
 import { postApi, getApi } from '../redux/api/apiCall';
 import { colors} from '../styles';
-import { ActivityIndicator } from 'react-native-paper';
+
+import DefaultAvatar from '../../assets/images/default-avatar.png';
 import reactotron from 'reactotron-react-native';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('screen');
@@ -49,6 +49,72 @@ const styles = {
     marginVertical: 24,
     marginHorizontal: (SCREEN_WIDTH - 150) / 2,
     alignItems: 'center',
+  },
+
+  imageWrapper: {
+    width: 50,
+    height: 50,
+    position: 'relative',
+    borderRadius: 25,
+    overflow: 'hidden',
+  }, 
+  photo: {
+    borderRadius: 25,
+    borderColor: colors.gray,
+    backgroundColor: colors.info,
+    width: 50,
+    height: 50
+  },
+  loadingContainer: {
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+}
+
+class AvatarImage extends React.Component {
+  state = {
+    loading: false,
+    imageFailed: false,
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.photo !== prevProps.photo) {
+      this.setState({
+        loading: false,
+        imageFailed: false,
+      });
+    }
+  }
+
+  render() {
+    const { photo } = this.props;
+    const { imageFailed, loading } = this.state;
+    return (
+      <View style={styles.imageWrapper}>
+        <Image
+          source={!imageFailed ? { uri: photo } : DefaultAvatar}
+          style={styles.photo}
+          onLoadStart={() => {
+            !imageFailed && this.setState({ loading: true })
+          }}
+          onLoad={() => {
+            !imageFailed && this.setState({ loading: false })
+          }}
+          onError={() => {
+            this.setState({ imageFailed: true, loading: false })
+          }}
+        />
+        {loading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="small" color="white" />
+          </View>
+        )}
+      </View>
+    )
   }
 }
 
@@ -111,7 +177,7 @@ class Chatting extends React.Component {
         _id: chat._id,
         text: chat.message,
         user: {
-          _id: sender === chat.sender ? -1 : 2
+          _id: sender === chat.sender ? -1 : 2,
         },
         createdAt: chat.created
       }));
@@ -134,7 +200,7 @@ class Chatting extends React.Component {
         _id: chat._id,
         text: chat.message,
         user: {
-          _id: sender === chat.sender ? -1 : 2
+          _id: sender === chat.sender ? -1 : 2,
         },
         createdAt: chat.created
       }));
@@ -142,7 +208,6 @@ class Chatting extends React.Component {
         messages: GiftedChat.prepend(previousState.messages, reverse(messages)),
       }));
     } catch(err) {
-      reactotron.log(err);
       console.log('chats fetch', err);
     } finally {
       this.setState({ loadingEarlier: false });
@@ -160,7 +225,7 @@ class Chatting extends React.Component {
           createdAt: conversation.messages.message.sentDate,
           user: {
             _id: (conversation.messages.message.to == to) ? -1: 2,
-            avatar: constants.BASE_URL +  user.photo
+            avatar: constants.BASE_URL + 'profileImage/' + user.photo
           }
         })
       : conversation.messages.message.map((messageItem, messageIndex) => (
@@ -257,6 +322,15 @@ class Chatting extends React.Component {
     </TouchableOpacity>
   )
 
+  renderAvatar = (props) => {
+    const { currentMessage, onPressAvatar } = props;
+    const { user, _id: currentMessageId, moderatorJoined } = currentMessage;
+    const { firstUnread } = this.state;
+    const { user: userProfile } = this.props;
+    const profilePhoto = get(userProfile, 'photo', 'default.png');
+    return <AvatarImage photo={constants.BASE_URL + 'profileImage/' + profilePhoto} />;
+  };
+
   render() {
     const {loading} = this.props
     const user = { _id: this.state.userId || -1 };
@@ -272,6 +346,7 @@ class Chatting extends React.Component {
             renderSend={this.renderSend}
             placeholder="键入消息。。。"
             renderLoadEarlier={this.renderLoadEarlier}
+            renderAvatar={this.renderAvatar}
           />
         )}
       </>

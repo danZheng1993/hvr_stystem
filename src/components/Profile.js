@@ -37,17 +37,14 @@ export default class Profile extends React.Component {
   }
 
   handleAvatarLoadStart = () => {
-    console.log('start loading');
     this.setState({ loading: true });
   }
 
   handleAvatarLoadEnd = () => {
-    console.log('load end');
     this.setState({ loading: false });
   }
 
   handleAvatarLoadError = (err) => {
-    console.log('load error', err);
     this.setState({ loading: false, avatarImage: DefaultAvatarImage });
   }
 

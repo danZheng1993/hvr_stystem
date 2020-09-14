@@ -78,10 +78,16 @@ class LoginWithPassword extends React.Component {
     setTimeout(() => {
       if (profile.info.role == 'provider') {
         Pushy.subscribe('provider');
-        navigation.navigate('Provider');
+        navigation.reset({
+          routes: [{ name: 'Provider' }],
+          index: 0
+        });
       } else if (profile.info.role =='client'){
         Pushy.subscribe('client');
-        navigation.navigate('Client');
+        navigation.reset({
+          routes: [{ name: 'Client' }],
+          index: 0
+        });
       }
     }, 300);
   }
