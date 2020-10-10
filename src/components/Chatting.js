@@ -253,7 +253,7 @@ class Chatting extends React.Component {
           createdAt: new Date(),
           user: {
             _id: 2,
-            name: 'React Native',
+            name: user.username,
             avatar: constants.BASE_URL +  user.photo
           },
         },

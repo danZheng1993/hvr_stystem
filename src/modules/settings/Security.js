@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  Alert,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -43,8 +44,25 @@ class PasswordRecovery extends React.Component {
      const {saveProfile} = this.props
      const {password} = this.state
      saveProfile({
-       body: {password},
-       success: () => this.props.navigation.navigate('Auth')
+      body: {password},
+      success: () => {
+        Alert.alert(
+          '成功',
+          '密码更新成功',
+          [
+            {
+              text: '好',
+              onPress: () => {
+                this.props.navigation.navigate('Auth');
+              },
+            },
+          ],
+          { cancelable: false },
+        );
+      },
+      fail: () => {
+        Alert.alert('发生了错误', '密码更新失败');
+      }
      })
     }
 

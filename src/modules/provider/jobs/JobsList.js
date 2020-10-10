@@ -20,6 +20,8 @@ import { getSettings } from '../../../redux/modules/setting';
 import { getDateTimeStr } from '../../../utils/helper';
 import Bell from '../../../components/Bell';
 import { isIphoneX } from '../../../helpers';
+import { getLocation } from '../../../redux/api/apiCall';
+import reactotron from 'reactotron-react-native';
 
 class JobsList extends React.Component {
   constructor(props) {
@@ -46,13 +48,20 @@ class JobsList extends React.Component {
     })
   }
 
-  resetLocation = () => {
-    const {searchJob, getSettings} = this.props
-    this.setState({location: '北京'})
-    getSettings()
-    searchJob({
-      body: {location: '北京'}
-    })
+  async resetLocation() {
+    console.log('resetting location')
+    try {
+      const {searchJob, getSettings} = this.props
+      const location = await getLocation();
+      const city = location.city.replace('市', '');
+      this.setState({location: city})
+      getSettings()
+      searchJob({
+        body: {location: city}
+      })
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   render() {
@@ -63,7 +72,7 @@ class JobsList extends React.Component {
         <View style={{ flexDirection: "row", backgroundColor: colors.secondary, justifyContent: 'space-between', paddingVertical: 5, paddingHorizontal: 10, paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 48 : 25 : 15}}>
           <TouchableOpacity 
             style={{ justifyContent:"center", alignItems:"center"}}
-            onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation, resetLocation: this.resetLocation, location })}
+            onPress={() => this.props.navigation.navigate('Location',{chooseLocation: this.chooseLocation, resetLocation: () => this.resetLocation(), location })}
             >
             <Icon name="location" size={25} color="white" />
             <Text style={{color: colors.white, margin: 0}}>{location}</Text>

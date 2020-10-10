@@ -21,6 +21,8 @@ import { Form, TextValidator } from 'react-native-validator-form';
 import { signup, sendcode, checkcode, registerPushyToken } from '../../redux/modules/auth'
 import { Text } from '../../components/StyledText';
 import { tokenSelector } from '../../redux/selectors';
+import { getLocation } from '../../redux/api/apiCall';
+import reactotron from 'reactotron-react-native';
 
 var timer
 class SignupAsProvider extends React.Component {
@@ -73,11 +75,12 @@ class SignupAsProvider extends React.Component {
   handleWeChat = async () => {
     // Linking.openURL(`${constants.BASE_URL}/auth/wechat`);
     try {
+      const location = await getLocation();
       const isInstalled = await WeChat.isWXAppInstalled();
       if (isInstalled) {
         const result = await WeChat.sendAuthRequest('snsapi_userinfo', 'wechat_hvr_integration');
         this.props.signup({
-          body: { code: result.code, role: 'provider', type: 'wechat' },
+          body: { code: result.code, location: location.city, role: 'provider', type: 'wechat' },
           success: () => {
             setTimeout(() => {
               Pushy.subscribe('all');
@@ -100,7 +103,7 @@ class SignupAsProvider extends React.Component {
     }
   }
 
-  submit = () => {
+  submit = async () => {
     const { phoneNumber, verificationCode, password, passwordConfirm, counter} = this.state
 
     if (!phoneNumber || !verificationCode || !password || !passwordConfirm || password!=passwordConfirm) return;
@@ -108,9 +111,10 @@ class SignupAsProvider extends React.Component {
       Alert.alert("try again")
       return;
     }
+    const location = await getLocation();
     clearInterval(timer)
     this.props.checkcode ({
-      body:{ phoneNumber, code: verificationCode, password, role: 'provider'},
+      body:{ phoneNumber, location: location.city, code: verificationCode, password, role: 'provider'},
       success: () => {
         setTimeout(() => {
           console.log('provider signup');

@@ -482,11 +482,9 @@ export default class Location extends Component {
               lightTheme
             />
           </View>
-          {location !== '北京' && (
-            <TouchableOpacity style={styles.resetButton} onPress={this.handleReset}>
-              <Text style={styles.resetButtonText}>重置位置</Text>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity style={styles.resetButton} onPress={this.handleReset}>
+            <Text style={styles.resetButtonText}>重置位置</Text>
+          </TouchableOpacity>
         </View>
         <FlatList
           data={CityList.filter((item) => item.searchStr.includes(searchStr))}

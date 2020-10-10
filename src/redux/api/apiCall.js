@@ -1,9 +1,12 @@
 import axios from 'axios'
 import { call, put } from 'redux-saga/effects'
-import { get } from 'lodash'
+import { constant, get } from 'lodash'
 import { requestFail, requestPending, requestSuccess } from './request'
 import SyncStorage from 'sync-storage';
+import Geolocation from '@react-native-community/geolocation';
+
 import constants from '../../constants'
+import reactotron from 'reactotron-react-native';
 const defaultHeaders = () => {
   const token = SyncStorage.get('token') || null;
   //axios.defaults.baseURL = process.env.API_ROOT + '/'
@@ -92,4 +95,17 @@ export const updateApi = (url, data) =>
     method: 'PUT',
     headers: defaultHeaders(),
     data,
+  });
+
+export const getLocation = () =>
+  new Promise((resolve, reject) => {
+    Geolocation.getCurrentPosition(async (info) => {
+      try {
+        const { longitude, latitude } = info.coords;
+        const result = await fetch(`https://geocode.xyz/${latitude},${longitude}?geoit=json`).then(res => res.json());
+        resolve(result);
+      } catch {
+        reject(err);
+      }
+    });
   });

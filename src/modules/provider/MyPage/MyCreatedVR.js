@@ -7,19 +7,21 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
+  Share,
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-
 import LinearGradient from 'react-native-linear-gradient';
+
 import { Loader, NoData, Text, Confirm } from '../../../components'
 import { colors } from '../../../styles';
 import constants from '../../../constants'
 import { getMyMedias, trashMedia, increaseVisits } from '../../../redux/modules/media'
 import { mediaLoadingSelector,  profileSelector, myMediasSelector } from '../../../redux/selectors'
 import { getDateStr } from '../../../utils/helper';
+import { MEDIA_BASE_URL } from '../../../constants';
 
 
 class MyMedia extends React.Component {
@@ -32,6 +34,13 @@ class MyMedia extends React.Component {
   handlePlay(media) {
     this.props.increaseVisits({id: media._id})
     this.props.navigation.navigate('Player', {url: media.path})
+  }
+
+  handleShare = (idx) => {
+    const { medias } = this.props;
+    Share.share({
+      message: `请检查这部影片\n${MEDIA_BASE_URL}/${medias[idx].path}`
+    })
   }
   
   trash(id) {
@@ -66,7 +75,7 @@ class MyMedia extends React.Component {
                   <Text size={14} black>发布时间： {getDateStr(media.created)}</Text>
                 </View>
                 <View style={{flexDirection: 'row'}}>
-                  <TouchableOpacity onPress={() => null}>
+                  <TouchableOpacity onPress={() => this.handleShare(index)}>
                     <Image
                       source={require('../../../../assets/images/follow.png')}
                       style={{width: 20, height: 20}}

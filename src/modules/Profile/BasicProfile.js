@@ -66,16 +66,58 @@ class BasicProfile extends React.Component {
         .then(res => {
           if (userName || overview) {
             this.props.saveProfile({
-              body: {userName, overview, location}
+              body: {userName, overview, location},
+              success: () => {
+                Alert.alert(
+                  '成功',
+                  '个人资料更新成功',
+                  [
+                    {
+                      text: '好',
+                      onPress: () => {
+                        if (update == '')
+                          this.props.navigation.navigate('ShootingID')
+                        else 
+                          this.props.navigation.goBack()      
+                      },
+                    },
+                  ],
+                  { cancelable: false },
+                );
+              },
+              fail: () => {
+                Alert.alert('发生了错误', '无法更新用户个人资料信息');
+              }
             })
           }
         })
         .catch(err => console.log('upload error', err))
+    } else {
+      this.props.saveProfile({
+        body: { userName, overview, location },
+        success: () => {
+          Alert.alert(
+            '成功',
+            '个人资料更新成功',
+            [
+              {
+                text: '好',
+                onPress: () => {
+                  if (update == '')
+                    this.props.navigation.navigate('ShootingID')
+                  else 
+                    this.props.navigation.goBack()      
+                },
+              },
+            ],
+            { cancelable: false },
+          );
+        },
+        fail: () => {
+          Alert.alert('发生了错误', '无法更新用户个人资料信息');
+        }
+      })
     }
-    if (update == '')
-      this.props.navigation.navigate('ShootingID')
-    else 
-      this.props.navigation.goBack()
   };
   
   handleChoosePhoto = () => {

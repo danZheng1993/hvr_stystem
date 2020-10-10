@@ -51,13 +51,6 @@ const settings = props => {
           onPress={() => props.navigation.navigate('Security')}
           bottomDivider
         />
-        <ListItem
-          key={3}
-          title='清除缓存'
-          titleStyle={{color: colors.secondary, fontWeight: 'bold', fontSize: 18}}
-          hideChevron={false}
-          chevron={{ color: colors.secondary, size: 28 }}
-        />
       </View>
       <TouchableOpacity
         style={{

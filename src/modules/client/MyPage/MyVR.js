@@ -6,7 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  ImageBackground
+  ImageBackground,
+  Share
 } from 'react-native';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -28,6 +29,13 @@ class MyVR extends React.Component {
 
   handlePlay(media) {
     this.props.navigation.navigate('Player', {url: media.path})
+  }
+
+  handleShare = (idx) => {
+    const { medias } = this.props;
+    Share.share({
+      message: `请检查这部影片\n${constants.MEDIA_BASE_URL}/${medias[idx].path}`
+    })
   }
 
   render() {    
@@ -56,7 +64,7 @@ class MyVR extends React.Component {
                 <Text black size={14}>{media.creator.userName}</Text>
               </View>
               <View style={{flexDirection: 'row', }}>
-                <TouchableOpacity style={{marginLeft: 10}} onPress={() => null}>
+                <TouchableOpacity style={{marginLeft: 10}} onPress={() => this.handleShare(index)}>
                   <Image
                     source={require('../../../../assets/images/follow.png')}
                     style={{width: 20, height: 20}}

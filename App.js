@@ -4,12 +4,20 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
 import Pushy from 'pushy-react-native';
 import * as WeChat from 'react-native-wechat-lib';
+import Geolocation from '@react-native-community/geolocation';
+
+Geolocation.setRNConfiguration({
+  skipPermissionRequests: true,
+  authorizationLevel: "whenInUse",
+});
 
 import { store, persistor } from './src/redux/store';
 import { messageReceived, tokenGenerated } from './src/redux/modules/message';
 import AppView from './src/modules/AppViewContainer';
 import { Player } from './src/components';
 import CONSTANTS from './src/constants';
+import reactotron from 'reactotron-react-native';
+import { getApi, getLocation, postApi } from './src/redux/api/apiCall';
 
 const initWeChat = async () => {
   try {

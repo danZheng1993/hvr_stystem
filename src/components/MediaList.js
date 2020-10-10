@@ -5,7 +5,8 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
-  ImageBackground
+  ImageBackground,
+  Share,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,6 +50,12 @@ export default ({ medias }) => {
       success: () => toast('成功!'),
       fail: ()=> toast('失败')
     }));
+  }
+
+  const handleShare = (media) => {
+    Share.share({
+      message: `请检查这部影片\n${constants.MEDIA_BASE_URL}/${media.path}`
+    })
   }
 
   const collections = profile? profile.collections : []
@@ -105,7 +112,7 @@ export default ({ medias }) => {
                 style={styles.heartIcon}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.followIconWrapper} onPress={() => null}>
+            <TouchableOpacity style={styles.followIconWrapper} onPress={() => handleShare(media)}>
               <Image
                 source={FollowIcon}
                 style={styles.followIcon}
