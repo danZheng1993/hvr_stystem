@@ -69,7 +69,7 @@ class ShootingID extends React.Component {
         path: 'images',
       },
     };
-    ImagePicker.showImagePicker(options, response => {
+    ImagePicker.showImagePicker(constants.PHOTO_SELECTION_OPTIONS , response => {
       console.log('Response = ', response);
  
       if (response.didCancel) {

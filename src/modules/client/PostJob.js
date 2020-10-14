@@ -88,13 +88,46 @@ class PostJob extends React.Component {
     const {types, scenes, subcategories, services} = this.state
     let radioGroup = []
     for (let i = 0; i<services.length; i++) radioGroup.push(1)
-    this.setState({type: types[0], scene: scenes[0], subcategory: subcategories[0], description: '', budget: '', isPublic: 0, location: '北京', systembudget: 0, service: '', radioGroup, count: ''})
-    this.props.navigation.navigate('ClientJob')
+    this.setState({
+      type: types[0],
+      scene: scenes[0],
+      subcategory: subcategories[0],
+      description: '',
+      budget: '',
+      isPublic: 0,
+      location: '北京',
+      systembudget: 0,
+      service: '',
+      radioGroup,
+      count: ''
+    });
+
+    this.startCountdown();
   }
+
+  startCountdown = () => {
+    this.setState({ countDown: 5 });
+    this.timerId = setInterval(this.doCountDown, 1000);
+  }
+
+  doCountDown = () => {
+    const { countDown } = this.state;
+    if (countDown === 1) {
+      clearInterval(this.timerId);
+      this.setState({ countDown: 0 }, () => {
+        this.setState({ countDown: -1 }, () => {
+          this.props.navigation.navigate('ClientJob');
+        });
+      });
+    } else {
+      this.setState({ countDown: countDown - 1 });
+    }
+  }
+
   handleConfirm = () => {
     const {count, budget, description} = this.state
     if (!description || !count || !budget || isNaN(count) || isNaN(budget)) {
-      toast('Wrong Input!')
+      toast('请填写完整内容!')
       return
     }
     const {services, radioGroup} = this.state
@@ -126,241 +159,282 @@ class PostJob extends React.Component {
 
   render() { 
     const { jobsloading, settings} = this.props
-    const { types, typeKey, scenes, sceneKey, subcategories, services } = this.state
+    const { types, typeKey, scenes, sceneKey, subcategories, services, countDown } = this.state
     const {isLive, isConfirm, location, type, count, scene, subcategory, subcategoryKey, service, description, isPublic, budget, systembudget} = this.state
     const panoramaPrice = settings.panoramaPrice || 0
     return (
-      <ScrollView style={styles.container}>
-        <Loader
-          loading={ jobsloading } />   
-        {isConfirm ?
-        <Modal isVisible={true} onBackdropPress={() => this.setState({isConfirm: false})}>
-          <View style={{...styles.componentsSection, alignItems: 'stretch', alignSelf: 'stretch', alignContent: 'stretch', justifyContent: 'center'}}>
-            <View style={{alignItems: 'center'}}>
-              <Text size ={18} color={colors.secondary} bold>需求详情</Text>
-            </View>
-            <View style={[styles.underline, styles.stretch]}>
-              <Text size={14} bold>拍摄城市</Text>
-              <Text>{location}</Text>
-            </View>
-            <View style={styles.stretch}>
-              <Text size={14} bold>服务类别</Text>
-              <Text>{type}</Text>
-            </View>
-            <View style={[styles.underline, styles.stretch]}>
-              <Text size={14} bold>场景数量</Text>
-              <Text>{count}个</Text>
-            </View>
-            <View style={[styles.underline, styles.stretch]}>
-              <Text size={14} bold>拍摄场景</Text>
-              <Text>{scene}</Text>
-            </View>
-            <View style={[styles.underline, styles.stretch]}>
-              <Text size={14} bold>行业类别</Text>
-              <Text>{subcategory}</Text>
-            </View>
-            <View style={styles.stretch}>
-              <Text size={14} bold>其他需求</Text>
-              <Text>{service}</Text>
-            </View>
-            <View style={[styles.underline, styles.stretch]}>
-              <Text size={14} bold>是否公开</Text>
-              <Text>{isPublic? '非公开': '公开'}</Text>
-            </View>
-            <View style={styles.stretch}>
-              <Text size={14} bold>需求描述</Text>
-              <Text>{description}</Text>
-            </View>
-            <View style={{justifyContent: 'center', flexDirection: 'row'}}>
-              <View style={{flex:1, justifyContent: 'center'}}>
-                <Text color={colors.secondary} size={14} bold>平台预估价格: {systembudget}</Text>
+      <View style={styles.wrapper}>
+        <ScrollView style={styles.container}>
+          <Loader
+            loading={ jobsloading } />   
+          {isConfirm ?
+          <Modal isVisible={true} onBackdropPress={() => this.setState({isConfirm: false})}>
+            <View style={{...styles.componentsSection, alignItems: 'stretch', alignSelf: 'stretch', alignContent: 'stretch', justifyContent: 'center'}}>
+              <View style={{alignItems: 'center', marginBottom: 12}}>
+                <Text size ={22} color={colors.secondary} bold>需求详情</Text>
               </View>
-              <View style={{flex:1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.secondary, borderRadius: 10}}>
-                <Text color={colors.white} size={14} bold>预算金额</Text>
-                <Text color={colors.white} size={14} bold>{budget}</Text>
+              <View style={[styles.modalFieldInfo, styles.modalFieldSeparator]}>
+                <Text size={14} bold>拍摄城市</Text>
+                <Text>{location}</Text>
               </View>
-            </View>
-            <Button caption="提交" onPress={() => this.handleClick()} style={{marginVertical: 20}}/>
-          </View>
-        </Modal> :
-        <Form
-          ref="form"
-          onSubmit={this.handleConfirm}
-        >
-          <View style={[styles.componentsSection, styles.stretch]} >
-            <Text black size={14}>城市选择: </Text> 
-            <Text color={colors.primary} onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}>{location} ></Text>
-          </View>
-          <View style={styles.componentsSection} >
-            <View style={[styles.row]}>
-              <Text style={{flex: 1}} size={14} black>服务类别:</Text>
-              <View style={styles.border}>
-                <ModalSelector
-                  data={types.map((type, idx) => ({ key: idx, label: type }))}
-                  selectedKey={typeKey}
-                  initValue="服务类别"
-                  initValueTextStyle={styles.selectedItem}
-                  selectTextStyle={styles.selectedItem}
-                  onChange={(option) => { this.setState({ type: option.label, typeKey: option.key }); }}
-                />
+              <View style={styles.modalFieldInfo}>
+                <Text size={14} bold>服务类别</Text>
+                <Text>{type}</Text>
               </View>
-            </View>
-            { !isLive ?
-            <View style={styles.row}>
-              <Text style={{flex: 1}} size={14} black>场景数量:</Text>
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <TextInput
-                  style={[styles.input, {width: '80%'}]}
-                  keyboardType = 'numeric'
-                  value={this.state.count}
-                  onChangeText={count => this.setState({ count, systembudget: panoramaPrice * (+count) })}
-                />
-                <Text> 个</Text>
+              <View style={[styles.modalFieldInfo, styles.modalFieldSeparator]}>
+                <Text size={14} bold>场景数量</Text>
+                <Text>{count}个</Text>
               </View>
-            </View>
-            : <>
-            <DatePicker
-              style={{width: '75%', alignSelf: 'flex-end'}}
-              date={this.state.start}
-              mode="datetime"
-              placeholder="select date"
-              format="YYYY-MM-DD hh:mm:ss"
-              minDate="2019-12-01"
-              maxDate="2049-12-31"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              onDateChange={(start) => {this.setState({start: start})}}
-            />
-              <DatePicker
-              style={{width: '75%', alignSelf: 'flex-end'}}
-              date={this.state.end}
-              mode="datetime"
-              placeholder="select date"
-              format="YYYY-MM-DD hh:mm:ss"
-              minDate="2019-12-01"
-              maxDate="2049-12-31"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              onDateChange={(end) => {this.setState({end: end})}}
-            />
-            </>
-            }
-            <View style={styles.row}>
-              <Text style={{flex: 1}} size={14} black>拍摄场景:</Text>
-              <View style={styles.border}>
-                <ModalSelector
-                  data={scenes.map((scene, idx) => ({ key: idx, label: scene }))}
-                  selectedKey={sceneKey}
-                  initValue="拍摄场景"
-                  initValueTextStyle={styles.selectedItem}
-                  selectTextStyle={styles.selectedItem}
-                  onChange={(option) => { this.setState({ scene: option.label, sceneKey: option.key }); }}
-                />
+              <View style={[styles.modalFieldInfo, styles.modalFieldSeparator]}>
+                <Text size={14} bold>拍摄场景</Text>
+                <Text>{scene}</Text>
               </View>
-            </View>
-            <View style={styles.row}>
-              <Text style={{flex: 1}} size={14} black>行业类别:</Text>
-              <View style={styles.border}>
-                <ModalSelector
-                  data={subcategories.map((subcategory, idx) => ({ key: idx, label: subcategory }))}
-                  selectedKey={subcategoryKey}
-                  initValue="行业类别"
-                  initValueTextStyle={styles.selectedItem}
-                  selectTextStyle={styles.selectedItem}
-                  onChange={(option) => { this.setState({ subcategory: option.label, subcategoryKey: option.key }); }}
-                />
+              <View style={[styles.modalFieldInfo, styles.modalFieldSeparator]}>
+                <Text size={14} bold>行业类别</Text>
+                <Text>{subcategory}</Text>
               </View>
-            </View>
-          </View>
-
-          <View style = {[styles.componentsSection, {paddingRight: 15}]}>
-            <Text size={14} style={{marginBottom: 10}}>其他需求</Text>
-            <View style={{flexDirection: 'row'}}>
-              <View style={{flex: 1}}>
-                {Array.isArray(services) && services.map((service, index) => (
-                  <View key={index}>
-                    <Text black>
-                      是否需要{service}?
-                    </Text>
-                    <View style={{width: '80%'}}>
-                      <RadioForm
-                        items={['是', '否']}
-                        defaultIndex={this.state.radioGroup[index]}
-                        onChange={value => this.handleSelect(index, value)}
-                        size={11}
-                      />
-                    </View>
-                  </View>
-                ))}
+              <View style={styles.modalFieldInfo}>
+                <Text size={14} bold>其他需求</Text>
+                <Text>{service}</Text>
               </View>
-              <View style={{flex:1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, backgroundColor: colors.secondary, marginVertical: 20}}>
-                <Text white size={18}>平台预估价格</Text>
-                <Text white size={22} bold>¥{systembudget}</Text>
+              <View style={[styles.modalFieldInfo, styles.modalFieldSeparator]}>
+                <Text size={14} bold>是否公开</Text>
+                <Text>{isPublic? '非公开': '公开'}</Text>
               </View>
+              <View style={styles.modalFieldInfo}>
+                <Text size={14} bold>需求描述</Text>
+                <Text>{description}</Text>
+              </View>
+              <View style={{justifyContent: 'center', flexDirection: 'row'}}>
+                <View style={{flex:1, justifyContent: 'center'}}>
+                  <Text color={colors.secondary} size={14} bold>平台预估价格: {systembudget}</Text>
+                </View>
+                <View style={{flex:1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.secondary, borderRadius: 10}}>
+                  <Text color={colors.white} size={14} bold>预算金额</Text>
+                  <Text color={colors.white} size={14} bold>{budget}</Text>
+                </View>
+              </View>
+              <Button caption="提交" onPress={() => this.handleClick()} style={{marginVertical: 20}}/>
             </View>
-          </View>
-
-          <View style= {[styles.componentsSection, {paddingHorizontal: 15}]}>
-            <Text size={14} style={{paddingLeft: 15}}>其他需求</Text>
-            <TextInput
-              textAlignVertical='top'
-              style={styles.input}
-              multiline={true}
-              maxLength={200}
-              numberOfLines={6}
-              height={100}
-              value={this.state.description}
-              onChangeText={description => this.setState({ description })}
-            />
-          </View>
-          <View style={[styles.componentsSection, styles.stretch, { alignItems: 'center' }]}>
-            <View style={{flex: 1}}><Text size={14}>预算价格</Text></View>
-            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-              <TextInput
-                style={[styles.input, {width: '80%'}]}
-                keyboardType = 'numeric'
-                value={this.state.budget}
-                onChangeText={budget => this.setState({ budget })}
-              />
-              <Text> 元</Text>
+          </Modal> :
+          <Form
+            ref="form"
+            onSubmit={this.handleConfirm}
+          >
+            <View style={[styles.componentsSection, styles.stretch]} >
+              <Text black size={14}>城市选择: </Text> 
+              <Text color={colors.primary} onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}>{location} ></Text>
             </View>
-          </View>
-
-          <View style = {[styles.componentsSection, styles.stretch]}>
-            <View style={{ flexDirection: 'column', alignItems: 'stretch', flex: 1 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                <Text size={14} bold style={{ flex: 2 }}>
-                  是否公开
-                </Text>
-                <View style={{ flex: 1 }}>
-                  <RadioForm
-                    items={['是', '否']}
-                    defaultIndex = {isPublic}
-                    onChange={value => this.setState({isPublic: value})}
-                    size={12}
+            <View style={styles.componentsSection} >
+              <View style={[styles.row]}>
+                <Text style={{flex: 1}} size={14} black>服务类别:</Text>
+                <View style={styles.border}>
+                  <ModalSelector
+                    selectStyle={styles.modalSelector}
+                    selectTextStyle={styles.modalSelectedItemTextStyle}
+                    selectTextPassThruProps={{ numberOfLines: 1 }}
+                    data={types.map((type, idx) => ({ key: idx, label: type }))}
+                    selectedKey={typeKey}
+                    initValue="服务类别"
+                    initValueTextStyle={styles.selectedItem}
+                    selectTextStyle={styles.selectedItem}
+                    onChange={(option) => { this.setState({ type: option.label, typeKey: option.key }); }}
                   />
                 </View>
               </View>
-              <Text>
-                选择公开在项目完成后作品会在平台展示
-              </Text>
+              { !isLive ?
+              <View style={styles.row}>
+                <Text style={{flex: 1}} size={14} black>场景数量:</Text>
+                <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                  <TextInput
+                    style={[styles.input, {width: '80%'}]}
+                    keyboardType = 'numeric'
+                    value={this.state.count}
+                    onChangeText={count => this.setState({ count, systembudget: panoramaPrice * (+count) })}
+                  />
+                  <Text> 个</Text>
+                </View>
+              </View>
+              : <>
+              <DatePicker
+                style={{width: '75%', alignSelf: 'flex-end'}}
+                date={this.state.start}
+                mode="datetime"
+                placeholder="select date"
+                format="YYYY-MM-DD hh:mm:ss"
+                minDate="2019-12-01"
+                maxDate="2049-12-31"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                onDateChange={(start) => {this.setState({start: start})}}
+              />
+                <DatePicker
+                style={{width: '75%', alignSelf: 'flex-end'}}
+                date={this.state.end}
+                mode="datetime"
+                placeholder="select date"
+                format="YYYY-MM-DD hh:mm:ss"
+                minDate="2019-12-01"
+                maxDate="2049-12-31"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                onDateChange={(end) => {this.setState({end: end})}}
+              />
+              </>
+              }
+              <View style={styles.row}>
+                <Text style={{flex: 1}} size={14} black>拍摄场景:</Text>
+                <View style={styles.border}>
+                  <ModalSelector
+                    selectStyle={styles.modalSelector}
+                    selectTextStyle={styles.modalSelectedItemTextStyle}
+                    selectTextPassThruProps={{ numberOfLines: 1 }}
+                    data={scenes.map((scene, idx) => ({ key: idx, label: scene }))}
+                    selectedKey={sceneKey}
+                    initValue="拍摄场景"
+                    initValueTextStyle={styles.selectedItem}
+                    selectTextStyle={styles.selectedItem}
+                    onChange={(option) => { this.setState({ scene: option.label, sceneKey: option.key }); }}
+                  />
+                </View>
+              </View>
+              <View style={styles.row}>
+                <Text style={{flex: 1}} size={14} black>行业类别:</Text>
+                <View style={styles.border}>
+                  <ModalSelector
+                    selectStyle={styles.modalSelector}
+                    selectTextPassThruProps={{ numberOfLines: 1 }}
+                    selectTextStyle={styles.modalSelectedItemTextStyle}
+                    data={subcategories.map((subcategory, idx) => ({ key: idx, label: subcategory }))}
+                    selectedKey={subcategoryKey}
+                    initValue="行业类别"
+                    initValueTextStyle={styles.selectedItem}
+                    selectTextStyle={styles.selectedItem}
+                    onChange={(option) => { this.setState({ subcategory: option.label, subcategoryKey: option.key }); }}
+                  />
+                </View>
+              </View>
+            </View>
+
+            <View style = {[styles.componentsSection, {paddingRight: 15}]}>
+              <Text size={14} style={{marginBottom: 10}}>其他需求</Text>
+              <View style={{flexDirection: 'row'}}>
+                <View style={{flex: 1}}>
+                  {Array.isArray(services) && services.map((service, index) => (
+                    <View key={index}>
+                      <Text black>
+                        是否需要{service}?
+                      </Text>
+                      <View style={{width: '80%'}}>
+                        <RadioForm
+                          items={['是', '否']}
+                          defaultIndex={this.state.radioGroup[index]}
+                          onChange={value => this.handleSelect(index, value)}
+                          size={11}
+                        />
+                      </View>
+                    </View>
+                  ))}
+                </View>
+                <View style={{flex:1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, backgroundColor: colors.secondary, marginVertical: 20}}>
+                  <Text white size={18}>平台预估价格</Text>
+                  <Text white size={22} bold>¥{systembudget}</Text>
+                </View>
+              </View>
+            </View>
+
+            <View style= {[styles.componentsSection, {paddingHorizontal: 15}]}>
+              <Text size={14} style={{paddingLeft: 15}}>其他需求</Text>
+              <TextInput
+                textAlignVertical='top'
+                style={styles.input}
+                multiline={true}
+                maxLength={200}
+                numberOfLines={6}
+                height={100}
+                value={this.state.description}
+                onChangeText={description => this.setState({ description })}
+              />
+            </View>
+            <View style={[styles.componentsSection, styles.stretch, { alignItems: 'center' }]}>
+              <View style={{flex: 1}}><Text size={14}>预算价格</Text></View>
+              <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                <TextInput
+                  style={[styles.input, {width: '80%'}]}
+                  keyboardType = 'numeric'
+                  value={this.state.budget}
+                  onChangeText={budget => this.setState({ budget })}
+                />
+                <Text> 元</Text>
+              </View>
+            </View>
+
+            <View style = {[styles.componentsSection, styles.stretch]}>
+              <View style={{ flexDirection: 'column', alignItems: 'stretch', flex: 1 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                  <Text size={14} bold style={{ flex: 2 }}>
+                    是否公开
+                  </Text>
+                  <View style={{ flex: 1 }}>
+                    <RadioForm
+                      items={['是', '否']}
+                      defaultIndex = {isPublic}
+                      onChange={value => this.setState({isPublic: value})}
+                      size={12}
+                    />
+                  </View>
+                </View>
+                <Text>
+                  选择公开在项目完成后作品会在平台展示
+                </Text>
+              </View>
+            </View>
+            <Button
+              large
+              bgColor={colors.secondary}
+              style={styles.button}
+              caption="提 交"
+              onPress={() => this.refs.form.submit()}
+            />
+          </Form>   
+        }
+        </ScrollView>
+        {countDown >= 0 && (
+          <View style={styles.countDownOverlay}>
+            <View style={styles.countDownWrapper}>
+              <Text color={colors.blue} bold size={24}>发布成功</Text>
+              <Text color={colors.blue} bold size={24}>{countDown}S</Text>
             </View>
           </View>
-          <Button
-            large
-            bgColor={colors.secondary}
-            style={styles.button}
-            caption="提 交"
-            onPress={() => this.refs.form.submit()}
-          />
-        </Form>   
-      }
-      </ScrollView>
+        )}
+      </View>
     );
     }
 }
 
 const styles = StyleSheet.create({
+  countDownOverlay: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    left: 0,
+    top: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  countDownWrapper: {
+    padding: 24,
+    width: 240,
+    paddingHorizontal: 24,
+    borderRadius: 5,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  wrapper: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: colors.bluish,
@@ -397,7 +471,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5
   },
   input: {
-    height: 40,
+    height: 32,
     borderColor: colors.primary,
     borderWidth: 1,
     borderRadius: 5,
@@ -413,6 +487,26 @@ const styles = StyleSheet.create({
   },
   selectedItem: {
     fontSize: 14,
+  },
+  modalSelector: {
+    borderWidth: 0,
+    height: 32,
+  },
+  modalSelectedItemTextStyle: {
+    fontSize: 14,
+    textAlign: 'center',
+    lineHeight: 24,
+  },
+  modalFieldInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  modalFieldSeparator: {
+    borderBottomColor: colors.greybackground,
+    borderBottomWidth: 1,
+    borderStyle: "solid",
+    marginBottom: 12,
   }
 });
 

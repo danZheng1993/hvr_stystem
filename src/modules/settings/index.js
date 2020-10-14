@@ -30,6 +30,20 @@ const settings = props => {
       }
     ])
   }
+
+  const handleClearCache = () => {
+    Alert.alert('清除缓存', '清除缓存后，你的手机可用空间将会增加',
+      [
+        {
+          text: '是',
+          onPress: () => {
+            clearItem();
+          }
+        },
+        { text: '否' },
+      ]
+    );
+  }
   return (
     <View style={{justifyContent: 'space-between', flex: 1, backgroundColor: colors.bluish}}>
       <View style={{ backgroundColor: colors.white, paddingHorizontal: 15, margin: 20,borderRadius: 5}}>
@@ -49,6 +63,15 @@ const settings = props => {
           titleStyle={{color: colors.secondary, fontWeight: 'bold', fontSize: 18}}
           hideChevron={false}
           onPress={() => props.navigation.navigate('Security')}
+          bottomDivider
+        />
+        <ListItem
+          key={3}
+          title='清除缓存'
+          chevron={{ color: colors.secondary, size: 28}}
+          titleStyle={{color: colors.secondary, fontWeight: 'bold', fontSize: 18}}
+          hideChevron={false}
+          onPress={handleClearCache}
           bottomDivider
         />
       </View>

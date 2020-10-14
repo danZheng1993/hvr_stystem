@@ -33,7 +33,6 @@ class MyPage extends React.Component {
       {title: '待拍摄', icon: iconWaiting},
       {title: '待验收', icon: iconTesting},
       {title: '评价', icon: iconFeedback},
-      {title: '已完成', icon: iconFeedback},
     ]
     const collectionlength = profile ? profile.collections.length: 0
     const attentionlength = profile ? profile.attentions.length: 0

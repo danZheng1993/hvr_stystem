@@ -46,7 +46,7 @@ class RequestInvoice extends React.Component {
         <View>
           {Array.isArray(myInvoice) && myInvoice.map((invoice, index) => (
             <View style={styles.componentsSection} key={index}>
-              <View style={{padding: 15}}>
+              <View style={{padding: 15, flex: 1}}>
                 <Text>{invoice.jobID.type}</Text>
                 <Text size={18} color={colors.secondary}>合同金额 : ¥{invoice.price}</Text>
               </View>

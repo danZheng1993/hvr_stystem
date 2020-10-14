@@ -3,6 +3,7 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  TouchableOpacity,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -14,21 +15,30 @@ import { profileSelector } from '../../../redux/selectors'
 
 class Authentication extends React.Component {
 
+  handleShootingID = () => {
+    this.props.navigation.navigate('ShootingID');
+  }
+
+  handleCompanyProfile = () => {
+    this.props.navigation.navigate('CompanyProfile');
+  }
+
   render() {    
     const {profile} = this.props
     return (
       <View style={styles.container}>
-        <View style={styles.componentsSection}>
+
+        <TouchableOpacity style={styles.componentsSection} onPress={this.handleShootingID}>
           <Text size={16} black bold>个人信息认证</Text>
           <Text size={22}>{profile.permission === 'ALLOWED' ? '已认证' : '未认证'}</Text>
-        </View>
-        <View style={styles.componentsSection}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.componentsSection} onPress={this.handleCompanyProfile}>
           <Text size={16} black bold>公司信息认证</Text>
           { profile.type !== '个人服务方'
             ? <Text size={22}>已认证</Text>
             : <Text size={22} color={colors.primary} onPress={() => this.props.navigation.navigate('CompanyInfo')}>点击认证</Text>
           }
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }

@@ -57,13 +57,13 @@ class SendVerificationCode extends React.Component {
       <View style={{alignItems: 'center'}}>
         {!isCheck ? <View>
           <View style={styles.description}>
-            <Text color={colors.black}>
+            <Text size={18} color={colors.black}>
               为了保证你的账号安全，请验证身份。验证成功
               后进行下一步操作。
             </Text>
           </View>
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Text color={colors.black}>*********{phoneNumber % 100}</Text>
+            <Text size={16} color={colors.black}>*********{phoneNumber % 100}</Text>
             <Button
               large
               bgColor={colors.secondary}
@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     margin: 20
   },
   button: {
+    marginTop: 32,
     marginBottom: 20,
     alignSelf: 'stretch',
   },

@@ -95,8 +95,8 @@ export default () => (
       name="约拍"
       component={PostJob}
       options={{ tabBarIcon: ({ focused }) => (
-        <View style={{ position: 'absolute', top: -30 }}>
-          <TabBarIcon noTint source={PostIcon} width={48} height={48} />
+        <View style={{ position: 'absolute', top: -24 }}>
+          <TabBarIcon noTint source={PostIcon} width={54} height={54} />
         </View>
       )}}
       listeners={({ navigation }) => ({

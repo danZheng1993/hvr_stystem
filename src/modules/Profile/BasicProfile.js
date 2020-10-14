@@ -163,38 +163,46 @@ class BasicProfile extends React.Component {
 
   render() {
     const { photo , update, location, url, loadingImage, imgError} = this.state
+    let headTitle = '信息填写';
+    if (update === 'photo') {
+      headTitle = '修改头像';
+    } else if (update === 'userName') {
+      headTitle = '修改昵称';
+    } else if (update === 'overview') {
+      headTitle = '服务简介';
+    }
     return (
       <View style={styles.container}>
-      <Text size={28} bold black style={{marginBottom: 30, alignSelf: 'center'}}>信息填写</Text>
+        <Text size={28} bold black style={{marginTop: -32, marginBottom: 44, alignSelf: 'center'}}>{headTitle}</Text>
         {(update == '' || update == 'photo') && 
-         <TouchableOpacity onPress={this.handleChoosePhoto} style={{alignSelf: 'center'}}>
-          <View style={styles.photoWrapper}>
-            <Image
-              source={imgError ? DefaultAvatar : { uri: photo ? photo.uri : url }}
-              style={styles.photo}
-              onLoadStart={() => {if(!imgError) { this.setState({ loadingImage: true, imgError: false, }) }}}
-              onLoadEnd={() => this.setState({ loadingImage: false, })}
-              onError={() => this.setState({ loadingImage: false, imgError: true })}
-            />
-            {loadingImage && (
-              <View style={styles.loadingIndicator}>
-                <ActivityIndicator size="small" />
-              </View>
-            )}
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleChoosePhoto} style={{alignSelf: 'center'}}>
+            <View style={styles.photoWrapper}>
+              <Image
+                source={imgError ? DefaultAvatar : { uri: photo ? photo.uri : url }}
+                style={styles.photo}
+                onLoadStart={() => {if(!imgError) { this.setState({ loadingImage: true, imgError: false, }) }}}
+                onLoadEnd={() => this.setState({ loadingImage: false, })}
+                onError={() => this.setState({ loadingImage: false, imgError: true })}
+              />
+              {loadingImage && (
+                <View style={styles.loadingIndicator}>
+                  <ActivityIndicator size="small" />
+                </View>
+              )}
+            </View>
+          </TouchableOpacity>
         }
         {(update == '' || update == 'userName') && 
-        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-          <Text>用户昵称</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 24}}>
+            <Text size={20}>用户昵称</Text>
             <TextInput
-                style={styles.singleinput}
-                placeholder="昵称"
-                value={this.state.userName}
-                maxLength={10}
-                onChangeText={userName => this.setState({ userName })}
+              style={styles.singleinput}
+              placeholder="昵称"
+              value={this.state.userName}
+              maxLength={10}
+              onChangeText={userName => this.setState({ userName })}
             />
-        </View>
+          </View>
         }
         { update == '' && 
         <TouchableOpacity
@@ -207,16 +215,15 @@ class BasicProfile extends React.Component {
         </TouchableOpacity>
         }
         {(update == '' || update == 'overview') && 
-        <View>
-          <Text >用户昵称</Text>
+          <View>
             <TextInput
-                style={styles.multipleinput}
-                placeholder="填写服务介绍"
-                multiline
-                maxLength={140}
-                numberOfLines={4}
-                value={this.state.overview}
-                onChangeText={overview => this.setState({ overview })}
+              style={styles.multipleinput}
+              placeholder="填写服务介绍"
+              multiline
+              maxLength={140}
+              numberOfLines={4}
+              value={this.state.overview}
+              onChangeText={overview => this.setState({ overview })}
             />
           </View>
         }
@@ -243,10 +250,12 @@ const styles = StyleSheet.create({
     flex: 1,
     borderBottomColor: colors.grey,
     padding: 5,
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
+    fontSize: 20,
   },
   multipleinput: {
     backgroundColor: colors.greybackground,
+    fontSize: 20,
   },
   photo: {
     width: 100,
@@ -275,7 +284,8 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'stretch',
-    margin: 20
+    margin: 20,
+    marginTop: 32,
   },
 });
 

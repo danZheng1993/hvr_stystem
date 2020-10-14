@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SliderBox } from 'react-native-image-slider-box';
 import isEmpty from 'lodash/isEmpty';
@@ -7,6 +7,8 @@ import isEmpty from 'lodash/isEmpty';
 import constants from '../constants';
 import { Text } from './StyledText';
 import { colors } from '../styles';
+
+import BannerBG from '../../assets/images/slider_banner_bg.png';
 
 export default ({ banners }) => {
   const [validBannerList, setValidBannerList] = useState([]);
@@ -44,9 +46,9 @@ export default ({ banners }) => {
         />
       )}
       {validBannerList.length > 0 && (
-        <View style={styles.captionWrapper}>
+        <ImageBackground source={BannerBG} style={styles.captionWrapper}>
           <Text size={14} style={styles.caption}>{validBannerList[currentItem].title}</Text>
-        </View>
+        </ImageBackground>
       )}
     </View>
   )
@@ -64,5 +66,6 @@ const styles = {
   caption: {
     textAlign: 'center',
     color: colors.white,
+    opacity: 0.8,
   }
 }

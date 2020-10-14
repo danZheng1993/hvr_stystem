@@ -73,27 +73,27 @@ class Search extends React.Component {
                     <GoBack navigation={this.props.navigation} />
                     <View style={{flex: 3}}>
                         <SearchBar
-                            containerStyle={{height: 30, padding: 0, backgroundColor: '#f0eff5', borderColor: '#f0eff5',  borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
-                            inputContainerStyle={{height: 30, backgroundColor: colors.white, borderWidth: 0, borderTopLeftRadius: 15, borderBottomLeftRadius: 15, padding: 5}}
-                            inputStyle={{padding: 5, fontSize: 12}}
+                            containerStyle={styles.searchBarContainer}
+                            inputContainerStyle={styles.searchBarInputContainer}
+                            inputStyle={styles.searchBarInput}
                             placeholder="请输入关键字"
                             onChangeText={this.updateSearch}
                             value={search}
                         />
                     </View>
                     <View style={{flex: 1, marginTop: 1, flexDirection: 'row', justifyContent:"flex-end", alignItems:"center", backgroundColor: colors.white,  borderTopRightRadius: 15, borderBottomRightRadius: 15}}>
-                        <Text color={colors.secondary} onPress = {() => this.updateType()}>{this.state.label}</Text>
-                        <Text color={colors.secondary} style={{borderLeftColor: colors.gray, borderLeftWidth: 1, paddingHorizontal: 10}} onPress = {() => this.searchContent()}>搜索</Text>
+                        <Text size={14} color={colors.secondary} onPress = {() => this.updateType()}>{this.state.label}</Text>
+                        <Text size={14} color={colors.secondary} style={{borderLeftColor: colors.gray, borderLeftWidth: 1, paddingHorizontal: 10}} onPress = {() => this.searchContent()}>搜索</Text>
                     </View>
                 </View>
                 <View style={{padding: 10}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text black>历史记录</Text>
-                        <Text onPress={() => clearSearch()}>清除</Text>
+                        <Text size={14} bold black>历史记录</Text>
+                        <Text size={14} onPress={() => clearSearch()}>清除</Text>
                     </View>
                     <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
                         {!!recentSearch.length && recentSearch.map((item, index) => (
-                            <Text key={index} style={styles.spin} onPress={() => {this.searchContent(item)}}>
+                            <Text size={14} key={index} style={styles.spin} onPress={() => {this.searchContent(item)}}>
                                 {item}
                             </Text>
                         ))}
@@ -101,12 +101,12 @@ class Search extends React.Component {
                 </View>
                 <View style={{padding: 10}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text black>热门搜索</Text>
+                        <Text size={14} bold black>热门搜索</Text>
                         {/* <Text>清除</Text> */}
                     </View>
                     <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
                         {!!popularSearch.length && popularSearch.map((item, index) => (
-                            <Text key={index} style={styles.spin} onPress={() => {this.searchContent(item)}}>
+                            <Text size={14} key={index} style={styles.spin} onPress={() => {this.searchContent(item)}}>
                                 {item}
                             </Text>
                         ))}
@@ -130,6 +130,26 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         margin: 5,
         borderRadius: 5
+    },
+    searchBarContainer: {
+        height: 30,
+        padding: 0,
+        backgroundColor: '#f0eff5',
+        borderColor: '#f0eff5',
+        borderBottomColor: 'transparent',
+        borderTopColor: 'transparent',
+    },
+    searchBarInputContainer: {
+        height: 30,
+        backgroundColor: colors.white,
+        borderWidth: 0,
+        borderTopLeftRadius: 15,
+        borderBottomLeftRadius: 15,
+        padding: 5,
+    },
+    searchBarInput: {
+        padding: 5,
+        fontSize: 14,
     }
 })
 const mapStateToProps = createStructuredSelector({
