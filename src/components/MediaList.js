@@ -87,7 +87,7 @@ export default ({ medias }) => {
         <View style={styles.actionBarWrapper} >
           <View style={styles.userInfoWrapper}>
             <Image
-              source={media.creator ? {uri: constants.BASE_URL + media.creator.photo} : DefaultAvatar}
+              source={media.creator ? {uri: constants.BASE_URL + 'profileImage/' + media.creator.photo} : DefaultAvatar}
               style={styles.avatarImage}
             />
             <Text black>{media.creator.userName}</Text>
@@ -128,6 +128,8 @@ export default ({ medias }) => {
 
   return (
     <FlatList
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flex: 1 }}
       data={medias}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
@@ -184,7 +186,11 @@ const styles = StyleSheet.create({
   avatarImage: {
     width: 20,
     height: 20,
-    borderRadius: 10
+    backgroundColor: colors.white,
+    borderRadius: 10,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: colors.primary,
   },
 
   followIcon: {

@@ -94,7 +94,11 @@ export default () => (
     <BottomTab.Screen
       name="约拍"
       component={PostJob}
-      options={{ tabBarIcon: ({ focused }) => <TabBarIcon noTint source={PostIcon} width={32} height={32} /> }}
+      options={{ tabBarIcon: ({ focused }) => (
+        <View style={{ position: 'absolute', top: -30 }}>
+          <TabBarIcon noTint source={PostIcon} width={48} height={48} />
+        </View>
+      )}}
       listeners={({ navigation }) => ({
         tabPress: (e) => {
           e.preventDefault();

@@ -4,10 +4,13 @@ import { useNavigation } from '@react-navigation/native';
 import { SliderBox } from 'react-native-image-slider-box';
 import isEmpty from 'lodash/isEmpty';
 
-import constants from '../constants'
+import constants from '../constants';
+import { Text } from './StyledText';
+import { colors } from '../styles';
 
 export default ({ banners }) => {
   const [validBannerList, setValidBannerList] = useState([]);
+  const [currentItem, setCurrentItem] = useState(0);
   const navigation = useNavigation();
   useEffect(() => {
     if (banners.length > 0) {
@@ -24,17 +27,42 @@ export default ({ banners }) => {
     }
   }
 
+  const handleItemChange = (index) => {
+    setCurrentItem(index);
+  }
+
   const imgList = validBannerList.map(banner => constants.BANNER_BASE_URL + banner.image);
 
   return (
-    <View style={{width: '100%', height: 200}}>
+    <View style={styles.wrappper}>
       {validBannerList.length > 0 && (
         <SliderBox
           images={imgList}
           circleLoop
           onCurrentImagePressed={handleItemPress}
+          currentImageEmitter={handleItemChange}
         />
+      )}
+      {validBannerList.length > 0 && (
+        <View style={styles.captionWrapper}>
+          <Text size={14} style={styles.caption}>{validBannerList[currentItem].title}</Text>
+        </View>
       )}
     </View>
   )
 };
+
+const styles = {
+  wrapper: { width: '100%', height: 230 },
+  captionWrapper: {
+    height: 30,
+    backgroundColor: colors.primary,
+    paddingVertical: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  caption: {
+    textAlign: 'center',
+    color: colors.white,
+  }
+}
