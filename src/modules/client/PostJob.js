@@ -313,9 +313,9 @@ class PostJob extends React.Component {
               onChangeText={description => this.setState({ description })}
             />
           </View>
-          <View style={[styles.componentsSection, styles.stretch]}>
+          <View style={[styles.componentsSection, styles.stretch, { alignItems: 'center' }]}>
             <View style={{flex: 1}}><Text size={14}>预算价格</Text></View>
-            <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
               <TextInput
                 style={[styles.input, {width: '80%'}]}
                 keyboardType = 'numeric'
@@ -327,20 +327,24 @@ class PostJob extends React.Component {
           </View>
 
           <View style = {[styles.componentsSection, styles.stretch]}>
-            <View>
-              <Text size={14} bold>
-                是否公开
-              </Text>
+            <View style={{ flexDirection: 'column', alignItems: 'stretch', flex: 1 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                <Text size={14} bold style={{ flex: 2 }}>
+                  是否公开
+                </Text>
+                <View style={{ flex: 1 }}>
+                  <RadioForm
+                    items={['是', '否']}
+                    defaultIndex = {isPublic}
+                    onChange={value => this.setState({isPublic: value})}
+                    size={12}
+                  />
+                </View>
+              </View>
               <Text>
                 选择公开在项目完成后作品会在平台展示
               </Text>
             </View>
-            <RadioForm
-              items={['是', '否']}
-              defaultIndex = {isPublic}
-              onChange={value => this.setState({isPublic: value})}
-              size={12}
-            />
           </View>
           <Button
             large
@@ -393,7 +397,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5
   },
   input: {
-    height: 20,
+    height: 40,
     borderColor: colors.primary,
     borderWidth: 1,
     borderRadius: 5,
