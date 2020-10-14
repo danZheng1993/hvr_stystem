@@ -63,10 +63,11 @@ class BasicProfile extends React.Component {
     if (photo) {
       const formData = this.createFormData(photo, { type: "photo"});
       uploadFile('profile/me', 'POST', formData)
+        .then(res => res.json())
         .then(res => {
           if (userName || overview) {
             this.props.saveProfile({
-              body: {userName, overview, location},
+              body: {userName, overview, location, photo: res.fileName},
               success: () => {
                 Alert.alert(
                   '成功',
@@ -121,14 +122,7 @@ class BasicProfile extends React.Component {
   };
   
   handleChoosePhoto = () => {
-    var options = {
-      title: 'Select Image',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-    ImagePicker.showImagePicker(options, response => {
+    ImagePicker.showImagePicker(constants.PHOTO_SELECTION_OPTIONS, response => {
       
       if (response.didCancel) {
         console.log('User cancelled image picker');

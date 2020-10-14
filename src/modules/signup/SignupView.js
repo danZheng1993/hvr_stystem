@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
   },
   stretchButton: {
     marginBottom: 20,
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
+    fontSize: 16,
   },
   description: {
     alignItems: "center",

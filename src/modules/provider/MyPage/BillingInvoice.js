@@ -18,6 +18,7 @@ import { colors } from '../../../styles';
 import uploadFile from '../../../redux/api/upload'
 import { getMyInvoice } from '../../../redux/modules/invoice'
 import { invoicesloadingSelector, myInvoiceSelector } from '../../../redux/selectors'
+import constants from '../../../constants';
 
 class BillingInvoice extends React.Component {
 
@@ -43,14 +44,7 @@ class BillingInvoice extends React.Component {
   };
   
   handleChoosePhoto = (id) => {
-    var options = {
-      title: 'Select Image',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-    ImagePicker.showImagePicker(options, response => {
+    ImagePicker.showImagePicker(constants.PHOTO_SELECTION_OPTIONS, response => {
       console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');

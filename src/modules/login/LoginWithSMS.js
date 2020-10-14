@@ -98,8 +98,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 70,
-    paddingVertical: 30
+    paddingHorizontal: 60,
+    paddingVertical: 30,
+    backgroundColor: 'white',
   },
   photo: {
     borderRadius: 25,

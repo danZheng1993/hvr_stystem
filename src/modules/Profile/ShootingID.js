@@ -18,6 +18,8 @@ import { profileSelector } from '../../redux/selectors'
 import FrontIDPlaceholder from '../../../assets/images/front.png';
 import BackIDPlaceholder from '../../../assets/images/back.png';
 
+import constants from '../../constants';
+
 class ShootingID extends React.Component {
   constructor(props) {
     super(props)
@@ -86,14 +88,7 @@ class ShootingID extends React.Component {
     });
   }
   handleChooseBackPhoto = () => {
-    var options = {
-      title: 'Select Image',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-    ImagePicker.showImagePicker(options, response => {
+    ImagePicker.showImagePicker(constants.PHOTO_SELECTION_OPTIONS, response => {
       console.log('Response = ', response);
  
       if (response.didCancel) {

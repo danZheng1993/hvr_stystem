@@ -4,17 +4,22 @@ import {
   View,
   Image,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import get from 'lodash/get';
+import { TouchableRipple } from 'react-native-paper';
+import { connect } from 'react-redux';
+import ImagePicker from 'react-native-image-picker'
 
 import {Text} from './StyledText'
 import { colors } from '../styles';
 import constants from '../constants';
-import { TouchableRipple } from 'react-native-paper';
-
 import DefaultAvatarImage from '../../assets/images/default-avatar.png';
+import uploadFile from '../redux/api/upload';
+import { saveProfile } from '../redux/modules/auth';
+import reactotron from 'reactotron-react-native';
 
-export default class Profile extends React.Component {
+class Profile extends React.Component {
   state = {
     avatarImage: false,
     loading: null,
@@ -48,6 +53,54 @@ export default class Profile extends React.Component {
     this.setState({ loading: false, avatarImage: DefaultAvatarImage });
   }
 
+  createFormData = (photo, body) => {
+    const data = new FormData();
+    const nameParts = (Platform.OS === 'ios' ? photo.uri : photo.path).split('.');
+    const ext = nameParts[nameParts.length - 1];
+    data.append("photo", {
+      name: `profile.${ext}`,
+      type: 'image/*',
+      uri: Platform.OS === 'android' ? `file://${photo.path}` : photo.uri,
+    });
+  
+    Object.keys(body).forEach(key => {
+      data.append(key, body[key]);
+    });
+    return data;
+  };
+
+  handleUpdatePhoto = () => {
+    ImagePicker.showImagePicker(constants.PHOTO_SELECTION_OPTIONS, response => {
+      
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        const formData = this.createFormData(response, { type: "photo"});
+        uploadFile('profile/me', 'POST', formData)
+          .then(res => res.json())
+          .then(res => {
+            reactotron.log(this.props.saveProfile)
+            this.props.saveProfile({
+              body: {photo: res.fileName},
+              success: () => {
+                Alert.alert(
+                  '成功',
+                  '个人资料更新成功',
+                  [{ text: '好' }],
+                  { cancelable: false },
+                );
+              },
+              fail: () => {
+                Alert.alert('发生了错误', '无法更新用户个人资料信息');
+              }
+            })
+          })
+      }
+    });
+  }
+
   render() {   
     const {user} = this.props
     const { loading, avatarImage } = this.state;
@@ -55,7 +108,7 @@ export default class Profile extends React.Component {
       <View >
         {user &&
           <View style = {styles.row}>
-            <TouchableRipple onPress={() => this.props.navigation.navigate('BasicProfile', {update: 'photo'})}>
+            <TouchableRipple onPress={this.handleUpdatePhoto}>
               <View style={styles.imageWrapper}>
                 <Image
                   source={avatarImage}
@@ -110,3 +163,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   }
 });
+
+export default connect(null, { saveProfile })(Profile);

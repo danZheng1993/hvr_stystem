@@ -109,7 +109,7 @@ export default ({ medias }) => {
             >
               <Image
                 source={collections.indexOf(media._id) == -1 ? HeartO : Heart}
-                style={styles.heartIcon}
+                style={collections.indexOf(media._id) == -1 ? styles.heartOIcon : styles.heartIcon}
               />
             </TouchableOpacity>
             <TouchableOpacity style={styles.followIconWrapper} onPress={() => handleShare(media)}>
@@ -193,6 +193,11 @@ const styles = StyleSheet.create({
   },
 
   heartIcon: {
+    width: 20,
+    height: 20,
+  },
+
+  heartOIcon: {
     width: 20,
     height: 20,
     tintColor: colors.gray,

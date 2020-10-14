@@ -1,6 +1,18 @@
 // const baseUrl = 'http://localhost:4000/'
 // const baseUrl = 'http://192.168.0.169:4000/';
 const baseUrl = 'http://47.105.53.235/api/';
+
+const PHOTO_SELECTION_OPTIONS = {
+  title: '',
+  takePhotoButtonTitle: '拍照',
+  chooseFromLibraryButtonTitle: '从相册选择',
+  cancelButtonTitle: '取消',
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+}
+
 const constants = {
     SMS_VERIFICATION: 'SMS_VERIFICATION',
     PASSWORD_VERIFICATION: 'PASSWORD_VERIFICATION',
@@ -17,6 +29,7 @@ const constants = {
     WECHAT_APP_ID: 'wx832bdf14313c1570',
     HEREMAP_API_URL: 'https://revgeocode.search.hereapi.com/v1/revgeocode',
     HEREMAP_API_TOKEN: 'az9j9AkmzwqXkCQA3kULLVTT4D49QbdFW4nQSuuGrlo',
+    PHOTO_SELECTION_OPTIONS,
     // IP: ip
 }
 

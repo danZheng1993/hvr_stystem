@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-around',
-    margin: 70
+    padding: 70,
+    backgroundColor: 'white'
   },
   buttonsContainer: {
     flex: 2,

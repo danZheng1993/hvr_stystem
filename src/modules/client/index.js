@@ -75,9 +75,9 @@ export default () => (
       showLabel: true,
       style: {
         backgroundColor: colors.secondary,
-        paddingBottom: isIphoneX() ? 24 : 16,
-        paddingTop: isIphoneX() ? 16 : 8,
-        height: isIphoneX() ? 86 : 72,
+        paddingBottom: isIphoneX() ? 24 : 4,
+        paddingTop: 12,
+        height: isIphoneX() ? 86 : 60,
       },
     }}
   >

@@ -273,7 +273,6 @@ export default handleActions({
     status: requestSuccess(SAVE_PROFILE),
     me: {
       ...payload,
-      photo: `${payload.photo}?${new Date().toISOString()}`
     },
     error: null,
     loading: false

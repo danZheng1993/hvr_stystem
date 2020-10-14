@@ -113,6 +113,7 @@ class LoginWithPassword extends React.Component {
             onSubmit={this.handleClick}
           >
             <TextValidator
+              style={styles.input}
               name="phoneNumber"
               maxLength={11}
               label='手机号'
@@ -190,8 +191,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 70,
-    paddingVertical: 30
+    paddingHorizontal: 60,
+    paddingVertical: 30,
+    backgroundColor: 'white',
   },
   buttonsContainer: {
     flex: 1,
@@ -203,6 +205,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'stretch',
+    fontSize: 16,
   },
   photo: {
     borderRadius: 25,
@@ -211,6 +214,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 15,
+    fontSize: 16,
   },
   touch: {
     flexDirection: 'row',

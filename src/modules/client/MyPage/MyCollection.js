@@ -39,7 +39,7 @@ class MyCollection extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bluish,
+    backgroundColor: colors.white,
     paddingHorizontal: 15,
     paddingTop: 20,
   },

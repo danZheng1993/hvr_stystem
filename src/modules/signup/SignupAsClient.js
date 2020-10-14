@@ -152,6 +152,7 @@ class SignupAsClient extends React.Component {
             style={{alignSelf: 'stretch'}}
         >
           <TextValidator
+            style={styles.input}
             name="phoneNumber"
             maxLength={11}
             label='手机号'
@@ -166,6 +167,7 @@ class SignupAsClient extends React.Component {
           <View style={styles.verificationCode}>
             <View style={{ marginBottom: 15, flex: 4}}>
               <TextValidator
+                style={styles.input}
                 name="verificationCode"
                 validators={['required', 'matchRegexp:^[0-9]{4}$']}                 
                 errorMessages={['必填此项', '验证码出错']}
@@ -177,13 +179,13 @@ class SignupAsClient extends React.Component {
                 onChangeText={verificationCode => this.setState({ verificationCode })}
               />
             </View>
-            <View style={{alignSelf: 'center'}}>
+            <View style={{paddingTop: 18}}>
               {counter == 60 ? (
-                <TouchableOpacity style={{ paddingHorizontal: 16, paddingVertical: 8 }} onPress={() => this.sendCode()}>
-                  <Text style={{color: colors.primary}}>获得验证码 </Text>  
+                <TouchableOpacity style={{ paddingHorizontal: 16 }} onPress={() => this.sendCode()}>
+                  <Text size={14} style={{color: colors.primary}}>获得验证码 </Text>  
                 </TouchableOpacity>
               ) : (
-                <Text style={{color: colors.description}}>{counter}s 重新获取 </Text>
+                <Text size={14} style={{color: colors.description}}>{counter}s 重新获取 </Text>
               )}
             </View>
             
@@ -250,9 +252,11 @@ class SignupAsClient extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   contentContainer: {
-    padding: 70,
+    paddingVertical: 70,
+    paddingHorizontal: 60,
     alignItems: 'center',
     justifyContent: 'space-around',
   },
@@ -278,6 +282,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 15,
+    fontSize: 16,
   },
   verificationCode: {
     flexDirection: 'row',

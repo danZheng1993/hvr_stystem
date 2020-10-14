@@ -36,10 +36,8 @@ const styles = StyleSheet.create({
     tintColor: colors.primary,
   },
   headerContainer: {
-    height: 70,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingBottom: 10,
   },
   headerImage: {
     position: 'absolute',
@@ -47,7 +45,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: 70,
   },
   headerCaption: {
     fontFamily: fonts.primaryRegular,
