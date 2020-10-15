@@ -13,7 +13,8 @@ export default function RNSRadioGroup({
   underline,
   noline,
   small,
-  lightTheme
+  lightTheme,
+  inline,
 }) {
   return (
     <View
@@ -42,6 +43,7 @@ export default function RNSRadioGroup({
                 lightTheme && styles.itemUnderline,
                 noline && !!index && styles.itemNoLine,
                 isActive && activeStyle,
+                inline ? { marginHorizontal: 10, padding: 4 } : { flex: 1 }
               ]}
             >
               <Text
@@ -86,7 +88,6 @@ const styles = {
     fontSize: 12
   },
   item: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 0,

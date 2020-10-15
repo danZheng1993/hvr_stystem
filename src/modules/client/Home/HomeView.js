@@ -85,6 +85,7 @@ export default () => {
           items={tabs}
           onChange={setTabIndex}
           underline
+          inline
         />
         <View style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}>
           <Bell/>
