@@ -11,33 +11,30 @@ import isEmpty from 'lodash/isEmpty';
 
 import {Text} from './StyledText';
 import { getDateStr } from '../utils/helper';
-import { extractImageFromContent } from '../utils/images';
 import { colors } from '../styles';
+import DefaultImage from '../../assets/images/logo.png';
+import constants from '../constants';
+import reactotron from 'reactotron-react-native';
 
 export default ({ news, onRefresh, refreshing }) => {
   const navigation = useNavigation();
   const handleWebView = (item) => {
-    if (isEmpty(item.path)) {
-      Alert.alert('没有网址链接');
-    } else {
-      navigation.navigate('WebViewer', {url: item.path})
-    }
+    navigation.navigate('NewsDetail', { item })
   }
   const renderItem = ({ item }) => {
-    const image = extractImageFromContent(item.content);
     return (
       <TouchableOpacity 
         style={styles.itemWrapper}
         onPress={() => handleWebView(item)}
       >
         <View style={styles.itemContent}>
-          <Text black bold>{item.title}</Text>
-          <Text size={9}>{getDateStr(item.created)}</Text>
+          <Text size={16} black bold>{item.title}</Text>
+          <Text size={12}>{getDateStr(item.created)}</Text>
         </View>
         <View style={styles.itemImageWrapper}>
           <Image
             resizeMode="cover"
-            source={{uri: image}}
+            source={isEmpty(item.image) ? DefaultImage : {uri: constants.NEWS_BASE_URL + item.image}}
             style={styles.itemImage}
           />
         </View>

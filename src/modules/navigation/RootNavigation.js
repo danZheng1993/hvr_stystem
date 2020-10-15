@@ -62,6 +62,8 @@ import Security from '../settings/Security';
 import AboutUs from '../auth/AboutUs';
 import Help from '../auth/Help';
 
+import NewsDetail from '../NewsDetail';
+
 const Stack = createStackNavigator();
 
 const MainNavigator = () => (
@@ -94,6 +96,7 @@ const MainNavigator = () => (
     }}
   >
     <Stack.Screen name="Main" component={HomeScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="NewsDetail" component={NewsDetail} options={{ headerShown: false }} />
     <Stack.Screen name="Settings" component={Settings} options={{ title: '设 置' }} />
     <Stack.Screen name="MyCreated" component={Developing} options={{ title: '我发布的' }} />
     <Stack.Screen name="VRShop" component={Developing} options={{ title: '我的VR' }} />
