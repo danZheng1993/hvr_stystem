@@ -187,8 +187,8 @@ class ShootingID extends React.Component {
             format="YYYY-MM-DD"
             minDate="2019-12-01"
             maxDate="2049-12-31"
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
+            confirmBtnText="确定"
+            cancelBtnText="取消"
             onDateChange={(validFrom) => {this.setState({validFrom})}}
           />
           <DatePicker
@@ -200,8 +200,8 @@ class ShootingID extends React.Component {
             format="YYYY-MM-DD"
             minDate="2019-12-01"
             maxDate="2049-12-31"
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
+            confirmBtnText="确定"
+            cancelBtnText="取消"
             onDateChange={(validDate) => {this.setState({validDate})}}
           />
         </View>
