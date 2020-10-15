@@ -79,6 +79,7 @@ class AvatarImage extends React.Component {
   state = {
     loading: false,
     imageFailed: false,
+    image: false,
   }
 
   componentDidUpdate(prevProps) {
@@ -250,6 +251,7 @@ class Chatting extends React.Component {
         {
           _id: messages.id,
           text: messages.message,
+          image: messages.image,
           createdAt: new Date(),
           user: {
             _id: 2,
@@ -283,18 +285,20 @@ class Chatting extends React.Component {
   }
 
   sendMessage = async (messages) => {
-    const { to } = this.state;
+    const { to, image } = this.state;
     const { profile } = this.props;
     const message = messages[0];
     try {
       const result = await postApi('/chats', {
         message: message.text,
+        image,
         sender: profile._id,
         receiver: to,
       });
       const messageId = result.data._id;
       this.socket.emit('message', {
         message: message.text,
+        image,
         sender: profile._id,
         receiver: to,
         id: messageId,
@@ -347,6 +351,8 @@ class Chatting extends React.Component {
             placeholder="键入消息。。。"
             renderLoadEarlier={this.renderLoadEarlier}
             renderAvatar={this.renderAvatar}
+            renderTime={() => false}
+            dateFormat="ddd, hA"
           />
         )}
       </>
