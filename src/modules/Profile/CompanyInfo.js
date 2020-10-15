@@ -109,7 +109,7 @@ class CompanyInfo extends React.Component {
             placeholder="请输入公司名称"
             value={this.state.name}
             onChangeText={name => this.setState({ name })}
-        />
+          />
         <Text size={14} color={colors.redAlert}>
           温馨提示: 公司名称必须与营业执照一致
         </Text>
@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
   input: {
     marginBottom: 15,
     alignSelf: 'stretch',
-    width: 300
   },
   buttonsContainer: {
     alignSelf: 'stretch',

@@ -1,15 +1,16 @@
 import React from 'react'
 import { View, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import { TextInput } from 'react-native-paper';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 
 import ImagePicker from 'react-native-image-picker'
-import { colors, commonStyles } from '../../styles'
-import { Button } from '../../components';
-import { Text } from '../../components/StyledText';
-
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
+
+import { colors, commonStyles } from '../../styles'
+import { Button, toast } from '../../components';
+import { Text } from '../../components/StyledText';
 
 import { saveProfile } from '../../redux/modules/auth'
 import uploadFile from '../../redux/api/upload'
@@ -19,6 +20,7 @@ import FrontIDPlaceholder from '../../../assets/images/front.png';
 import BackIDPlaceholder from '../../../assets/images/back.png';
 
 import constants from '../../constants';
+import reactotron from 'reactotron-react-native';
 
 class ShootingID extends React.Component {
   constructor(props) {
@@ -26,22 +28,32 @@ class ShootingID extends React.Component {
   }
   state = {
     frontPhoto: null,
-    backPhoto: null
+    backPhoto: null,
+    holderName: '',
+    idNumber: '',
+    validDate: '',
   }
-  handleClick = () => {
-    const {frontPhoto, backPhoto,} = this.state
-    const {profile} = this.props
-    if (frontPhoto) {
-      uploadFile('profile/me', 'post',this.createFormData(frontPhoto, { type: "frontID"}))
-      .then(res => console.log(res))
-      .catch(err => Alert.alert(err))
+  handleClick = async () => {
+    try {
+      const { frontPhoto, backPhoto, holderName, idNumber, validDate } = this.state
+      const { saveProfile, navigation, route } = this.props
+      const forSingle = route.params.forSingle || false;
+      if (frontPhoto) {
+        await uploadFile('profile/me', 'post',this.createFormData(frontPhoto, { type: "frontID"}));
+      }
+      if (backPhoto) {
+        await uploadFile('profile/me', 'post',this.createFormData(backPhoto, { type: "backID"}))
+      }
+      saveProfile({ holderName, idNumber, validDate });
+      if (forSingle) {
+        navigation.goBack();
+      } else {
+        navigation.navigate('CompanyInfo');
+      }
+    } catch (err) {
+      console.log(err);
+      toast('无效的输入');
     }
-    if (backPhoto) {
-      uploadFile('profile/me', 'post',this.createFormData(backPhoto, { type: "backID"}))
-      .then(res => console.log(res))
-      .catch(err => Alert.alert(err))
-    }
-    this.props.navigation.navigate('CompanyInfo')
   };
   
   createFormData = (photo, body) => {
@@ -110,40 +122,66 @@ class ShootingID extends React.Component {
   render() {
     const { frontPhoto, backPhoto } = this.state
     return (
-      <View style={styles.container}>
+      <KeyboardAwareScrollView style={{ flex: 1 }} contentContainerStyle={styles.container}>
         <Text size={28} bold black style={{marginBottom: 30}}>上传身份证</Text>
-          <TouchableOpacity onPress={this.handleChooseFrontPhoto} style={styles.touch}>
-            {frontPhoto ? 
-            <Image
-              source={{ uri: frontPhoto.uri }}
-              style={{width: '100%', height: '100%'}}
-              onPress={this.handleChoosePhoto}
-            /> :
-            <Image
-              source={FrontIDPlaceholder}
-              style={styles.photo}
-            />
-            }    
-          </TouchableOpacity>
-          <Text size={14} black>
-            身份证正面照片
-          </Text>
-          <TouchableOpacity onPress={this.handleChooseBackPhoto} style={styles.touch}>
-            {backPhoto ? 
-            <Image
-              source={{ uri: backPhoto.uri }}
-              style={{width: '100%', height: '100%'}}
-              onPress={this.handleChoosePhoto}
-            /> :
-            <Image
-              source={BackIDPlaceholder}
-              style={styles.photo}
-            />
-            }    
-          </TouchableOpacity>
-          <Text size={14} black>
-            身份证反面照片
-          </Text>
+        <View style={styles.imageWrapper}>
+          <View style={styles.idHolder}>
+            <TouchableOpacity onPress={this.handleChooseFrontPhoto} style={styles.touch}>
+              {frontPhoto ? 
+                <Image
+                  source={{ uri: frontPhoto.uri }}
+                  style={{width: '100%', height: '100%'}}
+                  onPress={this.handleChoosePhoto}
+                /> :
+                <Image
+                  source={FrontIDPlaceholder}
+                  style={styles.photo}
+                />
+              }    
+            </TouchableOpacity>
+            <Text size={14} black>
+              身份证正面照片
+            </Text>
+          </View>
+          <View style={styles.idHolder}>
+            <TouchableOpacity onPress={this.handleChooseBackPhoto} style={styles.touch}>
+              {backPhoto ? 
+              <Image
+                source={{ uri: backPhoto.uri }}
+                style={{width: '100%', height: '100%'}}
+                onPress={this.handleChoosePhoto}
+              /> :
+              <Image
+                source={BackIDPlaceholder}
+                style={styles.photo}
+              />
+              }    
+            </TouchableOpacity>
+            <Text size={14} black>
+              身份证反面照片
+            </Text>
+          </View>
+        </View>
+        <View>
+          <TextInput
+            style={styles.input}
+            placeholder="身份证持有人姓名"
+            value={this.state.holderName}
+            onChangeText={holderName => this.setState({ holderName })}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="身份证号码"
+            value={this.state.idNumber}
+            onChangeText={idNumber => this.setState({ idNumber })}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="有效日期"
+            value={this.state.validDate}
+            onChangeText={validDate => this.setState({ validDate })}
+          />
+        </View>
         <Button
           rounded
           bgColor={colors.secondary}
@@ -151,17 +189,16 @@ class ShootingID extends React.Component {
           caption="下一步"
           onPress={() => this.handleClick()}
         />
-      </View>    
+      </KeyboardAwareScrollView>    
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 50
+    paddingVertical: 50
   },
   photo: {
     width: 60,
@@ -174,7 +211,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 15,
-    height: 150
+    height: 100,
+    width: '100%',
   },
   input: {
     marginBottom: 15,
@@ -186,6 +224,24 @@ const styles = StyleSheet.create({
   button: {
     margin: 20,
     alignSelf: 'stretch',
+  },
+  imageWrapper: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingBottom: 16,
+  },
+  idHolder: {
+    flex: 1,
+    paddingHorizontal: 4,
+    alignItems: 'center',
+  },
+  input: {
+    marginBottom: 15,
+    alignSelf: 'stretch',
+    width: 300,
+    backgroundColor: 'white',
   },
 });
 

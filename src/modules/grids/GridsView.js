@@ -20,10 +20,10 @@ export default class GridsScreen extends React.Component {
     ];
 
   _openArticle = article => {
-    this.props.navigation.navigate({
-      routeName: 'Article',
-      params: { ...article },
-    });
+    this.props.navigation.navigate(
+      'Article',
+      { ...article },
+    );
   };
 
   renderRowOne = rowData => {
