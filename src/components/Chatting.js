@@ -363,7 +363,7 @@ class Chatting extends React.Component {
             renderLoadEarlier={this.renderLoadEarlier}
             renderAvatar={this.renderAvatar}
             renderTime={() => false}
-            dateFormat="ddd, hA"
+            dateFormat="HH:mm"
             renderAccessory={addImage ? this.renderAccessory : undefined}
           />
         )}

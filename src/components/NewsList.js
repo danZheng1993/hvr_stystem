@@ -29,6 +29,7 @@ export default ({ news, onRefresh, refreshing }) => {
       >
         <View style={styles.itemContent}>
           <Text size={16} black bold>{item.title}</Text>
+          <Text size={16} black>{item.source}</Text>
           <Text size={12}>{getDateStr(item.created)}</Text>
         </View>
         <View style={styles.itemImageWrapper}>

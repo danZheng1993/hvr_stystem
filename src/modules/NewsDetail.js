@@ -27,18 +27,20 @@ export default class NewsDetail extends React.Component {
           <Text size={18} bold>{item.title}</Text>
           <View style={styles.button} />
         </View>
-        <ScrollView style={styles.content}>
+        <View style={styles.content}>
           <Text size={16}>{item.source}</Text>
           <Text size={14}>{getDateStr(item.created)}</Text>
-          <Image
-            style={styles.image}
-            source={isEmpty(item.image) ? DefaultImage : { uri: constants.NEWS_BASE_URL + item.image }}
-          />
+          {!isEmpty(item.image) && <Image style={{ width: '100%', height: 250 }} source={{ uri: constants.NEWS_BASE_URL + item.image }} />}
           <WebView
             source={{html: item.content}}
-            style={{ width: '100%', minHeight: 120 }}
+            containerStyle={{ flex: 1 }}
+            style={styles.webview}
+            mixedContentMode="always"
+            overScrollMode="content"
+            contentMode="mobile"
+            contentInsetAdjustmentBehavior="automatic"
           />
-        </ScrollView>
+        </View>
       </View>
     );
   }
@@ -48,6 +50,9 @@ const styles = {
   wrapper: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  webview: {
+    flex: 1,
   },
   header: {
     flexDirection: 'row',
@@ -59,6 +64,7 @@ const styles = {
     justifyContent: 'space-between'
   },
   content: {
+    flex: 1,
     padding: 16,
   },
   image: {

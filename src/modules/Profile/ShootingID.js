@@ -2,6 +2,8 @@ import React from 'react'
 import { View, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import { TextInput } from 'react-native-paper';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
+import DatePicker from 'react-native-datepicker'
+import moment from 'moment';
 
 import ImagePicker from 'react-native-image-picker'
 import { connect } from 'react-redux';
@@ -32,10 +34,11 @@ class ShootingID extends React.Component {
     holderName: '',
     idNumber: '',
     validDate: '',
+    validFrom: '',
   }
   handleClick = async () => {
     try {
-      const { frontPhoto, backPhoto, holderName, idNumber, validDate } = this.state
+      const { frontPhoto, backPhoto, holderName, idNumber, validDate, validFrom } = this.state
       const { saveProfile, navigation, route } = this.props
       const forSingle = route.params.forSingle || false;
       if (frontPhoto) {
@@ -44,7 +47,7 @@ class ShootingID extends React.Component {
       if (backPhoto) {
         await uploadFile('profile/me', 'post',this.createFormData(backPhoto, { type: "backID"}))
       }
-      saveProfile({ holderName, idNumber, validDate });
+      saveProfile({ body: { holderName, idNumber, validDate, validFrom } });
       if (forSingle) {
         navigation.goBack();
       } else {
@@ -175,11 +178,31 @@ class ShootingID extends React.Component {
             value={this.state.idNumber}
             onChangeText={idNumber => this.setState({ idNumber })}
           />
-          <TextInput
+          <Text size={16}>有效期限</Text>
+          <DatePicker
             style={styles.input}
-            placeholder="有效日期"
-            value={this.state.validDate}
-            onChangeText={validDate => this.setState({ validDate })}
+            date={this.state.validFrom}
+            mode="date"
+            placeholder="有效期限"
+            format="YYYY-MM-DD"
+            minDate="2019-12-01"
+            maxDate="2049-12-31"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            onDateChange={(validFrom) => {this.setState({validFrom})}}
+          />
+          <DatePicker
+            style={styles.input}
+            date={this.state.validDate}
+            mode="date"
+            minDate={moment(this.state.validFrom || new Date).format('YYYY-MM-DD')}
+            placeholder="长期请勿选"
+            format="YYYY-MM-DD"
+            minDate="2019-12-01"
+            maxDate="2049-12-31"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            onDateChange={(validDate) => {this.setState({validDate})}}
           />
         </View>
         <Button
