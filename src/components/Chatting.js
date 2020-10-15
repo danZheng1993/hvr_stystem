@@ -127,6 +127,8 @@ class Chatting extends React.Component {
       userId: null,
       to: '',
       loadingEarlier: false,
+      addImage: false,
+      image: null,
     };
 
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
@@ -291,14 +293,14 @@ class Chatting extends React.Component {
     try {
       const result = await postApi('/chats', {
         message: message.text,
-        image,
+        image: image ? image : undefined,
         sender: profile._id,
         receiver: to,
       });
       const messageId = result.data._id;
       this.socket.emit('message', {
         message: message.text,
-        image,
+        image: image ? image : undefined,
         sender: profile._id,
         receiver: to,
         id: messageId,
@@ -335,8 +337,17 @@ class Chatting extends React.Component {
     return <AvatarImage photo={constants.BASE_URL + 'profileImage/' + profilePhoto} />;
   };
 
+  renderAccessory = () => {
+    return (
+      <View>
+        <Text>Accessory</Text>
+      </View>
+    )
+  }
+
   render() {
-    const {loading} = this.props
+    const { loading } = this.props
+    const { addImage } = this.state;
     const user = { _id: this.state.userId || -1 };
     return (
       <>
@@ -353,6 +364,7 @@ class Chatting extends React.Component {
             renderAvatar={this.renderAvatar}
             renderTime={() => false}
             dateFormat="ddd, hA"
+            renderAccessory={addImage ? this.renderAccessory : undefined}
           />
         )}
       </>
