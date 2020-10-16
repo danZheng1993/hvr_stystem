@@ -22,9 +22,7 @@ export default ({ banners }) => {
 
   const handleItemPress = (index) => {
     const url = validBannerList[index].url;
-    if (isEmpty(url)) {
-      Alert.alert('没有网址链接');
-    } else {
+    if (!isEmpty(url)) {
       navigation.navigate('WebViewer', { url })
     }
   }

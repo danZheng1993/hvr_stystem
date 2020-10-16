@@ -7,6 +7,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { colors, fonts } from '../styles';
 import {getContacts, clearUnreadMessages, getNormalNotifications, getEventNotifications} from '../redux/modules/auth'
+import { messageRead } from '../redux/modules/message';
 import { contactsSelector, unreadMessagesSelector} from '../redux/selectors'
 import constants from '../constants'
 import reactotron from 'reactotron-react-native';
@@ -48,12 +49,14 @@ class Notification extends React.Component {
     }
 
     showNotification = () => {
+      this.props.messageRead();
       this.props.clearUnreadMessages('system')
       this.props.navigation.navigate('SystemNotification')
     }
 
     showNormalNotification = () => {
       const { normalNotification } = this.state;
+      this.props.messageRead();
       this.props.navigation.navigate({
         name: 'NotificationList',
         params: { type: 'normal', notifications: normalNotification }
@@ -62,6 +65,7 @@ class Notification extends React.Component {
     
     showEventNotification = () => {
       const { eventNotification } = this.state;
+      this.props.messageRead();
       this.props.navigation.navigate({
         name: 'NotificationList',
         params: { type: 'event', notifications: eventNotification }
@@ -75,7 +79,7 @@ class Notification extends React.Component {
               <View style={styles.demoIconsContainer}>
                 <TouchableOpacity 
                   style={{ justifyContent:"center", alignItems:"center", marginHorizontal: 10}}
-                  onPress = {() => this.showNotification()}
+                  // onPress = {() => this.showNotification()}
                 >
                   <Image
                     resizeMode="contain"
@@ -153,6 +157,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
     getContacts,
+    messageRead,
     clearUnreadMessages,
     getNormalNotifications,
     getEventNotifications,

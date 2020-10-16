@@ -14,7 +14,7 @@ export const profileSelector = (state) => {
 }
 
 export const unreadMessagesSelector = (state) =>
-  get(state, 'auth.unread', {})
+  get(state, 'message.messages', {})
 
 export const notificationsSelector = (state) =>
   get(state, 'auth.notification', [])
