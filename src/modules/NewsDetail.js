@@ -24,7 +24,9 @@ export default class NewsDetail extends React.Component {
           <TouchableOpacity style={styles.button} onPress={this.handleClose}>
             <Ionicons name="chevron-back" size={24} color={colors.primary} />
           </TouchableOpacity>
-          <Text size={18} bold>{item.title}</Text>
+					<View style={{ flex: 1 }}>
+          	<Text size={18} bold hCenter>{item.title}</Text>
+					</View>
           <View style={styles.button} />
         </View>
         <View style={styles.content}>
