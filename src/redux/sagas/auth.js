@@ -173,13 +173,13 @@ const doRegisterPushyToken = apiCall({
 const doGetEventNotifications = apiCall({
   type: GET_EVENT_NOTIFICATIONS,
   method: 'get',
-  path: () => '/messages/?count=0&page_size=10&filter=%7B%22type%22:%22event%7D'
+  path: () => '/messages/?count=0&page_size=10&filter=%7B%22type%22:%22event%22%7D'
 })
 
 const doGetNormalNotifications = apiCall({
   type: GET_NORMAL_NOTIFICATIONS,
   method: 'get',
-  path: () => '/messages/?count=0&page_size=10&filter=%7B%22type%22:%22notification%7D'
+  path: () => '/messages/?count=0&page_size=10&filter=%7B%22type%22:%22notification%22%7D'
 })
 
 export default function* rootSaga () {

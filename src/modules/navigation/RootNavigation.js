@@ -56,6 +56,7 @@ import Player from '../../components/Player';
 import SearchResult from '../../components/SearchResult';
 import Location from '../../components/Location';
 import Developing from '../../components/Developing'
+import NotificationList from '../../components/NotificationList';
 import Settings from '../settings';
 import PersonalInformation from '../settings/PersonalInformation';
 import Security from '../settings/Security';
@@ -377,6 +378,7 @@ const MainNavigator = () => (
     <Stack.Screen name="Chatting" component={Chatting} options={{ title: '大众传媒' }} />
     <Stack.Screen name="ViewInvoice" component={ViewInvoice} options={{ title: '' }} />
     <Stack.Screen name="Notification" component={Notification} options={{ title: '消息' }} />
+    <Stack.Screen name="NotificationList" component={NotificationList} options={{ title: '消息' }} />
     <Stack.Screen name="SystemNotification" component={SystemNotification} options={{ title: '通知消息' }} />
     <Stack.Screen name="PersonalInformation" component={PersonalInformation} options={{ title: '' }} />
     <Stack.Screen name="Security" component={Security} options={{ title: '安全验证' }} />
