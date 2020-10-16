@@ -14,7 +14,7 @@ const Notification = ({ notification }) => (
       <Text style={styles.subTitle}>{notification.title}</Text>
     )}
     {!isEmpty(notification.image) && (
-      <Image style={styles.image} source={{ uri: constants.MESSAGE_BASE_URL + notification.image }} />
+      <Image style={styles.image} source={{ uri: constants.MESSAGE_BASE_URL + notification.image }} resizeMode="contain" />
     )}
   </View>
 )
@@ -60,7 +60,7 @@ const styles= StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 120,
+    height: 250,
   }
 })
 
