@@ -1,11 +1,12 @@
 import { ListItem, Badge } from 'react-native-elements'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, {Component} from 'react'
-import { colors, fonts } from '../styles';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import {getContacts, clearUnreadMessages} from '../redux/modules/auth'
+
+import { colors, fonts } from '../styles';
+import {getContacts, clearUnreadMessages, getNormalNotifications, getEventNotifications} from '../redux/modules/auth'
 import { contactsSelector, unreadMessagesSelector} from '../redux/selectors'
 import constants from '../constants'
 
@@ -21,8 +22,29 @@ class Notification extends React.Component {
         }
     }
     componentWillMount() {
-        this.props.getContacts()
+      this.props.navigation.addListener('focus', this.fetchNotifications)
+      this.props.getContacts()
     }
+
+    componentDidMount() {
+      this.props.getContacts();
+      this.fetchNotifications();
+    }
+
+    fetchNotifications = () => {
+      const { getNormalNotifications, getEventNotifications } = this.props;
+      getNormalNotifications({
+        success: (data) => {
+          console.log({ normalNotification: data });
+        }
+      });
+      getEventNotifications({
+        success: (data) => {
+          console.log({ eventNotification: data });
+        }
+      });
+    }
+
     startChat = (id) => {
         this.props.clearUnreadMessages(id)
         this.props.navigation.navigate('Chatting', {to: id})
@@ -117,7 +139,9 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
     getContacts,
-    clearUnreadMessages
+    clearUnreadMessages,
+    getNormalNotifications,
+    getEventNotifications,
 };
   
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

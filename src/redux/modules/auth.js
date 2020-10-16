@@ -26,6 +26,8 @@ export const CHECK_CODE = 'CHECK_CODE'
 export const THIRD_PARTY_SUCCESS = 'THIRD_PARTY_SUCCESS'
 export const REGISTER_PUSHY_TOKEN = 'REGISTER_PUSH_TOKEN'
 export const DO_WECHAT_SIGNUP = 'DO_WECHAT_SIGNUP'
+export const GET_EVENT_NOTIFICATIONS = 'GET_EVENT_NOTIFICATIONS'
+export const GET_NORMAL_NOTIFICATIONS = 'GET_NORMAL_NOTIFICATIONS'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -52,6 +54,8 @@ export const clearUnreadMessages = createAction(CLEAR_UNREAD_MESSAGES)
 export const addToSearch = createAction(ADD_TO_SEARCH)
 export const clearSearch = createAction(CLEAR_SEARCH)
 export const registerPushyToken = createAction(REGISTER_PUSHY_TOKEN)
+export const getEventNotifications = createAction(GET_EVENT_NOTIFICATIONS)
+export const getNormalNotifications = createAction(GET_NORMAL_NOTIFICATIONS)
 
 const getInitialState = async () => {
   let authRestore = await AsyncStorage.getItem('hvr_auth') || null

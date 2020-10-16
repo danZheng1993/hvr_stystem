@@ -1,7 +1,7 @@
 import { takeLatest } from 'redux-saga/effects'
 import AsyncStorage from '@react-native-community/async-storage';
 import SyncStorage from 'sync-storage';
-import { DO_LOGIN, DO_SIGNUP, GET_PROFILE, SAVE_PROFILE, SEND_CODE, CHECK_CODE, ADD_TO_CONTACTS, GET_CONTACTS, ADD_TO_COLLECTIONS, ADD_TO_ATTENTIONS, REMOVE_FROM_COLLECTIONS, REMOVE_FROM_ATTENTIONS, REGISTER_PUSHY_TOKEN } from '../modules/auth'
+import { DO_LOGIN, DO_SIGNUP, GET_PROFILE, SAVE_PROFILE, SEND_CODE, CHECK_CODE, ADD_TO_CONTACTS, GET_CONTACTS, ADD_TO_COLLECTIONS, ADD_TO_ATTENTIONS, REMOVE_FROM_COLLECTIONS, REMOVE_FROM_ATTENTIONS, REGISTER_PUSHY_TOKEN, GET_EVENT_NOTIFICATIONS, GET_NORMAL_NOTIFICATIONS } from '../modules/auth'
 import apiCall from '../api/apiCall'
 import {saveItem, loadItem} from '../api/storage'
 
@@ -170,6 +170,18 @@ const doRegisterPushyToken = apiCall({
   }
 })
 
+const doGetEventNotifications = apiCall({
+  type: GET_EVENT_NOTIFICATIONS,
+  method: 'get',
+  path: () => '/messages/?count=0&page_size=10&filter=%7B%22type%22:%22event%7D'
+})
+
+const doGetNormalNotifications = apiCall({
+  type: GET_NORMAL_NOTIFICATIONS,
+  method: 'get',
+  path: () => '/messages/?count=0&page_size=10&filter=%7B%22type%22:%22notification%7D'
+})
+
 export default function* rootSaga () {
   yield takeLatest(DO_LOGIN, doLogin)
   yield takeLatest(DO_SIGNUP, doSignup)
@@ -184,4 +196,6 @@ export default function* rootSaga () {
   yield takeLatest(REMOVE_FROM_ATTENTIONS, doRemoveFromAttentions)
   yield takeLatest(GET_CONTACTS, doGetContacts)
   yield takeLatest(REGISTER_PUSHY_TOKEN, doRegisterPushyToken)
+  yield takeLatest(GET_NORMAL_NOTIFICATIONS, doGetNormalNotifications)
+  yield takeLatest(GET_EVENT_NOTIFICATIONS, doGetEventNotifications)
 }
