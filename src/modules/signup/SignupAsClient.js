@@ -89,7 +89,7 @@ class SignupAsClient extends React.Component {
       Alert.alert('电话号码无效');
     } else {
       this.props.sendcode({
-        body: { phoneNumber: phoneNumber},
+        body: { phoneNumber: phoneNumber },
         success: () => {
           Alert.alert('短信发送验证码。代码有效期为60秒。');
           timer = setInterval(this.countTime, 1000)
