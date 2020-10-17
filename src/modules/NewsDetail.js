@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Animated, Image, TouchableOpacity } from 'react-native';
 import WebView from 'react-native-webview';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import isEmpty from 'lodash/isEmpty';
@@ -12,8 +12,30 @@ import DefaultImage from '../../assets/images/logo.png';
 import constants from '../constants';
 
 export default class NewsDetail extends React.Component {
+  aniVal = new Animated.Value(1);
   handleClose = () => {
     this.props.navigation.goBack();
+  }
+  handleScroll = ({ nativeEvent }) => {
+    const { contentOffset } = nativeEvent;
+    if (contentOffset.y < 100 && this.aniVal._value === 0) {
+      Animated.timing(
+        this.aniVal,
+        {
+          duration: 300,
+          toValue: 1
+        }
+      ).start();
+    }
+    if (contentOffset.y >= 100 && this.aniVal._value === 1) {
+      Animated.timing(
+        this.aniVal,
+        {
+          duration: 300,
+          toValue: 0,
+        }
+      ).start();
+    }
   }
   render() {
     const { route } = this.props;
@@ -32,7 +54,20 @@ export default class NewsDetail extends React.Component {
         <View style={styles.content}>
           <Text size={16}>{item.source}</Text>
           <Text size={14}>{getDateStr(item.created)}</Text>
-          {!isEmpty(item.image) && <Image style={{ width: '100%', height: 250 }} source={{ uri: constants.NEWS_BASE_URL + item.image }} />}
+          {!isEmpty(item.image) && (
+            <Animated.View
+              style={{
+                width: '100%',
+                height: this.aniVal.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, 250],
+                }),
+                overflow: 'hidden'
+              }}
+            >
+              <Image style={{ width: '100%', height: '100%' }} source={{ uri: constants.NEWS_BASE_URL + item.image }} />
+            </Animated.View>
+          )}
           <WebView
             source={{html: item.content}}
             containerStyle={{ flex: 1 }}
@@ -41,6 +76,7 @@ export default class NewsDetail extends React.Component {
             overScrollMode="content"
             contentMode="mobile"
             contentInsetAdjustmentBehavior="automatic"
+            onScroll={this.handleScroll}
           />
         </View>
       </View>

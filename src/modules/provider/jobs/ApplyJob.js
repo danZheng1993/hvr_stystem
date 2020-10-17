@@ -68,7 +68,7 @@ class ApplyJob extends React.Component {
               <Button
                 small
                 bgColor={colors.secondary}
-                caption="联系服务商"
+                caption="联系需求方"
                 onPress={() => this.handleContact(job.creator)}
               />
               <View style={{flexDirection: 'row'}}>

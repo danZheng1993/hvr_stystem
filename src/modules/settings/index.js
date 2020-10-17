@@ -58,7 +58,7 @@ const settings = props => {
         />
         <ListItem
           key={2}
-          title='账户安全'
+          title='修改密码'
           chevron={{ color: colors.secondary, size: 28}}
           titleStyle={{color: colors.secondary, fontWeight: 'bold', fontSize: 18}}
           hideChevron={false}
