@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.pedrouid.crypto.RNSCCryptoPackage;
 import com.theweflex.react.WeChatPackage;
 import com.rnfs.RNFSPackage;
 import com.facebook.react.ReactInstanceManager;
