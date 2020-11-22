@@ -23,14 +23,16 @@ const signPayload = (partnerId, prepayId, nonceStr, timestamp, package) => {
 }
 
 const handlePayment = async (callback) => {
+	const nonceStr = Math.random().toString().slice(2, 32);
+	const timeStamp = Date.now();
 	try {
 		await WeChat.pay({
 			partnerId: '1603740497',
 			prepayId: '1563539641',
-			nonceStr: Math.random().toString().slice(2, 32),
-			timeStamp: Date.now(),
+			nonceStr,
+			timeStamp,
 			package: 'Sign=WXPay',
-			sign: signPayload(partnerId, prepayId, nonceStr, timestamp, package),
+			sign: signPayload('1603740497', '1563539641', nonceStr, timeStamp, 'Sign=WXPay')
 		});
 		callback();
 	} catch {
