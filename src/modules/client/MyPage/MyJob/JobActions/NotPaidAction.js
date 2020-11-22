@@ -5,6 +5,7 @@ import {
   View,
 } from 'react-native';
 import * as WeChat from 'react-native-wechat-lib';
+import md5 from 'md5';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -15,6 +16,12 @@ import {settingsListSelector} from '../../../../../redux/selectors'
 import {Button, Text} from '../../../../../components'
 import {colors} from '../../../../../styles'
 
+const signPayload = (partnerId, prepayId, nonceStr, timestamp, package) => {
+	const strA = `partnerid=${partnerId}&prepayid=${prepayId}&noncestr=${nonceStr}&timestamp=${timestamp}&package=${package}`;
+	const strSignTemp = `${strA}&key=uJZcu0UOUTv2q54xxcUa7Z6o3OM8RNmc`;
+	return md5(strSignTemp);
+}
+
 const handlePayment = async (callback) => {
 	try {
 		await WeChat.pay({
@@ -23,6 +30,7 @@ const handlePayment = async (callback) => {
 			nonceStr: Math.random().toString().slice(2, 32),
 			timeStamp: Date.now(),
 			package: 'Sign=WXPay',
+			sign: signPayload(partnerId, prepayId, nonceStr, timestamp, package),
 		});
 		callback();
 	} catch {
