@@ -16,8 +16,8 @@ import {settingsListSelector} from '../../../../../redux/selectors'
 import {Button, Text} from '../../../../../components'
 import {colors} from '../../../../../styles'
 
-const signPayload = (partnerId, prepayId, nonceStr, timestamp, package) => {
-	const strA = `partnerid=${partnerId}&prepayid=${prepayId}&noncestr=${nonceStr}&timestamp=${timestamp}&package=${package}`;
+const signPayload = (partnerId, prepayId, nonceStr, timestamp, pckg) => {
+	const strA = `partnerid=${partnerId}&prepayid=${prepayId}&noncestr=${nonceStr}&timestamp=${timestamp}&package=${pckg}`;
 	const strSignTemp = `${strA}&key=uJZcu0UOUTv2q54xxcUa7Z6o3OM8RNmc`;
 	return md5(strSignTemp);
 }
