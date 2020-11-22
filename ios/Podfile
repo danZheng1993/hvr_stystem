@@ -7,7 +7,6 @@ target 'ReactNativeStarter' do
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
 
-  pod 'react-native-simple-crypto', :path => '../node_modules/react-native-simple-crypto'
 
   target 'ReactNativeStarterTests' do
     inherit! :complete
