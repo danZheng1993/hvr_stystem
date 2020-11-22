@@ -28,7 +28,7 @@ const constants = {
     MEDIA_BASE_URL: `${baseUrl}/mediaSource/`,
     SPLASH_BASE_URL: `${baseUrl}/splashImage/`,
     MESSAGE_BASE_URL: `${baseUrl}/messageImage/`,
-    WECHAT_APP_ID: 'wx832bdf14313c1570',
+    WECHAT_APP_ID: 'wx396f2ab3d9c48808',
     HEREMAP_API_URL: 'https://revgeocode.search.hereapi.com/v1/revgeocode',
     HEREMAP_API_TOKEN: 'az9j9AkmzwqXkCQA3kULLVTT4D49QbdFW4nQSuuGrlo',
     PHOTO_SELECTION_OPTIONS,

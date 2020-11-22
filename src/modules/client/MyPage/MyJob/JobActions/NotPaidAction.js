@@ -1,17 +1,34 @@
 import React from 'react';
 import {
+	Alert,
   StyleSheet,
   View,
 } from 'react-native';
+import * as WeChat from 'react-native-wechat-lib';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import {payUpfront} from '../../../../../redux/modules/payment'
+import { makePayment } from '../../../../../redux/modules/payment'
 import {updateMyJobsList, cancelJob, removeFromMyJobsList} from '../../../../../redux/modules/job'
 import {settingsListSelector} from '../../../../../redux/selectors'
 import {Button, Text} from '../../../../../components'
 import {colors} from '../../../../../styles'
+
+const handlePayment = async (callback) => {
+	try {
+		await WeChat.pay({
+			partnerId: '1603740497',
+			prepayId: '1563539641',
+			nonceStr: Math.random().toString().slice(2, 32),
+			timeStamp: Date.now(),
+			package: 'Sign=WXPay',
+		});
+		callback();
+	} catch {
+		Alert.alert('付款失败');
+	}
+}
 
 const NotPaidAction = props => {
   const {settings, job} = props
@@ -38,10 +55,10 @@ const NotPaidAction = props => {
             small
             bgColor={colors.warning}
             caption="去支付"
-            onPress={() => Confirm('提示', '是否确认支付首款？', () => props.payUpfront({
+            onPress={() => Confirm('提示', '是否确认支付首款？', handlePayment(() => props.makePayment({
               body: {id: props.job._id},
               success: (payload) => {props.updateMyJobsList(payload.data)}
-            }))}
+            })))}
           />
         </View>
       </View>
@@ -70,7 +87,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  payUpfront,
+  makePayment,
   cancelJob,
   removeFromMyJobsList,
   updateMyJobsList

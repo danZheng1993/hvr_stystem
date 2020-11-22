@@ -1,26 +1,58 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Image, TextInput} from 'react-native'
-import { colors } from '../../../../styles';
-import { Text, toast } from '../../../../components';
+import {View, StyleSheet, Image, TextInput, Alert} from 'react-native'
 import { TouchableRipple } from 'react-native-paper';
+import * as WeChat from 'react-native-wechat-lib';
+import { connect } from 'react-redux';
 
 const iconWeisin = require('../../../../../assets/images/weisin.png')
 const iconAlipay = require('../../../../../assets/images/alipay.png')
 const iconCard = require('../../../../../assets/images/card.png')
+import { colors } from '../../../../styles';
+import { Text, toast } from '../../../../components';
+import constants from '../../../../constants';
 
-export default class Withdraw extends Component {
+import { sendPaymentToUser } from '../../../../redux/modules/payment';
+import reactotron from 'reactotron-react-native';
+
+class Withdraw extends Component {
   constructor(props) {
     super(props)
     this.state = {
       amount: ''
     }
-  }
+	}
+	
+	weixinWithdraw = async (amount) => {
+		try {
+			const result = await WeChat.sendAuthRequest('snsapi_userinfo', 'wechat_hvr_integration');
+			const data = await fetch(`${constants.BASE_URL}auth/openid`, {
+				method: 'POST',
+				body: { code: result.code }
+			}).then(response => response.json())
+			reactotron.log({ data });
+			// this.props.sendPaymentToUser({
+			// 	body: {
+			// 		amount,
+			// 		openId: result.openId,
+			// 	},
+			// 	success: () => {
+			// 		Alert.alert('汇款成功');
+			// 	},
+			// 	fail: () => {
+			// 		Alert.alert('汇款失败');
+			// 	}
+			// });
+		} catch {
+			Alert.alert('汇款失败');
+		}
+	}
 
   Withdraw = (type) => {
     const {amount} = this.state
     if (!amount || isNaN(amount)) return toast('Wrong Input!')
     switch(type) {
-      case 1: // WEISIN
+			case 1: // WEISIN
+				this.weixinWithdraw(amount);
         break;
       case 1: // ALIPAY
         break;
@@ -56,7 +88,7 @@ export default class Withdraw extends Component {
               <Text white bold size={18}>提现到微信</Text>
             </View>
           </TouchableRipple>
-          <TouchableRipple onPress={() => this.Withdraw(2)} style={[styles.button, {backgroundColor: '#01aaef'}]}>
+          {/* <TouchableRipple onPress={() => this.Withdraw(2)} style={[styles.button, {backgroundColor: '#01aaef'}]}>
             <View style={styles.row}>
               <Image
                 source={iconAlipay}
@@ -73,12 +105,14 @@ export default class Withdraw extends Component {
               />
               <Text white bold size={18}>提现到银行卡</Text>
             </View>
-          </TouchableRipple>
+          </TouchableRipple> */}
         </View>
       </View>
     );
   }
 }
+
+export default connect(null, { sendPaymentToUser })(Withdraw);
 
 const styles = StyleSheet.create({
   container: {

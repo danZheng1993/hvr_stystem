@@ -10,13 +10,13 @@ PODS:
     - AppCenter/Crashes
     - AppCenterReactNativeShared
     - React
-  - AppCenter/Analytics (3.3.2):
+  - AppCenter/Analytics (3.3.4):
     - AppCenter/Core
-  - AppCenter/Core (3.3.2)
-  - AppCenter/Crashes (3.3.2):
+  - AppCenter/Core (3.3.4)
+  - AppCenter/Crashes (3.3.4):
     - AppCenter/Core
-  - AppCenterReactNativeShared (3.1.1):
-    - AppCenter/Core (= 3.3.2)
+  - AppCenterReactNativeShared (3.1.2):
+    - AppCenter/Core (= 3.3.4)
   - boost-for-react-native (1.63.0)
   - BVLinearGradient (2.5.6):
     - React
@@ -211,6 +211,8 @@ PODS:
   - React-jsinspector (0.63.2)
   - react-native-blur (0.8.0):
     - React
+  - react-native-geolocation (2.0.2):
+    - React
   - react-native-image-picker (2.3.3):
     - React
   - react-native-netinfo (5.9.6):
@@ -332,6 +334,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
+  - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -412,6 +415,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-blur:
     :path: "../node_modules/@react-native-community/blur"
+  react-native-geolocation:
+    :path: "../node_modules/@react-native-community/geolocation"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
   react-native-netinfo:
@@ -468,11 +473,11 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AppCenter: aba7de06e4c2184f90dc84f7866bd07f82427d69
+  AppCenter: 0487be185c038ed2ecc5ed38219af1dcd280af23
   appcenter-analytics: bce201b504c8138d235e6f42de1f36d30d2cd7f5
   appcenter-core: 086ab16077baef60368c6a119af6e9e127406286
   appcenter-crashes: 10790bf670f79150f1654d79f76c10a8b4936688
-  AppCenterReactNativeShared: b9fa50d999e830e03f086f487b1aa0f9772088c1
+  AppCenterReactNativeShared: 66667cd2dfad295b84bbf0f462e0e139e2128284
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   DoubleConversion: cde416483dac037923206447da6e1454df403714
@@ -493,6 +498,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 8ca588cc921e70590820ce72b8789b02c67cce38
   React-jsinspector: b14e62ebe7a66e9231e9581279909f2fc3db6606
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
+  react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
   react-native-image-picker: 3d3f85baabca60a00b75fb8facc1376db7bbdafa
   react-native-netinfo: 38a1e0b3e89b48e4b5833ed475d8df5f049f6f90
   react-native-safe-area-context: 955ecfce672683b495d9294d2f154a9ad1d9796b
@@ -522,6 +528,6 @@ SPEC CHECKSUMS:
   SGPlayerVR: fb77d8b7c21cc0607bd78714f716dc88b6c6349e
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
 
-PODFILE CHECKSUM: 6943ae46a56b9831d07f32c7232cf6a03963e20c
+PODFILE CHECKSUM: da130f49004a3f47619f4ffe936128f0640bde31
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3
