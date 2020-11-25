@@ -24,24 +24,26 @@ class Withdraw extends Component {
 	
 	weixinWithdraw = async (amount) => {
 		try {
-			const result = await WeChat.sendAuthRequest('snsapi_userinfo', 'wechat_hvr_integration');
+			const result = await WeChat.sendAuthRequest('snsapi_userinfo', 'openid_integration');
 			const data = await fetch(`${constants.BASE_URL}auth/openid`, {
 				method: 'POST',
-				body: { code: result.code }
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ code: result.code })
 			}).then(response => response.json())
-			reactotron.log({ data });
-			// this.props.sendPaymentToUser({
-			// 	body: {
-			// 		amount,
-			// 		openId: result.openId,
-			// 	},
-			// 	success: () => {
-			// 		Alert.alert('汇款成功');
-			// 	},
-			// 	fail: () => {
-			// 		Alert.alert('汇款失败');
-			// 	}
-			// });
+			this.props.sendPaymentToUser({
+				body: {
+					amount,
+					openId: result.openId,
+				},
+				success: () => {
+					Alert.alert('汇款成功');
+				},
+				fail: () => {
+					Alert.alert('汇款失败');
+				}
+			});
 		} catch {
 			Alert.alert('汇款失败');
 		}
