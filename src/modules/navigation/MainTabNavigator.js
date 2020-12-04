@@ -11,13 +11,13 @@ import GridsScreen from '../grids/GridsViewContainer';
 import PagesScreen from '../pages/PagesViewContainer';
 import ComponentsScreen from '../components/ComponentsViewContainer';
 
-const iconHome = require('../../../assets/images/tabbar/home.png');
-const iconCalendar = require('../../../assets/images/tabbar/calendar.png');
-const iconGrids = require('../../../assets/images/tabbar/grids.png');
-const iconPages = require('../../../assets/images/tabbar/pages.png');
-const iconComponents = require('../../../assets/images/tabbar/components.png');
+import iconHome from '../../../assets/images/tabbar/home.png';
+import iconCalendar from '../../../assets/images/tabbar/calendar.png';
+import iconGrids from '../../../assets/images/tabbar/grids.png';
+import iconPages from '../../../assets/images/tabbar/pages.png';
+import iconComponents from '../../../assets/images/tabbar/components.png';
 
-const hederBackground = require('../../../assets/images/topBarBg.png');
+import hederBackground from '../../../assets/images/topBarBg.png';
 
 const styles = StyleSheet.create({
   tabBarItemContainer: {

@@ -3,10 +3,12 @@ import {
   View,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   StyleSheet,
   FlatList,
 } from 'react-native'
 import { SearchBar } from 'react-native-elements';
+import { colors } from '../styles';
 
 const CityList= [ 
 	{"searchStr": "阿坝"},
@@ -339,8 +341,25 @@ const CityList= [
 	{"searchStr": "肇庆"},
 	{"searchStr": "昭通"},
 	{"searchStr": "赵县"},
-	 ]
+];
 
+const favCity = [
+	[
+		{"searchStr": "北京"},
+		{"searchStr": "上海"},
+		{"searchStr": "深圳"},
+	],
+	[
+		{"searchStr": "广州"},
+		{"searchStr": "成都"},
+		{"searchStr": "西安"},
+	],
+	[
+		{"searchStr": "南京"},
+		{"searchStr": "武汉"},
+		{"searchStr": "杭州"},
+	]
+];
 	 
 export default class Location extends Component {
   
@@ -482,11 +501,30 @@ export default class Location extends Component {
               lightTheme
             />
           </View>
-          <TouchableOpacity style={styles.resetButton} onPress={this.handleReset}>
+          {/* <TouchableOpacity style={styles.resetButton} onPress={this.handleReset}>
             <Text style={styles.resetButtonText}>重置位置</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
+		<View style={{ height: 160 }}>
+		  <Text style={{ fontSize: 16, paddingLeft: 16, paddingVertical: 12 }}>热门城市</Text>
+		  <View style={styles.favCityWrapper}>
+			  {favCity.map((favItems, idx) => (
+				<View style={styles.favCityLineWrapper} key={`fav_row_${idx}`}>
+					{favItems.map((item, idx) => (
+						<TouchableWithoutFeedback onPress={() => this.handleChoose(item.searchStr)} key={`fav_item_${idx}`}>
+							<View style={styles.favItemWrapper}>
+								<Text style={styles.favItemText}>
+									{item.searchStr}
+								</Text>
+							</View>
+						</TouchableWithoutFeedback>
+					))}
+				</View>
+			  ))}
+		  </View>
+		</View>
         <FlatList
+		  style={{ flex: 1 }}
           data={CityList.filter((item) => item.searchStr.includes(searchStr))}
           renderItem={this.renderRow}
           ListEmptyComponent={this.renderEmptyResult}
@@ -546,5 +584,32 @@ const styles = StyleSheet.create({
   },
   normalText: {
     color: '#000',
+  },
+  favCityWrapper: {
+		flex: 1,
+		flexDirection: 'column',
+		alignItems: 'center',
+		width: '100%',
+		paddingHorizontal: 16,
+  },
+  favCityLineWrapper: {
+	width: '100%',
+	flex: 1,
+	flexDirection: 'row',
+	alignItems: 'center',
+	justifyContent: 'space-between'
+  },
+  favItemWrapper: {
+	flex: 1,
+	marginHorizontal: 4,
+	paddingVertical: 8,
+	justifyContent: 'center',
+	backgroundColor: colors.secondary,
+	textAlign: 'center',
+	borderRadius: 8
+  },
+  favItemText: {
+	textAlign: 'center',
+	color: 'white',
   }
 })

@@ -45,15 +45,15 @@ export default () => {
   const loading = (newsLoading || bannerLoading || mediaLoading) && !newsRefreshing;
   useEffect(() => {
     dispatch(getSettings());
+    dispatch(getBanners());
+    dispatch(getNewsList());
+    dispatch(getMediaList());
   }, []);
 
-  useEffect(() => {
-    if (isFocused) {
-      dispatch(getBanners());
-      dispatch(getNewsList());
-      dispatch(getMediaList());
-    }
-  }, [isFocused]);
+  // useEffect(() => {
+  //   if (isFocused) {
+  //   }
+  // }, [isFocused]);
 
   useEffect(() => {
     if (!newsLoading) {

@@ -18,6 +18,7 @@ export default class UsersList extends React.Component {
     date: new Date(),
     loading: false,
     imageFailed: false,
+    loaded: false,
   }
 
   componentDidMount() {
@@ -26,7 +27,7 @@ export default class UsersList extends React.Component {
 
   render() {   
     const {user, navigation} = this.props
-    const { imageFailed, loading, date } = this.state;
+    const { imageFailed, loading, date, loaded } = this.state;
     return (
       <TouchableRipple onPress={() => navigation.navigate('ProviderDetail', {user: user})} style={{marginBottom: 10}}>
       {user &&
@@ -42,10 +43,10 @@ export default class UsersList extends React.Component {
                   source={!imageFailed ? {uri: constants.BASE_URL + 'profileImage/' + user.photo + `?t=${date.toISOString()}`} : DefaultAvatarImage}
                   style={styles.photo}
                   onLoadStart={() => this.setState({ loading: true })}
-                  onLoad={() => this.setState({ loading: false })}
-                  onError={() => this.setState({ imageFailed: true, loading: false })}
+                  onLoad={() => this.setState({ loading: false, loaded: true, })}
+                  onError={() => this.setState({ imageFailed: true, loading: false, loaded: true })}
                 />
-                {loading && (
+                {loading && !loaded && (
                   <View style={styles.loadingContainer}>
                     <ActivityIndicator size="small" color="white" />
                   </View>
@@ -54,11 +55,11 @@ export default class UsersList extends React.Component {
               <Text bold>{user.userName}</Text>
               <Text size={12} >{user.overview}</Text>
             </View>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text color={colors.primary}>服务雇主: {user.contacts.length}家</Text>
-              <Text color={colors.primary}>发布作品: 3个</Text>
-              <Text color={colors.primary}>播放量:{user.balance.toFixed(2)}</Text>
-              <Text color={colors.primary}>坐标: {user.location}</Text>
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-start'}}>
+              <Text size={14} color={colors.secondary}>服务雇主: {user.contacts.length}家</Text>
+              <Text size={14} color={colors.secondary}>发布作品: 3个</Text>
+              <Text size={14} color={colors.secondary}>播放量:{user.balance.toFixed(2)}</Text>
+              <Text size={14} color={colors.secondary}>坐标: {user.location}</Text>
             </View>
           </ImageBackground>}
       </TouchableRipple>

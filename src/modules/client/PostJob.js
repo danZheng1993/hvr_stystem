@@ -43,7 +43,7 @@ class PostJob extends React.Component {
       description: '',
       budget: '',
       count: '',
-      isPublic: 0,
+      isPublic: 1,
       isLive: false,
       isConfirm: false,
       start: new Date(),
@@ -53,7 +53,7 @@ class PostJob extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {settings, profile} = this.props
     const types = settings.type.split(",")
     const scenes = settings.scene.split(",")
@@ -222,12 +222,12 @@ class PostJob extends React.Component {
             onSubmit={this.handleConfirm}
           >
             <View style={[styles.componentsSection, styles.stretch]} >
-              <Text black size={14}>城市选择: </Text> 
+              <Text black size={15}>城市选择: </Text> 
               <Text color={colors.primary} onPress={() => this.props.navigation.navigate('Location', {chooseLocation: this.chooseLocation})}>{location} ></Text>
             </View>
             <View style={styles.componentsSection} >
               <View style={[styles.row]}>
-                <Text style={{flex: 1}} size={14} black>服务类别:</Text>
+                <Text style={{flex: 1}} size={15} black>服务类别:</Text>
                 <View style={styles.border}>
                   <ModalSelector
                     selectStyle={styles.modalSelector}
@@ -239,18 +239,22 @@ class PostJob extends React.Component {
                     initValueTextStyle={styles.selectedItem}
                     selectTextStyle={styles.selectedItem}
                     onChange={(option) => { this.setState({ type: option.label, typeKey: option.key }); }}
+                    cancelText="取消"
                   />
                 </View>
               </View>
               { !isLive ?
               <View style={styles.row}>
-                <Text style={{flex: 1}} size={14} black>场景数量:</Text>
+                <Text style={{flex: 1}} size={15} black>场景数量: </Text>
                 <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                   <TextInput
                     style={[styles.input, {width: '80%'}]}
                     keyboardType = 'numeric'
-                    value={this.state.count}
-                    onChangeText={count => this.setState({ count, systembudget: panoramaPrice * (+count) })}
+                    value={`${count > 0 ? count : ''}`}
+                    onChangeText={cnt => {
+                      const safeCount = Math.max(0, Math.min(cnt, 20));
+                      this.setState({ count: safeCount, systembudget: panoramaPrice * (+safeCount) })
+                    }}
                   />
                   <Text> 个</Text>
                 </View>
@@ -295,6 +299,7 @@ class PostJob extends React.Component {
                     initValueTextStyle={styles.selectedItem}
                     selectTextStyle={styles.selectedItem}
                     onChange={(option) => { this.setState({ scene: option.label, sceneKey: option.key }); }}
+                    cancelText="取消"
                   />
                 </View>
               </View>
@@ -311,18 +316,19 @@ class PostJob extends React.Component {
                     initValueTextStyle={styles.selectedItem}
                     selectTextStyle={styles.selectedItem}
                     onChange={(option) => { this.setState({ subcategory: option.label, subcategoryKey: option.key }); }}
+                    cancelText="取消"
                   />
                 </View>
               </View>
             </View>
 
             <View style = {[styles.componentsSection, {paddingRight: 15}]}>
-              <Text size={14} style={{marginBottom: 10}}>其他需求</Text>
+              <Text size={15} style={{marginBottom: 10}}>其他需求</Text>
               <View style={{flexDirection: 'row'}}>
                 <View style={{flex: 1}}>
                   {Array.isArray(services) && services.map((service, index) => (
                     <View key={index}>
-                      <Text black>
+                      <Text size={15} black>
                         是否需要{service}?
                       </Text>
                       <View style={{width: '80%'}}>
@@ -330,7 +336,7 @@ class PostJob extends React.Component {
                           items={['是', '否']}
                           defaultIndex={this.state.radioGroup[index]}
                           onChange={value => this.handleSelect(index, value)}
-                          size={11}
+                          size={13}
                         />
                       </View>
                     </View>
@@ -344,7 +350,7 @@ class PostJob extends React.Component {
             </View>
 
             <View style= {[styles.componentsSection, {paddingHorizontal: 15}]}>
-              <Text size={14} style={{paddingLeft: 15}}>其他需求</Text>
+              <Text size={15} style={{paddingLeft: 15}}>其他需求</Text>
               <TextInput
                 textAlignVertical='top'
                 style={styles.input}
@@ -357,7 +363,7 @@ class PostJob extends React.Component {
               />
             </View>
             <View style={[styles.componentsSection, styles.stretch, { alignItems: 'center' }]}>
-              <View style={{flex: 1}}><Text size={14}>预算价格</Text></View>
+              <View style={{flex: 1}}><Text size={15}>预算价格</Text></View>
               <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                 <TextInput
                   style={[styles.input, {width: '80%'}]}
@@ -365,14 +371,14 @@ class PostJob extends React.Component {
                   value={this.state.budget}
                   onChangeText={budget => this.setState({ budget })}
                 />
-                <Text> 元</Text>
+                <Text size={15}> 元</Text>
               </View>
             </View>
 
             <View style = {[styles.componentsSection, styles.stretch]}>
               <View style={{ flexDirection: 'column', alignItems: 'stretch', flex: 1 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                  <Text size={14} bold style={{ flex: 2 }}>
+                  <Text size={15} bold style={{ flex: 2 }}>
                     是否公开
                   </Text>
                   <View style={{ flex: 1 }}>
@@ -380,11 +386,11 @@ class PostJob extends React.Component {
                       items={['是', '否']}
                       defaultIndex = {isPublic}
                       onChange={value => this.setState({isPublic: value})}
-                      size={12}
+                      size={14}
                     />
                   </View>
                 </View>
-                <Text>
+                <Text size={14}>
                   选择公开在项目完成后作品会在平台展示
                 </Text>
               </View>
@@ -477,6 +483,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 3,
     paddingLeft: 10,
+    fontSize: 15,
   },
   componentsSection: {
     backgroundColor: colors.white,
@@ -493,7 +500,7 @@ const styles = StyleSheet.create({
     height: 32,
   },
   modalSelectedItemTextStyle: {
-    fontSize: 14,
+    fontSize: 15,
     textAlign: 'center',
     lineHeight: 24,
   },
