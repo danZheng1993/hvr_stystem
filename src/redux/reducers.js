@@ -13,6 +13,7 @@ import subcategory from './modules/subcategory'
 import user from './modules/user'
 import job from './modules/job'
 import chat from './modules/chat'
+import contracts from './modules/contracts'
 import banner from './modules/banner'
 import news from './modules/news'
 import media from './modules/media'
@@ -43,5 +44,6 @@ export default combineReducers({
   news,
   media,
   invoice,
-  message
+  message,
+  contracts,
 })

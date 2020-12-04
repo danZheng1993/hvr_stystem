@@ -118,6 +118,12 @@ export const mediaListSelector = (state) =>
 export const mediasSearchResultSelector = (state) =>
   get(state, 'media.searchResult', [])
 
+export const contractsResultSelector = (state) => 
+  get(state, 'contracts.contracts', []);
+
+export const contractsLoadingSelelctor = (state) =>
+  get(state, 'contracts.loading', false);
+
 export const mediaLoadingSelector = (state) =>
   get(state, 'media.loading', false)
 

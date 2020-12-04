@@ -28,6 +28,7 @@ import Client from '../client'
 import PostJob from '../client/PostJob'
 import ClientJob from '../client/MyPage/MyJob';
 import MyCollection from '../client/MyPage/MyCollection';
+import MyContract from '../client/MyPage/MyContract';
 import MyAttention from '../client/MyPage/MyAttention';
 import MyVR from '../client/MyPage/MyVR';
 import RequestInvoice from '../client/MyPage/RequestInvoice';
@@ -101,7 +102,7 @@ const MainNavigator = () => (
     <Stack.Screen name="Settings" component={Settings} options={{ title: '设 置' }} />
     <Stack.Screen name="MyCreated" component={Developing} options={{ title: '我发布的' }} />
     <Stack.Screen name="VRShop" component={Developing} options={{ title: '我的VR' }} />
-    <Stack.Screen name="MyContract" component={Developing} options={{ title: '我的合同' }} />
+    <Stack.Screen name="MyContract" component={MyContract} options={{ title: '我的合同' }} />
     <Stack.Screen name="Auth" component={AuthScreen} options={{ headerShown: false }} />
     <Stack.Screen name="Terms" component={TermsScreen} options={{ title: '服务条款和隐私政策' }} />
     <Stack.Screen
