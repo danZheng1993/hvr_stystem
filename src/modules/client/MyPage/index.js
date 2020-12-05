@@ -12,28 +12,34 @@ import { profileSelector, unreadMessagesSelector, myMediasSelector } from '../..
 import constants from '../../../constants';
 import { isIphoneX } from '../../../helpers';
 
-const iconBidding = require('../../../../assets/images/bidding.png');
-const iconSetting = require('../../../../assets/images/setting.png');
-const iconPaying = require('../../../../assets/images/paying.png');
-const iconWaiting = require('../../../../assets/images/waiting.png');
-const iconTesting = require('../../../../assets/images/testing.png');
-const iconFeedback = require('../../../../assets/images/feedback.png');
+import iconBidding from '../../../../assets/images/bidding.png';
+import iconSetting from '../../../../assets/images/setting.png';
+import iconPaying from '../../../../assets/images/paying.png';
+import iconWaiting from '../../../../assets/images/waiting.png';
+import iconTesting from '../../../../assets/images/testing.png';
+import iconFeedback from '../../../../assets/images/feedback.png';
+import reactotron from 'reactotron-react-native';
+
+const jobStatus = [
+  {title: '竞标中', icon: iconBidding},
+  {title: '待付款', icon: iconPaying},
+  {title: '待拍摄', icon: iconWaiting},
+  {title: '待验收', icon: iconTesting},
+  {title: '评价', icon: iconFeedback},
+]
 
 class MyPage extends React.Component {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getMyMedias()
+  }
+
+  handleJobTypeNav = (selected) => {
+    this.props.navigation.navigate('ClientJob', { selected })
   }
 
   render () {
     const {profile, unread, medias} = this.props
-    const jobStatus = [
-      {title: '竞标中', icon: iconBidding},
-      {title: '待付款', icon: iconPaying},
-      {title: '待拍摄', icon: iconWaiting},
-      {title: '待验收', icon: iconTesting},
-      {title: '评价', icon: iconFeedback},
-    ]
     const collectionlength = profile ? profile.collections.length: 0
     const attentionlength = profile ? profile.attentions.length: 0
     return (
@@ -84,7 +90,11 @@ class MyPage extends React.Component {
           </View>
           <View style={styles.demoButtonsContainer}>
             {jobStatus.map((jobItem, index) => (
-              <TouchableOpacity key={index} style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('ClientJob', {selected: index+1})}>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={() => this.handleJobTypeNav(index+1)}
+                key={`job_type_${jobItem.title}`}
+              >
                 <Image
                   resizeMode="cover"
                   source={jobItem.icon}
@@ -188,7 +198,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10
+    paddingTop: 10,
+    width: 48,
   },
   settingsContainer: {
     flexDirection: 'row',

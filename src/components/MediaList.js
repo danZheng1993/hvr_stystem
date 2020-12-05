@@ -25,6 +25,7 @@ import Heart from '../../assets/images/heart.png';
 import PlayIcon from '../../assets/images/play.png';
 import DefaultAvatar from '../../assets/images/default-avatar.png';
 import FollowIcon from '../../assets/images/follow.png';
+import reactotron from 'reactotron-react-native';
 
 export default ({ medias }) => {
   const profile = useSelector(profileSelector);
@@ -60,8 +61,8 @@ export default ({ medias }) => {
 
   const collections = profile? profile.collections : []
   const attentions = profile? profile.attentions : []
-
   const renderItem = ({ item: media }) => {
+    const isInCollection = collections.findIndex(item => item === media._id) >= 0;
     return (
       <View>
         <TouchableOpacity
@@ -104,13 +105,20 @@ export default ({ medias }) => {
           <View style={styles.actionButtonsWrapper}>
             <TouchableOpacity
               onPress={() => {
-                collections.indexOf(media._id) == -1 ? handleAddToCollection(media._id) : handleRemoveFromCollection(media._id)
+                isInCollection ? handleRemoveFromCollection(media._id) : handleAddToCollection(media._id)
               }}
             >
-              <Image
-                source={collections.indexOf(media._id) == -1 ? HeartO : Heart}
-                style={collections.indexOf(media._id) == -1 ? styles.heartOIcon : styles.heartIcon}
-              />
+              {isInCollection ? 
+                <Image
+                  source={Heart}
+                  style={styles.heartIcon}
+                />
+              :
+                <Image
+                  source={HeartO}
+                  style={styles.heartOIcon}
+                />
+              }
             </TouchableOpacity>
             <TouchableOpacity style={styles.followIconWrapper} onPress={() => handleShare(media)}>
               <Image
@@ -201,6 +209,7 @@ const styles = StyleSheet.create({
   heartIcon: {
     width: 20,
     height: 20,
+    tintColor: colors.redAlert,
   },
 
   heartOIcon: {

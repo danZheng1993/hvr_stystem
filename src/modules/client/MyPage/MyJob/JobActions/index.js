@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import {Button, Text} from '../../../../../components'
 import NotPaidAction from './NotPaidAction'
 import TestingAction from './TestingAction'
@@ -10,12 +11,14 @@ import WaitingAction from './WaitingAction'
 import {colors} from '../../../../../styles'
 import { getDateTimeStr } from '../../../../../utils/helper';
 import { getApi } from '../../../../../redux/api/apiCall';
+import { increaseVisits } from '../../../../../redux/modules/media';
 
 const FeedbackAction = ({navigation,job}) => {
   const [media, setMedia] = useState(null);
   useEffect(() => {
     getMedia();
   })
+  const dispatch = useDispatch();
 
   const getMedia = async () => {
     try {
@@ -44,7 +47,10 @@ const FeedbackAction = ({navigation,job}) => {
               primary
               caption="查看视频"
               style={{marginRight: 5}}
-              onPress={() => navigation.navigate('Player', { url: media.path })}
+              onPress={() => {
+                dispatch(increaseVisits({ id: media._id }));
+                navigation.navigate('Player', { url: media.path })
+              }}
             />
           )}
           <Button
@@ -64,6 +70,7 @@ const FinishingAction = ({navigation, job}) => {
   useEffect(() => {
     getMedia();
   })
+  const dispatch = useDispatch();
 
   const getMedia = async () => {
     try {
@@ -73,7 +80,7 @@ const FinishingAction = ({navigation, job}) => {
       console.log(err);
     }
   }
-  console.log({ media });
+  
   return (
     <View>
       <Text size={14}>首付款支付时间 : <Text>¥{getDateTimeStr(job.created)}</Text></Text>
@@ -92,7 +99,10 @@ const FinishingAction = ({navigation, job}) => {
             primary
             caption="查看视频"
             style={{marginRight: 5}}
-            onPress={() => navigation.navigate('Player', { url: media.path })}
+            onPress={() => {
+              dispatch(increaseVisits({ id: media._id }));
+              navigation.navigate('Player', { url: media.path });
+            }}
           />
         )}
       </View>

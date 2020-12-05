@@ -38,9 +38,6 @@ class JobDetail extends React.Component {
           <Text size={14}>需求描述: {job.description}</Text>
           {job.status != '竞标中' && <>
           <Text size={14}>项目定价 : ¥{job.price}</Text>
-          <Text size={14}>项目首付款({upfrontRate}%) : ¥{job.price * upfrontRate / 100}</Text>
-          <Text size={14}>项目尾款({100-upfrontRate}%) : ¥{job.price *(100 - upfrontRate) / 100}</Text>
-          <Text size={14}>首付款支付时间 : {getDateTimeStr(job.upfontDate)}</Text>
           <Text size={14}>尾款支付时间 : {getDateTimeStr(job.finalPayDate)}</Text>
           </> }
         </View>: 

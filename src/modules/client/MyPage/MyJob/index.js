@@ -26,17 +26,15 @@ class MyJobList extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {getMyJob, profile, route} = this.props
     const {selected = 0} = route.params || {}
-    this.props.setRadioGroupsState({ ...this.props.radioGroupsState, 0: selected })
-    this.setState({selected})
+    this.setState({ selected })
     getMyJob()
   }
 
   handleClick = (index) => {
-    this.props.setRadioGroupsState({ ...this.props.radioGroupsState, 0: index })
-    this.setState({selected: index})
+    this.setState({ selected: index })
   }
 
   render() {    
@@ -44,24 +42,22 @@ class MyJobList extends React.Component {
     const upfrontRate = settings.upfrontRate || 0 
     const {selected} = this.state
     let jobslist = jobs
-    if (selected && jobs.length) {
+    if (selected > 0 && jobs.length) {
       jobslist = jobs.filter(job => job.status == status[selected])
     }
     return (
       <>
-      <View style={styles.componentsSection}>
-        <RadioGroup
-          items={['全部', '竞标中', '待付款','待拍摄', '待验收', '评价', '已完成']}
-          selectedIndex={this.props.radioGroupsState[0]}
-          onChange={index => this.handleClick(index)}
-          small
-          underline
-        />
-      </View>
-      <Loader loading={jobsloading} />     
-      <ScrollView style={styles.container}>  
+        <View style={styles.componentsSection}>
+          <RadioGroup
+            items={['全部', '竞标中', '待付款','待拍摄', '待验收', '评价', '已完成']}
+            selectedIndex={selected}
+            onChange={index => this.handleClick(index)}
+            small
+            underline
+          />
+        </View>
+        <Loader loading={jobsloading} />
         <JobsList jobs={jobslist} navigation={this.props.navigation} upfrontRate={upfrontRate} />
-      </ScrollView>
       </>
     );
   }
@@ -92,6 +88,4 @@ const mapDispatchToProps = {
   getMyJob
 };
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
-
-export default compose(withConnect,    withState('radioGroupsState', 'setRadioGroupsState', [0, 0]))(MyJobList);
+export default connect(mapStateToProps, mapDispatchToProps)(MyJobList);

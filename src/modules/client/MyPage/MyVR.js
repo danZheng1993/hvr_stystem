@@ -17,7 +17,7 @@ import { Loader, NoData, Text } from '../../../components'
 import { colors } from '../../../styles';
 import constants from '../../../constants'
 
-import { getMyMedias } from '../../../redux/modules/media'
+import { getMyMedias, increaseVisits } from '../../../redux/modules/media'
 import { mediaLoadingSelector,  profileSelector, myMediasSelector } from '../../../redux/selectors'
 
 class MyVR extends React.Component {
@@ -28,6 +28,7 @@ class MyVR extends React.Component {
   }
 
   handlePlay(media) {
+    this.props.increaseVisits({ id: media._id });
     this.props.navigation.navigate('Player', {url: media.path})
   }
 
@@ -104,6 +105,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   getMyMedias,
+  increaseVisits,
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

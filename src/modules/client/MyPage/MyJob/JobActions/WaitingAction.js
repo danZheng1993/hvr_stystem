@@ -2,21 +2,26 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
+import { useNavigation } from '@react-navigation/native';
 import { cancelJob, removeFromMyJobsList, promptJob} from '../../../../../redux/modules/job'
 import {Button, Text, toast} from '../../../../../components'
 import {colors} from '../../../../../styles'
 import {settingsListSelector} from '../../../../../redux/selectors'
 
 const WaitingAction = props => {
+  const navigation = useNavigation();
   const {settings, job} = props
   return (
     <View>
-      <Text size={14}>签订合同: <Text color={colors.primary}>电子合同</Text></Text>
+      <TouchableWithoutFeedback onPress={() => navigation.navigate('MyContractDetail', { contract: job })}>
+        <Text size={14}>签订合同: <Text color={colors.primary}>电子合同</Text></Text>
+      </TouchableWithoutFeedback>
       <View style={styles.textContainer}>
         <Text size={14} color={colors.grey}>定价 : <Text>¥{job.price}</Text></Text>
         <Text size={14} color={colors.secondary}>已支付首付款 : <Text>¥{job.price * settings.upfrontRate / 100}</Text></Text>

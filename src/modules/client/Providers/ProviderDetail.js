@@ -117,7 +117,7 @@ class ProviderDetail extends React.Component {
               <Text white size={14}>发布视频</Text>
             </View>
             <View style={{alignItems: 'center'}}>
-              <Text white bold size={24}>{user.balance.toFixed(2)}</Text>
+              <Text white bold size={24}>{user.visits || medias.reduce((prev, media) => prev + media.visits, 0)}</Text>
               <Text white size={14}>播放数量</Text>
             </View>
           </View> 

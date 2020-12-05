@@ -58,7 +58,7 @@ export default class UsersList extends React.Component {
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-start'}}>
               <Text size={14} color={colors.secondary}>服务雇主: {user.contacts.length}家</Text>
               <Text size={14} color={colors.secondary}>发布作品: 3个</Text>
-              <Text size={14} color={colors.secondary}>播放量:{user.balance.toFixed(2)}</Text>
+              <Text size={14} color={colors.secondary}>播放量: {user.visits || 0}</Text>
               <Text size={14} color={colors.secondary}>坐标: {user.location}</Text>
             </View>
           </ImageBackground>}

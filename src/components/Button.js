@@ -57,6 +57,9 @@ export default function RNSButton(props) {
       props.textColor && {
         color: props.textColor,
       },
+      props.fontSize && {
+        fontSize: props.fontSize,
+      }
     ];
 
     content = (
@@ -108,7 +111,8 @@ export default function RNSButton(props) {
               props.small && styles.captionSmall,
               icon && styles.captionWithIcon,
               styles.primaryCaption,
-              props.textColor && {color: props.textColor}
+              props.textColor && {color: props.textColor},
+              props.fontSize && { fontSize: props.fontSize }
             ]}
           >
             {caption}
@@ -184,6 +188,10 @@ const styles = StyleSheet.create({
   },
   captionSmall: {
     fontSize: 14,
+    fontWeight: '500',
+  },
+  captionSmaller: {
+    fontSize: 12,
     fontWeight: '500',
   },
   captionWithIcon: {

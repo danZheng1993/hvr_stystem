@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import {finalPay} from '../../../../../redux/modules/payment'
+import {increaseVisits} from '../../../../../redux/modules/media'
 import {updateMyJobsList} from '../../../../../redux/modules/job'
 import {Button, Confirm, Text} from '../../../../../components'
 import {settingsListSelector} from '../../../../../redux/selectors'
@@ -49,7 +50,10 @@ const TestingAction = props => {
               primary
               caption="查看视频"
               style={{marginRight: 5}}
-              onPress={() => navigation.navigate('Player', { url: media.path })}
+              onPress={() => {
+                increaseVisits({ id: media.path });
+                navigation.navigate('Player', { url: media.path })
+              }}
             />
           )}
           <Button
@@ -90,7 +94,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   finalPay,
-  updateMyJobsList
+  updateMyJobsList,
+  increaseVisits,
 };
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

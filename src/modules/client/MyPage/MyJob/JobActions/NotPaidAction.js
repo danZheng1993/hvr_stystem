@@ -41,7 +41,26 @@ const handlePayment = async (callback) => {
 }
 
 const NotPaidAction = props => {
-  const {settings, job} = props
+  const {settings, job, removeFromMyJobsList, cancelJob} = props
+
+  const confirmRemoval = () => {
+    Alert.alert(
+      '提示',
+      '是否确认取消？',
+      [
+        { text: '是', onPress: removeJob },
+        { text: '否' }
+      ]
+    );
+  }
+
+  const removeJob = () => {
+    cancelJob({
+      id: job._id,
+      success: () => {removeFromMyJobsList({id: job._id})}
+    })
+  }
+
   return (
     <View>
       <Text size={14}>签订合同: <Text color={colors.primary}>电子合同</Text></Text>
@@ -57,10 +76,7 @@ const NotPaidAction = props => {
         />
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
           <Text size={12} color={colors.primary}
-           onPress={() => props.cancelJob({
-            id: props.job._id,
-            success: () => {props.removeFromMyJobsList({id: props.job._id})}
-          })}>取消订单</Text>
+           onPress={confirmRemoval}>取消订单</Text>
           <Button
             small
             bgColor={colors.warning}

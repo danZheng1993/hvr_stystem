@@ -23,6 +23,7 @@ import {  servicesListSelector,
           profileSelector,
           settingsListSelector,
           jobsloadingSelector } from '../../redux/selectors'
+import reactotron from 'reactotron-react-native';
 
 class PostJob extends React.Component {
   constructor(props) {
@@ -125,8 +126,9 @@ class PostJob extends React.Component {
   }
 
   handleConfirm = () => {
-    const {count, budget, description} = this.state
-    if (!description || !count || !budget || isNaN(count) || isNaN(budget)) {
+    const {count, budget, description, typeKey} = this.state
+    reactotron.log({ typeKey });
+    if (!(typeKey >= 0) || !description || !count || !budget || isNaN(count) || isNaN(budget)) {
       toast('请填写完整内容!')
       return
     }
