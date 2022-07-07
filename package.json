@@ -35,7 +35,7 @@
     "global": "^4.4.0",
     "lodash": "^4.17.19",
     "md5": "^2.3.0",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "mongodb-backup": "^1.6.9",
     "pushy-react-native": "^1.0.15",
     "react": "16.13.1",
